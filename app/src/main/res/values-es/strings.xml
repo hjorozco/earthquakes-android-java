@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Temblores</string>
+    <string name="menu_activity_main_action_refresh_title">Actualizar</string>
+    <string name="menu_activity_main_action_settings_title">Preferencias de búsqueda</string>
+</resources>
