@@ -1,6 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 Hector J. Orozco -->
 <resources>
+
+    <!-- ********** APP ********** -->
+
     <string name="app_name">Temblores</string>
-    <string name="menu_activity_main_action_refresh_title">Actualizar</string>
-    <string name="menu_activity_main_action_settings_title">Preferencias de búsqueda</string>
+
+    <!-- Message that will be displayed only the first time the app runs. -->
+    <string name="first_time_message">
+        Gracias por instalar esta aplicación.\n\n
+        Hector J. Orozco.
+    </string>
+
+    <!-- ********** App ********** -->
+
+
+    <!-- String to be displayed at the top TextView of help_activity.xml layout -->
+    <string name="help_text_1">
+        Para obtener una lista de temblores del \"Servicio Geológico de los Estados Unidos\" (USGS)
+        ve a la opción de \"Ajustes\" (rueda de engranaje), luego selecciona las opciones que prefieras.\n\n
+        Después, haz clic en la flecha hacia atrás para generar la lista de temblores.\n\n
+        Una vez que la lista se despliegue, haz click en un temblor para obtener más información.\n\n
+        Esta aplicación muestra la hora local para el usuario de la misma; en la que el temblor ocurrió.\n\n
+        El máximo número de temblores que puede ser desplegado es 20,000
+    </string>
+
+    <!-- String to be displayed at the bottom TextView of help_activity.xml layout -->
+    <string name="help_text_2">¿Tienes preguntas o comentarios?</string>
+
+    <!-- String to be displayed at the button of help_activity.xml layout -->
+    <string name="help_text_3">Héctor J. Orozco\n
+    hjorozco@hotmail.com</string>
+
+
+    <!-- ********** ACTIVITY MAIN ********** -->
+
+    <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
+    if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
+    <string name="near_the">Localidad</string>
+
+    <string name="loading_earthquakes_info">Buscando &#8230;\n\n
+        Puede tomar hasta dos minutos dependiendo de las preferencias de búsqueda y la conexión
+        al USGS.\n\n
+        Si no obtienes resultados actualiza la lista y/o cambia las preferencias de búsqueda.
+    </string>
+
+    <string name="no_internet_connection_text">No hay conexión a Internet.\n\n
+        Checa la configuración de tu dispositivo o cambia de lugar.</string>
+
+    <!-- String to be displayed when there is not data to show on the ListView of
+    earthquake_activity -->
+    <string name="empty_list_text">
+        No se encontraron temblores.
+    </string>
+
+    <string name="map_menu_item">Mostrar en mapa</string>
+    <string name="menu_activity_main_action_search_preferences_title">
+        Preferencias de búsqueda de temblores</string>
+    <string name="info_menu_item">Información de la lista</string>
+    <string name="menu_activity_main_action_refresh_title">Actualizar la lista</string>
+    <string name="help_menu_item">Ayuda</string>
+
+    <!-- ********** Activity Main ********** -->
+
+
+    <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
+    <string name="settings_help_menu_item">Preferencias de búsqueda</string>
+
+    <!-- Maps Activity Title [CHAR LIMIT=NONE] -->
+    <string name="title_activity_earthquakes_map">Mapa de temblores</string>
+
+
+    <!-- Help Activity Title [CHAR LIMIT=NONE] -->
+    <string name="help_title">Ayuda</string>
+
+
+    <!-- ********** ACTIVITY SEARCH PREFERENCES ********** -->
+
+    <string name="activity_search_preferences_label">
+        @string/menu_activity_main_action_search_preferences_title</string>
+
+    <string name="settings_order_by_label">Ordenar por</string>
+    <string name="settings_order_by_magnitude_label">Magnitud</string>
+    <string name="settings_order_by_most_recent_label">Fecha</string>
+
+
+    <string name="search_preferences_magnitudes_category_title">Magnitudes</string>
+
+    <string name="search_preferences_minimum_magnitude_title">Mínima</string>
+
+    <string name="search_preferences_maximum_magnitude_title">Máxima</string>
+
+    <string name="settings_date_period_label">Periodo de tiempo</string>
+    <string name="settings_date_period_custom_label">Personalizado</string>
+    <string name="settings_date_period_today_label">Últimas 24 horas</string>
+    <string name="settings_date_period_last_week_label">Últimos 7 días</string>
+    <string name="settings_date_period_last_month_label">Últimos 30 días</string>
+    <string name="settings_date_period_last_year_label">Últimos 365 días</string>
+
+    <string name="settings_end_date_label">@string/most_recent_date_text</string>
+    <string name="settings_end_date_default">enero 01, 2015</string>
+
+    <string name="settings_start_date_label">@string/past_date_text</string>
+    <string name="settings_start_date_default">enero 01, 2015</string>
+
+    <string name="settings_filter_by_label">Localidad</string>
+
+    <string name="settings_limit_label">Número máximo de temblores</string>
+
+    <string name="most_recent_date_text">Fecha más reciente</string>
+    <string name="past_date_text">Fecha pasada</string>
+    <string name="today_text">Hoy</string>
+    <string name="yesterday_text">Ayer</string>
+    <string name="seven_days_ago_text">Hace 7 días</string>
+    <string name="thirty_days_ago_text">Hace 30 días</string>
+    <string name="three_hundred_sixty_five_days_ago_text">Hace 365 días</string>
+
+    <!-- ********** Activity Search Preferences ********** -->
+
+
+    <!-- Strings used to send an email to hjorozco@hotmail.com -->
+    <string name="email_subject">Aplicación de Reporte de temblores.</string>
+    <string name="email_chooser">Selecciona una aplicación para mandar un correo electrónico a
+        Hector J. Orozco &#8230;</string>
+
+    <!-- String displayed at the bottom of the Configuration Screen -->
+    <string name="settings_help_message_text">
+        El tiempo que tomará la búsqueda de temblores será mayor mientras:\n
+        - menor sea la magnitud mínima,\n
+        - mayor sea la diferencia entre las magnitudes mínima y máxima,\n
+        - mayor sea el periodo de tiempo.\n\n
+        El periodo de tiempo va hacia atrás, de la fecha más reciente a la fecha más antigua.\n\n
+        El número máximo de temblores que pueden ser desplegados en la lista es de 20,000.\n\n
+        Una vez ingresadas las preferencias de búsqueda, da clic en la flecha hacia atrás
+        en la esquina superior izquierda de la pantalla para buscar temblores.
+    </string>
+
+    <!-- String used to display a title of the "Information" option AlertDialog -->
+    <string name="information_alert_dialog_title_text">Información de la lista.</string>
+
+    <!-- Strings used to display a message about the current list displayed, on the "Information"
+    option AlertDialog -->
+    <string name="current_list_alert_dialog_message_1">
+        Mostrando %1$s &lt;b>%2$s %4$s más %3$s en %5$s&lt;/b> para las siguientes preferencias de
+        búsqueda: &lt;br/&gt; &lt;br/&gt;
+        &lt;i>Periodo de tiempo &lt;/i>%6$s &lt;br/&gt;
+        (%7$s a &lt;br/&gt;
+        %8$s). &lt;br/&gt;
+        &lt;i>Magnitud &lt;/i>%9$s a %10$s. &lt;br/&gt;
+        &lt;i>Ordenados por &lt;/i>%11$s. &lt;br/&gt;
+        &lt;i>Máximo número de temblores &lt;/i>%12$s.
+        %13$s
+    </string>
+
+    <string name="current_list_alert_dialog_message_2">
+        &lt;br/&gt; &lt;br/&gt; &lt;br/&gt;
+        &lt;b>%1$s del primer temblor en la lista:&lt;/b> &lt;br/&gt;
+        %2$s &lt;br/&gt; &lt;br/&gt;
+        &lt;b>%1$s del último temblor en la lista:&lt;/b> &lt;br/&gt;
+        %3$s.
+    </string>
+
+    <!-- Other strings used by the "Information" Alert Dialog message.  -->
+    <string name="the_text_singular">el</string>
+    <string name="the_text_plural">los</string>
+    <string name="earthquakes_text_singular">temblor</string>
+    <string name="earthquakes_text_plural">temblores</string>
+    <string name="powerful_text_singular">poderoso</string>
+    <string name="powerful_text_plural">poderosos</string>
+    <string name="recent_text_singular">reciente</string>
+    <string name="recent_text_plural">recientes</string>
+    <string name="the_whole_world_text">todo el mundo</string>
+    <string name="magnitude_text">Magnitud</string>
+    <string name="date_text">Fecha</string>
+    <string name="negative_button_text">Más información</string>
+    <string name="positive_button_text">Aceptar</string>
+    <string name="twenty_four_hours_text">24 horas</string>
+    <string name="seven_days_text">7 días</string>
+    <string name="thirty_days_text">30 días</string>
+    <string name="three_hundred_sixty_five_days_text">365 días</string>
+    <string name="custom_text">Personalizado</string>
+
+
+
 </resources>

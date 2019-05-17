@@ -11,9 +11,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_activity_main_action_settings"
+        android:id="@+id/menu_activity_main_action_search_preferences"
         android:icon="@drawable/ic_settings_white_24dp"
         android:orderInCategory="2"
-        android:title="@string/menu_activity_main_action_settings_title"
+        android:title="@string/menu_activity_main_action_search_preferences_title"
         app:showAsAction="ifRoom" />
 </menu>

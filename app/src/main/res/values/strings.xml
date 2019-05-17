@@ -1,8 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 Hector J. Orozco -->
 <resources>
+
+
+    <!-- ********** APP ********** -->
+
     <string name="app_name">Earthquakes</string>
 
-    <!-- ACTIVITY_MAIN String -->
-    <string name="menu_activity_main_action_refresh_title">Refresh</string>
-    <string name="menu_activity_main_action_settings_title">Search preferences</string>
+    <!-- Message that will be displayed only the first time the app runs. -->
+    <string name="first_time_message">
+        Thank you for installing this application.\n\n
+        Hector J. Orozco.
+    </string>
+
+    <!-- ********** App ********** -->
+
+
+    <!-- String to be displayed at the top TextView of help_activity.xml layout -->
+    <string name="help_text_1">
+        To get a list of Earthquakes from the \"United States Geological Survey\" go to \"Settings\"
+        (gear wheel) then select the settings you prefer.\n\n
+        After that click the back arrow to populate the list of earthquakes.\n\n
+        Once the list is displayed, click on an earthquake to get more information.\n\n
+        This app shows the user\'s local time when the earthquake actually happened.\n\n
+        The max number of earthquakes that can be displayed is 20,000
+    </string>
+
+    <!-- String to be displayed at the bottom TextView of help_activity.xml layout -->
+    <string name="help_text_2">Questions or comments?</string>
+
+    <!-- String to be displayed at the button of help_activity.xml layout -->
+    <string name="help_text_3">Hector J. Orozco\n
+    hjorozco@hotmail.com</string>
+
+
+    <!-- ********** ACTIVITY MAIN ********** -->
+
+    <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
+    if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
+    <string name="near_the">Location</string>
+
+    <string name="loading_earthquakes_info">Searching &#8230;\n\n
+        It can take up to two minutes depending on the search preferences and the connection to
+        the USGS.\n\n
+        If you don\'t get any results refresh the list and/or modify the search preferences.
+    </string>
+
+    <string name="no_internet_connection_text">There is no internet connection.\n\n
+        Check your device settings or move to a different location.</string>
+
+    <!-- String to be displayed when there is not data to show on the ListView of
+    earthquake_activity -->
+    <string name="empty_list_text">No earthquakes found.</string>
+
+    <string name="map_menu_item">Earthquakes map</string>
+    <string name="menu_activity_main_action_search_preferences_title">Search preferences</string>
+    <string name="info_menu_item">List information</string>
+    <string name="menu_activity_main_action_refresh_title">Refresh list</string>
+    <string name="help_menu_item">Help</string>
+
+    <!-- ********** Activity main ********** -->
+
+    <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
+    <string name="settings_help_menu_item">Search preferences help</string>
+
+    <!-- Maps Activity Title [CHAR LIMIT=NONE] -->
+    <string name="title_activity_earthquakes_map">Earthquakes map</string>
+
+    <!-- Help Activity Title [CHAR LIMIT=NONE] -->
+    <string name="help_title">Help</string>
+
+
+    <!-- ********** ACTIVITY SEARCH PREFERENCES ********** -->
+
+    <string name="activity_search_preferences_label">@string/menu_activity_main_action_search_preferences_title</string>
+
+
+    <string name="search_preferences_magnitudes_category_title">Magnitudes</string>
+
+    <string name="search_preferences_minimum_magnitude_title">Minimum</string>
+    <string name="search_preferences_minimum_magnitude_key" translatable="false">minimum_magnitude</string>
+    <string name="search_preferences_minimum_magnitude_default_value" translatable="false">6</string>
+
+    <string name="search_preferences_maximum_magnitude_title">Maximum</string>
+    <string name="search_preferences_maximum_magnitude_key" translatable="false">maximum_magnitude</string>
+    <string name="search_preferences_maximum_magnitude_default_value" translatable="false">12</string>
+
+
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_most_recent_value</string>
+    <string name="settings_order_by_magnitude_label">Magnitude</string>
+    <string name="settings_order_by_magnitude_value" translatable="false">magnitude</string>
+    <string name="settings_order_by_most_recent_label">Date</string>
+    <string name="settings_order_by_most_recent_value" translatable="false">time</string>
+
+
+    <string name="settings_date_period_label">Time period</string>
+    <string name="settings_date_period_key" translatable="false">date_period</string>
+    <string name="settings_date_period_default" translatable="false">@string/settings_date_period_last_month_value</string>
+    <string name="settings_date_period_custom_label">Custom</string>
+    <string name="settings_date_period_custom_value" translatable="false">custom</string>
+    <string name="settings_date_period_today_label">Last 24 hours</string>
+    <string name="settings_date_period_today_value" translatable="false">day</string>
+    <string name="settings_date_period_last_week_label">Last 7 days</string>
+    <string name="settings_date_period_last_week_value" translatable="false">week</string>
+    <string name="settings_date_period_last_month_label">Last 30 days</string>
+    <string name="settings_date_period_last_month_value" translatable="false">month</string>
+    <string name="settings_date_period_last_year_label">Last 365 days</string>
+    <string name="settings_date_period_last_year_value" translatable="false">year</string>
+
+    <string name="settings_end_date_label">@string/most_recent_date_text</string>
+    <string name="settings_end_date_key" translatable="false">end_date</string>
+    <string name="settings_end_date_default">January 01, 2015</string>
+
+    <string name="settings_start_date_label">@string/past_date_text</string>
+    <string name="settings_start_date_key" translatable="false">start_date</string>
+    <string name="settings_start_date_default">January 01, 2015</string>
+
+    <string name="settings_filter_by_label">Location</string>
+    <string name="settings_filter_by_key" translatable="false">filter_by</string>
+    <string name="settings_filter_by_default" translatable="false" />
+
+    <string name="settings_limit_label">Max number of earthquakes</string>
+    <string name="settings_limit_key" translatable="false">limit</string>
+    <string name="settings_limit_default" translatable="false">10</string>
+
+    <string name="most_recent_date_text">Most recent date</string>
+    <string name="past_date_text">Past date</string>
+    <string name="today_text">Today</string>
+    <string name="yesterday_text">Yesterday</string>
+    <string name="seven_days_ago_text">7 days ago</string>
+    <string name="thirty_days_ago_text">30 days ago</string>
+    <string name="three_hundred_sixty_five_days_ago_text">365 days ago</string>
+
+    <!-- ********** Activity Search Preferences ********** -->
+
+
+    <!-- Strings used to send an email to hjorozco@hotmail.com -->
+    <string name="email_address" translatable="false">hjorozco@hotmail.com</string>
+    <string name="email_subject">Earthquakes Report Application.</string>
+    <string name="email_setting" translatable="false">mailto:</string>
+    <string name="email_chooser">Choose an application to send an email to Hector J. Orozco &#8230;</string>
+
+    <!-- String displayed at the bottom of the Configuration Screen -->
+    <string name="settings_help_message_text">
+        The earthquakes search time will be longer:\n
+        - the longer the minimum magnitude,\n
+        - the greater the difference between the minimum and maximum magnitudes,\n
+        - the greater the period of time.\n\n
+        The time period goes back in time, from the most recent date to the former date.\n\n
+        The maximum number of earthquakes that can be displayed on the list is 20,000.\n\n
+        Once the search preferences are entered, click the back arrow on the top left corner
+        of the screen to search for earthquakes.
+    </string>
+
+    <!-- String used to display a title of the "Information" option AlertDialog -->
+    <string name="information_alert_dialog_title_text">List information.</string>
+
+    <!-- Strings used to display a message about the current list displayed, on the "Information"
+    option AlertDialog -->
+    <string name="current_list_alert_dialog_message_1">
+        Showing %1$s &lt;b>%2$s most %3$s %4$s in %5$s&lt;/b> for the next search preferences:
+        &lt;br/&gt; &lt;br/&gt;
+        &lt;i>Period of time &lt;/i>%6$s &lt;br/&gt;
+        (%7$s to &lt;br/&gt;
+        %8$s). &lt;br/&gt;
+        &lt;i>Magnitude &lt;/i>%9$s to %10$s. &lt;br/&gt;
+        &lt;i>Ordered by &lt;/i>%11$s. &lt;br/&gt;
+        &lt;i>Max number of earthquakes &lt;/i>%12$s.
+        %13$s
+    </string>
+
+    <string name="current_list_alert_dialog_message_2">
+        &lt;br/&gt; &lt;br/&gt; &lt;br/&gt;
+        &lt;b>%1$s of first earthquake on the list:&lt;/b> &lt;br/&gt;
+        %2$s &lt;br/&gt; &lt;br/&gt;
+        &lt;b>%1$s of last earthquake on the list:&lt;/b> &lt;br/&gt;
+        %3$s.
+    </string>
+
+    <!-- Other strings used by the "Information" Alert Dialog message.  -->
+    <string name="the_text_singular">the</string>
+    <string name="the_text_plural">the</string>
+    <string name="earthquakes_text_singular">earthquake</string>
+    <string name="earthquakes_text_plural">earthquakes</string>
+    <string name="powerful_text_singular">powerful</string>
+    <string name="powerful_text_plural">powerful</string>
+    <string name="recent_text_singular">recent</string>
+    <string name="recent_text_plural">recent</string>
+    <string name="the_whole_world_text">the whole world</string>
+    <string name="magnitude_text">Magnitude</string>
+    <string name="date_text">Date</string>
+    <string name="negative_button_text">More info</string>
+    <string name="positive_button_text">OK</string>
+    <string name="twenty_four_hours_text">24 hours</string>
+    <string name="seven_days_text">7 days</string>
+    <string name="thirty_days_text">30 days</string>
+    <string name="three_hundred_sixty_five_days_text">365 days</string>
+    <string name="custom_text">custom</string>
+
+
+    <!-- Images content descriptions -->
+
 
 </resources>
