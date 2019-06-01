@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="settings_order_by_labels">
-        <item>@string/settings_order_by_magnitude_label</item>
-        <item>@string/settings_order_by_most_recent_label</item>
+    <string-array name="search_preference_order_by_entries">
+        <item>@string/search_preference_order_by_magnitude_entry</item>
+        <item>@string/search_preference_order_by_date_entry</item>
     </string-array>
 
-    <string-array name="settings_order_by_values">
-        <item>@string/settings_order_by_magnitude_value</item>
-        <item>@string/settings_order_by_most_recent_value</item>
+    <string-array name="search_preference_order_by_entry_values">
+        <item>@string/search_preference_order_by_magnitude_entry_value</item>
+        <item>@string/search_preference_order_by_date_entry_value</item>
     </string-array>
 
-    <string-array name="settings_date_period_labels">
-        <item>@string/settings_date_period_custom_label</item>
-        <item>@string/settings_date_period_today_label</item>
-        <item>@string/settings_date_period_last_week_label</item>
-        <item>@string/settings_date_period_last_month_label</item>
-        <item>@string/settings_date_period_last_year_label</item>
+    <string-array name="search_preference_time_period_entries">
+        <item>@string/search_preference_time_period_custom_entry</item>
+        <item>@string/search_preference_time_period_last_24_hours_entry</item>
+        <item>@string/search_preference_time_period_last_7_days_entry</item>
+        <item>@string/search_preference_time_period_last_30_days_entry</item>
+        <item>@string/search_preference_time_period_last_365_days_entry</item>
     </string-array>
 
-    <string-array name="settings_date_period_values">
-        <item>@string/settings_date_period_custom_value</item>
-        <item>@string/settings_date_period_today_value</item>
-        <item>@string/settings_date_period_last_week_value</item>
-        <item>@string/settings_date_period_last_month_value</item>
-        <item>@string/settings_date_period_last_year_value</item>
+    <string-array name="search_preference_time_period_entry_values">
+        <item>@string/search_preference_time_period_custom_entry_value</item>
+        <item>@string/search_preference_time_period_last_24_hours_entry_value</item>
+        <item>@string/search_preference_time_period_last_7_days_entry_value</item>
+        <item>@string/search_preference_time_period_last_30_days_entry_value</item>
+        <item>@string/search_preference_time_period_last_365_days_entry_value</item>
     </string-array>
 
 </resources>

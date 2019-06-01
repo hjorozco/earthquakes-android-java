@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.stetho.Stetho;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
 
+        // Initialize Stetho.
+        Stetho.initializeWithDefaults(this);
 
         List<Earthquake> earthquakes = new ArrayList<>();
 
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupRecyclerView(){
+    private void setupRecyclerView() {
         mRecyclerView = findViewById(R.id.activity_main_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mEarthquakesListAdapter);
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_activity_main_action_refresh:
                 break;
             case R.id.menu_activity_main_action_search_preferences:
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void showSearchPreferences(){
+    private void showSearchPreferences() {
         if (getResources().getBoolean(R.bool.tablet)) {
             replaceFragmentOnDetailLayout(new SearchPreferencesFragment());
         } else {

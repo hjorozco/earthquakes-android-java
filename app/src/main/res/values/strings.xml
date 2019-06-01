@@ -76,55 +76,70 @@
     <string name="activity_search_preferences_label">@string/menu_activity_main_action_search_preferences_title</string>
 
 
-    <string name="search_preferences_magnitudes_category_title">Magnitudes</string>
+    <string name="search_preferences_magnitudes_category_title">Magnitude preferences</string>
+    <string name="search_preferences_magnitudes_category_key" translatable="false">magnitudes</string>
 
-    <string name="search_preferences_minimum_magnitude_title">Minimum</string>
-    <string name="search_preferences_minimum_magnitude_key" translatable="false">minimum_magnitude</string>
-    <string name="search_preferences_minimum_magnitude_default_value" translatable="false">6</string>
+    <string name="search_preferences_magnitudes_minimum_value" translatable="false">0</string>
+    <string name="search_preferences_magnitudes_maximum_value" translatable="false">10</string>
 
-    <string name="search_preferences_maximum_magnitude_title">Maximum</string>
-    <string name="search_preferences_maximum_magnitude_key" translatable="false">maximum_magnitude</string>
-    <string name="search_preferences_maximum_magnitude_default_value" translatable="false">12</string>
+    <string name="search_preference_minimum_magnitude_title">Minimum magnitude</string>
+    <string name="search_preference_minimum_magnitude_key" translatable="false">minimum_magnitude</string>
+    <string name="search_preference_minimum_magnitude_default_value" translatable="false">6</string>
 
-
-    <string name="settings_order_by_label">Order By</string>
-    <string name="settings_order_by_key" translatable="false">order_by</string>
-    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_most_recent_value</string>
-    <string name="settings_order_by_magnitude_label">Magnitude</string>
-    <string name="settings_order_by_magnitude_value" translatable="false">magnitude</string>
-    <string name="settings_order_by_most_recent_label">Date</string>
-    <string name="settings_order_by_most_recent_value" translatable="false">time</string>
+    <string name="search_preference_maximum_magnitude_title">Maximum magnitude</string>
+    <string name="search_preference_maximum_magnitude_key" translatable="false">maximum_magnitude</string>
+    <string name="search_preference_maximum_magnitude_default_value" translatable="false">
+        @string/search_preferences_magnitudes_maximum_value</string>
 
 
-    <string name="settings_date_period_label">Time period</string>
-    <string name="settings_date_period_key" translatable="false">date_period</string>
-    <string name="settings_date_period_default" translatable="false">@string/settings_date_period_last_month_value</string>
-    <string name="settings_date_period_custom_label">Custom</string>
-    <string name="settings_date_period_custom_value" translatable="false">custom</string>
-    <string name="settings_date_period_today_label">Last 24 hours</string>
-    <string name="settings_date_period_today_value" translatable="false">day</string>
-    <string name="settings_date_period_last_week_label">Last 7 days</string>
-    <string name="settings_date_period_last_week_value" translatable="false">week</string>
-    <string name="settings_date_period_last_month_label">Last 30 days</string>
-    <string name="settings_date_period_last_month_value" translatable="false">month</string>
-    <string name="settings_date_period_last_year_label">Last 365 days</string>
-    <string name="settings_date_period_last_year_value" translatable="false">year</string>
+    <string name="search_preferences_time_category_title">Time preferences</string>
+    <string name="search_preferences_time_category_key" translatable="false">time</string>
 
-    <string name="settings_end_date_label">@string/most_recent_date_text</string>
-    <string name="settings_end_date_key" translatable="false">end_date</string>
-    <string name="settings_end_date_default">January 01, 2015</string>
+    <string name="search_preference_time_period_title">Time period</string>
+    <string name="search_preference_time_period_key" translatable="false">date_period</string>
+    <string name="search_preference_time_period_default_value" translatable="false">@string/search_preference_time_period_last_30_days_entry_value</string>
+    <string name="search_preference_time_period_custom_entry">Custom</string>
+    <string name="search_preference_time_period_custom_entry_value" translatable="false">custom</string>
+    <string name="search_preference_time_period_last_24_hours_entry">Last 24 hours</string>
+    <string name="search_preference_time_period_last_24_hours_entry_value" translatable="false">day</string>
+    <string name="search_preference_time_period_last_7_days_entry">Last 7 days</string>
+    <string name="search_preference_time_period_last_7_days_entry_value" translatable="false">week</string>
+    <string name="search_preference_time_period_last_30_days_entry">Last 30 days</string>
+    <string name="search_preference_time_period_last_30_days_entry_value" translatable="false">month</string>
+    <string name="search_preference_time_period_last_365_days_entry">Last 365 days</string>
+    <string name="search_preference_time_period_last_365_days_entry_value" translatable="false">year</string>
 
-    <string name="settings_start_date_label">@string/past_date_text</string>
-    <string name="settings_start_date_key" translatable="false">start_date</string>
-    <string name="settings_start_date_default">January 01, 2015</string>
+    <string name="search_preference_end_date_title">@string/most_recent_date_text</string>
+    <string name="search_preference_end_date_key" translatable="false">end_date</string>
+    <string name="search_preference_end_date_default">January 01, 2015</string>
 
-    <string name="settings_filter_by_label">Location</string>
-    <string name="settings_filter_by_key" translatable="false">filter_by</string>
-    <string name="settings_filter_by_default" translatable="false" />
+    <string name="search_preference_start_date_title">@string/past_date_text</string>
+    <string name="search_preference_start_date_key" translatable="false">start_date</string>
+    <string name="search_preference_start_date_default">January 01, 2015</string>
 
-    <string name="settings_limit_label">Max number of earthquakes</string>
-    <string name="settings_limit_key" translatable="false">limit</string>
-    <string name="settings_limit_default" translatable="false">10</string>
+
+    <string name="search_preferences_other_preferences_category_title">General preferences</string>
+    <string name="search_preferences_other_preferences_category_key" translatable="false">other_preferences</string>
+
+    <string name="search_preference_max_number_of_earthquakes_title">Max number of earthquakes</string>
+    <string name="search_preference_max_number_of_earthquakes_key" translatable="false">limit</string>
+    <string name="search_preference_max_number_of_earthquakes_default_value" translatable="false" />
+    <string name="search_preference_max_number_of_earthquakes_not_set_value">Not set. Will display all the earthquakes returned from the search.</string>
+     <string name="search_preference_max_number_of_earthquakes_zero_value">0. Will not display any earthquake.</string>
+
+    <string name="search_preference_order_by_title">Order By</string>
+    <string name="search_preference_order_by_key" translatable="false">order_by</string>
+    <string name="search_preference_order_by_default_value" translatable="false">@string/search_preference_order_by_date_entry_value</string>
+    <string name="search_preference_order_by_magnitude_entry">Magnitude</string>
+    <string name="search_preference_order_by_magnitude_entry_value" translatable="false">magnitude</string>
+    <string name="search_preference_order_by_date_entry">Date</string>
+    <string name="search_preference_order_by_date_entry_value" translatable="false">time</string>
+
+    <string name="search_preference_location_title">Location</string>
+    <string name="search_preference_location_key" translatable="false">filter_by</string>
+    <string name="search_preference_location_default_value" translatable="false" />
+    <string name="search_preference_location_not_set_value">Not set. Will search for earthquakes in the whole world.</string>
+
 
     <string name="most_recent_date_text">Most recent date</string>
     <string name="past_date_text">Past date</string>
