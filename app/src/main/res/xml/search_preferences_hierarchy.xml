@@ -10,7 +10,7 @@
         <EditTextPreference
             android:defaultValue="@string/search_preference_max_number_of_earthquakes_default_value"
             android:key="@string/search_preference_max_number_of_earthquakes_key"
-            android:title="@string/search_preference_max_number_of_earthquakes_title" />
+            android:title="@string/search_preference_max_number_of_earthquakes_title"/>
 
         <ListPreference
             android:defaultValue="@string/search_preference_order_by_default_value"
@@ -40,12 +40,12 @@
             app:useSimpleSummaryProvider="true" />
 
         <com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference
-            android:defaultValue="90"
+            android:defaultValue="0"
             android:key="@string/search_preference_end_date_key"
             android:title="@string/search_preference_end_date_title" />
 
         <com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference
-            android:defaultValue="90"
+            android:defaultValue="0"
             android:key="@string/search_preference_start_date_key"
             android:title="@string/search_preference_start_date_title" />
 

@@ -3,31 +3,39 @@ package com.weebly.hectorjorozco.earthquakes.ui.datepreference;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.TimePicker;
+import android.widget.DatePicker;
 
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
-// Class that handles the dialog
+
+// Class that handles the DialogPreference dialog fragment shown to the user
 
 public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragmentCompat {
 
-    private TimePicker mTimePicker;
 
-    // Static method that creates a new instance of our TimePreferenceFragmentCompat.
-    // To know to which preference this new dialog belongs, we add a String parameter with the key
-    // of the preference to our method and pass it (inside a Bundle) to the dialog.
+    private DatePicker mDatePicker;
+
+
+    /**
+     * Creates a new instance of this fragment.
+      * @param dateDialogPreferenceKey The key of the DialogPreference that will use this fragment
+     * @return A new instance of this fragment.
+     */
     public static DatePreferenceDialogFragmentCompat newInstance(
-            String key) {
+            String dateDialogPreferenceKey) {
         final DatePreferenceDialogFragmentCompat
-                fragment = new DatePreferenceDialogFragmentCompat();
-        final Bundle b = new Bundle(1);
-        b.putString(ARG_KEY, key);
-        fragment.setArguments(b);
-        return fragment;
+                datePreferenceDialogFragmentCompat = new DatePreferenceDialogFragmentCompat();
+        final Bundle bundle = new Bundle(1);
+        bundle.putString(ARG_KEY, dateDialogPreferenceKey);
+        datePreferenceDialogFragmentCompat.setArguments(bundle);
+        return datePreferenceDialogFragmentCompat;
     }
 
 
@@ -39,45 +47,44 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        mTimePicker = view.findViewById(R.id.edit);
+        mDatePicker = view.findViewById(R.id.date_picker);
 
-        // Exception when there is no TimePicker
-        if (mTimePicker == null) {
-            throw new IllegalStateException("Dialog view must contain" +
-                    " a TimePicker with id 'edit'");
+        if (mDatePicker == null) {
+            throw new IllegalStateException("Dialog view must contain a DatePicker with id 'date_picker'");
         }
 
-        // Get the time from the related Preference
-        Integer minutesAfterMidnight = null;
+        // Get the date in milliseconds from the related Preference
+        Long dateInMilliseconds = null;
         DialogPreference preference = getPreference();
         if (preference instanceof DateDialogPreference) {
-            minutesAfterMidnight =
-                    ((DateDialogPreference) preference).getTime();
+            dateInMilliseconds =
+                    ((DateDialogPreference) preference).getDateInMilliseconds();
         }
 
-        // Set the time to the TimePicker
-        if (minutesAfterMidnight != null) {
-            int hours = minutesAfterMidnight / 60;
-            int minutes = minutesAfterMidnight % 60;
-            boolean is24hour = DateFormat.is24HourFormat(getContext());
+        // Set the time to the DatePicker
+        if (dateInMilliseconds != null) {
 
-            mTimePicker.setIs24HourView(is24hour);
-            mTimePicker.setCurrentHour(hours);
-            mTimePicker.setCurrentMinute(minutes);
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(new Date(dateInMilliseconds));
+            mDatePicker.init(calendar.get(
+                    Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH),
+                    null);
         }
     }
 
 
     // save the selected time when we click the OK button (positive result). For this, we override
     // the onDialogClosed method. First we calculate the minutes we want to save, and after that,
-    // we get our related preference and call the setTime method we have defined there.
+    // we get our related preference and call the setDateInMilliseconds method we have defined there.
     @Override
     public void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
+
             // generate value to save
-            int hours = mTimePicker.getCurrentHour();
-            int minutes = mTimePicker.getCurrentMinute();
-            int minutesAfterMidnight = (hours * 60) + minutes;
+            Calendar calendar = new GregorianCalendar(mDatePicker.getYear(), mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
+            long dateInMilliseconds = calendar.getTimeInMillis();
 
             // Get the related Preference and save the value
             DialogPreference preference = getPreference();
@@ -86,9 +93,9 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
                         ((DateDialogPreference) preference);
                 // This allows the client to ignore the user value.
                 if (dateDialogPreference.callChangeListener(
-                        minutesAfterMidnight)) {
+                        dateInMilliseconds)) {
                     // Save the value
-                    dateDialogPreference.setTime(minutesAfterMidnight);
+                    dateDialogPreference.setDateInMilliseconds(dateInMilliseconds);
                 }
             }
         }

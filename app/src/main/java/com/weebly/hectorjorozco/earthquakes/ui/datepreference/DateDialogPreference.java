@@ -3,21 +3,20 @@ package com.weebly.hectorjorozco.earthquakes.ui.datepreference;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.preference.DialogPreference;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
-// Class that handles the values of the preference
+// Class that handles the value of the DialogPreference that is saved on SharedPreferences
 
 public class DateDialogPreference extends DialogPreference {
 
-    private int mTime;
-    // The Layout ID of the layout resource to be displayed by this DialogPreference
-    private int mDialogLayoutResId = R.layout.pref_dialog_time;
+
+    private long mDateInMilliseconds;
 
 
-    // Four constructors
     public DateDialogPreference(Context context) {
         this(context, null);
     }
@@ -34,43 +33,40 @@ public class DateDialogPreference extends DialogPreference {
     public DateDialogPreference(Context context, AttributeSet attrs,
                                 int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-
-        // Do custom stuff here
-        // ...
-        // read attributes etc.
     }
 
 
-    public int getTime() {
-        return mTime;
+    long getDateInMilliseconds() {
+        return mDateInMilliseconds;
     }
 
 
-    // Save the time int value to Shared Preferences and updates the preference summary
-    public void setTime(int time) {
-        mTime = time;
-        persistInt(time);
-        setSummary(String.valueOf(mTime));
+    // Save the DateInMilliseconds long value to Shared Preferences and updates the preference summary
+    void setDateInMilliseconds(long dateInMilliseconds) {
+        mDateInMilliseconds = dateInMilliseconds;
+        persistLong(dateInMilliseconds);
+        setSummary(String.valueOf(mDateInMilliseconds));
     }
 
 
     // Reads the preference default value from xml attribute. Fallback value is set to 0.
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getInt(index, 0);
+        return (long) a.getInt(index, 0);
     }
 
 
+    // Set the initial value of the preference when the preference screen is shown
     @Override
     protected void onSetInitialValue(Object defaultValue) {
-        setTime(getPersistedInt(mTime));
+        setDateInMilliseconds(getPersistedLong(mDateInMilliseconds));
     }
 
 
     // Set the layout resource for the DialogPreference
     @Override
     public int getDialogLayoutResource() {
-        return mDialogLayoutResId;
+        return R.layout.preference_dialog_date;
     }
 
 }
