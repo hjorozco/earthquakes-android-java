@@ -46,6 +46,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     // Called during onCreate(Bundle) to supply the preferences for this fragment.
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
         setPreferencesFromResource(R.xml.search_preferences_hierarchy, rootKey);
 
         setupMaxNumberOfEarthquakesEditTextPreference((EditTextPreference)

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="search_preference_order_by_entries">
-        <item>@string/search_preference_order_by_magnitude_entry</item>
         <item>@string/search_preference_order_by_date_entry</item>
+        <item>@string/search_preference_order_by_magnitude_entry</item>
     </string-array>
 
     <string-array name="search_preference_order_by_entry_values">
-        <item>@string/search_preference_order_by_magnitude_entry_value</item>
         <item>@string/search_preference_order_by_date_entry_value</item>
+        <item>@string/search_preference_order_by_magnitude_entry_value</item>
     </string-array>
 
     <string-array name="search_preference_time_period_entries">

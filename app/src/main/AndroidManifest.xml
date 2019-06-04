@@ -28,8 +28,9 @@
 
         <!-- Activity that lets the user set the earthquakes search preferences. -->
         <activity
+            android:name=".ui.SearchPreferencesActivity"
             android:label="@string/activity_search_preferences_label"
-            android:name=".ui.SearchPreferencesActivity"/>
+            android:theme="@style/AppTheme" />
 
     </application>
 

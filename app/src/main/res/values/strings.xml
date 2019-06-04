@@ -92,10 +92,10 @@
         @string/search_preferences_magnitudes_maximum_value</string>
 
 
-    <string name="search_preferences_time_category_title">Time preferences</string>
+    <string name="search_preferences_time_category_title">Date preferences</string>
     <string name="search_preferences_time_category_key" translatable="false">time</string>
 
-    <string name="search_preference_time_period_title">Time period</string>
+    <string name="search_preference_time_period_title">Date range</string>
     <string name="search_preference_time_period_key" translatable="false">date_period</string>
     <string name="search_preference_time_period_default_value" translatable="false">@string/search_preference_time_period_last_30_days_entry_value</string>
     <string name="search_preference_time_period_custom_entry">Custom</string>
@@ -127,7 +127,7 @@
     <string name="search_preference_max_number_of_earthquakes_not_set_value">Not set. Will display all the earthquakes returned from the search.</string>
      <string name="search_preference_max_number_of_earthquakes_zero_value">0. Will not display any earthquake.</string>
 
-    <string name="search_preference_order_by_title">Order By</string>
+    <string name="search_preference_order_by_title">Sort By</string>
     <string name="search_preference_order_by_key" translatable="false">order_by</string>
     <string name="search_preference_order_by_default_value" translatable="false">@string/search_preference_order_by_date_entry_value</string>
     <string name="search_preference_order_by_magnitude_entry">Magnitude</string>
@@ -141,8 +141,8 @@
     <string name="search_preference_location_not_set_value">Not set. Will search for earthquakes in the whole world.</string>
 
 
-    <string name="most_recent_date_text">Most recent date</string>
-    <string name="past_date_text">Past date</string>
+    <string name="most_recent_date_text">To</string>
+    <string name="past_date_text">From</string>
     <string name="today_text">Today</string>
     <string name="yesterday_text">Yesterday</string>
     <string name="seven_days_ago_text">7 days ago</string>

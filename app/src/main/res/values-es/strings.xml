@@ -88,9 +88,9 @@
     <string name="search_preference_maximum_magnitude_title">Magnitud máxima</string>
 
 
-    <string name="search_preferences_time_category_title">Preferencias de tiempo</string>
+    <string name="search_preferences_time_category_title">Preferencias de fecha</string>
 
-    <string name="search_preference_time_period_title">Periodo de tiempo</string>
+    <string name="search_preference_time_period_title">Rango de fechas</string>
     <string name="search_preference_time_period_custom_entry">Personalizado</string>
     <string name="search_preference_time_period_last_24_hours_entry">Últimas 24 horas</string>
     <string name="search_preference_time_period_last_7_days_entry">Últimos 7 días</string>
@@ -117,8 +117,8 @@
     <string name="search_preference_location_title">Localidad</string>
     <string name="search_preference_location_not_set_value">Sin definir. Bbuscará temblores en todo el mundo.</string>
 
-    <string name="most_recent_date_text">Fecha más reciente</string>
-    <string name="past_date_text">Fecha pasada</string>
+    <string name="most_recent_date_text">A</string>
+    <string name="past_date_text">De</string>
     <string name="today_text">Hoy</string>
     <string name="yesterday_text">Ayer</string>
     <string name="seven_days_ago_text">Hace 7 días</string>
