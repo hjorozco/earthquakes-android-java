@@ -2,6 +2,7 @@ package com.weebly.hectorjorozco.earthquakes.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.Log;
 
 import com.weebly.hectorjorozco.earthquakes.R;
@@ -9,12 +10,21 @@ import com.weebly.hectorjorozco.earthquakes.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-/**
- * Created by hjoro on 11/14/2016.
- */
 
 public final class LanguageUtils {
+
+
+    public static String getLocaleLanguage(){
+        String localeLanguage;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            localeLanguage = Resources.getSystem().getConfiguration().getLocales().get(0).getLanguage();
+        } else {
+            localeLanguage = Resources.getSystem().getConfiguration().locale.getLanguage();
+        }
+        return localeLanguage;
+    }
 
 
     // Gets the two letter code of the language of the date.

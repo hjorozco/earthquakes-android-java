@@ -3,11 +3,15 @@ package com.weebly.hectorjorozco.earthquakes.ui.datepreference;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import androidx.preference.DialogPreference;
 
 import com.weebly.hectorjorozco.earthquakes.R;
+import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 // Class that handles the value of the DialogPreference that is saved on SharedPreferences
 
@@ -15,6 +19,8 @@ public class DateDialogPreference extends DialogPreference {
 
 
     private long mDateInMilliseconds;
+    private long mMinimumDateInMilliseconds;
+    private long mMaximumDateInMilliseconds;
 
 
     public DateDialogPreference(Context context) {
@@ -36,16 +42,16 @@ public class DateDialogPreference extends DialogPreference {
     }
 
 
-    long getDateInMilliseconds() {
+    public long getDateInMilliseconds() {
         return mDateInMilliseconds;
     }
 
 
     // Save the DateInMilliseconds long value to Shared Preferences and updates the preference summary
-    void setDateInMilliseconds(long dateInMilliseconds) {
+    public void setDateInMilliseconds(long dateInMilliseconds) {
         mDateInMilliseconds = dateInMilliseconds;
         persistLong(dateInMilliseconds);
-        setSummary(String.valueOf(mDateInMilliseconds));
+        setSummary(dateSummaryFormatter().format(new Date(mDateInMilliseconds)));
     }
 
 
@@ -67,6 +73,40 @@ public class DateDialogPreference extends DialogPreference {
     @Override
     public int getDialogLayoutResource() {
         return R.layout.preference_dialog_date;
+    }
+
+    /**
+     * Produces the date formatter used for showing the date in the summary.
+     *
+     * @return the SimpleDateFormat used for summary dates
+     */
+    private static SimpleDateFormat dateSummaryFormatter() {
+
+        SimpleDateFormat simpleDateFormat;
+        if (LanguageUtils.getLocaleLanguage().equals("es")) {
+            simpleDateFormat = new SimpleDateFormat("d 'de' MMMM 'del' yyyy, hh:mm aaa", Locale.getDefault());
+        } else {
+            simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa", Locale.getDefault());
+        }
+
+        return simpleDateFormat;
+    }
+
+
+    public long getMinimumDateInMilliseconds(){
+        return mMinimumDateInMilliseconds;
+    }
+
+    public void setMinimumDateInMilliseconds(long minimumDateInMilliseconds){
+        mMinimumDateInMilliseconds = minimumDateInMilliseconds;
+    }
+
+    public long getMaximumDateInMilliseconds(){
+        return mMaximumDateInMilliseconds;
+    }
+
+    public void setMaximumDateInMilliseconds(long maximumDateInMilliseconds){
+        mMaximumDateInMilliseconds = maximumDateInMilliseconds;
     }
 
 }

@@ -79,19 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showSearchPreferences() {
-        if (getResources().getBoolean(R.bool.tablet)) {
-            replaceFragmentOnDetailLayout(new SearchPreferencesFragment());
-        } else {
-            Intent intent = new Intent(this, SearchPreferencesActivity.class);
-            startActivity(intent);
-        }
-    }
+        Intent intent = new Intent(this, SearchPreferencesActivity.class);
+        startActivity(intent);
 
-    // Helper method that displays a fragment on the Detail Container of Main Activity.
-    private void replaceFragmentOnDetailLayout(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.activity_main_detail_layout, fragment)
-                .commit();
     }
 
 }

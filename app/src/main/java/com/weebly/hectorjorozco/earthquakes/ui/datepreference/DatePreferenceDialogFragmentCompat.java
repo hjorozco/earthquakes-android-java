@@ -39,10 +39,7 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
     }
 
 
-    // Now we need to do something with our TimePicker. We want that it always shows the time that
-    // was stored in the SharedPreferences. We can access the TimePicker from our created layout,
-    // after it was added to the dialog. We can do this in the onBindDialogView method.
-    // The getPreference method returns the preference which opened the dialog.
+    // Binds views in the content view of the dialog to data.
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
@@ -53,7 +50,7 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
             throw new IllegalStateException("Dialog view must contain a DatePicker with id 'date_picker'");
         }
 
-        // Get the date in milliseconds from the related Preference
+        // Get the date in milliseconds from the preference that opened the dialog
         Long dateInMilliseconds = null;
         DialogPreference preference = getPreference();
         if (preference instanceof DateDialogPreference) {
@@ -71,18 +68,21 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH),
                     null);
+
+            if (preference.getKey().equals(getString(R.string.search_preference_start_date_key))) {
+                mDatePicker.setMaxDate(((DateDialogPreference) preference).getMaximumDateInMilliseconds());
+            } else {
+                mDatePicker.setMinDate(((DateDialogPreference) preference).getMinimumDateInMilliseconds());
+            }
         }
     }
 
 
-    // save the selected time when we click the OK button (positive result). For this, we override
-    // the onDialogClosed method. First we calculate the minutes we want to save, and after that,
-    // we get our related preference and call the setDateInMilliseconds method we have defined there.
     @Override
     public void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
 
-            // generate value to save
+            // Generate the value to save
             Calendar calendar = new GregorianCalendar(mDatePicker.getYear(), mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
             long dateInMilliseconds = calendar.getTimeInMillis();
 
@@ -94,7 +94,7 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
                 // This allows the client to ignore the user value.
                 if (dateDialogPreference.callChangeListener(
                         dateInMilliseconds)) {
-                    // Save the value
+                    // Save the value and update the summary
                     dateDialogPreference.setDateInMilliseconds(dateInMilliseconds);
                 }
             }

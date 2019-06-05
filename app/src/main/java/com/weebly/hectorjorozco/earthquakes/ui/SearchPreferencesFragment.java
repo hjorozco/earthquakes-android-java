@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
@@ -18,6 +20,9 @@ import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDialogFragmentCompat;
 
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
 
 public class SearchPreferencesFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -25,9 +30,15 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     private static final int MAX_NUMBER_OF_EARTHQUAKES_EDIT_TEXT_LENGTH_FILTER = 10;
     private static final int LOCATION_EDIT_TEXT_LENGTH_FILTER = 50;
 
+    private ListPreference mDateRangeListPreference;
+    private DateDialogPreference mFromDateDialogPreference;
+    private DateDialogPreference mToDateDialogPreference;
     private SeekBarPreference minimumMagnitudeSeekBarPreference;
     private SeekBarPreference maximumMagnitudeSeekBarPreference;
 
+    // Used to flag when the "from" or "to" dates where changed by a predefined date range selected or by
+    // the user changint the date individually
+    private boolean mDateRangeChanged;
 
     @Override
     public void onResume() {
@@ -42,7 +53,6 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
-
     // Called during onCreate(Bundle) to supply the preferences for this fragment.
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -55,9 +65,14 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         setupLocationEditTextPreference((EditTextPreference)
                 findPreference(getString(R.string.search_preference_location_key)));
 
+        mDateRangeListPreference = findPreference(getString(R.string.search_preference_date_range_key));
+        mFromDateDialogPreference = findPreference(getString(R.string.search_preference_start_date_key));
+        mToDateDialogPreference = findPreference(getString(R.string.search_preference_end_date_key));
+
         minimumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_minimum_magnitude_key));
         maximumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_maximum_magnitude_key));
 
+        setupDatePreferences();
         setupMinimumMagnitudeSeekBarPreference(minimumMagnitudeSeekBarPreference);
         setupMaximumMagnitudeSeekBarPreference(maximumMagnitudeSeekBarPreference);
 
@@ -68,11 +83,33 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if (key.equals(getString(R.string.search_preference_minimum_magnitude_key))) {
-            minimumMagnitudeSeekBarPreference.setSummary(String.valueOf(minimumMagnitudeSeekBarPreference.getValue()));
+        Log.d("TESTING", "Preference changed");
+
+        if (key.equals(getString(R.string.search_preference_date_range_key))) {
+
+            mDateRangeChanged = true;
+
+            updatePredefinedDateRanges();
+
         }
 
-        if (key.equals(getString(R.string.search_preference_maximum_magnitude_key))) {
+        if (key.equals(getString(R.string.search_preference_start_date_key))) {
+            if (!mDateRangeChanged) {
+                mDateRangeListPreference.setValue(getString(R.string.search_preference_date_range_custom_entry_value));
+            }
+            mToDateDialogPreference.setMinimumDateInMilliseconds(mFromDateDialogPreference.getDateInMilliseconds());
+
+        } else if (key.equals(getString(R.string.search_preference_end_date_key))) {
+            if (!mDateRangeChanged) {
+                mDateRangeListPreference.setValue(getString(R.string.search_preference_date_range_custom_entry_value));
+            }
+            mDateRangeChanged = false;
+            mFromDateDialogPreference.setMaximumDateInMilliseconds(mToDateDialogPreference.getDateInMilliseconds());
+
+        } else if (key.equals(getString(R.string.search_preference_minimum_magnitude_key))) {
+            minimumMagnitudeSeekBarPreference.setSummary(String.valueOf(minimumMagnitudeSeekBarPreference.getValue()));
+
+        } else if (key.equals(getString(R.string.search_preference_maximum_magnitude_key))) {
             maximumMagnitudeSeekBarPreference.setSummary(String.valueOf(maximumMagnitudeSeekBarPreference.getValue()));
         }
     }
@@ -91,8 +128,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                 dialogFragment.show(getFragmentManager(),
                         "androidx.preference.PreferenceDialogFragmentCompat");
             }
-        }
-        else {
+        } else {
             // Call the super class method that handles the predefined DialogPreferences
             super.onDisplayPreferenceDialog(preference);
         }
@@ -167,6 +203,50 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                 }
             });
 
+        }
+    }
+
+
+    private void setupDatePreferences() {
+
+        updatePredefinedDateRanges();
+
+        if (mFromDateDialogPreference != null && mToDateDialogPreference != null) {
+            // Sets the maximum of the "from" date to be the "to" date.
+            mFromDateDialogPreference.setMaximumDateInMilliseconds(mToDateDialogPreference.getDateInMilliseconds());
+            // Sets the minimum of the "to" date to be the "from" date.
+            mToDateDialogPreference.setMinimumDateInMilliseconds(mFromDateDialogPreference.getDateInMilliseconds());
+        }
+    }
+
+
+    // Updates the value of the "from" and "to" dates for predefined date ranges, with the present time.
+    private void updatePredefinedDateRanges(){
+        Calendar calendar = Calendar.getInstance();
+        long todayDateOnMilliseconds = calendar.getTimeInMillis();
+        long millisecondsOnOneDay = TimeUnit.DAYS.toMillis(1);
+
+        if (mDateRangeListPreference != null) {
+
+            String dateRangeListPreferenceValue = mDateRangeListPreference.getValue();
+
+            if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_24_hours_entry_value))) {
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+
+            } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_7_days_entry_value))) {
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 7);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+
+            } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_30_days_entry_value))) {
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 30);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+
+            } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_365_days_entry_value))) {
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 365);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+
+            }
         }
     }
 
