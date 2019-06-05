@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#795548</color>         <!-- Brown 500 -->
+    <color name="colorPrimary">#795548</color>          <!-- Brown 500 -->
     <color name="colorPrimaryDark">#5D4037</color>      <!-- Brown 700 -->
     <color name="colorAccent">#8D6E63</color>
+
+    <!-- Scrim colors -->
+    <color name="colorScrim">#40000000</color>
+    <color name="colorScrimDark">#80000000</color>
+
 </resources>

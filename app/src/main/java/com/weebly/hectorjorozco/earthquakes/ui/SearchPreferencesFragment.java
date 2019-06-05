@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -82,8 +81,6 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     // Called when a shared preference is changed, added, or removed.
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-        Log.d("TESTING", "Preference changed");
 
         if (key.equals(getString(R.string.search_preference_date_range_key))) {
 

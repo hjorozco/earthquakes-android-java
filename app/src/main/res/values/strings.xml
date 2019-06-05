@@ -59,6 +59,9 @@
     <string name="menu_activity_main_action_refresh_title">Refresh list</string>
     <string name="help_menu_item">Help</string>
 
+    <string name="activity_main_image_view_content_description" translatable="false">
+        House damaged by an earthquake</string>
+
     <!-- ********** Activity main ********** -->
 
     <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
