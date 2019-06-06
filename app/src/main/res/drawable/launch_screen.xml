@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- The android:opacity=”opaque” xml attribute prevents a flash of black as the theme transitions. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+
+    <!-- The background color -->
+    <item android:drawable="@android:color/white" />
+
+    <!-- Product logo or app icon -->
+    <item>
+
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/splash_image" />
+
+    </item>
+
+</layer-list>
