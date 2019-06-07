@@ -5,10 +5,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,15 +19,16 @@ import com.facebook.stetho.Stetho;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;
-
+    private MainActivityViewModel mMainActivityViewModel;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +44,13 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
 
-        List<Earthquake> earthquakes = new ArrayList<>();
-
-        for (int i = 0; i < 500; i++) {
-            earthquakes.add(new Earthquake("Earthquake " + i));
-        }
-
         mEarthquakesListAdapter = new EarthquakesListAdapter(this);
-        mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
 
         setupRecyclerView();
+
+        setupViewModel();
+
+        setupSwipeRefreshLayout();
     }
 
 
@@ -58,6 +59,36 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mEarthquakesListAdapter);
         mRecyclerView.setNestedScrollingEnabled(false);
+    }
+
+//    private void setupViewModel(){
+//        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+//        mMainActivityViewModel.getEarthquakes().observe(this, earthquakes ->
+//                mEarthquakesListAdapter.setEarthquakesListData(earthquakes));
+//    }
+
+    private void setupViewModel(){
+        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        mMainActivityViewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
+            @Override
+            public void onChanged(List<Earthquake> earthquakes) {
+                mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
+                Log.d("TESTING", "ViewModel OnChanged");
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void setupSwipeRefreshLayout(){
+        mSwipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d("TESTING","Refreshed");
+                mMainActivityViewModel.loadEarthquakes();
+            }
+        });
     }
 
     @Override

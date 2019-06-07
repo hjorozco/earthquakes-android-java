@@ -8,4 +8,54 @@
     <color name="colorScrim">#40000000</color>
     <color name="colorScrimDark">#80000000</color>
 
+
+    <!-- *************** MAGNITUDE COLORS AND BACKGROUNDS COLORS ********************** -->
+    <!-- MAGNITUDE COLORS, used on the borders of the magnitude circle, and the earthquake
+    information texts. -->
+    <!-- BACKGROUND COLORS, used on the background of the magnitude circle.  -->
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 0 and 0.9 -->
+    <color name="magnitude0">#4CAF50</color>   <!-- (Green 500) -->
+    <color name="background0">#E8F5E9</color>  <!-- (Green 50) -->
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 1 and 1.9 -->
+    <color name="magnitude1">#43A047</color>   <!-- (Green 600)-->
+    <color name="background1">#C8E6C9</color>   <!-- (Green 100)-->
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 2 and 2.9 -->
+    <color name="magnitude2">#388E3C</color>   <!-- (Green 700)-->
+    <color name="background2">#A5D6A7</color>   <!-- (Green 200)-->
+
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 3 and 3.9 -->
+    <color name="magnitude3">#FB8C00</color>   <!-- (Orange 600)-->
+    <color name="background3">#FFF3E0</color>   <!-- (Orange 50)-->
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 4 and 4.9 -->
+    <color name="magnitude4">#F57C00</color>  <!-- (Orange 700)-->
+    <color name="background4">#FFE0B2</color>  <!-- (Orange 100)-->
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 5 and 5.9 -->
+    <color name="magnitude5">#EF6C00</color>  <!-- (Orange 800) -->
+    <color name="background5">#FFCC80</color>  <!-- (Orange 200) -->
+
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 6 and 6.9 -->
+    <color name="magnitude6">#D32F2F</color>  <!-- (Red 700) -->
+    <color name="background6">#FFCDD2</color>  <!-- (Red 100) -->
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 7 and 7.9 -->
+    <color name="magnitude7">#B71C1C</color>  <!-- (Red 900) -->
+    <color name="background7">#EF9A9A</color>  <!-- (Red 200) -->
+
+
+    <!-- Magnitude color and background color for an earthquake with magnitude between 8 and 8.9 -->
+    <color name="magnitude8">#311B92</color>  <!-- (Deep Purple 900) -->
+    <color name="background8">#B39DDB</color>  <!-- (Deep Purple 200) -->
+
+
+    <!-- Magnitude color and background color for an earthquake with magnitude over 9 -->
+    <color name="magnitude9plus">#000000</color>  <!-- (Black) -->
+    <color name="background9plus">#B0BEC5</color>  <!-- (Blue Grey 200) -->
+
 </resources>
