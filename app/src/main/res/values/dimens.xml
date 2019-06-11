@@ -1,8 +1,18 @@
 <resources>
     <dimen name="app_bar_height">180dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
 
+    <dimen name="recycler_view_divider_inset_left">76dp</dimen>
+    <dimen name="recycler_view_divider_inset_right">16dp</dimen>
+    <dimen name="recycler_view_divider_size">1dp</dimen>
 
     <dimen name="application_standard_margin">16dp</dimen>
+
+    <dimen name="application_small_padding">8dp</dimen>
+    <dimen name="application_standard_padding">16dp</dimen>
+
+    <dimen name="application_small_text_size">13sp</dimen>
+    <dimen name="application_standard_text_size">16sp</dimen>
+
+    <dimen name="earthquake_list_item_magnitude_text_view_size">44dp</dimen>
 
 </resources>

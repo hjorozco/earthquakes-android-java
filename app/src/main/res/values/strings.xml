@@ -82,17 +82,11 @@
     <string name="search_preferences_magnitudes_category_title">Magnitude preferences</string>
     <string name="search_preferences_magnitudes_category_key" translatable="false">magnitudes</string>
 
-    <string name="search_preferences_magnitudes_minimum_value" translatable="false">0</string>
-    <string name="search_preferences_magnitudes_maximum_value" translatable="false">10</string>
-
     <string name="search_preference_minimum_magnitude_title">Minimum magnitude</string>
     <string name="search_preference_minimum_magnitude_key" translatable="false">minimum_magnitude</string>
-    <string name="search_preference_minimum_magnitude_default_value" translatable="false">6</string>
 
     <string name="search_preference_maximum_magnitude_title">Maximum magnitude</string>
     <string name="search_preference_maximum_magnitude_key" translatable="false">maximum_magnitude</string>
-    <string name="search_preference_maximum_magnitude_default_value" translatable="false">
-        @string/search_preferences_magnitudes_maximum_value</string>
 
 
     <string name="search_preferences_date_preferences_category_title">Date preferences</string>
@@ -114,11 +108,9 @@
 
     <string name="search_preference_end_date_title">@string/most_recent_date_text</string>
     <string name="search_preference_end_date_key" translatable="false">end_date</string>
-    <string name="search_preference_end_date_default">January 01, 2015</string>
 
     <string name="search_preference_start_date_title">@string/past_date_text</string>
     <string name="search_preference_start_date_key" translatable="false">start_date</string>
-    <string name="search_preference_start_date_default">January 01, 2015</string>
 
 
     <string name="search_preferences_other_preferences_category_title">General preferences</string>
@@ -126,17 +118,18 @@
 
     <string name="search_preference_max_number_of_earthquakes_title">Max number of earthquakes</string>
     <string name="search_preference_max_number_of_earthquakes_key" translatable="false">limit</string>
-    <string name="search_preference_max_number_of_earthquakes_default_value" translatable="false" />
-    <string name="search_preference_max_number_of_earthquakes_not_set_value">Not set. Will display all the earthquakes returned from the search.</string>
-     <string name="search_preference_max_number_of_earthquakes_zero_value">0. Will not display any earthquake.</string>
+    <string name="search_preference_max_number_of_earthquakes_default_value" translatable="false">10</string>
+    <string name="search_preference_max_number_of_earthquakes_not_set_text">Not set . Will display a maximum of 20,000 earthquakes.</string>
+    <string name="search_preference_max_number_of_earthquakes_zero_text">0. Will not display any earthquake.</string>
+    <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000 is the limit for a search.</string>
 
-    <string name="search_preference_order_by_title">Sort By</string>
-    <string name="search_preference_order_by_key" translatable="false">order_by</string>
-    <string name="search_preference_order_by_default_value" translatable="false">@string/search_preference_order_by_date_entry_value</string>
-    <string name="search_preference_order_by_magnitude_entry">Magnitude</string>
-    <string name="search_preference_order_by_magnitude_entry_value" translatable="false">magnitude</string>
-    <string name="search_preference_order_by_date_entry">Date</string>
-    <string name="search_preference_order_by_date_entry_value" translatable="false">time</string>
+    <string name="search_preference_sort_by_title">Sort By</string>
+    <string name="search_preference_sort_by_key" translatable="false">order_by</string>
+    <string name="search_preference_sort_by_default_value" translatable="false">@string/search_preference_sort_by_date_entry_value</string>
+    <string name="search_preference_sort_by_magnitude_entry">Magnitude</string>
+    <string name="search_preference_sort_by_magnitude_entry_value" translatable="false">magnitude</string>
+    <string name="search_preference_sort_by_date_entry">Date</string>
+    <string name="search_preference_sort_by_date_entry_value" translatable="false">time</string>
 
     <string name="search_preference_location_title">Location</string>
     <string name="search_preference_location_key" translatable="false">filter_by</string>

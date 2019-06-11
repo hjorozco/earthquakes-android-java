@@ -2,6 +2,7 @@ package com.weebly.hectorjorozco.earthquakes.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
     @Override
     public EarthquakeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.earthquake_list_item, parent, false);
+        Log.d("TESTING", "View created");
         return new EarthquakeViewHolder(view);
     }
 
@@ -118,11 +120,11 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
 
         EarthquakeViewHolder(@NonNull View itemView) {
             super(itemView);
-            magnitudeTextView = itemView.findViewById(R.id.list_item_magnitude);
-            locationOffsetTextView = itemView.findViewById(R.id.list_item_location_offset);
-            locationPrimaryTextView = itemView.findViewById(R.id.list_item_location_primary);
-            dateTextView = itemView.findViewById(R.id.list_item_date);
-            timeTextView = itemView.findViewById(R.id.list_item_time);
+            magnitudeTextView = itemView.findViewById(R.id.earthquake_list_item_magnitude_text_view);
+            locationOffsetTextView = itemView.findViewById(R.id.earthquake_list_item_location_offset_text_view);
+            locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
+            dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
+            timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
         }
 
     }

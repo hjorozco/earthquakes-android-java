@@ -2,11 +2,14 @@
 <resources>
     <color name="colorPrimary">#795548</color>          <!-- Brown 500 -->
     <color name="colorPrimaryDark">#5D4037</color>      <!-- Brown 700 -->
-    <color name="colorAccent">#8D6E63</color>
+    <color name="colorAccent">#8D6E63</color>           <!-- Brown 400 -->
 
     <!-- Scrim colors -->
     <color name="colorScrim">#40000000</color>
     <color name="colorScrimDark">#80000000</color>
+
+    <!-- List divider color -->
+    <color name="light_brown">#D7CCC8</color>           <!-- Brown 200 -->
 
 
     <!-- *************** MAGNITUDE COLORS AND BACKGROUNDS COLORS ********************** -->

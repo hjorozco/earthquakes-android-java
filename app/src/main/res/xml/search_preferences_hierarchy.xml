@@ -10,23 +10,23 @@
         <EditTextPreference
             android:defaultValue="@string/search_preference_max_number_of_earthquakes_default_value"
             android:key="@string/search_preference_max_number_of_earthquakes_key"
-            app:icon="@drawable/ic_max_number_of_earthquakes_brown_24dp"
-            android:title="@string/search_preference_max_number_of_earthquakes_title"/>
+            android:title="@string/search_preference_max_number_of_earthquakes_title"
+            app:icon="@drawable/ic_max_number_of_earthquakes_brown_24dp" />
 
         <ListPreference
-            android:defaultValue="@string/search_preference_order_by_default_value"
-            android:entries="@array/search_preference_order_by_entries"
-            android:entryValues="@array/search_preference_order_by_entry_values"
-            android:key="@string/search_preference_order_by_key"
+            android:defaultValue="@string/search_preference_sort_by_default_value"
+            android:entries="@array/search_preference_sort_by_entries"
+            android:entryValues="@array/search_preference_sort_by_entry_values"
+            android:key="@string/search_preference_sort_by_key"
+            android:title="@string/search_preference_sort_by_title"
             app:icon="@drawable/ic_sort_brown_24dp"
-            android:title="@string/search_preference_order_by_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             android:defaultValue="@string/search_preference_location_default_value"
             android:key="@string/search_preference_location_key"
             android:title="@string/search_preference_location_title"
-            app:icon="@drawable/ic_location_brown_24dp"/>
+            app:icon="@drawable/ic_location_brown_24dp" />
 
     </PreferenceCategory>
 
@@ -44,16 +44,16 @@
             app:useSimpleSummaryProvider="true" />
 
         <com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference
-            android:defaultValue="0"
+            android:defaultValue="@integer/search_preference_start_date_default_value"
             android:key="@string/search_preference_start_date_key"
-            app:icon="@drawable/ic_date_range_from_brown_24dp"
-            android:title="@string/search_preference_start_date_title" />
+            android:title="@string/search_preference_start_date_title"
+            app:icon="@drawable/ic_date_range_from_brown_24dp" />
 
         <com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference
-            android:defaultValue="0"
+            android:defaultValue="@integer/search_preference_end_date_default_value"
             android:key="@string/search_preference_end_date_key"
-            app:icon="@drawable/ic_date_range_to_brown_24dp"
-            android:title="@string/search_preference_end_date_title" />
+            android:title="@string/search_preference_end_date_title"
+            app:icon="@drawable/ic_date_range_to_brown_24dp" />
 
     </PreferenceCategory>
 
@@ -62,20 +62,20 @@
         app:title="@string/search_preferences_magnitudes_category_title">
 
         <SeekBarPreference
-            android:defaultValue="@string/search_preference_minimum_magnitude_default_value"
+            android:defaultValue="@integer/search_preference_minimum_magnitude_default_value"
             android:key="@string/search_preference_minimum_magnitude_key"
-            android:max="@string/search_preferences_magnitudes_maximum_value"
-            app:icon="@drawable/ic_minimum_magnitude_brown_24dp"
+            android:max="@integer/search_preferences_magnitudes_maximum_value"
             android:title="@string/search_preference_minimum_magnitude_title"
-            app:min="@string/search_preferences_magnitudes_minimum_value" />
+            app:icon="@drawable/ic_minimum_magnitude_brown_24dp"
+            app:min="@integer/search_preferences_magnitudes_minimum_value" />
 
         <SeekBarPreference
-            app:icon="@drawable/ic_maximum_magnitude_brown_24dp"
-            android:defaultValue="@string/search_preference_maximum_magnitude_default_value"
+            android:defaultValue="@integer/search_preference_maximum_magnitude_default_value"
             android:key="@string/search_preference_maximum_magnitude_key"
-            android:max="@string/search_preferences_magnitudes_maximum_value"
+            android:max="@integer/search_preferences_magnitudes_maximum_value"
             android:title="@string/search_preference_maximum_magnitude_title"
-            app:min="@string/search_preferences_magnitudes_minimum_value" />
+            app:icon="@drawable/ic_maximum_magnitude_brown_24dp"
+            app:min="@integer/search_preferences_magnitudes_minimum_value" />
 
     </PreferenceCategory>
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="search_preferences_magnitudes_minimum_value">0</integer>
+    <integer name="search_preferences_magnitudes_maximum_value">10</integer>
+
+    <integer name="search_preference_minimum_magnitude_default_value">6</integer>
+    <integer name="search_preference_maximum_magnitude_default_value">10</integer>
+    
+    <integer name="search_preference_end_date_default_value">0</integer>
+    <integer name="search_preference_start_date_default_value">0</integer>
+    
+</resources>

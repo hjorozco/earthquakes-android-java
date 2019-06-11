@@ -98,21 +98,20 @@
     <string name="search_preference_date_range_last_365_days_entry">Últimos 365 días</string>
 
     <string name="search_preference_end_date_title">@string/most_recent_date_text</string>
-    <string name="search_preference_end_date_default">enero 01, 2015</string>
 
     <string name="search_preference_start_date_title">@string/past_date_text</string>
-    <string name="search_preference_start_date_default">enero 01, 2015</string>
 
 
     <string name="search_preferences_other_preferences_category_title">Preferencias generales</string>
 
     <string name="search_preference_max_number_of_earthquakes_title">Número máximo de temblores</string>
-    <string name="search_preference_max_number_of_earthquakes_not_set_value">Sin definir. Mostrará todos los temblores devueltos por la búsqueda.</string>
-    <string name="search_preference_max_number_of_earthquakes_zero_value">0. No mostrará ningún temblor.</string>
+    <string name="search_preference_max_number_of_earthquakes_not_set_text">Sin definir. Mostrará un máximo de 20,000 terremotos.</string>
+    <string name="search_preference_max_number_of_earthquakes_zero_text">0. No mostrará ningún temblor.</string>
+    <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000 es el limite para una búsqueda.</string>
 
-    <string name="search_preference_order_by_title">Ordenar por</string>
-    <string name="search_preference_order_by_magnitude_entry">Magnitud</string>
-    <string name="search_preference_order_by_date_entry">Fecha</string>
+    <string name="search_preference_sort_by_title">Ordenar por</string>
+    <string name="search_preference_sort_by_magnitude_entry">Magnitud</string>
+    <string name="search_preference_sort_by_date_entry">Fecha</string>
 
     <string name="search_preference_location_title">Localidad</string>
     <string name="search_preference_location_not_set_value">Sin definir. Buscará temblores en todo el mundo.</string>

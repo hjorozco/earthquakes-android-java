@@ -12,6 +12,7 @@ import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 // Class that handles the value of the DialogPreference that is saved on SharedPreferences
 
@@ -48,7 +49,16 @@ public class DateDialogPreference extends DialogPreference {
 
 
     // Save the DateInMilliseconds long value to Shared Preferences and updates the preference summary
-    public void setDateInMilliseconds(long dateInMilliseconds) {
+    public void setDateInMilliseconds(long dateInMilliseconds, boolean setByDefinedDateRange) {
+
+        // If the "to" date was custom saved by the user, then add 11 hours and 59 minutes to it to cover
+        // that whole day.
+        if(!setByDefinedDateRange &&
+                getKey().equals(getContext().getString(R.string.search_preference_end_date_key))) {
+            long millisecondsOnOneDay = TimeUnit.DAYS.toMillis(1);
+            dateInMilliseconds = dateInMilliseconds + (millisecondsOnOneDay) - (1000*60);
+        }
+
         mDateInMilliseconds = dateInMilliseconds;
         persistLong(dateInMilliseconds);
         setSummary(dateSummaryFormatter().format(new Date(mDateInMilliseconds)));
@@ -65,7 +75,7 @@ public class DateDialogPreference extends DialogPreference {
     // Set the initial value of the preference when the preference screen is shown
     @Override
     protected void onSetInitialValue(Object defaultValue) {
-        setDateInMilliseconds(getPersistedLong(mDateInMilliseconds));
+        setDateInMilliseconds(getPersistedLong(mDateInMilliseconds), false);
     }
 
 
@@ -93,7 +103,7 @@ public class DateDialogPreference extends DialogPreference {
     }
 
 
-    public long getMinimumDateInMilliseconds(){
+    long getMinimumDateInMilliseconds(){
         return mMinimumDateInMilliseconds;
     }
 
@@ -101,7 +111,7 @@ public class DateDialogPreference extends DialogPreference {
         mMinimumDateInMilliseconds = minimumDateInMilliseconds;
     }
 
-    public long getMaximumDateInMilliseconds(){
+    long getMaximumDateInMilliseconds(){
         return mMaximumDateInMilliseconds;
     }
 

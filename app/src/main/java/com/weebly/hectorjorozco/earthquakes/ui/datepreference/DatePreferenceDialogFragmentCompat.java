@@ -95,7 +95,7 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
                 if (dateDialogPreference.callChangeListener(
                         dateInMilliseconds)) {
                     // Save the value and update the summary
-                    dateDialogPreference.setDateInMilliseconds(dateInMilliseconds);
+                    dateDialogPreference.setDateInMilliseconds(dateInMilliseconds, false);
                 }
             }
         }

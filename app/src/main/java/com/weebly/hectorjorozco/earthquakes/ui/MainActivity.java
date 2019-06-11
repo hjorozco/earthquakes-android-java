@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,12 +18,11 @@ import android.view.MenuItem;
 import com.facebook.stetho.Stetho;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
-import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
+
+    public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
 
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;
@@ -34,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         // Sets style back to normal after splash image
-        setTheme(R.style.AppTheme_NoActionBar);
+        setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
 
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
@@ -55,40 +52,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupRecyclerView() {
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider));
+
         mRecyclerView = findViewById(R.id.activity_main_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mEarthquakesListAdapter);
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setNestedScrollingEnabled(false);
     }
 
-//    private void setupViewModel(){
-//        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-//        mMainActivityViewModel.getEarthquakes().observe(this, earthquakes ->
-//                mEarthquakesListAdapter.setEarthquakesListData(earthquakes));
-//    }
 
     private void setupViewModel(){
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-        mMainActivityViewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
-            @Override
-            public void onChanged(List<Earthquake> earthquakes) {
-                mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
-                Log.d("TESTING", "ViewModel OnChanged");
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
+        mMainActivityViewModel.getEarthquakes().observe(this, earthquakes -> {
+            mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
+            mSwipeRefreshLayout.setRefreshing(false);
+            Log.d("TESTING", "ViewModel OnChanged (set adapter with earthquakes list)");
         });
     }
 
     private void setupSwipeRefreshLayout(){
         mSwipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
         mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.d("TESTING","Refreshed");
-                mMainActivityViewModel.loadEarthquakes();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mMainActivityViewModel.loadEarthquakes());
     }
 
     @Override

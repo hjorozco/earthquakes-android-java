@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
@@ -22,18 +20,20 @@ import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDial
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
+
 
 public class SearchPreferencesFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-    private static final int MAX_NUMBER_OF_EARTHQUAKES_EDIT_TEXT_LENGTH_FILTER = 10;
+    private static final int MAX_NUMBER_OF_EARTHQUAKES_EDIT_TEXT_LENGTH_FILTER = 5;
     private static final int LOCATION_EDIT_TEXT_LENGTH_FILTER = 50;
 
     private ListPreference mDateRangeListPreference;
     private DateDialogPreference mFromDateDialogPreference;
     private DateDialogPreference mToDateDialogPreference;
-    private SeekBarPreference minimumMagnitudeSeekBarPreference;
-    private SeekBarPreference maximumMagnitudeSeekBarPreference;
+    private SeekBarPreference mMinimumMagnitudeSeekBarPreference;
+    private SeekBarPreference mMaximumMagnitudeSeekBarPreference;
 
     // Used to flag when the "from" or "to" dates where changed by a predefined date range selected or by
     // the user changint the date individually
@@ -58,22 +58,20 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         setPreferencesFromResource(R.xml.search_preferences_hierarchy, rootKey);
 
-        setupMaxNumberOfEarthquakesEditTextPreference((EditTextPreference)
-                findPreference(getString(R.string.search_preference_max_number_of_earthquakes_key)));
+        setupMaxNumberOfEarthquakesEditTextPreference(findPreference(getString(R.string.search_preference_max_number_of_earthquakes_key)));
 
-        setupLocationEditTextPreference((EditTextPreference)
-                findPreference(getString(R.string.search_preference_location_key)));
+        setupLocationEditTextPreference(findPreference(getString(R.string.search_preference_location_key)));
 
         mDateRangeListPreference = findPreference(getString(R.string.search_preference_date_range_key));
         mFromDateDialogPreference = findPreference(getString(R.string.search_preference_start_date_key));
         mToDateDialogPreference = findPreference(getString(R.string.search_preference_end_date_key));
 
-        minimumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_minimum_magnitude_key));
-        maximumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_maximum_magnitude_key));
+        mMinimumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_minimum_magnitude_key));
+        mMaximumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_maximum_magnitude_key));
 
         setupDatePreferences();
-        setupMinimumMagnitudeSeekBarPreference(minimumMagnitudeSeekBarPreference);
-        setupMaximumMagnitudeSeekBarPreference(maximumMagnitudeSeekBarPreference);
+        setupMinimumMagnitudeSeekBarPreference(mMinimumMagnitudeSeekBarPreference);
+        setupMaximumMagnitudeSeekBarPreference(mMaximumMagnitudeSeekBarPreference);
 
     }
 
@@ -82,15 +80,13 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if (key.equals(getString(R.string.search_preference_date_range_key))) {
+        if (key.equals(getString(R.string.search_preference_location_key))) {
 
+        } else if (key.equals(getString(R.string.search_preference_date_range_key))) {
             mDateRangeChanged = true;
-
             updatePredefinedDateRanges();
 
-        }
-
-        if (key.equals(getString(R.string.search_preference_start_date_key))) {
+        } else if (key.equals(getString(R.string.search_preference_start_date_key))) {
             if (!mDateRangeChanged) {
                 mDateRangeListPreference.setValue(getString(R.string.search_preference_date_range_custom_entry_value));
             }
@@ -104,10 +100,10 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             mFromDateDialogPreference.setMaximumDateInMilliseconds(mToDateDialogPreference.getDateInMilliseconds());
 
         } else if (key.equals(getString(R.string.search_preference_minimum_magnitude_key))) {
-            minimumMagnitudeSeekBarPreference.setSummary(String.valueOf(minimumMagnitudeSeekBarPreference.getValue()));
+            mMinimumMagnitudeSeekBarPreference.setSummary(String.valueOf(mMinimumMagnitudeSeekBarPreference.getValue()));
 
         } else if (key.equals(getString(R.string.search_preference_maximum_magnitude_key))) {
-            maximumMagnitudeSeekBarPreference.setSummary(String.valueOf(maximumMagnitudeSeekBarPreference.getValue()));
+            mMaximumMagnitudeSeekBarPreference.setSummary(String.valueOf(mMaximumMagnitudeSeekBarPreference.getValue()));
         }
     }
 
@@ -136,34 +132,36 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         if (editTextPreference != null) {
 
-            // Sets the input type to only whole numbers, filters the length and removes all leading zeros if any
+            // Sets the input type to only whole numbers, filters the lengthemoves all leading zeros if any
+            // and shows "20000" when the value is more than 20000
             editTextPreference.setOnBindEditTextListener(
-                    new EditTextPreference.OnBindEditTextListener() {
-                        @Override
-                        public void onBindEditText(@NonNull EditText editText) {
-                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
-                                    MAX_NUMBER_OF_EARTHQUAKES_EDIT_TEXT_LENGTH_FILTER)});
+                    editText -> {
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
+                                MAX_NUMBER_OF_EARTHQUAKES_EDIT_TEXT_LENGTH_FILTER)});
 
-                            String maxNumberOfEarthquakesString = editText.getText().toString();
-                            if (!maxNumberOfEarthquakesString.isEmpty()) {
-                                editText.setText(String.valueOf(Integer.valueOf(maxNumberOfEarthquakesString)));
+                        String maxNumberOfEarthquakesString = editText.getText().toString();
+                        if (!maxNumberOfEarthquakesString.isEmpty()) {
+                            int maxNumberOfEarthquakes = Integer.valueOf(maxNumberOfEarthquakesString);
+                            if (maxNumberOfEarthquakes > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
+                                editText.setText(String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT));
+                            } else {
+                                editText.setText(String.valueOf(maxNumberOfEarthquakes));
                             }
-
-                            editText.selectAll();
                         }
+                        editText.selectAll();
                     });
 
-            editTextPreference.setSummaryProvider(new Preference.SummaryProvider<EditTextPreference>() {
-                @Override
-                public CharSequence provideSummary(EditTextPreference preference) {
-
-                    if (preference.getText().isEmpty()) {
-                        return getString(R.string.search_preference_max_number_of_earthquakes_not_set_value);
+            editTextPreference.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
+                if (preference.getText().isEmpty()) {
+                    return getString(R.string.search_preference_max_number_of_earthquakes_not_set_text);
+                } else {
+                    int maxNumberOfEarthquakes = Integer.valueOf(preference.getText());
+                    if (maxNumberOfEarthquakes == 0) {
+                        return getString(R.string.search_preference_max_number_of_earthquakes_zero_text);
                     } else {
-                        int maxNumberOfEarthquakes = Integer.valueOf(preference.getText());
-                        if (maxNumberOfEarthquakes == 0) {
-                            return getString(R.string.search_preference_max_number_of_earthquakes_zero_value);
+                        if (maxNumberOfEarthquakes > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
+                            return getString(R.string.search_preference_max_number_of_earthquakes_limit_passed_text);
                         } else {
                             return String.valueOf(maxNumberOfEarthquakes);
                         }
@@ -179,25 +177,19 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         if (editTextPreference != null) {
 
             editTextPreference.setOnBindEditTextListener(
-                    new EditTextPreference.OnBindEditTextListener() {
-                        @Override
-                        public void onBindEditText(@NonNull EditText editText) {
-                            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
-                                    LOCATION_EDIT_TEXT_LENGTH_FILTER)});
-                            editText.setText(editText.getText().toString().trim());
-                            editText.selectAll();
-                        }
+                    editText -> {
+                        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
+                                LOCATION_EDIT_TEXT_LENGTH_FILTER)});
+                        editText.setText(editText.getText().toString().trim());
+                        editText.selectAll();
                     });
 
-            editTextPreference.setSummaryProvider(new Preference.SummaryProvider<EditTextPreference>() {
-                @Override
-                public CharSequence provideSummary(EditTextPreference preference) {
-                    String editTextPreferenceText = preference.getText().trim();
-                    if (TextUtils.isEmpty(editTextPreferenceText)) {
-                        return getString(R.string.search_preference_location_not_set_value);
-                    }
-                    return editTextPreferenceText;
+            editTextPreference.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
+                String editTextPreferenceText = preference.getText().trim();
+                if (TextUtils.isEmpty(editTextPreferenceText)) {
+                    return getString(R.string.search_preference_location_not_set_value);
                 }
+                return editTextPreferenceText;
             });
 
         }
@@ -218,7 +210,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
 
     // Updates the value of the "from" and "to" dates for predefined date ranges, with the present time.
-    private void updatePredefinedDateRanges(){
+    private void updatePredefinedDateRanges() {
         Calendar calendar = Calendar.getInstance();
         long todayDateOnMilliseconds = calendar.getTimeInMillis();
         long millisecondsOnOneDay = TimeUnit.DAYS.toMillis(1);
@@ -228,20 +220,20 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             String dateRangeListPreferenceValue = mDateRangeListPreference.getValue();
 
             if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_24_hours_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay, true);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
 
             } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_7_days_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 7);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 7, true);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
 
             } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_30_days_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 30);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 30, true);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
 
             } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_365_days_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 365);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 365, true);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
 
             }
         }
@@ -252,14 +244,11 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         seekBarPreference.setUpdatesContinuously(true);
 
-        minimumMagnitudeSeekBarPreference.setSummary(String.valueOf(minimumMagnitudeSeekBarPreference.getValue()));
+        mMinimumMagnitudeSeekBarPreference.setSummary(String.valueOf(mMinimumMagnitudeSeekBarPreference.getValue()));
 
-        seekBarPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                return (Integer) newValue <= maximumMagnitudeSeekBarPreference.getValue();
-            }
-        });
+        // Saves the minimum magnitude value only if it is less than or equal to the maximum magnitude
+        seekBarPreference.setOnPreferenceChangeListener((preference, newValue) ->
+                (Integer) newValue <= mMaximumMagnitudeSeekBarPreference.getValue());
     }
 
 
@@ -267,14 +256,11 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         seekBarPreference.setUpdatesContinuously(true);
 
-        maximumMagnitudeSeekBarPreference.setSummary(String.valueOf(maximumMagnitudeSeekBarPreference.getValue()));
+        mMaximumMagnitudeSeekBarPreference.setSummary(String.valueOf(mMaximumMagnitudeSeekBarPreference.getValue()));
 
-        seekBarPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                return (Integer) newValue >= minimumMagnitudeSeekBarPreference.getValue();
-            }
-        });
+        // Saves the maximum magnitude value only if it is more than or equal to the minimum magnitude
+        seekBarPreference.setOnPreferenceChangeListener((preference, newValue) ->
+                (Integer) newValue >= mMinimumMagnitudeSeekBarPreference.getValue());
     }
 
 }

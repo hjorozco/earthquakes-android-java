@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.viewmodels;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.util.List;
@@ -30,13 +32,16 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void loadEarthquakes(){
-        final String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2018-04-25T16%3A29%3A35-5%3A00&endtime=2019-04-25T16%3A29%3A35-5%3A00&limit=10000&minmagnitude=0&maxmagnitude=12&orderby=time";
-        final String location = "Mexico";
-        final String limit = "10000";
+
+        Context context = getApplication();
+        EarthquakesSearchParameters earthquakesSearchParameters = QueryUtils.getEarthquakesSearchParameters(context);
 
         Executor executor = new NetworkQueryExecutor();
         executor.execute(() -> {
-            earthquakes.postValue(QueryUtils.fetchEarthquakeData(getApplication(), url , location, limit));
+            earthquakes.postValue(QueryUtils.fetchEarthquakeData(context,
+                    earthquakesSearchParameters.getUrl() ,
+                    earthquakesSearchParameters.getLocation(),
+                    earthquakesSearchParameters.getMaxNumber()));
             Log.d("TESTING", "Earthquakes fetched from the internet");
         });
     }
