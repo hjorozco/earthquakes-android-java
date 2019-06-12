@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.weebly.hectorjorozco.earthquakes">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <dist:module dist:instant="true" />
@@ -21,7 +22,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Launcher">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

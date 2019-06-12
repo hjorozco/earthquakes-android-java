@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public final class LanguageUtils {
+public class LanguageUtils {
 
 
     public static String getLocaleLanguage(){

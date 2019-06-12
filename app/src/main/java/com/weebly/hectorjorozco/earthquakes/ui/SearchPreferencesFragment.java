@@ -18,6 +18,7 @@ import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreferen
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDialogFragmentCompat;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
@@ -80,9 +81,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if (key.equals(getString(R.string.search_preference_location_key))) {
-
-        } else if (key.equals(getString(R.string.search_preference_date_range_key))) {
+        if (key.equals(getString(R.string.search_preference_date_range_key))) {
             mDateRangeChanged = true;
             updatePredefinedDateRanges();
 
@@ -163,7 +162,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                         if (maxNumberOfEarthquakes > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
                             return getString(R.string.search_preference_max_number_of_earthquakes_limit_passed_text);
                         } else {
-                            return String.valueOf(maxNumberOfEarthquakes);
+                            return String.format(Locale.getDefault(), "%,d", maxNumberOfEarthquakes);
                         }
                     }
                 }

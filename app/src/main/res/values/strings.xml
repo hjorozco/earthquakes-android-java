@@ -40,14 +40,9 @@
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
     <string name="near_the">Location</string>
 
-    <string name="loading_earthquakes_info">Searching &#8230;\n\n
-        It can take up to two minutes depending on the search preferences and the connection to
-        the USGS.\n\n
-        If you don\'t get any results refresh the list and/or modify the search preferences.
-    </string>
+    <string name="searching_earthquakes_text">Searching earthquakes&#8230;</string>
 
-    <string name="no_internet_connection_text">There is no internet connection.\n\n
-        Check your device settings or move to a different location.</string>
+    <string name="no_internet_connection_text">No internet connection.</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
@@ -121,7 +116,7 @@
     <string name="search_preference_max_number_of_earthquakes_default_value" translatable="false">10</string>
     <string name="search_preference_max_number_of_earthquakes_not_set_text">Not set . Will display a maximum of 20,000 earthquakes.</string>
     <string name="search_preference_max_number_of_earthquakes_zero_text">0. Will not display any earthquake.</string>
-    <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000 is the limit for a search.</string>
+    <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000. Limit number for a search.</string>
 
     <string name="search_preference_sort_by_title">Sort By</string>
     <string name="search_preference_sort_by_key" translatable="false">order_by</string>

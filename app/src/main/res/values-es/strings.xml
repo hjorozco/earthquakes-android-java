@@ -39,14 +39,9 @@
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
     <string name="near_the">Localidad</string>
 
-    <string name="loading_earthquakes_info">Buscando &#8230;\n\n
-        Puede tomar hasta dos minutos dependiendo de las preferencias de búsqueda y la conexión
-        al USGS.\n\n
-        Si no obtienes resultados actualiza la lista y/o cambia las preferencias de búsqueda.
-    </string>
+    <string name="searching_earthquakes_text">Buscando temblores&#8230;</string>
 
-    <string name="no_internet_connection_text">No hay conexión a Internet.\n\n
-        Checa la configuración de tu dispositivo o cambia de lugar.</string>
+    <string name="no_internet_connection_text">No hay conexión a Internet.</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
@@ -105,9 +100,9 @@
     <string name="search_preferences_other_preferences_category_title">Preferencias generales</string>
 
     <string name="search_preference_max_number_of_earthquakes_title">Número máximo de temblores</string>
-    <string name="search_preference_max_number_of_earthquakes_not_set_text">Sin definir. Mostrará un máximo de 20,000 terremotos.</string>
+    <string name="search_preference_max_number_of_earthquakes_not_set_text">Sin definir. Mostrará un máximo de 20,000 temblores.</string>
     <string name="search_preference_max_number_of_earthquakes_zero_text">0. No mostrará ningún temblor.</string>
-    <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000 es el limite para una búsqueda.</string>
+    <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000. Número límite para una búsqueda.</string>
 
     <string name="search_preference_sort_by_title">Ordenar por</string>
     <string name="search_preference_sort_by_magnitude_entry">Magnitud</string>

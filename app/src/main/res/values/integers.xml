@@ -8,5 +8,7 @@
     
     <integer name="search_preference_end_date_default_value">0</integer>
     <integer name="search_preference_start_date_default_value">0</integer>
+
+    <integer name="message_icons_view_port_size">512</integer>
     
 </resources>

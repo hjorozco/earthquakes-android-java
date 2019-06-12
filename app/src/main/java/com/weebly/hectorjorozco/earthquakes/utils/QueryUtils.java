@@ -3,6 +3,8 @@ package com.weebly.hectorjorozco.earthquakes.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 
 import androidx.preference.PreferenceManager;
@@ -39,7 +41,7 @@ import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
-public final class QueryUtils {
+public class QueryUtils {
 
     private static String mOrderBy, mMinMagnitude, mMaxMagnitude, mStartDateTime, mEndDateTime,
             mDatePeriod, mStartDate, mEndDate, mLimit, mLocation;
@@ -433,16 +435,19 @@ public final class QueryUtils {
                 context.getString(R.string.search_preference_max_number_of_earthquakes_key),
                 context.getString(R.string.search_preference_max_number_of_earthquakes_default_value));
 
-        // If the limit set by the user is 20,000 or more, set the limit to 20,000 and
-        // update the limit preference value to 20,000
-        if (mLimit.isEmpty() || Integer.valueOf(mLimit) > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
+        // If the limit set by the user is empty, set the limit for the search to 20,000
+        if (mLimit.isEmpty()) {
+            mLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
+
+        } else if (Integer.valueOf(mLimit) > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
+            // If the limit set by the user is 20,000 or more, set the limit for the search to 20,000
+            // and update the limit preference value to 20,000
             mLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
             preferencesEditor = preferencesEditor.putString(
                     context.getString(R.string.search_preference_max_number_of_earthquakes_key), mLimit);
             preferencesEditor.apply();
         }
 
-        // TODO Check value that will be passed as limit
 
         // If the location is empty, set the limit of the query to the limit set by the user on preferences.
         String queryLimit;
@@ -480,6 +485,25 @@ public final class QueryUtils {
 
     private static SimpleDateFormat dateForQueryFormatter() {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    }
+
+
+    /**
+     * Checks if there is an Internet connection available for the app to use.
+     *
+     * @return true if there is a connection, false otherwise.
+     */
+    public static boolean internetConnection(Context context) {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager == null) {
+            return false;
+        } else {
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            return (networkInfo != null && networkInfo.isConnected());
+        }
     }
 
 }

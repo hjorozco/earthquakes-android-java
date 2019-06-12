@@ -23,27 +23,33 @@ public class MainActivityViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public LiveData<List<Earthquake>> getEarthquakes(){
-        if (earthquakes==null) {
+    public LiveData<List<Earthquake>> getEarthquakes() {
+        if (earthquakes == null) {
             earthquakes = new MutableLiveData<>();
             loadEarthquakes();
         }
         return earthquakes;
     }
 
-    public void loadEarthquakes(){
+    public void loadEarthquakes() {
 
-        Context context = getApplication();
-        EarthquakesSearchParameters earthquakesSearchParameters = QueryUtils.getEarthquakesSearchParameters(context);
+        // If there is an internet connection load earthquakes from USGS. If not return null.
+        if (QueryUtils.internetConnection(getApplication())) {
 
-        Executor executor = new NetworkQueryExecutor();
-        executor.execute(() -> {
-            earthquakes.postValue(QueryUtils.fetchEarthquakeData(context,
-                    earthquakesSearchParameters.getUrl() ,
-                    earthquakesSearchParameters.getLocation(),
-                    earthquakesSearchParameters.getMaxNumber()));
-            Log.d("TESTING", "Earthquakes fetched from the internet");
-        });
+            Context context = getApplication();
+            EarthquakesSearchParameters earthquakesSearchParameters = QueryUtils.getEarthquakesSearchParameters(context);
+
+            Executor executor = new NetworkQueryExecutor();
+            executor.execute(() -> {
+                earthquakes.postValue(QueryUtils.fetchEarthquakeData(context,
+                        earthquakesSearchParameters.getUrl(),
+                        earthquakesSearchParameters.getLocation(),
+                        earthquakesSearchParameters.getMaxNumber()));
+                Log.d("TESTING", "Earthquakes fetched from the internet");
+            });
+        } else {
+            earthquakes.postValue(null);
+        }
     }
 
     class NetworkQueryExecutor implements Executor {
