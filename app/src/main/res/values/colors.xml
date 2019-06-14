@@ -8,6 +8,8 @@
     <color name="colorScrim">#40000000</color>
     <color name="colorScrimDark">#80000000</color>
 
+    <color name="colorDisableMenuItem">#BDBDBD</color>
+
     <!-- List divider color -->
     <color name="light_brown">#D7CCC8</color>           <!-- Brown 200 -->
 

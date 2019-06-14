@@ -3,6 +3,7 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout mMessageRelativeLayout;
     private TextView mMessageTextView;
     private ProgressBar mProgressBar;
+    private Menu mMenu;
+    private FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +60,21 @@ public class MainActivity extends AppCompatActivity {
         mMessageRelativeLayout = findViewById(R.id.activity_main_message_relative_layout);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
+        mFloatingActionButton = findViewById(R.id.activity_main_fab);
+
 
         setupSwipeRefreshLayout();
 
         setupRecyclerView();
 
         setupViewModel();
+
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecyclerView.scrollToPosition(0);
+            }
+        });
     }
 
 
@@ -99,10 +112,16 @@ public class MainActivity extends AppCompatActivity {
             mProgressBar.setVisibility(View.INVISIBLE);
             mSwipeRefreshLayout.setEnabled(true);
             if (QueryUtils.earthquakesFetched) {
+                if (mMenu != null) {
+                    MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
+                    menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
+                    menuItemRefresh.setEnabled(true);
+                }
                 mSwipeRefreshLayout.setRefreshing(false);
             } else {
                 mSwipeRefreshLayout.setRefreshing(true);
             }
+
         });
 
     }
@@ -110,14 +129,9 @@ public class MainActivity extends AppCompatActivity {
     // Shows a "Searching" message and icon while loading the earthquakes from USGS
     private void setupSwipeRefreshLayout() {
         mSwipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
-
         mSwipeRefreshLayout.setEnabled(false);
-
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            QueryUtils.earthquakesFetched = false;
-            setMessage(SEARCHING_MESSAGE_REFRESH);
-            mMainActivityViewModel.loadEarthquakes();
-        });
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mSwipeRefreshLayout.setOnRefreshListener(this::doRefreshListActions);
     }
 
     // Helper method that sets the message image and text
@@ -158,6 +172,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+
+        MenuItem menuItemRefresh = menu.findItem(R.id.menu_activity_main_action_refresh);
+
+        menuItemRefresh.setEnabled(false);
+
+        if (QueryUtils.earthquakesFetched) {
+            menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
+            menuItemRefresh.setEnabled(true);
+        }
+
+        mMenu = menu;
         return true;
     }
 
@@ -166,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_activity_main_action_refresh:
+                doRefreshListActions();
                 break;
             case R.id.menu_activity_main_action_search_preferences:
                 showSearchPreferences();
@@ -179,7 +205,17 @@ public class MainActivity extends AppCompatActivity {
     private void showSearchPreferences() {
         Intent intent = new Intent(this, SearchPreferencesActivity.class);
         startActivity(intent);
+    }
 
+
+    private void doRefreshListActions() {
+        MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
+        menuItemRefresh.setIcon(R.drawable.ic_refresh_grey_24dp);
+        menuItemRefresh.setEnabled(false);
+        mSwipeRefreshLayout.setRefreshing(true);
+        QueryUtils.earthquakesFetched = false;
+        setMessage(SEARCHING_MESSAGE_REFRESH);
+        mMainActivityViewModel.loadEarthquakes();
     }
 
 }
