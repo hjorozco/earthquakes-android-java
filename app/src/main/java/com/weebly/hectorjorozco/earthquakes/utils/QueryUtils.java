@@ -56,6 +56,10 @@ public class QueryUtils {
 
     private static List<Earthquake> mEarthquakeList;
 
+    // Flag used to indicate when the Earthquakes have been fetched from the USGS site in order to
+    // hide swipeRefreshLayout indicator on MainActivity.java during rotation.
+    public static boolean earthquakesFetched;
+
     /**
      * Query the USGS dataset and return an {@link ArrayList<Earthquake>} object with a list of
      * Earthquakes information.

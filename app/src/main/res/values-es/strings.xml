@@ -39,14 +39,14 @@
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
     <string name="near_the">Localidad</string>
 
-    <string name="searching_earthquakes_text">Buscando temblores&#8230;</string>
+    <string name="searching_earthquakes_text">Buscando temblores</string>
 
-    <string name="no_internet_connection_text">No hay conexión a Internet.</string>
+    <string name="no_internet_connection_text">No hay conexión al servidor de temblores</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
-    <string name="empty_list_text">
-        No se encontraron temblores.
+    <string name="no_earthquakes_found_text">
+        No se encontraron temblores
     </string>
 
     <string name="map_menu_item">Mostrar en mapa</string>

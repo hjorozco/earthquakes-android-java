@@ -2,7 +2,6 @@ package com.weebly.hectorjorozco.earthquakes.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,6 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
     @Override
     public EarthquakeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.earthquake_list_item, parent, false);
-        Log.d("TESTING", "View created");
         return new EarthquakeViewHolder(view);
     }
 

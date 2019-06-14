@@ -14,19 +14,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ScrollView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
 
-    private static final byte LOADING_MESSAGE = 0;
+    private static final byte SEARCHING_MESSAGE_REFRESH = 0;
     private static final byte NO_INTERNET_MESSAGE = 1;
     private static final byte NO_EARTHQUAKES_MESSAGE = 2;
 
@@ -34,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private MainActivityViewModel mMainActivityViewModel;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private ScrollView mMessageScrollView;
+    private RelativeLayout mMessageRelativeLayout;
     private TextView mMessageTextView;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
         Stetho.initializeWithDefaults(this);
 
         mEarthquakesListAdapter = new EarthquakesListAdapter(this);
-        mMessageScrollView = findViewById(R.id.activity_main_message_scroll_view);
+        mMessageRelativeLayout = findViewById(R.id.activity_main_message_relative_layout);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
+        mProgressBar = findViewById(R.id.activity_main_progress_bar);
 
         setupSwipeRefreshLayout();
 
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mEarthquakesListAdapter);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setNestedScrollingEnabled(true);
     }
 
 
@@ -91,7 +95,14 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("TESTING", "ViewModel OnChanged (set adapter with earthquakes list)");
                 }
             }
-            mSwipeRefreshLayout.setRefreshing(false);
+            Log.d("TESTING", "OnChanged");
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mSwipeRefreshLayout.setEnabled(true);
+            if (QueryUtils.earthquakesFetched) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            } else {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
         });
 
     }
@@ -99,9 +110,12 @@ public class MainActivity extends AppCompatActivity {
     // Shows a "Searching" message and icon while loading the earthquakes from USGS
     private void setupSwipeRefreshLayout() {
         mSwipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
-        mSwipeRefreshLayout.setRefreshing(true);
+
+        mSwipeRefreshLayout.setEnabled(false);
+
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            setMessage(LOADING_MESSAGE);
+            QueryUtils.earthquakesFetched = false;
+            setMessage(SEARCHING_MESSAGE_REFRESH);
             mMainActivityViewModel.loadEarthquakes();
         });
     }
@@ -111,17 +125,17 @@ public class MainActivity extends AppCompatActivity {
         int imageID = 0;
         int textID = 0;
         switch (messageType) {
-            case LOADING_MESSAGE:
-                imageID = R.drawable.ic_search;
+            case SEARCHING_MESSAGE_REFRESH:
+                imageID = R.drawable.ic_message_searching_earthquakes;
                 textID = R.string.searching_earthquakes_text;
                 break;
             case NO_INTERNET_MESSAGE:
-                imageID = R.drawable.ic_no_signal;
+                imageID = R.drawable.ic_message_no_internet;
                 textID = R.string.no_internet_connection_text;
                 break;
             case NO_EARTHQUAKES_MESSAGE:
-                imageID = R.drawable.ic_earthquakes;
-                textID = R.string.empty_list_text;
+                imageID = R.drawable.ic_message_no_earthquakes;
+                textID = R.string.no_earthquakes_found_text;
                 break;
         }
         mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
@@ -133,10 +147,10 @@ public class MainActivity extends AppCompatActivity {
     private void setMessageVisible(boolean showMessage) {
         if (showMessage) {
             mRecyclerView.setVisibility(View.GONE);
-            mMessageScrollView.setVisibility(View.VISIBLE);
+            mMessageRelativeLayout.setVisibility(View.VISIBLE);
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
-            mMessageScrollView.setVisibility(View.GONE);
+            mMessageRelativeLayout.setVisibility(View.GONE);
         }
     }
 

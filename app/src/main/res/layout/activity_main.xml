@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,30 +16,36 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
-        <ScrollView
-            android:id="@+id/activity_main_message_scroll_view"
+        <RelativeLayout
+            android:id="@+id/activity_main_message_relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:layout_centerInParent="true">
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/activity_main_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/application_standard_margin"/>
 
             <TextView
                 android:id="@+id/activity_main_message_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textAlignment="center"
-                android:drawableTop="@drawable/ic_search"
+                android:layout_centerInParent="true"
+                android:drawableTop="@drawable/ic_message_searching_earthquakes"
                 android:drawablePadding="@dimen/application_big_padding"
                 android:padding="@dimen/application_big_padding"
                 android:text="@string/searching_earthquakes_text"
+                android:textAlignment="center"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/colorPrimary"
                 tools:visibility="visible" />
 
-        </ScrollView>
+        </RelativeLayout>
 
     </RelativeLayout>
 
