@@ -3,7 +3,6 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -26,6 +25,7 @@ import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private Menu mMenu;
     private FloatingActionButton mFloatingActionButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,19 +63,13 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
         mFloatingActionButton = findViewById(R.id.activity_main_fab);
 
-
         setupSwipeRefreshLayout();
 
         setupRecyclerView();
 
         setupViewModel();
 
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRecyclerView.scrollToPosition(0);
-            }
-        });
+        mFloatingActionButton.setOnClickListener(v -> mRecyclerView.scrollToPosition(0));
     }
 
 
@@ -95,44 +90,46 @@ public class MainActivity extends AppCompatActivity {
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mMainActivityViewModel.getEarthquakes().observe(this, earthquakes -> {
 
+            Log.d("TESTING", "OnChanged");
+
             if (earthquakes == null) {
-                setMessageVisible(true);
-                setMessage(NO_INTERNET_MESSAGE);
+                if (!QueryUtils.searchingForEarthquakes) {
+                    setMessageVisible(true);
+                    setMessage(NO_INTERNET_MESSAGE);
+                    enableRefresh();
+                    Log.d("TESTING", "No connection to USGS server");
+                } else {
+                    checkForEarthquakesFetchedToEnableRefresh();
+                }
             } else {
                 if (earthquakes.size() == 0) {
-                    setMessageVisible(true);
-                    setMessage(NO_EARTHQUAKES_MESSAGE);
+                    if (!QueryUtils.searchingForEarthquakes) {
+                        setMessageVisible(true);
+                        setMessage(NO_EARTHQUAKES_MESSAGE);
+                        Log.d("TESTING", "No earthquakes found");
+                    }
                 } else {
                     setMessageVisible(false);
                     mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
-                    Log.d("TESTING", "ViewModel OnChanged (set adapter with earthquakes list)");
+                    Log.d("TESTING", "Earthquake adapter updated with earthquakes list");
                 }
-            }
-            Log.d("TESTING", "OnChanged");
-            mProgressBar.setVisibility(View.INVISIBLE);
-            mSwipeRefreshLayout.setEnabled(true);
-            if (QueryUtils.earthquakesFetched) {
-                if (mMenu != null) {
-                    MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
-                    menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
-                    menuItemRefresh.setEnabled(true);
-                }
-                mSwipeRefreshLayout.setRefreshing(false);
-            } else {
-                mSwipeRefreshLayout.setRefreshing(true);
+                checkForEarthquakesFetchedToEnableRefresh();
             }
 
+            mSwipeRefreshLayout.setEnabled(true);
+            mProgressBar.setVisibility(View.INVISIBLE);
         });
 
     }
 
-    // Shows a "Searching" message and icon while loading the earthquakes from USGS
+
     private void setupSwipeRefreshLayout() {
         mSwipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
         mSwipeRefreshLayout.setEnabled(false);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeRefreshLayout.setOnRefreshListener(this::doRefreshListActions);
+        mSwipeRefreshLayout.setOnRefreshListener(this::doRefreshActions);
     }
+
 
     // Helper method that sets the message image and text
     private void setMessage(byte messageType) {
@@ -160,9 +157,11 @@ public class MainActivity extends AppCompatActivity {
     // Helper method that shows the message and hides the RecyclerView and vice versa.
     private void setMessageVisible(boolean showMessage) {
         if (showMessage) {
+            mFloatingActionButton.hide();
             mRecyclerView.setVisibility(View.GONE);
             mMessageRelativeLayout.setVisibility(View.VISIBLE);
         } else {
+            mFloatingActionButton.show();
             mRecyclerView.setVisibility(View.VISIBLE);
             mMessageRelativeLayout.setVisibility(View.GONE);
         }
@@ -175,9 +174,10 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem menuItemRefresh = menu.findItem(R.id.menu_activity_main_action_refresh);
 
+        // If the Earthquakes where fetched from the USGS server or the app is not searching for
+        // earthquakes enable the refresh menu item.
         menuItemRefresh.setEnabled(false);
-
-        if (QueryUtils.earthquakesFetched) {
+        if (QueryUtils.earthquakesFetched || !QueryUtils.searchingForEarthquakes) {
             menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
             menuItemRefresh.setEnabled(true);
         }
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_activity_main_action_refresh:
-                doRefreshListActions();
+                doRefreshActions();
                 break;
             case R.id.menu_activity_main_action_search_preferences:
                 showSearchPreferences();
@@ -208,14 +208,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void doRefreshListActions() {
+    private void doRefreshActions() {
+        // Disable refresh menu item
         MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
         menuItemRefresh.setIcon(R.drawable.ic_refresh_grey_24dp);
         menuItemRefresh.setEnabled(false);
+        // Show refreshing icon
         mSwipeRefreshLayout.setRefreshing(true);
+        // Initialize global variables
         QueryUtils.earthquakesFetched = false;
+        QueryUtils.searchingForEarthquakes = true;
+        // Set message to be show when the earthquakes list is empty.
         setMessage(SEARCHING_MESSAGE_REFRESH);
+        // Force the ViewModel to load the earthquakes from the USGS server.
         mMainActivityViewModel.loadEarthquakes();
+    }
+
+
+    // Stops refreshing animation and enables the refresh menu item
+    private void enableRefresh() {
+        if (mMenu != null) {
+            MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
+            menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
+            menuItemRefresh.setEnabled(true);
+        }
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    private void checkForEarthquakesFetchedToEnableRefresh(){
+        if (QueryUtils.earthquakesFetched) {
+            enableRefresh();
+        } else {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
     }
 
 }

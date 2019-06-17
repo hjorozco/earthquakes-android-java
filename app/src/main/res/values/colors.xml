@@ -10,6 +10,8 @@
 
     <color name="colorDisableMenuItem">#BDBDBD</color>
 
+    <color name="colorAppBackground">#FFFAFAFA</color>
+
     <!-- List divider color -->
     <color name="light_brown">#D7CCC8</color>           <!-- Brown 200 -->
 

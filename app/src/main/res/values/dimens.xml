@@ -18,4 +18,6 @@
 
     <dimen name="message_icons_size">96dp</dimen>
 
+    <dimen name="fab_size">32dp</dimen>
+
 </resources>

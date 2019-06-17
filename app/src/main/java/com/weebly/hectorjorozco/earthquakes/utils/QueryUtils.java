@@ -56,9 +56,9 @@ public class QueryUtils {
 
     private static List<Earthquake> mEarthquakeList;
 
-    // Flag used to indicate when the Earthquakes have been fetched from the USGS site in order to
-    // hide swipeRefreshLayout indicator on MainActivity.java during rotation.
-    public static boolean earthquakesFetched;
+    // Global variables
+    public static boolean earthquakesFetched = false;
+    public static boolean searchingForEarthquakes = true;
 
     /**
      * Query the USGS dataset and return an {@link ArrayList<Earthquake>} object with a list of
@@ -476,8 +476,6 @@ public class QueryUtils {
         uriBuilder.appendQueryParameter("minmagnitude", mMinMagnitude);
         uriBuilder.appendQueryParameter("maxmagnitude", mMaxMagnitude);
         uriBuilder.appendQueryParameter("orderby", mOrderBy);
-
-        Log.d("TESTING", "NEW APP" + uriBuilder.toString() + " \"" + mLocation + "\" " + " " + mLimit);
 
         return new EarthquakesSearchParameters(uriBuilder.toString(), mLocation, mLimit);
     }

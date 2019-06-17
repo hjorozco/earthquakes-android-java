@@ -41,14 +41,17 @@ public class MainActivityViewModel extends AndroidViewModel {
 
             Executor networkQueryExecutor = new NetworkQueryExecutor();
             networkQueryExecutor.execute(() -> {
+                Log.d("TESTING", "Fetching earthquakes...");
                 earthquakes.postValue(QueryUtils.fetchEarthquakeData(context,
                         earthquakesSearchParameters.getUrl(),
                         earthquakesSearchParameters.getLocation(),
                         earthquakesSearchParameters.getMaxNumber()));
                 Log.d("TESTING", "EARTHQUAKES FETCHED!");
+                QueryUtils.searchingForEarthquakes = false;
                 QueryUtils.earthquakesFetched = true;
             });
         } else {
+            QueryUtils.searchingForEarthquakes = false;
             earthquakes.postValue(null);
         }
     }
