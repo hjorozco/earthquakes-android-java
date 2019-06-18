@@ -10,7 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
-import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters;
+import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters2;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.util.List;
@@ -37,15 +37,15 @@ public class MainActivityViewModel extends AndroidViewModel {
         if (QueryUtils.internetConnection(getApplication())) {
 
             Context context = getApplication();
-            EarthquakesSearchParameters earthquakesSearchParameters = QueryUtils.getEarthquakesSearchParameters(context);
+            EarthquakesSearchParameters2 earthquakesSearchParameters2 = QueryUtils.getEarthquakesSearchParameters2(context);
 
             Executor networkQueryExecutor = new NetworkQueryExecutor();
             networkQueryExecutor.execute(() -> {
                 Log.d("TESTING", "Fetching earthquakes...");
                 earthquakes.postValue(QueryUtils.fetchEarthquakeData(context,
-                        earthquakesSearchParameters.getUrl(),
-                        earthquakesSearchParameters.getLocation(),
-                        earthquakesSearchParameters.getMaxNumber()));
+                        earthquakesSearchParameters2.getUrl(),
+                        earthquakesSearchParameters2.getLocation(),
+                        earthquakesSearchParameters2.getMaxNumber()));
                 Log.d("TESTING", "EARTHQUAKES FETCHED!");
                 QueryUtils.searchingForEarthquakes = false;
                 QueryUtils.earthquakesFetched = true;

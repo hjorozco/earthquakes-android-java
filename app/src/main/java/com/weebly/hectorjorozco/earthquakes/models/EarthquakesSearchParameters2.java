@@ -1,12 +1,12 @@
 package com.weebly.hectorjorozco.earthquakes.models;
 
-public class EarthquakesSearchParameters {
+public class EarthquakesSearchParameters2 {
 
     private String mUrl;
     private String mLocation;
     private String mMaxNumber;
 
-    public EarthquakesSearchParameters(String url, String location, String maxNumber) {
+    public EarthquakesSearchParameters2(String url, String location, String maxNumber) {
         mUrl = url;
         mLocation = location;
         mMaxNumber = maxNumber;

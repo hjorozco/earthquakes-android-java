@@ -14,7 +14,8 @@ import android.util.Log;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
-import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters;
+import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
+import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters2;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +56,7 @@ public class QueryUtils {
     private static String mNumberOfEarthquakesDisplayed;
 
     private static List<Earthquake> mEarthquakeList;
+
 
     // Global variables
     public static boolean earthquakesFetched = false;
@@ -321,7 +323,7 @@ public class QueryUtils {
      *
      * @return An object that contains the parameters needed to do an Earthquakes search.
      */
-    public static EarthquakesSearchParameters getEarthquakesSearchParameters(Context context) {
+    public static EarthquakesSearchParameters2 getEarthquakesSearchParameters2(Context context) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
@@ -477,7 +479,174 @@ public class QueryUtils {
         uriBuilder.appendQueryParameter("maxmagnitude", mMaxMagnitude);
         uriBuilder.appendQueryParameter("orderby", mOrderBy);
 
-        return new EarthquakesSearchParameters(uriBuilder.toString(), mLocation, mLimit);
+        return new EarthquakesSearchParameters2(uriBuilder.toString(), mLocation, mLimit);
+    }
+
+
+    /**
+     * Builds the parameters for an Earthquakes search based on the preference values saved on
+     * Shared Preferences.
+     *
+     * @return An object that contains the parameters needed to do an Earthquakes search.
+     */
+    public static EarthquakesQueryParameters getEarthquakesQueryParameters(Context context) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
+
+        // Gets a String with the value of the "Sort by" setting.
+        mOrderBy = sharedPreferences.getString(
+                context.getString(R.string.search_preference_sort_by_key),
+                context.getString(R.string.search_preference_sort_by_default_value));
+
+
+        // Gets an integer with the value of the "minimum magnitude" setting and converts it to a String
+        mMinMagnitude = String.valueOf(sharedPreferences.getInt(
+                context.getString(R.string.search_preference_minimum_magnitude_key),
+                context.getResources().getInteger(R.integer.search_preference_minimum_magnitude_default_value)));
+
+
+        // Gets a integer with the value of the "maximum magnitude" setting and converts it to a String
+        mMaxMagnitude = String.valueOf(sharedPreferences.getInt(
+                context.getString(R.string.search_preference_maximum_magnitude_key),
+                context.getResources().getInteger(R.integer.search_preference_maximum_magnitude_default_value)));
+
+
+        // Get the actual time of the day
+        long currentTimeInMilliseconds = System.currentTimeMillis();
+        String currentTime = new SimpleDateFormat
+                ("HH:mm:ss", Locale.getDefault()).format(currentTimeInMilliseconds);
+        String currentTime12Hours = new SimpleDateFormat
+                ("h:mm a", Locale.getDefault()).format(currentTimeInMilliseconds);
+
+        String startDateTime = currentTime;
+        String endDateTime = currentTime;
+
+        mStartDateTime = currentTime12Hours;
+        mEndDateTime = currentTime12Hours;
+
+        // Gets the time zone of the device
+        TimeZone timeZone = TimeZone.getDefault();
+
+        // Number of hours that needs to be added to convert the current time from UTC to the
+        // users time zone.
+        int endDateTimeOffset = timeZone.getOffset(currentTimeInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
+        int startDateTimeOffset;
+
+        long millisecondsInOneDay = TimeUnit.DAYS.toMillis(1);
+
+        // Depending on the "date range" value stored on preferences, sets the value of the "starttime"
+        // and "endtime" options of the JSON query sent to the USGS. Calculates the start date time offset to UTC.
+        mDatePeriod = sharedPreferences.getString(
+                context.getString(R.string.search_preference_date_range_key),
+                context.getString(R.string.search_preference_date_range_default_value));
+        String startDateJSONQuery, endDateJSONQuery;
+        long startDateInMilliseconds, endDateInMilliseconds;
+
+        switch (mDatePeriod) {
+            case "day":
+                startDateInMilliseconds = currentTimeInMilliseconds - millisecondsInOneDay;
+                startDateTimeOffset =
+                        timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
+                endDateInMilliseconds = currentTimeInMilliseconds;
+                break;
+            case "week":
+                startDateInMilliseconds = currentTimeInMilliseconds - (millisecondsInOneDay * 7);
+                startDateTimeOffset =
+                        timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
+                endDateInMilliseconds = currentTimeInMilliseconds;
+                break;
+            case "month":
+                startDateInMilliseconds = currentTimeInMilliseconds - (millisecondsInOneDay * 30);
+                startDateTimeOffset =
+                        timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
+                endDateInMilliseconds = currentTimeInMilliseconds;
+                break;
+            case "year":
+                startDateInMilliseconds = currentTimeInMilliseconds - (millisecondsInOneDay * 365);
+                startDateTimeOffset =
+                        timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
+                endDateInMilliseconds = currentTimeInMilliseconds;
+                break;
+            default:
+
+                startDateInMilliseconds = sharedPreferences.getLong(
+                        context.getString(R.string.search_preference_start_date_key),
+                        context.getResources().getInteger(R.integer.search_preference_start_date_default_value));
+
+                endDateInMilliseconds = sharedPreferences.getLong(
+                        context.getString(R.string.search_preference_end_date_key),
+                        context.getResources().getInteger(R.integer.search_preference_end_date_default_value));
+
+                startDateTime = "00:00:00";
+                mStartDateTime = "0:00 AM";
+                endDateTime = "23:59:59";
+                mEndDateTime = "11:59 PM";
+
+                startDateTimeOffset = timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
+                endDateTimeOffset = timeZone.getOffset(endDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
+
+                break;
+        }
+
+        mStartDate = dateForDisplayFormatter().format(startDateInMilliseconds);
+        // Creates the startDate string that will be passed as a parameter to the USGS JSON query.
+        startDateJSONQuery = dateForQueryFormatter().format(startDateInMilliseconds)
+                + "T" + startDateTime + startDateTimeOffset + ":00";
+        mEndDate = dateForDisplayFormatter().format(endDateInMilliseconds);
+        // Creates the endDate string that will be passed as a parameter to the USGS JSON query.
+        endDateJSONQuery = dateForQueryFormatter().format(endDateInMilliseconds)
+                + "T" + endDateTime + endDateTimeOffset + ":00";
+
+        mLocation = sharedPreferences.getString(
+                context.getString(R.string.search_preference_location_key),
+                context.getString(R.string.search_preference_location_default_value)).trim();
+
+        // Gets a String with the value of the "Max earthquakes to display" setting.
+        mLimit = sharedPreferences.getString(
+                context.getString(R.string.search_preference_max_number_of_earthquakes_key),
+                context.getString(R.string.search_preference_max_number_of_earthquakes_default_value));
+
+        // If the limit set by the user is empty, set the limit for the search to 20,000
+        if (mLimit.isEmpty()) {
+            mLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
+
+        } else if (Integer.valueOf(mLimit) > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
+            // If the limit set by the user is 20,000 or more, set the limit for the search to 20,000
+            // and update the limit preference value to 20,000
+            mLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
+            preferencesEditor = preferencesEditor.putString(
+                    context.getString(R.string.search_preference_max_number_of_earthquakes_key), mLimit);
+            preferencesEditor.apply();
+        }
+
+
+        // If the location is empty, set the limit of the query to the limit set by the user on preferences.
+        String queryLimit;
+        if (mLocation.isEmpty()) {
+            queryLimit = mLimit;
+        }
+        // If there is a location on preferences, set the max number of earthquakes for the query
+        // to 20,000 earthquakes because the location will to be searched on all the possible earthquakes.
+        // Then then the user's limit will be applied on those results.
+        else {
+            queryLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
+        }
+
+        // Create the URI that will be used to query the USGS
+        Uri baseUri = Uri.parse(USGS_REQUEST_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("format", "geojson");
+        uriBuilder.appendQueryParameter("starttime", startDateJSONQuery);
+        uriBuilder.appendQueryParameter("endtime", endDateJSONQuery);
+        uriBuilder.appendQueryParameter("limit", queryLimit);
+        uriBuilder.appendQueryParameter("minmagnitude", mMinMagnitude);
+        uriBuilder.appendQueryParameter("maxmagnitude", mMaxMagnitude);
+        uriBuilder.appendQueryParameter("orderby", mOrderBy);
+
+        return new EarthquakesQueryParameters(startDateJSONQuery, endDateJSONQuery, queryLimit,
+                mMinMagnitude, mMaxMagnitude, mOrderBy);
     }
 
 
