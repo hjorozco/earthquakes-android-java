@@ -16,6 +16,9 @@ import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters2;
+import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
+import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitCallback;
+import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitImplementation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +58,7 @@ public class QueryUtils {
 
     private static String mNumberOfEarthquakesDisplayed;
 
-    private static List<Earthquake> mEarthquakeList;
+    private static List<Earthquake> mEarthquakesList;
 
 
     // Global variables
@@ -85,10 +88,49 @@ public class QueryUtils {
 
         // Assigns the value of the List<Earthquake>, extracted from the JSON Response, to a private
         // static variable that will be used by the MAPS.
-        mEarthquakeList = earthquakes;
+        mEarthquakesList = earthquakes;
 
         // Return the {@link Event}
         return earthquakes;
+    }
+
+
+    public static List<Earthquake> loadEarthquakeDataFromUSGS(Context context) {
+        RetrofitImplementation retrofitImplementation = RetrofitImplementation.getRetrofitImplementationInstance(context);
+
+        final boolean[] successfulQuery = new boolean[1];
+
+        retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
+            @Override
+            public void onResponse(Earthquakes retrofitResult) {
+                if (retrofitResult != null) {
+                    for (int i = 0; i < retrofitResult.getFeatures().size(); i++) {
+                        Log.d("RETROFIT", i + " " + retrofitResult.getFeatures().get(i).getProperties().getTitle());
+                    }
+
+                    // Assigns the value of the List<Earthquake>, extracted from the Retrofit Response, to a private
+                    // static variable that will be used by the MAPS.
+                    mEarthquakesList = getEarthquakesListFromRetrofitResult(context, retrofitResult);;
+
+                    successfulQuery[0] = true;
+
+                } else {
+                    Log.d("RETROFIT", "No earthquakes got");
+                    successfulQuery[0] = false;
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                successfulQuery[0] = false;
+            }
+        });
+
+        if (successfulQuery[0]) {
+            return mEarthquakesList;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -306,6 +348,13 @@ public class QueryUtils {
     }
 
 
+    private static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context, Earthquakes retrofitResult) {
+
+        // TODO Implement based on extractFeaturesFromJson method.
+        return null;
+    }
+
+
     // Returns the number of Earthquakes that will be displayed on the list.
     public static String getNumberOfEarthquakesDisplayed() {
         return mNumberOfEarthquakesDisplayed;
@@ -313,7 +362,7 @@ public class QueryUtils {
 
     // Returns the List<Earthquake> from the USGS query.
     public static List<Earthquake> getEarthquakeList() {
-        return mEarthquakeList;
+        return mEarthquakesList;
     }
 
 

@@ -50,8 +50,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
 
         // Set magnitude text
         DecimalFormat formatter = new DecimalFormat("0.0");
-        String magnitudeToDisplay = formatter.format(currentEarthquake.getMagnitude());
-        magnitudeToDisplay = magnitudeToDisplay.replace(',','.');
+        String magnitudeToDisplay = formatter.format(roundToOneDecimal(currentEarthquake.getMagnitude(), 1));
+        magnitudeToDisplay = magnitudeToDisplay.replace(',', '.');
         holder.magnitudeTextView.setText(magnitudeToDisplay);
 
         // Set colors for magnitude circle and text
@@ -128,9 +128,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
     }
 
 
-
-
-    /** Helper method used to determine the color used to display the earthquake information
+    /**
+     * Helper method used to determine the color used to display the earthquake information
      *
      * @param magnitude The magnitude of the earthquake.
      * @return The colors used to display the earthquake information
@@ -202,14 +201,22 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
             return mMagnitudeColor;
         }
 
-        private int getMagnitudeBackgroundColor () {return mMagnitudeBackgroundColor;}
+        private int getMagnitudeBackgroundColor() {
+            return mMagnitudeBackgroundColor;
+        }
 
     }
 
     // Helper method that returns the color number from the Color Resource ID.
-    private int getColor(int colorResourceId){
-        return ContextCompat.getColor(mContext,colorResourceId);
+    private int getColor(int colorResourceId) {
+        return ContextCompat.getColor(mContext, colorResourceId);
     }
 
+
+    // Helper method that rounds a double to only one decimal place
+    private static double roundToOneDecimal(double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
 
 }

@@ -47,9 +47,9 @@ public final class RetrofitImplementation implements Serializable {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(new OkHttpClient.Builder()
                         // Time to establish a connection to the API server
-                        .connectTimeout(60, TimeUnit.SECONDS)
+                        .connectTimeout(10, TimeUnit.SECONDS)
                         // Time between two bytes read from the API server
-                        .readTimeout(30, TimeUnit.SECONDS)
+                        .readTimeout(120, TimeUnit.SECONDS)
                         // Time between two bytes send to the API server
                         .writeTimeout(15, TimeUnit.SECONDS)
                         .build())
@@ -80,7 +80,7 @@ public final class RetrofitImplementation implements Serializable {
      *
      * @param retrofitCallback RetrofitCallback.java
      */
-    public void getListOfRecipes(final RetrofitCallback<Earthquakes> retrofitCallback) {
+    public void getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback) {
 
         EarthquakesQueryParameters earthquakesQueryParameters = QueryUtils.getEarthquakesQueryParameters(mContext);
 
