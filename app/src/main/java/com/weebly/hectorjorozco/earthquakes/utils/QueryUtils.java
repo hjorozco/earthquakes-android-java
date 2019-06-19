@@ -17,6 +17,9 @@ import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters2;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
+import com.weebly.hectorjorozco.earthquakes.models.retrofit.Feature;
+import com.weebly.hectorjorozco.earthquakes.models.retrofit.Geometry;
+import com.weebly.hectorjorozco.earthquakes.models.retrofit.Properties;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitCallback;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitImplementation;
 
@@ -92,45 +95,6 @@ public class QueryUtils {
 
         // Return the {@link Event}
         return earthquakes;
-    }
-
-
-    public static List<Earthquake> loadEarthquakeDataFromUSGS(Context context) {
-        RetrofitImplementation retrofitImplementation = RetrofitImplementation.getRetrofitImplementationInstance(context);
-
-        final boolean[] successfulQuery = new boolean[1];
-
-        retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
-            @Override
-            public void onResponse(Earthquakes retrofitResult) {
-                if (retrofitResult != null) {
-                    for (int i = 0; i < retrofitResult.getFeatures().size(); i++) {
-                        Log.d("RETROFIT", i + " " + retrofitResult.getFeatures().get(i).getProperties().getTitle());
-                    }
-
-                    // Assigns the value of the List<Earthquake>, extracted from the Retrofit Response, to a private
-                    // static variable that will be used by the MAPS.
-                    mEarthquakesList = getEarthquakesListFromRetrofitResult(context, retrofitResult);;
-
-                    successfulQuery[0] = true;
-
-                } else {
-                    Log.d("RETROFIT", "No earthquakes got");
-                    successfulQuery[0] = false;
-                }
-            }
-
-            @Override
-            public void onCancel() {
-                successfulQuery[0] = false;
-            }
-        });
-
-        if (successfulQuery[0]) {
-            return mEarthquakesList;
-        } else {
-            return null;
-        }
     }
 
     /**
@@ -348,10 +312,100 @@ public class QueryUtils {
     }
 
 
-    private static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context, Earthquakes retrofitResult) {
+    public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context, Earthquakes retrofitResult) {
 
-        // TODO Implement based on extractFeaturesFromJson method.
-        return null;
+        String location = mLocation;
+        String limit = mLimit;
+
+        // Number used to limit the results shown from the JSON query to the USGS.
+        int limitNumber = Integer.valueOf(limit);
+
+        String[] splitString;
+
+        // Contains the primary location of the earthquake
+        String locationPrimary;
+
+        // Gets the locale of the system
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+
+        // Two letter code of the language of the device, for example: English (en) Spanish (es)
+        String locality = locale.toString().substring(0, 2);
+
+        // Changes all of the location filter letters to lowercase. Then removes all Spanish
+        // accents and adds a space at beginning and end of the it.
+        location = location.toLowerCase(locale);
+        location = LanguageUtils.removeSpanishAccents(location);
+        location = " " + location + " ";
+
+        List<Earthquake> earthquakeList = new ArrayList<>();
+
+        // Get the list of "feature" objects from the retrofit result. Each feature is an earthquake.
+        List<Feature> featuresList = retrofitResult.getFeatures();
+
+        //Iterate the list of features until the end of the list or until the number of
+        // added earthquakes is the same as the limit set by the user.
+        int earthquakesAddedToListCounter = 0;
+
+        for (int i = 0; (i < featuresList.size()) && (earthquakesAddedToListCounter < limitNumber); i++) {
+
+            Feature feature = featuresList.get(i);
+            Properties properties = feature.getProperties();
+            Geometry geometry = feature.getGeometry();
+            List<Double> coordinates = geometry.getCoordinates();
+
+            // Get the place string from the earthquake feature properties, and splits it in two
+            // Strings.
+            splitString = LanguageUtils.splitLocation(context, properties.getPlace(), locality);
+
+            // Changes all the letters of the primary location String (that will be used to filter
+            // the results) to lower case, removes any Spanish accents, adds a space at the
+            // beginning and end, and replaces the commas with a blank space.
+            locationPrimary = splitString[1].toLowerCase(locale);
+            locationPrimary = LanguageUtils.removeSpanishAccents(locationPrimary);
+            locationPrimary = " " + locationPrimary + " ";
+            locationPrimary = locationPrimary.replace(',', ' ');
+            locationPrimary = locationPrimary.replace('-', ' ');
+
+            // If the location filter is empty, then add the earthquake data to the List
+            if (location.equals("  ")) {
+
+                earthquakeList.add(new Earthquake(
+                        properties.getMag(),
+                        splitString[0],
+                        splitString[1],
+                        properties.getTime(),
+                        properties.getUrl(),
+                        coordinates.get(1),
+                        coordinates.get(0)));
+
+                earthquakesAddedToListCounter++;
+
+            } else {
+                // If the primary location contains the location filter AND it is not an special
+                // case, then adds the earthquake data to the List of Earthquake objects
+                if ((locationPrimary.contains(location)) &&
+                        (!LanguageUtils.locationSearchSpecialCase(locationPrimary, location))) {
+                    // Get the values for the magnitude, place, time and URL of the previous JSON object,
+                    // creates a new Earthquake object with the these values and adds it to the List
+                    earthquakeList.add(new Earthquake(
+                            properties.getMag(),
+                            splitString[0],
+                            splitString[1],
+                            properties.getTime(),
+                            properties.getUrl(),
+                            coordinates.get(1),
+                            coordinates.get(0)));
+                    // Increments the counter of the number of earthquakes added to the List of
+                    // Earthquakes
+                    earthquakesAddedToListCounter++;
+                }
+            }
+        }
+
+        mNumberOfEarthquakesDisplayed = String.valueOf(earthquakesAddedToListCounter);
+
+        // Return the list of earthquakes
+        return earthquakeList;
     }
 
 

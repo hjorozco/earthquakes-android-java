@@ -33,8 +33,6 @@ public final class RetrofitImplementation implements Serializable {
     private static volatile RetrofitImplementation retrofitImplementation = new RetrofitImplementation();
     private RetrofitService retrofitService;
 
-    private static Context mContext;
-
     private RetrofitImplementation() {
         // Avoid the reflection api.
         if (retrofitImplementation != null) {
@@ -60,9 +58,7 @@ public final class RetrofitImplementation implements Serializable {
     }
 
 
-    public static RetrofitImplementation getRetrofitImplementationInstance(Context context) {
-
-        mContext = context;
+    public static RetrofitImplementation getRetrofitImplementationInstance() {
 
         if (retrofitImplementation == null) {
             synchronized (RetrofitImplementation.class) {
@@ -80,9 +76,9 @@ public final class RetrofitImplementation implements Serializable {
      *
      * @param retrofitCallback RetrofitCallback.java
      */
-    public void getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback) {
+    public void getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback, Context context) {
 
-        EarthquakesQueryParameters earthquakesQueryParameters = QueryUtils.getEarthquakesQueryParameters(mContext);
+        EarthquakesQueryParameters earthquakesQueryParameters = QueryUtils.getEarthquakesQueryParameters(context);
 
         Call<Earthquakes> retrofitServiceCall = retrofitService.getEarthquakesFromUSGS(
                 "geojson",

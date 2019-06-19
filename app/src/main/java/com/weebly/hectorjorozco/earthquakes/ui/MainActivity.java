@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
         mFloatingActionButton = findViewById(R.id.activity_main_fab);
 
-        QueryUtils.loadEarthquakeDataFromUSGS(this);
-
         setupSwipeRefreshLayout();
 
         setupRecyclerView();
