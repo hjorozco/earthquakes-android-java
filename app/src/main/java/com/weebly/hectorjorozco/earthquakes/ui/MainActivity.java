@@ -171,17 +171,14 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
 
-        MenuItem menuItemRefresh = menu.findItem(R.id.menu_activity_main_action_refresh);
+        mMenu = menu;
 
         // If the Earthquakes where fetched from the USGS server or the app is not searching for
         // earthquakes enable the refresh menu item.
-        menuItemRefresh.setEnabled(false);
         if (QueryUtils.earthquakesFetched || !QueryUtils.searchingForEarthquakes) {
-            menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
-            menuItemRefresh.setEnabled(true);
+            setupRefreshMenuItem(true);
         }
 
-        mMenu = menu;
         return true;
     }
 
@@ -190,7 +187,11 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_activity_main_action_refresh:
-                doRefreshActions();
+                if (!QueryUtils.searchingForEarthquakes) {
+                    doRefreshActions();
+                } else {
+                    mMainActivityViewModel.cancelRetrofitRequest();
+                }
                 break;
             case R.id.menu_activity_main_action_search_preferences:
                 showSearchPreferences();
@@ -209,9 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void doRefreshActions() {
         // Disable refresh menu item
-        MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
-        menuItemRefresh.setIcon(R.drawable.ic_refresh_grey_24dp);
-        menuItemRefresh.setEnabled(false);
+        setupRefreshMenuItem(false);
         // Show refreshing icon
         mSwipeRefreshLayout.setRefreshing(true);
         // Initialize global variables
@@ -224,18 +223,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Stops refreshing animation and enables the refresh menu item
+    // Stops refreshing animation and changes the refresh menu item icon and title to refresh
     private void enableRefresh() {
         if (mMenu != null) {
-            MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
-            menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
-            menuItemRefresh.setEnabled(true);
+            setupRefreshMenuItem(true);
         }
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
 
-    private void checkForEarthquakesFetchedToEnableRefresh(){
+    // Sets the icon and title of the "refresh" menu item.
+    private void setupRefreshMenuItem(boolean refresh) {
+        MenuItem menuItemRefresh = mMenu.findItem(R.id.menu_activity_main_action_refresh);
+        if (refresh) {
+            menuItemRefresh.setIcon(R.drawable.ic_refresh_white_24dp);
+            menuItemRefresh.setTitle(R.string.menu_activity_main_action_refresh_title);
+        } else {
+            menuItemRefresh.setIcon(R.drawable.ic_stop_white_24dp);
+            menuItemRefresh.setTitle(R.string.menu_activity_main_action_stop_title);
+        }
+
+    }
+
+    private void checkForEarthquakesFetchedToEnableRefresh() {
         if (QueryUtils.earthquakesFetched) {
             enableRefresh();
         } else {

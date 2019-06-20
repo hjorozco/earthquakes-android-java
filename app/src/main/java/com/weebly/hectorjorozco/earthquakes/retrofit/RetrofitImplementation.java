@@ -76,7 +76,7 @@ public final class RetrofitImplementation implements Serializable {
      *
      * @param retrofitCallback RetrofitCallback.java
      */
-    public void getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback, Context context) {
+    public Call<Earthquakes> getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback, Context context) {
 
         EarthquakesQueryParameters earthquakesQueryParameters = QueryUtils.getEarthquakesQueryParameters(context);
 
@@ -108,6 +108,8 @@ public final class RetrofitImplementation implements Serializable {
                 }
             }
         });
+
+        return retrofitServiceCall;
     }
 
 }

@@ -10,21 +10,24 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
-import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters2;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitCallback;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitImplementation;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.util.List;
-import java.util.concurrent.Executor;
+
+import retrofit2.Call;
 
 public class MainActivityViewModel extends AndroidViewModel {
     private MutableLiveData<List<Earthquake>> earthquakes;
 
+    private Call<Earthquakes> mRetrofitServiceCall;
+
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
     }
+
 
     public LiveData<List<Earthquake>> getEarthquakes() {
         if (earthquakes == null) {
@@ -33,6 +36,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         }
         return earthquakes;
     }
+
 
     public void loadEarthquakes() {
 
@@ -45,21 +49,22 @@ public class MainActivityViewModel extends AndroidViewModel {
 
             RetrofitImplementation retrofitImplementation = RetrofitImplementation.getRetrofitImplementationInstance();
 
-            retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
+            mRetrofitServiceCall = retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
                 @Override
                 public void onResponse(Earthquakes retrofitResult) {
                     if (retrofitResult != null) {
-                        for (int i = 0; i < retrofitResult.getFeatures().size(); i++) {
-                            Log.d("RETROFIT", i + " " + retrofitResult.getFeatures().get(i).getProperties().getTitle());
-                        }
 
                         Log.d("TESTING", "EARTHQUAKES FETCHED!");
                         QueryUtils.searchingForEarthquakes = false;
                         QueryUtils.earthquakesFetched = true;
 
+                        List<Earthquake> earthquakeList = QueryUtils.getEarthquakesListFromRetrofitResult(context, retrofitResult);
+
                         // Assigns the value of the List<Earthquake>, extracted from the Retrofit Response, to a private
                         // static variable that will be used by the MAPS.
-                        earthquakes.postValue(QueryUtils.getEarthquakesListFromRetrofitResult(context, retrofitResult));
+                        QueryUtils.mEarthquakesList = earthquakeList;
+
+                        earthquakes.postValue(earthquakeList);
 
                     } else {
                         Log.d("TESTING", "No EARTHQUAKES FETCHED!");
@@ -71,8 +76,12 @@ public class MainActivityViewModel extends AndroidViewModel {
 
                 @Override
                 public void onCancel() {
-
+                    Log.d("TESTING", "Query CANCELLED!");
+                    QueryUtils.searchingForEarthquakes = false;
+                    QueryUtils.earthquakesFetched = true;
+                    earthquakes.postValue(earthquakes.getValue());
                 }
+
             }, context);
 
         } else {
@@ -81,9 +90,8 @@ public class MainActivityViewModel extends AndroidViewModel {
         }
     }
 
-    class NetworkQueryExecutor implements Executor {
-        public void execute(@NonNull Runnable runnable) {
-            new Thread(runnable).start();
-        }
+    public void cancelRetrofitRequest(){
+        mRetrofitServiceCall.cancel();
     }
+
 }

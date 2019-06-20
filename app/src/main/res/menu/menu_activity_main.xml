@@ -5,9 +5,9 @@
 
     <item
         android:id="@+id/menu_activity_main_action_refresh"
-        android:icon="@drawable/ic_refresh_grey_24dp"
+        android:icon="@drawable/ic_stop_white_24dp"
         android:orderInCategory="1"
-        android:title="@string/menu_activity_main_action_refresh_title"
+        android:title="@string/menu_activity_main_action_stop_title"
         app:showAsAction="ifRoom" />
 
     <item
@@ -16,4 +16,12 @@
         android:orderInCategory="2"
         android:title="@string/menu_activity_main_action_search_preferences_title"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_activity_main_action_list_information"
+        android:orderInCategory="3"
+        android:title="@string/menu_activity_main_action_list_information_title"
+        app:showAsAction="never" />
+
+
 </menu>

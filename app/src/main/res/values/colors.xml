@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#795548</color>          <!-- Brown 500 -->
     <color name="colorPrimaryDark">#5D4037</color>      <!-- Brown 700 -->
-    <color name="colorAccent">#8D6E63</color>           <!-- Brown 400 -->
+    <color name="colorAccent">#DD2C00</color>           <!-- Brown 400 -->
 
     <!-- Scrim colors -->
     <color name="colorScrim">#40000000</color>

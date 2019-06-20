@@ -50,8 +50,9 @@
 
     <string name="map_menu_item">Earthquakes map</string>
     <string name="menu_activity_main_action_search_preferences_title">Search preferences</string>
-    <string name="info_menu_item">List information</string>
+    <string name="menu_activity_main_action_list_information_title">List information</string>
     <string name="menu_activity_main_action_refresh_title">Refresh list</string>
+    <string name="menu_activity_main_action_stop_title">Stop query</string>
     <string name="help_menu_item">Help</string>
 
     <string name="activity_main_image_view_content_description" translatable="false">
