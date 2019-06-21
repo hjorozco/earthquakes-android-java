@@ -19,7 +19,10 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
-public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesListAdapter.EarthquakeViewHolder> {
+public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int TITTLE_TYPE = 0;
+    private static final int EARTHQUAKE_TYPE = 1;
 
     private Context mContext;
     private List<Earthquake> mEarthquakes;
@@ -34,61 +37,80 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
     // Called when ViewHolders are created to fill the RecyclerView.
     @NonNull
     @Override
-    public EarthquakeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.earthquake_list_item, parent, false);
-        return new EarthquakeViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        RecyclerView.ViewHolder viewHolder;
+        if (viewType == TITTLE_TYPE) {
+            viewHolder = new TitleViewHolder(LayoutInflater.from(mContext).inflate(R.layout.title_list_item, parent, false));
+        } else {
+            viewHolder = new EarthquakeViewHolder(LayoutInflater.from(mContext).inflate(R.layout.earthquake_list_item, parent, false));
+        }
+        return viewHolder;
+
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull EarthquakeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        // Get the {@link Earthquake} object located at this position in the list
-        Earthquake currentEarthquake = mEarthquakes.get(position);
+        if (holder instanceof TitleViewHolder) {
 
-        // ********************  DISPLAY MAGNITUDE OF THE EARTHQUAKE ********************
+            TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-        // Set magnitude text
-        DecimalFormat formatter = new DecimalFormat("0.0");
-        String magnitudeToDisplay = formatter.format(roundToOneDecimal(currentEarthquake.getMagnitude(), 1));
-        magnitudeToDisplay = magnitudeToDisplay.replace(',', '.');
-        holder.magnitudeTextView.setText(magnitudeToDisplay);
+            titleViewHolder.titleTextView.setText( mEarthquakes.size() + " earthquakes found.");
 
-        // Set colors for magnitude circle and text
-        Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
-        GradientDrawable magnitudeCircle = (GradientDrawable) holder.magnitudeTextView.getBackground();
-        EarthquakeInfoColors earthquakeInfoColors = getEarthquakeInfoColors(roundedMagnitude);
-        int magnitudeColor = earthquakeInfoColors.getMagnitudeColor();
-        int magnitudeBackgroundColor = earthquakeInfoColors.getMagnitudeBackgroundColor();
-        magnitudeCircle.setColor(magnitudeBackgroundColor);
-        magnitudeCircle.setStroke(10, magnitudeColor);
-        holder.magnitudeTextView.setTextColor(magnitudeColor);
+        } else if (holder instanceof EarthquakeViewHolder) {
+
+            EarthquakeViewHolder earthquakeViewHolder = (EarthquakeViewHolder) holder;
+
+            // Get the {@link Earthquake} object located at this position in the list
+            Earthquake currentEarthquake = mEarthquakes.get(position-1);
+
+            // ********************  DISPLAY MAGNITUDE OF THE EARTHQUAKE ********************
+
+            // Set magnitude text
+            DecimalFormat formatter = new DecimalFormat("0.0");
+            String magnitudeToDisplay = formatter.format(roundToOneDecimal(currentEarthquake.getMagnitude()));
+            magnitudeToDisplay = magnitudeToDisplay.replace(',', '.');
+            earthquakeViewHolder.magnitudeTextView.setText(magnitudeToDisplay);
+
+            // Set colors for magnitude circle and text
+            Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
+            GradientDrawable magnitudeCircle = (GradientDrawable) earthquakeViewHolder.magnitudeTextView.getBackground();
+            EarthquakeInfoColors earthquakeInfoColors = getEarthquakeInfoColors(roundedMagnitude);
+            int magnitudeColor = earthquakeInfoColors.getMagnitudeColor();
+            int magnitudeBackgroundColor = earthquakeInfoColors.getMagnitudeBackgroundColor();
+            magnitudeCircle.setColor(magnitudeBackgroundColor);
+            magnitudeCircle.setStroke(10, magnitudeColor);
+            earthquakeViewHolder.magnitudeTextView.setTextColor(magnitudeColor);
 
 
-        // ********************  DISPLAY LOCATION OF THE EARTHQUAKE ********************
+            // ********************  DISPLAY LOCATION OF THE EARTHQUAKE ********************
 
-        holder.locationOffsetTextView.setText(currentEarthquake.getLocationOffset());
-        holder.locationPrimaryTextView.setText(currentEarthquake.getLocationPrimary());
-        holder.locationOffsetTextView.setTextColor(magnitudeColor);
-        holder.locationPrimaryTextView.setTextColor(magnitudeColor);
+            earthquakeViewHolder.locationOffsetTextView.setText(currentEarthquake.getLocationOffset());
+            earthquakeViewHolder.locationPrimaryTextView.setText(currentEarthquake.getLocationPrimary());
+            earthquakeViewHolder.locationOffsetTextView.setTextColor(magnitudeColor);
+            earthquakeViewHolder.locationPrimaryTextView.setTextColor(magnitudeColor);
 
 
-        // ********************  DISPLAY DATE OF THE EARTHQUAKE ********************
+            // ********************  DISPLAY DATE OF THE EARTHQUAKE ********************
 
-        // Create a new Date object from the time in milliseconds of the earthquake
-        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
+            // Create a new Date object from the time in milliseconds of the earthquake
+            Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
 
-        // Get the formatted date from the dateObject created from the time in Milliseconds of the
-        // current Earthquake object and set this text on the dateTextView.
-        holder.dateTextView.setText(LanguageUtils.formatDate(dateObject));
+            // Get the formatted date from the dateObject created from the time in Milliseconds of the
+            // current Earthquake object and set this text on the dateTextView.
+            earthquakeViewHolder.dateTextView.setText(LanguageUtils.formatDate(dateObject));
 
-        /// Get the formatted time from the dateObject created from the time in Milliseconds of the
-        // current Earthquake object and set this text on the timeTextView.
-        holder.timeTextView.setText(LanguageUtils.formatTime(dateObject));
+            /// Get the formatted time from the dateObject created from the time in Milliseconds of the
+            // current Earthquake object and set this text on the timeTextView.
+            earthquakeViewHolder.timeTextView.setText(LanguageUtils.formatTime(dateObject));
 
-        // Set the color of dateTextView and TimeTextView
-        holder.dateTextView.setTextColor(magnitudeColor);
-        holder.timeTextView.setTextColor(magnitudeColor);
+            // Set the color of dateTextView and TimeTextView
+            earthquakeViewHolder.dateTextView.setTextColor(magnitudeColor);
+            earthquakeViewHolder.timeTextView.setTextColor(magnitudeColor);
+
+        }
 
     }
 
@@ -96,11 +118,21 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
     @Override
     public int getItemCount() {
         if (mEarthquakes == null) {
-            return 0;
+            return 1;
         } else {
-            return mEarthquakes.size();
+            return mEarthquakes.size() + 1;
         }
     }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0)
+            return TITTLE_TYPE;
+        else
+            return EARTHQUAKE_TYPE;
+    }
+
 
     public void setEarthquakesListData(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
@@ -124,7 +156,17 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
             dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
             timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
         }
+    }
 
+
+    class TitleViewHolder extends RecyclerView.ViewHolder {
+
+        TextView titleTextView;
+
+        TitleViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titleTextView = itemView.findViewById(R.id.title_list_item_text_view);
+        }
     }
 
 
@@ -214,8 +256,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<EarthquakesList
 
 
     // Helper method that rounds a double to only one decimal place
-    private static double roundToOneDecimal(double value, int precision) {
-        int scale = (int) Math.pow(10, precision);
+    private static double roundToOneDecimal(double value) {
+        int scale = (int) Math.pow(10, 1);
         return (double) Math.round(value * scale) / scale;
     }
 

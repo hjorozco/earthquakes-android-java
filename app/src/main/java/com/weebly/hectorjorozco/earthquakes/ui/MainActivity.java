@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                     setMessageVisible(true);
                     setMessage(Utils.sLoadEarthquakesResultCode);
                     enableRefresh();
-                    Utils.sLoadEarthquakesResultCode=Utils.NO_ACTION;
                 } else {
                     // If the search has not finished show the refreshing icon
                     mSwipeRefreshLayout.setRefreshing(true);
@@ -112,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             setMessage(Utils.NO_EARTHQUAKES_FOUND);
                         }
-                        Utils.sLoadEarthquakesResultCode=Utils.NO_ACTION;
                     }
                 } else {
                     setMessageVisible(false);
@@ -121,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode!=Utils.NO_ACTION){
                         Snackbar.make(findViewById(android.R.id.content),
                                 getSnackBarText(Utils.sLoadEarthquakesResultCode),
-                                Snackbar.LENGTH_SHORT).show();
+                                Snackbar.LENGTH_LONG).show();
                     }
                     Utils.sLoadEarthquakesResultCode=Utils.NO_ACTION;
                 }

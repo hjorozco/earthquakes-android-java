@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/title_list_item_text_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="sans-serif-medium"
+    android:paddingStart="@dimen/application_standard_padding"
+    android:paddingLeft="@dimen/application_standard_padding"
+    android:paddingTop="@dimen/application_small_padding"
+    android:paddingEnd="@dimen/application_standard_padding"
+    android:paddingRight="@dimen/application_standard_padding"
+    android:paddingBottom="@dimen/application_small_padding"
+    android:textSize="@dimen/application_standard_text_size"
+    android:textColor="@color/colorPrimary"
+    tools:text="200 earthquakes found" />
+
