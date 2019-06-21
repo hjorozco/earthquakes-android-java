@@ -10,17 +10,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitCallback;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitImplementation;
-import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.Utils;
 
 import java.util.List;
 
 import retrofit2.Call;
 
 public class MainActivityViewModel extends AndroidViewModel {
-    private MutableLiveData<List<Earthquake>> earthquakes;
+
+    private MutableLiveData<List<Earthquake>> mEarthquakes;
 
     private Call<Earthquakes> mRetrofitServiceCall;
 
@@ -30,11 +32,11 @@ public class MainActivityViewModel extends AndroidViewModel {
 
 
     public LiveData<List<Earthquake>> getEarthquakes() {
-        if (earthquakes == null) {
-            earthquakes = new MutableLiveData<>();
+        if (mEarthquakes == null) {
+            mEarthquakes = new MutableLiveData<>();
             loadEarthquakes();
         }
-        return earthquakes;
+        return mEarthquakes;
     }
 
 
@@ -42,55 +44,62 @@ public class MainActivityViewModel extends AndroidViewModel {
 
         Context context = getApplication();
 
-        // If there is an internet connection load earthquakes from USGS. If not return null.
-        if (QueryUtils.internetConnection(context)) {
+        // If there is an internet connection load earthquakes from USGS.
+        if (Utils.internetConnection(context)) {
 
             Log.d("TESTING", "Fetching earthquakes...");
 
-            RetrofitImplementation retrofitImplementation = RetrofitImplementation.getRetrofitImplementationInstance();
+            RetrofitImplementation retrofitImplementation =
+                    RetrofitImplementation.getRetrofitImplementationInstance();
 
-            mRetrofitServiceCall = retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
-                @Override
-                public void onResponse(Earthquakes retrofitResult) {
-                    if (retrofitResult != null) {
+            EarthquakesQueryParameters earthquakesQueryParameters =
+                    Utils.getEarthquakesQueryParameters(context);
 
-                        Log.d("TESTING", "EARTHQUAKES FETCHED!");
-                        QueryUtils.searchingForEarthquakes = false;
-                        QueryUtils.earthquakesFetched = true;
+            mRetrofitServiceCall =
+                    retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
 
-                        List<Earthquake> earthquakeList = QueryUtils.getEarthquakesListFromRetrofitResult(context, retrofitResult);
+                        @Override
+                        public void onResponse(Earthquakes retrofitResult) {
 
-                        // Assigns the value of the List<Earthquake>, extracted from the Retrofit Response, to a private
-                        // static variable that will be used by the MAPS.
-                        QueryUtils.mEarthquakesList = earthquakeList;
+                            if (retrofitResult != null) {
 
-                        earthquakes.postValue(earthquakeList);
+                                Log.d("TESTING", "List of Earthquakes fetched successfully");
+                                List<Earthquake> earthquakeList =
+                                        Utils.getEarthquakesListFromRetrofitResult(context, retrofitResult);
 
-                    } else {
-                        Log.d("TESTING", "No EARTHQUAKES FETCHED!");
-                        QueryUtils.searchingForEarthquakes = false;
-                        QueryUtils.earthquakesFetched = true;
-                        earthquakes.postValue(null);
-                    }
-                }
+                                // Assigns the value of the List<Earthquake>, extracted from the Retrofit
+                                // Response, to a variable that will be used by the MAPS activity.
+                                Utils.sEarthquakesList = earthquakeList;
 
-                @Override
-                public void onCancel() {
-                    Log.d("TESTING", "Query CANCELLED!");
-                    QueryUtils.searchingForEarthquakes = false;
-                    QueryUtils.earthquakesFetched = true;
-                    earthquakes.postValue(earthquakes.getValue());
-                }
+                                setLoadEarthquakesResult(earthquakeList, Utils.SEARCH_RESULT_NON_NULL);
 
-            }, context);
+                            } else {
+                                Log.d("TESTING", "Retrofit result was NULL");
+                                setLoadEarthquakesResult(mEarthquakes.getValue(), Utils.SEARCH_RESULT_NULL);
+                            }
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            Log.d("TESTING", "Cancelled query");
+                            setLoadEarthquakesResult(mEarthquakes.getValue(), Utils.SEARCH_CANCELLED);
+                        }
+
+                    }, earthquakesQueryParameters);
 
         } else {
-            QueryUtils.searchingForEarthquakes = false;
-            earthquakes.postValue(null);
+            Log.d("TESTING", "No internet connection");
+            setLoadEarthquakesResult(mEarthquakes.getValue(), Utils.NO_INTERNET_CONNECTION);
         }
     }
 
-    public void cancelRetrofitRequest(){
+    private void setLoadEarthquakesResult(List<Earthquake> earthquakesList, byte loadEarthquakesResultCode) {
+        Utils.sSearchingForEarthquakes = false;
+        Utils.sLoadEarthquakesResultCode = loadEarthquakesResultCode;
+        mEarthquakes.postValue(earthquakesList);
+    }
+
+    public void cancelRetrofitRequest() {
         mRetrofitServiceCall.cancel();
     }
 

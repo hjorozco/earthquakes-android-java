@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
-import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.Utils;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
@@ -76,9 +76,8 @@ public final class RetrofitImplementation implements Serializable {
      *
      * @param retrofitCallback RetrofitCallback.java
      */
-    public Call<Earthquakes> getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback, Context context) {
-
-        EarthquakesQueryParameters earthquakesQueryParameters = QueryUtils.getEarthquakesQueryParameters(context);
+    public Call<Earthquakes> getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback,
+                                                  EarthquakesQueryParameters earthquakesQueryParameters) {
 
         Call<Earthquakes> retrofitServiceCall = retrofitService.getEarthquakesFromUSGS(
                 "geojson",
@@ -100,10 +99,10 @@ public final class RetrofitImplementation implements Serializable {
             @Override
             public void onFailure(@NonNull Call<Earthquakes> call, @NonNull Throwable t) {
                 if (call.isCanceled()) {
-                    Log.e(LOG_TAG, "Cancelled.");
+                    Log.d("TESTING", "Retrofit service call was cancelled.");
                     retrofitCallback.onCancel();
                 } else {
-                    Log.e(LOG_TAG, t.getMessage());
+                    Log.d("TESTING", t.getMessage());
                     retrofitCallback.onResponse(null);
                 }
             }

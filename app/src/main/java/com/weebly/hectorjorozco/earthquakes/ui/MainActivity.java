@@ -20,19 +20,16 @@ import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
-import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.Utils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
-
-    private static final byte SEARCHING_MESSAGE_REFRESH = 0;
-    private static final byte NO_INTERNET_MESSAGE = 1;
-    private static final byte NO_EARTHQUAKES_MESSAGE = 2;
 
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;
@@ -91,31 +88,51 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("TESTING", "OnChanged");
 
+            // If the list of earthquakes was empty before the search
             if (earthquakes == null) {
-                if (!QueryUtils.searchingForEarthquakes) {
+                // If the search has finished display a message with an icon
+                if (!Utils.sSearchingForEarthquakes) {
                     setMessageVisible(true);
-                    setMessage(NO_INTERNET_MESSAGE);
+                    setMessage(Utils.sLoadEarthquakesResultCode);
                     enableRefresh();
-                    Log.d("TESTING", "No connection to USGS server");
+                    Utils.sLoadEarthquakesResultCode=Utils.NO_ACTION;
                 } else {
-                    checkForEarthquakesFetchedToEnableRefresh();
+                    // If the search has not finished show the refreshing icon
+                    mSwipeRefreshLayout.setRefreshing(true);
                 }
             } else {
                 if (earthquakes.size() == 0) {
-                    if (!QueryUtils.searchingForEarthquakes) {
+                    // If the search has finished display a message with an icon
+                    if (!Utils.sSearchingForEarthquakes) {
                         setMessageVisible(true);
-                        setMessage(NO_EARTHQUAKES_MESSAGE);
-                        Log.d("TESTING", "No earthquakes found");
+                        if (Utils.sLoadEarthquakesResultCode == Utils.NO_INTERNET_CONNECTION ||
+                                Utils.sLoadEarthquakesResultCode == Utils.SEARCH_CANCELLED ||
+                                Utils.sLoadEarthquakesResultCode == Utils.SEARCH_RESULT_NULL) {
+                            setMessage(Utils.sLoadEarthquakesResultCode);
+                        } else {
+                            setMessage(Utils.NO_EARTHQUAKES_FOUND);
+                        }
+                        Utils.sLoadEarthquakesResultCode=Utils.NO_ACTION;
                     }
                 } else {
                     setMessageVisible(false);
                     mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
-                    Log.d("TESTING", "Earthquake adapter updated with earthquakes list");
+                    // If the search has finished and no previous snack has been shown
+                    if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode!=Utils.NO_ACTION){
+                        Snackbar.make(findViewById(android.R.id.content),
+                                getSnackBarText(Utils.sLoadEarthquakesResultCode),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                    Utils.sLoadEarthquakesResultCode=Utils.NO_ACTION;
                 }
-                checkForEarthquakesFetchedToEnableRefresh();
+
+                // This is used when this observer on changed method is called after a screen rotation.
+                checkForSearchingStatusToEnableRefresh();
             }
 
             mSwipeRefreshLayout.setEnabled(true);
+
+            // Hide the progress bar. It is shown only when the app starts running.
             mProgressBar.setVisibility(View.INVISIBLE);
         });
 
@@ -131,25 +148,53 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Helper method that sets the message image and text
-    private void setMessage(byte messageType) {
+    private void setMessage(byte type) {
         int imageID = 0;
         int textID = 0;
-        switch (messageType) {
-            case SEARCHING_MESSAGE_REFRESH:
+        switch (type) {
+            case Utils.SEARCHING:
                 imageID = R.drawable.ic_message_searching_earthquakes;
                 textID = R.string.searching_earthquakes_text;
                 break;
-            case NO_INTERNET_MESSAGE:
+            case Utils.NO_INTERNET_CONNECTION:
                 imageID = R.drawable.ic_message_no_internet;
                 textID = R.string.no_internet_connection_text;
                 break;
-            case NO_EARTHQUAKES_MESSAGE:
+            case Utils.SEARCH_CANCELLED:
+                imageID = R.drawable.ic_message_searching_cancelled;
+                textID = R.string.search_cancelled_text;
+                break;
+            case Utils.NO_EARTHQUAKES_FOUND:
                 imageID = R.drawable.ic_message_no_earthquakes;
                 textID = R.string.no_earthquakes_found_text;
+                break;
+            case Utils.SEARCH_RESULT_NULL:
+                imageID = R.drawable.ic_message_no_server_response;
+                textID = R.string.no_server_response_text;
                 break;
         }
         mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
         mMessageTextView.setText(getString(textID));
+    }
+
+
+    private String getSnackBarText(byte type) {
+        String snackBarText = null;
+        switch (type) {
+            case Utils.NO_INTERNET_CONNECTION:
+                snackBarText = getString(R.string.no_internet_connection_text);
+                break;
+            case Utils.SEARCH_CANCELLED:
+                snackBarText = getString(R.string.search_cancelled_text);
+                break;
+            case Utils.SEARCH_RESULT_NULL:
+                snackBarText = getString(R.string.no_server_response_text);
+                break;
+            case Utils.SEARCH_RESULT_NON_NULL:
+                snackBarText = getString(R.string.earthquakes_list_updated_text);
+                break;
+        }
+        return snackBarText;
     }
 
 
@@ -166,28 +211,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-
         mMenu = menu;
-
-        // If the Earthquakes where fetched from the USGS server or the app is not searching for
-        // earthquakes enable the refresh menu item.
-        if (QueryUtils.earthquakesFetched || !QueryUtils.searchingForEarthquakes) {
+        // If the app is not searching for earthquakes show the refresh menu item.
+        if (!Utils.sSearchingForEarthquakes) {
             setupRefreshMenuItem(true);
         }
-
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.menu_activity_main_action_refresh:
-                if (!QueryUtils.searchingForEarthquakes) {
+                if (!Utils.sSearchingForEarthquakes) {
                     doRefreshActions();
                 } else {
                     mMainActivityViewModel.cancelRetrofitRequest();
@@ -209,16 +251,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void doRefreshActions() {
-        // Disable refresh menu item
+        // Show stop menu item
         setupRefreshMenuItem(false);
-        // Show refreshing icon
         mSwipeRefreshLayout.setRefreshing(true);
-        // Initialize global variables
-        QueryUtils.earthquakesFetched = false;
-        QueryUtils.searchingForEarthquakes = true;
-        // Set message to be show when the earthquakes list is empty.
-        setMessage(SEARCHING_MESSAGE_REFRESH);
-        // Force the ViewModel to load the earthquakes from the USGS server.
+        Utils.sSearchingForEarthquakes = true;
+        setMessage(Utils.SEARCHING);
         mMainActivityViewModel.loadEarthquakes();
     }
 
@@ -245,8 +282,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void checkForEarthquakesFetchedToEnableRefresh() {
-        if (QueryUtils.earthquakesFetched) {
+    private void checkForSearchingStatusToEnableRefresh() {
+        if (!Utils.sSearchingForEarthquakes) {
             enableRefresh();
         } else {
             mSwipeRefreshLayout.setRefreshing(true);

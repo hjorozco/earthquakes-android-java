@@ -42,7 +42,10 @@
 
     <string name="searching_earthquakes_text">Searching for earthquakes</string>
 
-    <string name="no_internet_connection_text">No connection to earthquakes server</string>
+    <string name="no_internet_connection_text">No internet connection</string>
+    <string name="search_cancelled_text">Search cancelled</string>
+    <string name="no_server_response_text">No response from the USGS server</string>
+    <string name="earthquakes_list_updated_text">Earthquakes list updated</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->

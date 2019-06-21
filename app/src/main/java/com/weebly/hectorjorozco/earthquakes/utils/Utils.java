@@ -9,32 +9,14 @@ import android.net.Uri;
 
 import androidx.preference.PreferenceManager;
 
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
-import com.weebly.hectorjorozco.earthquakes.models.EarthquakesSearchParameters2;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Feature;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Geometry;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Properties;
-import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitCallback;
-import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitImplementation;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +30,7 @@ import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
-public class QueryUtils {
+public class Utils {
 
     private static String mOrderBy, mMinMagnitude, mMaxMagnitude, mStartDateTime, mEndDateTime,
             mDatePeriod, mStartDate, mEndDate, mLimit, mLocation;
@@ -57,18 +39,25 @@ public class QueryUtils {
 
     private static final String USGS_REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query";
 
-    private static final String LOG_TAG = QueryUtils.class.getSimpleName();
+    public static final byte NO_ACTION = 0;
+    public static final byte SEARCHING = 1;
+    public static final byte NO_EARTHQUAKES_FOUND = 2;
+    public static final byte NO_INTERNET_CONNECTION = 3;
+    public static final byte SEARCH_RESULT_NON_NULL = 4;
+    public static final byte SEARCH_RESULT_NULL = 5;
+    public static final byte SEARCH_CANCELLED = 6;
+
 
     // Used on the information message
-    private static String mNumberOfEarthquakesDisplayed;
+    private static String sNumberOfEarthquakesDisplayed;
 
     // Used by the map activity
-    public static List<Earthquake> mEarthquakesList;
+    public static List<Earthquake> sEarthquakesList;
 
 
     // Global variables
-    public static boolean earthquakesFetched = false;
-    public static boolean searchingForEarthquakes = true;
+    public static boolean sSearchingForEarthquakes = true;
+    public static byte sLoadEarthquakesResultCode = NO_ACTION;
 
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context, Earthquakes retrofitResult) {
@@ -161,7 +150,7 @@ public class QueryUtils {
             }
         }
 
-        mNumberOfEarthquakesDisplayed = String.valueOf(earthquakesAddedToListCounter);
+        sNumberOfEarthquakesDisplayed = String.valueOf(earthquakesAddedToListCounter);
 
         // Return the list of earthquakes
         return earthquakeList;
@@ -170,12 +159,12 @@ public class QueryUtils {
 
     // Returns the number of Earthquakes that will be displayed on the list.
     public static String getNumberOfEarthquakesDisplayed() {
-        return mNumberOfEarthquakesDisplayed;
+        return sNumberOfEarthquakesDisplayed;
     }
 
     // Returns the List<Earthquake> from the USGS query.
-    public static List<Earthquake> getEarthquakeList() {
-        return mEarthquakesList;
+    public static List<Earthquake> getEarthquakesList() {
+        return sEarthquakesList;
     }
 
 

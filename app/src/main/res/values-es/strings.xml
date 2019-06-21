@@ -41,7 +41,10 @@
 
     <string name="searching_earthquakes_text">Buscando temblores</string>
 
-    <string name="no_internet_connection_text">No hay conexión al servidor de temblores</string>
+    <string name="no_internet_connection_text">No hay conexión a internet</string>
+    <string name="search_cancelled_text">Busqueda cancelada</string>
+    <string name="no_server_response_text">No hay respuesta del servidor de USGS</string>
+    <string name="earthquakes_list_updated_text">Lista de temblores actualizada</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
