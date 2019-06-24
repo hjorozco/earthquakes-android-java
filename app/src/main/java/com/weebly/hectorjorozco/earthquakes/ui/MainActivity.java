@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     // If the search has not finished show the refreshing icon
                     mSwipeRefreshLayout.setRefreshing(true);
                 }
+                Utils.sListWillBeLoadedAfterEmpty = true;
             } else {
                 if (earthquakes.size() == 0) {
                     // If the search has finished display a message with an icon
@@ -112,16 +113,18 @@ public class MainActivity extends AppCompatActivity {
                             setMessage(Utils.NO_EARTHQUAKES_FOUND);
                         }
                     }
+                    Utils.sListWillBeLoadedAfterEmpty = true;
                 } else {
                     setMessageVisible(false);
                     mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
                     // If the search has finished and no previous snack has been shown
-                    if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode!=Utils.NO_ACTION){
+                    if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode != Utils.NO_ACTION && !Utils.sListWillBeLoadedAfterEmpty) {
                         Snackbar.make(findViewById(android.R.id.content),
                                 getSnackBarText(Utils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_LONG).show();
                     }
-                    Utils.sLoadEarthquakesResultCode=Utils.NO_ACTION;
+                    Utils.sLoadEarthquakesResultCode = Utils.NO_ACTION;
+                    Utils.sListWillBeLoadedAfterEmpty = false;
                 }
 
                 // This is used when this observer on changed method is called after a screen rotation.
@@ -171,8 +174,10 @@ public class MainActivity extends AppCompatActivity {
                 textID = R.string.no_server_response_text;
                 break;
         }
-        mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
-        mMessageTextView.setText(getString(textID));
+        if (type != Utils.SEARCH_RESULT_NON_NULL) {
+            mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
+            mMessageTextView.setText(getString(textID));
+        }
     }
 
 

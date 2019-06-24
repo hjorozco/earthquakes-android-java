@@ -46,6 +46,10 @@
     <string name="no_server_response_text">No hay respuesta del servidor de USGS</string>
     <string name="earthquakes_list_updated_text">Lista de temblores actualizada</string>
 
+    <string name="earthquakes_list_title">%1$d temblor%2$s encontrado%3$s.</string>
+    <string name="earthquakes_list_title_earthquakes_word_suffix">es</string>
+    <string name="earthquakes_list_title_found_word_suffix">s</string>
+
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
     <string name="no_earthquakes_found_text">

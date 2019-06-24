@@ -58,6 +58,7 @@ public class Utils {
     // Global variables
     public static boolean sSearchingForEarthquakes = true;
     public static byte sLoadEarthquakesResultCode = NO_ACTION;
+    public static boolean sListWillBeLoadedAfterEmpty = true;
 
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context, Earthquakes retrofitResult) {

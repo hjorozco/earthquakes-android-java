@@ -57,7 +57,16 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-            titleViewHolder.titleTextView.setText( mEarthquakes.size() + " earthquakes found.");
+            String earthquakesWordSuffix, foundWordSuffix;
+            if (mEarthquakes.size()==1){
+                earthquakesWordSuffix = "";
+                foundWordSuffix = "";
+            } else {
+                earthquakesWordSuffix = mContext.getString(R.string.earthquakes_list_title_earthquakes_word_suffix);
+                foundWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_word_suffix);
+            }
+
+            titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title, mEarthquakes.size(), earthquakesWordSuffix, foundWordSuffix));
 
         } else if (holder instanceof EarthquakeViewHolder) {
 
