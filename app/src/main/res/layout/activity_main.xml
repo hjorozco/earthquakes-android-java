@@ -1,69 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/activity_main_swipe_refresh_layout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_main_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:visibility="gone"/>
+
+    <com.futuremind.recyclerviewfastscroll.FastScroller
+        android:id="@+id/activity_main_recycler_view_fast_scroller"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/activity_main_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/application_standard_margin" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activity_main_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:visibility="gone" />
+        <TextView
+            android:id="@+id/activity_main_message_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawableTop="@drawable/ic_message_searching_earthquakes"
+            android:drawablePadding="@dimen/application_big_padding"
+            android:padding="@dimen/application_big_padding"
+            android:text="@string/searching_earthquakes_text"
+            android:textAlignment="center"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/colorPrimary"
+            tools:visibility="visible" />
 
-            <RelativeLayout
-                android:id="@+id/activity_main_message_relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    </RelativeLayout>
 
-                <ProgressBar
-                    android:id="@+id/activity_main_progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/application_standard_margin" />
+</RelativeLayout>
 
-                <TextView
-                    android:id="@+id/activity_main_message_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/ic_message_searching_earthquakes"
-                    android:drawablePadding="@dimen/application_big_padding"
-                    android:padding="@dimen/application_big_padding"
-                    android:text="@string/searching_earthquakes_text"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/colorPrimary"
-                    tools:visibility="visible" />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_main_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:visibility="gone"
-        android:layout_margin="@dimen/application_standard_margin"
-        app:backgroundTint="@color/colorAppBackground"
-        app:fabCustomSize="@dimen/fab_size"
-        app:srcCompat="@drawable/ic_up_24dp_brown" />
-
-</FrameLayout>
 

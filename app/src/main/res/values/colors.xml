@@ -17,6 +17,8 @@
     <!-- List divider color -->
     <color name="light_brown">#D7CCC8</color>           <!-- Brown 200 -->
 
+    <color name="custom_handle_color">#90a4ae</color>
+    <color name="custom_bubble_color">#607d8b</color>
 
     <!-- *************** MAGNITUDE COLORS AND BACKGROUNDS COLORS ********************** -->
     <!-- MAGNITUDE COLORS, used on the borders of the magnitude circle, and the earthquake

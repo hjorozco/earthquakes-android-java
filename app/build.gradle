@@ -28,9 +28,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
     // Settings
-    implementation 'androidx.preference:preference:1.1.0-beta01'
+    implementation 'androidx.preference:preference:1.1.0-rc01'
     // ViewModel and Live Data
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02"
 
     // Retrofit library.
     implementation "com.squareup.retrofit2:retrofit:2.4.0"
@@ -39,6 +39,9 @@ dependencies {
 
     // Stetho library. Navigate to chrome://inspect in Google Chrome to inspect the app data.
     implementation 'com.facebook.stetho:stetho:1.5.0'
+
+    // RecyclerView Fast Scrolling library
+    implementation 'com.futuremind.recyclerfastscroll:fastscroll:0.2.5'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'

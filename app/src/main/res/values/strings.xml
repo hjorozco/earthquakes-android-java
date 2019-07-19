@@ -56,15 +56,23 @@
     earthquake_activity -->
     <string name="no_earthquakes_found_text">No earthquakes found</string>
 
-    <string name="map_menu_item">Earthquakes map</string>
+    <string name="menu_activity_main_action_refresh_title">Update list</string>
+    <string name="menu_activity_main_action_stop_title">Stop update</string>
     <string name="menu_activity_main_action_search_preferences_title">Search preferences</string>
     <string name="menu_activity_main_action_list_information_title">List information</string>
-    <string name="menu_activity_main_action_refresh_title">Refresh list</string>
-    <string name="menu_activity_main_action_stop_title">Stop query</string>
-    <string name="help_menu_item">Help</string>
+    <string name="menu_activity_main_action_earthquakes_map_title">Earthquakes map</string>
+    <string name="menu_activity_main_action_help_title">Help</string>
+    <string name="menu_activity_main_action_about_title">About</string>
 
     <string name="activity_main_image_view_content_description" translatable="false">
         House damaged by an earthquake</string>
+
+    <string name="activity_main_up_fab_tooltip_text">Go to the top of the list</string>
+    <string name="activity_main_down_fab_tooltip_text">Go to the bottom of the list</string>
+
+    <string name="activity_main_earthquakes_list_information_dialog_fragment_tag" translatable="false">
+        earthquakes_list_information_dialog_fragment
+    </string>
 
     <!-- ********** Activity main ********** -->
 

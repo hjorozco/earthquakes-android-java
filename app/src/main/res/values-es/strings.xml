@@ -56,13 +56,19 @@
         No se encontraron temblores
     </string>
 
-    <string name="map_menu_item">Mostrar en mapa</string>
+    <string name="menu_activity_main_action_refresh_title">Actualizar la lista</string>
+    <string name="menu_activity_main_action_stop_title">Detener la actualización</string>
     <string name="menu_activity_main_action_search_preferences_title">
         Preferencias de búsqueda</string>
     <string name="menu_activity_main_action_list_information_title">Información de la lista</string>
-    <string name="menu_activity_main_action_refresh_title">Actualizar la lista</string>
-    <string name="menu_activity_main_action_stop_title">Detener la búsqueda</string>
-    <string name="help_menu_item">Ayuda</string>
+    <string name="menu_activity_main_action_earthquakes_map_title">Mapa de temblores</string>
+    <string name="menu_activity_main_action_help_title">Ayuda</string>
+    <string name="menu_activity_main_action_about_title">Acerca de</string>
+
+
+    <string name="activity_main_up_fab_tooltip_text">Ir al principio de la lista</string>
+    <string name="activity_main_down_fab_tooltip_text">Ir al final de la lista</string>
+
 
     <!-- ********** Activity Main ********** -->
 

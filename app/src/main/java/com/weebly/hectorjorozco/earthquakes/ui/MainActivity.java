@@ -4,25 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
+import com.weebly.hectorjorozco.earthquakes.ui.RecyclerViewFastScroller.RecyclerViewFastScrollerViewProvider;
+import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.utils.Utils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
@@ -30,17 +30,16 @@ import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 public class MainActivity extends AppCompatActivity {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
+    public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
 
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;
     private MainActivityViewModel mMainActivityViewModel;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RelativeLayout mMessageRelativeLayout;
     private TextView mMessageTextView;
     private ProgressBar mProgressBar;
     private Menu mMenu;
-    private FloatingActionButton mFloatingActionButton;
-
+    private int mNumberOfEarthquakesOnList;
+    private FastScroller mRecyclerViewFastScroller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +54,14 @@ public class MainActivity extends AppCompatActivity {
         Stetho.initializeWithDefaults(this);
 
         mEarthquakesListAdapter = new EarthquakesListAdapter(this);
-        mMessageRelativeLayout = findViewById(R.id.activity_main_message_relative_layout);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
-        mFloatingActionButton = findViewById(R.id.activity_main_fab);
-
-        setupSwipeRefreshLayout();
 
         setupRecyclerView();
 
         setupViewModel();
-
-        mFloatingActionButton.setOnClickListener(v -> mRecyclerView.scrollToPosition(0));
     }
+
 
     private void setupRecyclerView() {
 
@@ -79,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mEarthquakesListAdapter);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setNestedScrollingEnabled(true);
+
+        // Sets up the fast scroller
+        mRecyclerViewFastScroller = findViewById(R.id.activity_main_recycler_view_fast_scroller);
+        RecyclerViewFastScrollerViewProvider viewProvider = new RecyclerViewFastScrollerViewProvider();
+        mRecyclerViewFastScroller.setRecyclerView(mRecyclerView);
+        mRecyclerViewFastScroller.setViewProvider(viewProvider);
     }
 
 
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mMainActivityViewModel.getEarthquakes().observe(this, earthquakes -> {
 
-            Log.d("TESTING", "OnChanged");
+            mNumberOfEarthquakesOnList = 0;
 
             // If the list of earthquakes was empty before the search
             if (earthquakes == null) {
@@ -95,9 +95,6 @@ public class MainActivity extends AppCompatActivity {
                     setMessageVisible(true);
                     setMessage(Utils.sLoadEarthquakesResultCode);
                     enableRefresh();
-                } else {
-                    // If the search has not finished show the refreshing icon
-                    mSwipeRefreshLayout.setRefreshing(true);
                 }
                 Utils.sListWillBeLoadedAfterEmpty = true;
             } else {
@@ -115,10 +112,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Utils.sListWillBeLoadedAfterEmpty = true;
                 } else {
+                    mNumberOfEarthquakesOnList = earthquakes.size();
                     setMessageVisible(false);
                     mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
                     // If the search has finished and no previous snack has been shown
-                    if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode != Utils.NO_ACTION && !Utils.sListWillBeLoadedAfterEmpty) {
+                    if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode != Utils.NO_ACTION
+                            && !Utils.sListWillBeLoadedAfterEmpty) {
                         Snackbar.make(findViewById(android.R.id.content),
                                 getSnackBarText(Utils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_LONG).show();
@@ -131,20 +130,17 @@ public class MainActivity extends AppCompatActivity {
                 checkForSearchingStatusToEnableRefresh();
             }
 
-            mSwipeRefreshLayout.setEnabled(true);
+            if (Utils.sSearchingForEarthquakes) {
+                mProgressBar.setVisibility(View.VISIBLE);
+            } else {
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
+
 
             // Hide the progress bar. It is shown only when the app starts running.
-            mProgressBar.setVisibility(View.INVISIBLE);
+            // mProgressBar.setVisibility(View.INVISIBLE);
         });
 
-    }
-
-
-    private void setupSwipeRefreshLayout() {
-        mSwipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
-        mSwipeRefreshLayout.setEnabled(false);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeRefreshLayout.setOnRefreshListener(this::doRefreshActions);
     }
 
 
@@ -204,13 +200,16 @@ public class MainActivity extends AppCompatActivity {
     // Helper method that shows the message and hides the RecyclerView and vice versa.
     private void setMessageVisible(boolean showMessage) {
         if (showMessage) {
-            mFloatingActionButton.hide();
             mRecyclerView.setVisibility(View.GONE);
-            mMessageRelativeLayout.setVisibility(View.VISIBLE);
+            mMessageTextView.setVisibility(View.VISIBLE);
         } else {
-            mFloatingActionButton.show();
             mRecyclerView.setVisibility(View.VISIBLE);
-            mMessageRelativeLayout.setVisibility(View.GONE);
+            if (mNumberOfEarthquakesOnList>UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING) {
+                mRecyclerViewFastScroller.setVisibility(View.VISIBLE);
+            } else {
+                mRecyclerViewFastScroller.setVisibility(View.INVISIBLE);
+            }
+            mMessageTextView.setVisibility(View.GONE);
         }
     }
 
@@ -218,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+        MenuCompat.setGroupDividerEnabled(menu, true);
         mMenu = menu;
         // If the app is not searching for earthquakes show the refresh menu item.
         if (!Utils.sSearchingForEarthquakes) {
@@ -240,7 +240,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_activity_main_action_search_preferences:
                 showSearchPreferences();
-                return true;
+                break;
+            case R.id.menu_activity_main_action_list_information:
+                showEarthquakesListInformation();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -253,10 +256,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void showEarthquakesListInformation() {
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance("Test", "Test");
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
+    }
+
+
     private void doRefreshActions() {
         // Show stop menu item
         setupRefreshMenuItem(false);
-        mSwipeRefreshLayout.setRefreshing(true);
+        mProgressBar.setVisibility(View.VISIBLE);
         Utils.sSearchingForEarthquakes = true;
         setMessage(Utils.SEARCHING);
         mMainActivityViewModel.loadEarthquakes();
@@ -268,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
         if (mMenu != null) {
             setupRefreshMenuItem(true);
         }
-        mSwipeRefreshLayout.setRefreshing(false);
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
 
@@ -289,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         if (!Utils.sSearchingForEarthquakes) {
             enableRefresh();
         } else {
-            mSwipeRefreshLayout.setRefreshing(true);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
     }
 

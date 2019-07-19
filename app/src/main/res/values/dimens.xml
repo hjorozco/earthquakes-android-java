@@ -5,6 +5,7 @@
     <dimen name="recycler_view_divider_inset_right">16dp</dimen>
     <dimen name="recycler_view_divider_size">1dp</dimen>
 
+    <dimen name="application_tiny_margin">4dp</dimen>
     <dimen name="application_standard_margin">16dp</dimen>
 
     <dimen name="application_small_padding">8dp</dimen>
@@ -19,5 +20,8 @@
     <dimen name="message_icons_size">96dp</dimen>
 
     <dimen name="fab_size">32dp</dimen>
+
+    <dimen name="recycler_view_fast_scroll_custom_handle_width">4dp</dimen>
+    <dimen name="recycler_view_fast_scroll_custom_handle_height">32dp</dimen>
 
 </resources>
