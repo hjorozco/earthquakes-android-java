@@ -5,12 +5,13 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
+import android.text.Html;
 
 import androidx.preference.PreferenceManager;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.models.EarthquakesListInformationValues;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Feature;
@@ -32,12 +33,10 @@ import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF
  */
 public class Utils {
 
-    private static String mOrderBy, mMinMagnitude, mMaxMagnitude, mStartDateTime, mEndDateTime,
-            mDatePeriod, mStartDate, mEndDate, mLimit, mLocation;
+    private static String mLimit;
+    private static String mLocation;
 
     private static final int MILLISECONDS_IN_ONE_HOUR = 3600000;
-
-    private static final String USGS_REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query";
 
     public static final byte NO_ACTION = 0;
     public static final byte SEARCHING = 1;
@@ -47,21 +46,23 @@ public class Utils {
     public static final byte SEARCH_RESULT_NULL = 5;
     public static final byte SEARCH_CANCELLED = 6;
 
-
-    // Used on the information message
-    private static String sNumberOfEarthquakesDisplayed;
-
     // Used by the map activity
     public static List<Earthquake> sEarthquakesList;
 
+    // Used to display the earthquakes list information
+    public static EarthquakesListInformationValues
+            sEarthquakesListInformationValuesWhenSearchStarted = null;
+    public static EarthquakesListInformationValues sEarthquakesListInformationValues = null;
 
-    // Global variables
+    // Other global variables
     public static boolean sSearchingForEarthquakes = true;
     public static byte sLoadEarthquakesResultCode = NO_ACTION;
     public static boolean sListWillBeLoadedAfterEmpty = true;
+    public static boolean sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
 
 
-    public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context, Earthquakes retrofitResult) {
+    public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context,
+                                                                        Earthquakes retrofitResult) {
 
         String location = mLocation;
         String limit = mLimit;
@@ -151,17 +152,10 @@ public class Utils {
             }
         }
 
-        sNumberOfEarthquakesDisplayed = String.valueOf(earthquakesAddedToListCounter);
-
         // Return the list of earthquakes
         return earthquakeList;
     }
 
-
-    // Returns the number of Earthquakes that will be displayed on the list.
-    public static String getNumberOfEarthquakesDisplayed() {
-        return sNumberOfEarthquakesDisplayed;
-    }
 
     // Returns the List<Earthquake> from the USGS query.
     public static List<Earthquake> getEarthquakesList() {
@@ -181,19 +175,19 @@ public class Utils {
         SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
 
         // Gets a String with the value of the "Sort by" setting.
-        mOrderBy = sharedPreferences.getString(
+        String orderBy = sharedPreferences.getString(
                 context.getString(R.string.search_preference_sort_by_key),
                 context.getString(R.string.search_preference_sort_by_default_value));
 
 
         // Gets an integer with the value of the "minimum magnitude" setting and converts it to a String
-        mMinMagnitude = String.valueOf(sharedPreferences.getInt(
+        String minMagnitude = String.valueOf(sharedPreferences.getInt(
                 context.getString(R.string.search_preference_minimum_magnitude_key),
                 context.getResources().getInteger(R.integer.search_preference_minimum_magnitude_default_value)));
 
 
         // Gets a integer with the value of the "maximum magnitude" setting and converts it to a String
-        mMaxMagnitude = String.valueOf(sharedPreferences.getInt(
+        String maxMagnitude = String.valueOf(sharedPreferences.getInt(
                 context.getString(R.string.search_preference_maximum_magnitude_key),
                 context.getResources().getInteger(R.integer.search_preference_maximum_magnitude_default_value)));
 
@@ -208,8 +202,8 @@ public class Utils {
         String startDateTime = currentTime;
         String endDateTime = currentTime;
 
-        mStartDateTime = currentTime12Hours;
-        mEndDateTime = currentTime12Hours;
+        String startDateTimeForListInfo = currentTime12Hours;
+        String endDateTimeForListInfo = currentTime12Hours;
 
         // Gets the time zone of the device
         TimeZone timeZone = TimeZone.getDefault();
@@ -223,13 +217,13 @@ public class Utils {
 
         // Depending on the "date range" value stored on preferences, sets the value of the "starttime"
         // and "endtime" options of the JSON query sent to the USGS. Calculates the start date time offset to UTC.
-        mDatePeriod = sharedPreferences.getString(
+        String datePeriod = sharedPreferences.getString(
                 context.getString(R.string.search_preference_date_range_key),
                 context.getString(R.string.search_preference_date_range_default_value));
         String startDateJSONQuery, endDateJSONQuery;
         long startDateInMilliseconds, endDateInMilliseconds;
 
-        switch (mDatePeriod) {
+        switch (datePeriod) {
             case "day":
                 startDateInMilliseconds = currentTimeInMilliseconds - millisecondsInOneDay;
                 startDateTimeOffset =
@@ -265,9 +259,9 @@ public class Utils {
                         context.getResources().getInteger(R.integer.search_preference_end_date_default_value));
 
                 startDateTime = "00:00:00";
-                mStartDateTime = "0:00 AM";
+                startDateTimeForListInfo = "0:00 AM";
                 endDateTime = "23:59:59";
-                mEndDateTime = "11:59 PM";
+                endDateTimeForListInfo = "11:59 PM";
 
                 startDateTimeOffset = timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
                 endDateTimeOffset = timeZone.getOffset(endDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
@@ -275,11 +269,11 @@ public class Utils {
                 break;
         }
 
-        mStartDate = dateForDisplayFormatter().format(startDateInMilliseconds);
+        String startDateForListInfo = dateForDisplayFormatter().format(startDateInMilliseconds);
         // Creates the startDate string that will be passed as a parameter to the USGS JSON query.
         startDateJSONQuery = dateForQueryFormatter().format(startDateInMilliseconds)
                 + "T" + startDateTime + startDateTimeOffset + ":00";
-        mEndDate = dateForDisplayFormatter().format(endDateInMilliseconds);
+        String endDateForListInfo = dateForDisplayFormatter().format(endDateInMilliseconds);
         // Creates the endDate string that will be passed as a parameter to the USGS JSON query.
         endDateJSONQuery = dateForQueryFormatter().format(endDateInMilliseconds)
                 + "T" + endDateTime + endDateTimeOffset + ":00";
@@ -319,20 +313,13 @@ public class Utils {
             queryLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
         }
 
-        // Create the URI that will be used to query the USGS
-        Uri baseUri = Uri.parse(USGS_REQUEST_URL);
-        Uri.Builder uriBuilder = baseUri.buildUpon();
-
-        uriBuilder.appendQueryParameter("format", "geojson");
-        uriBuilder.appendQueryParameter("starttime", startDateJSONQuery);
-        uriBuilder.appendQueryParameter("endtime", endDateJSONQuery);
-        uriBuilder.appendQueryParameter("limit", queryLimit);
-        uriBuilder.appendQueryParameter("minmagnitude", mMinMagnitude);
-        uriBuilder.appendQueryParameter("maxmagnitude", mMaxMagnitude);
-        uriBuilder.appendQueryParameter("orderby", mOrderBy);
+        // Stores the values needed to display the Earthquakes list information message
+        sEarthquakesListInformationValuesWhenSearchStarted = new EarthquakesListInformationValues(
+                orderBy, mLocation, datePeriod, startDateForListInfo, endDateForListInfo, startDateTimeForListInfo, endDateTimeForListInfo,
+                minMagnitude, maxMagnitude, mLimit);
 
         return new EarthquakesQueryParameters(startDateJSONQuery, endDateJSONQuery, queryLimit,
-                mMinMagnitude, mMaxMagnitude, mOrderBy);
+                minMagnitude, maxMagnitude, orderBy);
     }
 
 
@@ -361,6 +348,92 @@ public class Utils {
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             return (networkInfo != null && networkInfo.isConnected());
         }
+    }
+
+
+    // Creates a message about the list of earthquakes .
+    public static CharSequence createCurrentListAlertDialogMessage(Context context, EarthquakesListInformationValues values) {
+
+        String string1, string2, string3, string4, string5, string6, string7, string8, string9,
+                string10, string11, string12, string13, orderBy;
+
+        orderBy = values.getOrderBy();
+
+        string2 = values.getNumberOfEarthquakesDisplayed();
+
+        // If there is only one earthquake on the list, set the strings values to singular.
+        if (string2.equals("1")) {
+            string1 = context.getString(R.string.the_text_singular);
+            string2 = "";
+            if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
+                string3 = context.getString(R.string.powerful_text_singular);
+            } else {
+                string3 = context.getString(R.string.recent_text_singular);
+            }
+            string4 = context.getString(R.string.earthquakes_text_singular);
+            string13 = "";
+        } else {
+            // If there is more than one earthquake on the list, set the strings values to plural
+            string1 = context.getString(R.string.the_text_plural);
+            string4 = context.getString(R.string.earthquakes_text_plural);
+
+            if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
+                string3 = context.getString(R.string.powerful_text_plural);
+                string13 = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
+                        context.getString(R.string.magnitude_text), values.getFirstEarthquakeMag(), values.getLastEarthquakeMag());
+
+            } else {
+                string3 = context.getString(R.string.recent_text_plural);
+
+                string13 = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
+                        context.getString(R.string.date_text), values.getFirstEarthquakeDate(), values.getLastEarthquakeDate());
+            }
+
+        }
+
+        string5 = values.getLocation();
+        if (string5.isEmpty()) {
+            string5 = context.getString(R.string.the_whole_world_text);
+        }
+
+        switch (values.getDatePeriod()) {
+            case "day":
+                string6 = context.getString(R.string.twenty_four_hours_text);
+                break;
+            case "week":
+                string6 = context.getString(R.string.seven_days_text);
+                break;
+            case "month":
+                string6 = context.getString(R.string.thirty_days_text);
+                break;
+            case "year":
+                string6 = context.getString(R.string.three_hundred_sixty_five_days_text);
+                break;
+            default:
+                string6 = context.getString(R.string.custom_text);
+                string6 = LanguageUtils.changeFirstLetterToLowercase(string6);
+                break;
+        }
+
+        string7 = values.getEndDate() + " " + values.getEndDateTime();
+        string8 = values.getStartDate() + " " + values.getStartDateTime();
+        string9 = values.getMinMagnitude();
+        string10 = values.getMaxMagnitude();
+
+        if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
+            string11 = context.getString(R.string.search_preference_sort_by_magnitude_entry);
+        } else {
+            string11 = context.getString(R.string.search_preference_sort_by_date_entry);
+        }
+        string11 = LanguageUtils.changeFirstLetterToLowercase(string11);
+
+        string12 = values.getLimit();
+
+        String text = String.format
+                (context.getString(R.string.current_list_alert_dialog_message_1), string1, string2, string3,
+                        string4, string5, string6, string7, string8, string9, string10, string11, string12, string13);
+
+        return Html.fromHtml(text);
     }
 
 }

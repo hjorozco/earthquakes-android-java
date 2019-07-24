@@ -20,6 +20,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
+
 public class MainActivityViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Earthquake>> mEarthquakes;
@@ -72,6 +73,10 @@ public class MainActivityViewModel extends AndroidViewModel {
                                 Utils.sEarthquakesList = earthquakeList;
 
                                 setLoadEarthquakesResult(earthquakeList, Utils.SEARCH_RESULT_NON_NULL);
+
+                                if (earthquakeList.size() > 0) {
+                                    Utils.sOneOrMoreEarthquakesFoundByRetrofitQuery = true;
+                                }
 
                             } else {
                                 Log.d("TESTING", "Retrofit result was NULL");
