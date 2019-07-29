@@ -10,13 +10,14 @@ import com.weebly.hectorjorozco.earthquakes.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class LanguageUtils {
 
 
-    public static String getLocaleLanguage(){
+    public static String getLocaleLanguage() {
         String localeLanguage;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             localeLanguage = Resources.getSystem().getConfiguration().getLocales().get(0).getLanguage();
@@ -384,9 +385,9 @@ public class LanguageUtils {
         string = string.replace("", "");
         string = string.replace(" Unimak Island region", " región de la Isla Unimak");
         string = string.replace(" Unimak Island", " Isla Unimak");
-        string = string.replace(" U.S. Virgin Islands region", " región de las Islas Vírgenes de EE.UU");
-        string = string.replace(" U.S. Virgin Islands", " Islas Vírgenes de EE.UU");
-        string = string.replace(" U.S."," EE.UU.");
+        string = string.replace(" U.S. Virgin Islands region", " región de las Islas Vírgenes de EE.UU.");
+        string = string.replace(" U.S. Virgin Islands", " Islas Vírgenes de EE.UU.");
+        string = string.replace(" U.S.", " EE.UU.");
 
         // V
         string = string.replace("", "");
@@ -516,7 +517,7 @@ public class LanguageUtils {
      */
     public static String addUSAStringLocation(String string) {
         String[] usaStatesNames = {", Alabama", ", Alaska", ", Arizona", ", Arkansas", ", California",
-                ", Colorado", ", Connecticut", ", Delaware", ", Florida", ", Georgia", ", Hawaii",
+                ", Colorado", ", Connecticut", ", Delaware", ", Florida", ", Georgia", ", Guam", ", Hawaii",
                 ", Idaho", ", Illinois", ", Indiana", ", Iowa", ", Kansas", ", Kentucky", ", Louisiana",
                 ", Maine", ", Maryland", ", Massachusetts", ", Michigan", ", Minnesota", ", Mississippi",
                 ", Missouri", ", Montana", ", Nebraska", ", Nevada", ", New Hampshire", ", New Jersey",
@@ -534,10 +535,25 @@ public class LanguageUtils {
             }
             i++;
         }
-        while (noExit && i<50);
+        while (noExit && i < 50);
 
         return string;
     }
+
+
+    public static String abbreviateUnitedStatesName(String string) {
+        if (string.equals("united states of america") || string.equals("united states") ||
+                string.equals("usa") || string.equals("us")) {
+            return "u.s.";
+        } else if (string.equals("estados unidos de america") || string.equals("estados unidos") ||
+                string.equals("e.u.a") || string.equals("eua") ||string.equals("eu")) {
+            return "ee.uu.";
+        } else {
+            return string;
+        }
+    }
+
+   // TODO Method to convert US abbreviation to all caps
 
     /**
      * Checks if the filter process of a location is not a special case
@@ -681,6 +697,99 @@ public class LanguageUtils {
     public static String formatTime(Date dateObject) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         return timeFormat.format(dateObject);
+    }
+
+
+    /**
+     * Converts all the whitespace separated words in a String into capitalized words,
+     * that is each word is made up of a titlecase character and then a series of
+     * lowercase characters.
+     *
+     * @param str the String to capitalize, may be null
+     * @return capitalized String, null if null String input
+     */
+    public static String capitalizeFirstLetterOfEachWord(final String str) {
+        return capitalizeFirstLetterOfEachWord(str, (char[]) null);
+    }
+
+    /**
+     * Converts all the delimiter separated words in a String into capitalized words,
+     * that is each word is made up of a title case character and then a series of
+     * lowercase characters.
+     *
+     * @param str        the String to capitalize, may be null
+     * @param delimiters set of characters to determine capitalization, null means whitespace
+     * @return capitalized String, null  if null String input
+     */
+    private static String capitalizeFirstLetterOfEachWord(String str, final char... delimiters) {
+        if (str.isEmpty()) {
+            return str;
+        }
+        str = str.toLowerCase();
+        return capitalize(str, delimiters);
+    }
+
+
+    /**
+     * Capitalizes all the delimiter separated words in a String.
+     * Only the first character of each word is changed.
+     *
+     * @param str        the String to capitalize, may be null
+     * @param delimiters set of characters to determine capitalization, null means whitespace
+     * @return capitalized String, null if null String input
+     */
+    private static String capitalize(final String str, final char... delimiters) {
+        if (str.isEmpty()) {
+            return str;
+        }
+        final Set<Integer> delimiterSet = generateDelimiterSet(delimiters);
+        final int strLen = str.length();
+        final int[] newCodePoints = new int[strLen];
+        int outOffset = 0;
+
+        boolean capitalizeNext = true;
+        for (int index = 0; index < strLen; ) {
+            final int codePoint = str.codePointAt(index);
+
+            if (delimiterSet.contains(codePoint)) {
+                capitalizeNext = true;
+                newCodePoints[outOffset++] = codePoint;
+                index += Character.charCount(codePoint);
+            } else if (capitalizeNext) {
+                final int titleCaseCodePoint = Character.toTitleCase(codePoint);
+                newCodePoints[outOffset++] = titleCaseCodePoint;
+                index += Character.charCount(titleCaseCodePoint);
+                capitalizeNext = false;
+            } else {
+                newCodePoints[outOffset++] = codePoint;
+                index += Character.charCount(codePoint);
+            }
+        }
+        return new String(newCodePoints, 0, outOffset);
+    }
+
+
+    /**
+     * Converts an array of delimiters to a hash set of code points. Code point of space(32) is added as the default
+     * value if delimiters is null. The generated hash set provides O(1) lookup time.
+     *
+     * @param delimiters set of characters to determine capitalization, null means whitespace
+     * @return Set<Integer>
+     */
+    private static Set<Integer> generateDelimiterSet(final char[] delimiters) {
+        final Set<Integer> delimiterHashSet = new HashSet<>();
+        if (delimiters == null || delimiters.length == 0) {
+            if (delimiters == null) {
+                delimiterHashSet.add(Character.codePointAt(new char[]{' '}, 0));
+            }
+
+            return delimiterHashSet;
+        }
+
+        for (int index = 0; index < delimiters.length; index++) {
+            delimiterHashSet.add(Character.codePointAt(delimiters, index));
+        }
+        return delimiterHashSet;
     }
 
 }

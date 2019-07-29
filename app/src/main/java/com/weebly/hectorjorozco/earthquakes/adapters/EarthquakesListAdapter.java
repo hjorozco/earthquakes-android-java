@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private Context mContext;
     private List<Earthquake> mEarthquakes;
-
+    private String mLocation;
 
     // The adapter constructor
     public EarthquakesListAdapter(Context context) {
@@ -57,16 +58,25 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-            String earthquakesWordSuffix, foundWordSuffix;
+            String earthquakesWordSuffix, foundWordSuffix, titlePartTwo;
             if (mEarthquakes.size()==1){
                 earthquakesWordSuffix = "";
                 foundWordSuffix = "";
+                titlePartTwo = "";
             } else {
                 earthquakesWordSuffix = mContext.getString(R.string.earthquakes_list_title_earthquakes_word_suffix);
                 foundWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_word_suffix);
+
+                if (Utils.sEarthquakesListInformationValues.getOrderBy()
+                        .equals(mContext.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
+                    titlePartTwo = mContext.getString(R.string.earthquakes_list_title_sorted_by_magnitude_text);
+                } else {
+                    titlePartTwo = mContext.getString(R.string.earthquakes_list_title_sorted_by_date_text);
+                }
             }
 
-            titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title, mEarthquakes.size(), earthquakesWordSuffix, foundWordSuffix));
+            titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title,
+                    mEarthquakes.size(), earthquakesWordSuffix, foundWordSuffix, mLocation, titlePartTwo));
 
         } else if (holder instanceof EarthquakeViewHolder) {
 
@@ -90,7 +100,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             int magnitudeColor = earthquakeInfoColors.getMagnitudeColor();
             int magnitudeBackgroundColor = earthquakeInfoColors.getMagnitudeBackgroundColor();
             magnitudeCircle.setColor(magnitudeBackgroundColor);
-            magnitudeCircle.setStroke(10, magnitudeColor);
+            magnitudeCircle.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.magnitude_circle_stroke_width),
+                    magnitudeColor);
             earthquakeViewHolder.magnitudeTextView.setTextColor(magnitudeColor);
 
 
@@ -147,6 +158,18 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mEarthquakes = earthquakes;
         notifyDataSetChanged();
     }
+
+
+    public void setLocation(String location){
+        // TODO If location is USA add "the"
+
+        if (location.isEmpty()){
+            mLocation = mContext.getString(R.string.the_whole_world_text);
+        } else {
+            mLocation = LanguageUtils.capitalizeFirstLetterOfEachWord(location);
+        }
+    }
+
 
     // Inner class for creating ViewHolders
     class EarthquakeViewHolder extends RecyclerView.ViewHolder {

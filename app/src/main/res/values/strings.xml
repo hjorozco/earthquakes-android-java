@@ -47,10 +47,11 @@
     <string name="no_server_response_text">No response from the USGS server</string>
     <string name="earthquakes_list_updated_text">Earthquakes list updated</string>
 
-    <string name="earthquakes_list_title">%1$d earthquake%2$s found%3$s.</string>
+    <string name="earthquakes_list_title">%1$d earthquake%2$s found%3$s in %4$s. %5$s</string>
     <string name="earthquakes_list_title_earthquakes_word_suffix">s</string>
     <string name="earthquakes_list_title_found_word_suffix" />
-
+    <string name="earthquakes_list_title_sorted_by_date_text">Sorted by date.</string>
+    <string name="earthquakes_list_title_sorted_by_magnitude_text">Sorted by magnitude.</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
@@ -131,7 +132,7 @@
     <string name="search_preference_max_number_of_earthquakes_title">Max number of earthquakes</string>
     <string name="search_preference_max_number_of_earthquakes_key" translatable="false">limit</string>
     <string name="search_preference_max_number_of_earthquakes_default_value" translatable="false">10</string>
-    <string name="search_preference_max_number_of_earthquakes_not_set_text">Not set . Will display a maximum of 20,000 earthquakes.</string>
+    <string name="search_preference_max_number_of_earthquakes_not_set_text">Not set. Will display a maximum of 20,000 earthquakes.</string>
     <string name="search_preference_max_number_of_earthquakes_zero_text">0. Will not display any earthquake.</string>
     <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000. Limit number for a search.</string>
 

@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -16,6 +17,7 @@ import androidx.preference.SeekBarPreference;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDialogFragmentCompat;
+import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -173,18 +175,24 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
     private void setupLocationEditTextPreference(EditTextPreference editTextPreference) {
 
+        // TODO Convert US abbravaition to all caps.
+
         if (editTextPreference != null) {
 
             editTextPreference.setOnBindEditTextListener(
                     editText -> {
                         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
                                 LOCATION_EDIT_TEXT_LENGTH_FILTER)});
-                        editText.setText(editText.getText().toString().trim());
+                        editText.setText(LanguageUtils.
+                                capitalizeFirstLetterOfEachWord(editText.getText().toString().trim().
+                                        replaceAll(" +", " ")));
                         editText.selectAll();
                     });
 
             editTextPreference.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
-                String editTextPreferenceText = preference.getText().trim();
+                String editTextPreferenceText = LanguageUtils.
+                        capitalizeFirstLetterOfEachWord(preference.getText().trim().
+                                replaceAll(" +", " "));
                 if (TextUtils.isEmpty(editTextPreferenceText)) {
                     return getString(R.string.search_preference_location_not_set_value);
                 }

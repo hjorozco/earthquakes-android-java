@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawableTop="@drawable/ic_message_searching_earthquakes"
+
             android:drawablePadding="@dimen/application_big_padding"
             android:padding="@dimen/application_big_padding"
             android:text="@string/searching_earthquakes_text"

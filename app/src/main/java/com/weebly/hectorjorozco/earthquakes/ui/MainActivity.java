@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
 
+        setMessage(Utils.SEARCHING);
+
         setupRecyclerView();
 
         setupViewModel();
@@ -128,7 +130,15 @@ public class MainActivity extends AppCompatActivity {
                     // If one or more earthquakes were found
                     mNumberOfEarthquakesOnList = earthquakes.size();
                     setMessageVisible(false);
+
+                    // If there were new earthquakes displayed
+                    if (Utils.sLoadEarthquakesResultCode == Utils.SEARCH_RESULT_NON_NULL) {
+                        setEarthquakesListInformationValues(earthquakes.get(0),
+                                earthquakes.get(earthquakes.size() - 1));
+                    }
+
                     mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
+                    mEarthquakesListAdapter.setLocation(Utils.sEarthquakesListInformationValues.getLocation());
 
                     // If the search has finished and no previous snack has been shown
                     if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode != Utils.NO_ACTION
@@ -141,13 +151,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    // If there were new earthquakes displayed
-                    if (Utils.sLoadEarthquakesResultCode == Utils.SEARCH_RESULT_NON_NULL) {
-                        setEarthquakesListInformationValues(earthquakes.get(0),
-                                earthquakes.get(earthquakes.size() - 1));
-                    }
-
+                    // Flag used when activity is recreated to indicate that no action is tacking place
                     Utils.sLoadEarthquakesResultCode = Utils.NO_ACTION;
+
                     Utils.sListWillBeLoadedAfterEmpty = false;
 
                     if (mMenu != null && Utils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
@@ -317,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Utils.createCurrentListAlertDialogMessage(this, Utils.sEarthquakesListInformationValues),
-                        "List information");
+                        getString(R.string.menu_activity_main_action_list_information_title));
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));

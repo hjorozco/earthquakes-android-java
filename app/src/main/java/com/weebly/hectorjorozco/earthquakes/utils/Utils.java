@@ -85,6 +85,7 @@ public class Utils {
         // accents and adds a space at beginning and end of the it.
         location = location.toLowerCase(locale);
         location = LanguageUtils.removeSpanishAccents(location);
+        location = LanguageUtils.abbreviateUnitedStatesName(location);
         location = " " + location + " ";
 
         List<Earthquake> earthquakeList = new ArrayList<>();
@@ -280,7 +281,8 @@ public class Utils {
 
         mLocation = sharedPreferences.getString(
                 context.getString(R.string.search_preference_location_key),
-                context.getString(R.string.search_preference_location_default_value)).trim();
+                context.getString(R.string.search_preference_location_default_value)).trim().
+                replaceAll(" +", " ");
 
         // Gets a String with the value of the "Max earthquakes to display" setting.
         mLimit = sharedPreferences.getString(
