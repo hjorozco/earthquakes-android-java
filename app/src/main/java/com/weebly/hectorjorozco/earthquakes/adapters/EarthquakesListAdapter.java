@@ -59,7 +59,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
             String earthquakesWordSuffix, foundWordSuffix, titlePartTwo;
-            if (mEarthquakes.size()==1){
+            if (mEarthquakes.size() == 1) {
                 earthquakesWordSuffix = "";
                 foundWordSuffix = "";
                 titlePartTwo = "";
@@ -83,7 +83,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             EarthquakeViewHolder earthquakeViewHolder = (EarthquakeViewHolder) holder;
 
             // Get the {@link Earthquake} object located at this position in the list
-            Earthquake currentEarthquake = mEarthquakes.get(position-1);
+            Earthquake currentEarthquake = mEarthquakes.get(position - 1);
 
             // ********************  DISPLAY MAGNITUDE OF THE EARTHQUAKE ********************
 
@@ -160,13 +160,18 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
-    public void setLocation(String location){
+    public void setLocation(String location) {
         // TODO If location is USA add "the"
 
-        if (location.isEmpty()){
+        if (location.isEmpty()) {
             mLocation = mContext.getString(R.string.the_whole_world_text);
         } else {
-            mLocation = LanguageUtils.capitalizeFirstLetterOfEachWord(location);
+            if (LanguageUtils.isUnitedStatesAbbreviation(location) ||
+                    LanguageUtils.isUnitedStatesName(location)) {
+                mLocation = mContext.getString(R.string.earthquakes_list_title_us_name);
+            } else {
+                mLocation = LanguageUtils.formatLocationPreferenceText(location);
+            }
         }
     }
 

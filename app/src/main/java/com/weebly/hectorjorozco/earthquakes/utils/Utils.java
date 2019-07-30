@@ -81,11 +81,8 @@ public class Utils {
         // Two letter code of the language of the device, for example: English (en) Spanish (es)
         String locality = locale.toString().substring(0, 2);
 
-        // Changes all of the location filter letters to lowercase. Then removes all Spanish
-        // accents and adds a space at beginning and end of the it.
-        location = location.toLowerCase(locale);
         location = LanguageUtils.removeSpanishAccents(location);
-        location = LanguageUtils.abbreviateUnitedStatesName(location);
+        location = LanguageUtils.setUsaSearchName(location);
         location = " " + location + " ";
 
         List<Earthquake> earthquakeList = new ArrayList<>();
@@ -282,7 +279,8 @@ public class Utils {
         mLocation = sharedPreferences.getString(
                 context.getString(R.string.search_preference_location_key),
                 context.getString(R.string.search_preference_location_default_value)).trim().
-                replaceAll(" +", " ");
+                replaceAll(" +", " ").
+                toLowerCase(Resources.getSystem().getConfiguration().locale);
 
         // Gets a String with the value of the "Max earthquakes to display" setting.
         mLimit = sharedPreferences.getString(

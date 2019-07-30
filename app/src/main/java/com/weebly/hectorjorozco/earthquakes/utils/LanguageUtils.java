@@ -10,11 +10,22 @@ import com.weebly.hectorjorozco.earthquakes.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Locale;
 
 
 public class LanguageUtils {
+
+
+    private static Locale sLocale = Resources.getSystem().getConfiguration().locale;
+
+    private static String[] sArticles = {"of", "de", "the", "las", "los"};
+    private static String[] sUsaEnglishAbbreviations = {"usa", "u.s.a.", "u.s.a", "us", "u.s.", "u.s"};
+    private static String[] sUsaSpanishAbbreviations = {"ee.uu.", "ee.uu", "eeuu", "eua", "e.u.a.", "e.u.a", "eu", "e.u.", "e.u"};
+    private static String[] sUsaEnglishNames = {"united states of america", "united states"};
+    private static String[] sUsaSpanishNames = {"estados unidos de america", "estados unidos"};
+    private static String sUsaEnglishSearchName = "u.s.";
+    private static String sUsaSpanishSearchName = "ee.uu.";
+
 
 
     public static String getLocaleLanguage() {
@@ -541,19 +552,117 @@ public class LanguageUtils {
     }
 
 
-    public static String abbreviateUnitedStatesName(String string) {
-        if (string.equals("united states of america") || string.equals("united states") ||
-                string.equals("usa") || string.equals("us")) {
-            return "u.s.";
-        } else if (string.equals("estados unidos de america") || string.equals("estados unidos") ||
-                string.equals("e.u.a") || string.equals("eua") ||string.equals("eu")) {
-            return "ee.uu.";
+    /**
+     * Formats the location to be displayed correctly in the location EditText Preference Text
+     * @param string The location text to be formatted
+     * @return The location formatted text
+     */
+    public static String formatLocationPreferenceText(String string) {
+
+        string = string.trim().replaceAll(" +", " ").toLowerCase(sLocale);
+
+        if (isUnitedStatesAbbreviation(string)) {
+            return string.toUpperCase(sLocale);
         } else {
-            return string;
+            return LanguageUtils.capitalizeLocation(string);
         }
     }
 
-   // TODO Method to convert US abbreviation to all caps
+
+    /**
+     * Capitalizes every word in a location except articles
+     *
+     * @param location The location to capitalize
+     * @return The capitalizad location
+     */
+    private static String capitalizeLocation(String location) {
+
+        String[] words = location.split("\\s");  // the regex "\\s" matches one whitespace character
+        StringBuilder capitalizedLocation = new StringBuilder();
+
+        for (String word : words) {
+            if (isArticle(word)) {
+                capitalizedLocation.append(word).append(" ");
+            } else {
+                if (!word.isEmpty()) {
+                    capitalizedLocation.append(word.substring(0, 1).toUpperCase(sLocale))
+                            .append(word.substring(1)).append(" ");
+                }
+            }
+        }
+
+        return capitalizedLocation.toString().trim();
+    }
+
+
+    /**
+     * Checks if a word is an article
+     *
+     * @param word The word to check
+     * @return True if the word is an article, false otherwise
+     */
+    private static boolean isArticle(String word) {
+        for (String article : sArticles) {
+            if (article.equals(word)) return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Checks if a word is an abbreviation of the United States name in lowercase
+     *
+     * @param word The word to check
+     * @return True if the word is an abbreviation of the United states name, false otherwise
+     */
+    public static boolean isUnitedStatesAbbreviation(String word) {
+        for (String abbreviation : sUsaEnglishAbbreviations) {
+            if (abbreviation.equals(word)) return true;
+        }
+        for (String abbreviation : sUsaSpanishAbbreviations) {
+            if (abbreviation.equals(word)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a word is an abbreviation of the United States name in lowercase
+     *
+     * @param word The word to check
+     * @return True if the word is an abbreviation of the United states name, false otherwise
+     */
+    public static boolean isUnitedStatesName(String word) {
+        for (String name : sUsaEnglishNames) {
+            if (name.equals(word)) return true;
+        }
+        for (String name : sUsaSpanishNames) {
+            if (name.equals(word)) return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Sets the name of the United States to u.s. or ee.uu. for search purposes
+     * @param string The USA name
+     * @return "u.s." for an english name and "ee.uu." for a spanish name
+     */
+    public static String setUsaSearchName(String string) {
+        for (String abbreviation : sUsaEnglishAbbreviations) {
+            if (abbreviation.equals(string)) return sUsaEnglishSearchName;
+        }
+        for (String name : sUsaEnglishNames) {
+            if (name.equals(string)) return sUsaEnglishSearchName;
+        }
+        for (String abbreviation : sUsaSpanishAbbreviations) {
+            if (abbreviation.equals(string)) return sUsaSpanishSearchName;
+        }
+        for (String name : sUsaSpanishNames) {
+            if (name.equals(string)) return sUsaSpanishSearchName;
+        }
+        return string;
+    }
+
 
     /**
      * Checks if the filter process of a location is not a special case
@@ -699,97 +808,5 @@ public class LanguageUtils {
         return timeFormat.format(dateObject);
     }
 
-
-    /**
-     * Converts all the whitespace separated words in a String into capitalized words,
-     * that is each word is made up of a titlecase character and then a series of
-     * lowercase characters.
-     *
-     * @param str the String to capitalize, may be null
-     * @return capitalized String, null if null String input
-     */
-    public static String capitalizeFirstLetterOfEachWord(final String str) {
-        return capitalizeFirstLetterOfEachWord(str, (char[]) null);
-    }
-
-    /**
-     * Converts all the delimiter separated words in a String into capitalized words,
-     * that is each word is made up of a title case character and then a series of
-     * lowercase characters.
-     *
-     * @param str        the String to capitalize, may be null
-     * @param delimiters set of characters to determine capitalization, null means whitespace
-     * @return capitalized String, null  if null String input
-     */
-    private static String capitalizeFirstLetterOfEachWord(String str, final char... delimiters) {
-        if (str.isEmpty()) {
-            return str;
-        }
-        str = str.toLowerCase();
-        return capitalize(str, delimiters);
-    }
-
-
-    /**
-     * Capitalizes all the delimiter separated words in a String.
-     * Only the first character of each word is changed.
-     *
-     * @param str        the String to capitalize, may be null
-     * @param delimiters set of characters to determine capitalization, null means whitespace
-     * @return capitalized String, null if null String input
-     */
-    private static String capitalize(final String str, final char... delimiters) {
-        if (str.isEmpty()) {
-            return str;
-        }
-        final Set<Integer> delimiterSet = generateDelimiterSet(delimiters);
-        final int strLen = str.length();
-        final int[] newCodePoints = new int[strLen];
-        int outOffset = 0;
-
-        boolean capitalizeNext = true;
-        for (int index = 0; index < strLen; ) {
-            final int codePoint = str.codePointAt(index);
-
-            if (delimiterSet.contains(codePoint)) {
-                capitalizeNext = true;
-                newCodePoints[outOffset++] = codePoint;
-                index += Character.charCount(codePoint);
-            } else if (capitalizeNext) {
-                final int titleCaseCodePoint = Character.toTitleCase(codePoint);
-                newCodePoints[outOffset++] = titleCaseCodePoint;
-                index += Character.charCount(titleCaseCodePoint);
-                capitalizeNext = false;
-            } else {
-                newCodePoints[outOffset++] = codePoint;
-                index += Character.charCount(codePoint);
-            }
-        }
-        return new String(newCodePoints, 0, outOffset);
-    }
-
-
-    /**
-     * Converts an array of delimiters to a hash set of code points. Code point of space(32) is added as the default
-     * value if delimiters is null. The generated hash set provides O(1) lookup time.
-     *
-     * @param delimiters set of characters to determine capitalization, null means whitespace
-     * @return Set<Integer>
-     */
-    private static Set<Integer> generateDelimiterSet(final char[] delimiters) {
-        final Set<Integer> delimiterHashSet = new HashSet<>();
-        if (delimiters == null || delimiters.length == 0) {
-            if (delimiters == null) {
-                delimiterHashSet.add(Character.codePointAt(new char[]{' '}, 0));
-            }
-
-            return delimiterHashSet;
-        }
-
-        for (int index = 0; index < delimiters.length; index++) {
-            delimiterHashSet.add(Character.codePointAt(delimiters, index));
-        }
-        return delimiterHashSet;
-    }
 
 }

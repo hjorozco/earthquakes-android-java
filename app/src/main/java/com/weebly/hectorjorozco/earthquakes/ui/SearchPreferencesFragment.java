@@ -175,24 +175,20 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
     private void setupLocationEditTextPreference(EditTextPreference editTextPreference) {
 
-        // TODO Convert US abbravaition to all caps.
-
         if (editTextPreference != null) {
 
             editTextPreference.setOnBindEditTextListener(
                     editText -> {
                         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
                                 LOCATION_EDIT_TEXT_LENGTH_FILTER)});
-                        editText.setText(LanguageUtils.
-                                capitalizeFirstLetterOfEachWord(editText.getText().toString().trim().
-                                        replaceAll(" +", " ")));
+
+                        editText.setText(LanguageUtils.formatLocationPreferenceText(editText.getText().toString()));
                         editText.selectAll();
                     });
 
             editTextPreference.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
-                String editTextPreferenceText = LanguageUtils.
-                        capitalizeFirstLetterOfEachWord(preference.getText().trim().
-                                replaceAll(" +", " "));
+
+                String editTextPreferenceText = LanguageUtils.formatLocationPreferenceText(preference.getText());
                 if (TextUtils.isEmpty(editTextPreferenceText)) {
                     return getString(R.string.search_preference_location_not_set_value);
                 }

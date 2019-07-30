@@ -52,6 +52,7 @@
     <string name="earthquakes_list_title_found_word_suffix" />
     <string name="earthquakes_list_title_sorted_by_date_text">Sorted by date.</string>
     <string name="earthquakes_list_title_sorted_by_magnitude_text">Sorted by magnitude.</string>
+    <string name="earthquakes_list_title_us_name">the United States</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
