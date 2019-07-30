@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class LanguageUtils {
+public class WordsUtils {
 
 
     private static Locale sLocale = Resources.getSystem().getConfiguration().locale;
@@ -557,14 +557,14 @@ public class LanguageUtils {
      * @param string The location text to be formatted
      * @return The location formatted text
      */
-    public static String formatLocationPreferenceText(String string) {
+    public static String formatLocationText(String string) {
 
         string = string.trim().replaceAll(" +", " ").toLowerCase(sLocale);
 
         if (isUnitedStatesAbbreviation(string)) {
             return string.toUpperCase(sLocale);
         } else {
-            return LanguageUtils.capitalizeLocation(string);
+            return WordsUtils.capitalizeLocation(string);
         }
     }
 
@@ -720,10 +720,10 @@ public class LanguageUtils {
         if (location.contains("km") && (Character.isDigit(location.charAt(location.indexOf("km") - 1)))) {
 
             splitString[0] = location.substring(0, location.indexOf("of") + 2);
-            splitString[0] = LanguageUtils.insertSpaceBeforeKm(splitString[0]);
+            splitString[0] = WordsUtils.insertSpaceBeforeKm(splitString[0]);
             splitString[1] = location.substring(location.indexOf("of") + 3);
-            splitString[1] = LanguageUtils.abbreviationsToCompleteNames(splitString[1]);
-            splitString[1] = LanguageUtils.addUSAStringLocation(splitString[1]);
+            splitString[1] = WordsUtils.abbreviationsToCompleteNames(splitString[1]);
+            splitString[1] = WordsUtils.addUSAStringLocation(splitString[1]);
 
             // If the languaje of the device is Spanish
             if (locality.equals("es")) {
@@ -731,18 +731,18 @@ public class LanguageUtils {
                 string2 = splitString[0].substring(splitString[0].indexOf("km") + 3, splitString[0].indexOf("of"));
                 string2 = string2.replace("W", "O");
                 splitString[0] = string1 + "al " + string2 + "de";
-                splitString[1] = LanguageUtils.translateToSpanish(splitString[1]);
+                splitString[1] = WordsUtils.translateToSpanish(splitString[1]);
             }
             // if the location does not contain specific indication of km
         } else {
             splitString[0] = context.getString(R.string.near_the);
             splitString[1] = location;
-            splitString[1] = LanguageUtils.abbreviationsToCompleteNames(splitString[1]);
-            splitString[1] = LanguageUtils.addUSAStringLocation(splitString[1]);
+            splitString[1] = WordsUtils.abbreviationsToCompleteNames(splitString[1]);
+            splitString[1] = WordsUtils.addUSAStringLocation(splitString[1]);
 
             // If the language of the device is Spanish
             if (locality.equals("es")) {
-                splitString[1] = LanguageUtils.translateToSpanish(splitString[1]);
+                splitString[1] = WordsUtils.translateToSpanish(splitString[1]);
             }
         }
         return splitString;
@@ -770,15 +770,15 @@ public class LanguageUtils {
             String locality = Resources.getSystem().getConfiguration().locale.toString().substring(0, 2);
 
             // Two letter code of the language of the date.
-            String dateLocality = LanguageUtils.getDateLocality(inputDate);
+            String dateLocality = WordsUtils.getDateLocality(inputDate);
             // Checks if the date is in the same language as the actual language of the device,
             // if not, then changes the date to the correct language.
             if (!locality.equals(dateLocality)) {
                 if (dateLocality.equals("es")) {
-                    inputDate = LanguageUtils.changeDateToEnglish(inputDate);
+                    inputDate = WordsUtils.changeDateToEnglish(inputDate);
                 }
                 if (dateLocality.equals("en")) {
-                    inputDate = LanguageUtils.changeDateToSpanish(inputDate);
+                    inputDate = WordsUtils.changeDateToSpanish(inputDate);
                 }
             }
 

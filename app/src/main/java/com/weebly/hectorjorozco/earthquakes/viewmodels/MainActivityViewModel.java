@@ -14,7 +14,7 @@ import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitCallback;
 import com.weebly.hectorjorozco.earthquakes.retrofit.RetrofitImplementation;
-import com.weebly.hectorjorozco.earthquakes.utils.Utils;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         Context context = getApplication();
 
         // If there is an internet connection load earthquakes from USGS.
-        if (Utils.internetConnection(context)) {
+        if (QueryUtils.internetConnection(context)) {
 
             Log.d("TESTING", "Fetching earthquakes...");
 
@@ -54,7 +54,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                     RetrofitImplementation.getRetrofitImplementationInstance();
 
             EarthquakesQueryParameters earthquakesQueryParameters =
-                    Utils.getEarthquakesQueryParameters(context);
+                    QueryUtils.getEarthquakesQueryParameters(context);
 
             mRetrofitServiceCall =
                     retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
@@ -66,41 +66,41 @@ public class MainActivityViewModel extends AndroidViewModel {
 
                                 Log.d("TESTING", "List of Earthquakes fetched successfully");
                                 List<Earthquake> earthquakeList =
-                                        Utils.getEarthquakesListFromRetrofitResult(context, retrofitResult);
+                                        QueryUtils.getEarthquakesListFromRetrofitResult(context, retrofitResult);
 
                                 // Assigns the value of the List<Earthquake>, extracted from the Retrofit
                                 // Response, to a variable that will be used by the MAPS activity.
-                                Utils.sEarthquakesList = earthquakeList;
+                                QueryUtils.sEarthquakesList = earthquakeList;
 
-                                setLoadEarthquakesResult(earthquakeList, Utils.SEARCH_RESULT_NON_NULL);
+                                setLoadEarthquakesResult(earthquakeList, QueryUtils.SEARCH_RESULT_NON_NULL);
 
                                 if (earthquakeList.size() > 0) {
-                                    Utils.sOneOrMoreEarthquakesFoundByRetrofitQuery = true;
+                                    QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = true;
                                 }
 
                             } else {
                                 Log.d("TESTING", "Retrofit result was NULL");
-                                setLoadEarthquakesResult(mEarthquakes.getValue(), Utils.SEARCH_RESULT_NULL);
+                                setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.SEARCH_RESULT_NULL);
                             }
                         }
 
                         @Override
                         public void onCancel() {
                             Log.d("TESTING", "Cancelled query");
-                            setLoadEarthquakesResult(mEarthquakes.getValue(), Utils.SEARCH_CANCELLED);
+                            setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.SEARCH_CANCELLED);
                         }
 
                     }, earthquakesQueryParameters);
 
         } else {
             Log.d("TESTING", "No internet connection");
-            setLoadEarthquakesResult(mEarthquakes.getValue(), Utils.NO_INTERNET_CONNECTION);
+            setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.NO_INTERNET_CONNECTION);
         }
     }
 
     private void setLoadEarthquakesResult(List<Earthquake> earthquakesList, byte loadEarthquakesResultCode) {
-        Utils.sSearchingForEarthquakes = false;
-        Utils.sLoadEarthquakesResultCode = loadEarthquakesResultCode;
+        QueryUtils.sSearchingForEarthquakes = false;
+        QueryUtils.sLoadEarthquakesResultCode = loadEarthquakesResultCode;
         mEarthquakes.postValue(earthquakesList);
     }
 

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +24,8 @@ import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.RecyclerViewFastScroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
-import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
-import com.weebly.hectorjorozco.earthquakes.utils.Utils;
+import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
 import java.text.DecimalFormat;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
 
-        setMessage(Utils.SEARCHING);
+        setMessage(QueryUtils.SEARCHING);
 
         setupRecyclerView();
 
@@ -101,30 +100,30 @@ public class MainActivity extends AppCompatActivity {
             // If the list of earthquakes was empty before the search
             if (earthquakes == null) {
                 // If the search has finished display a message with an icon
-                if (!Utils.sSearchingForEarthquakes) {
+                if (!QueryUtils.sSearchingForEarthquakes) {
                     setMessageVisible(true);
-                    setMessage(Utils.sLoadEarthquakesResultCode);
+                    setMessage(QueryUtils.sLoadEarthquakesResultCode);
                     enableRefresh();
-                    Utils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
+                    QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
                 }
-                Utils.sListWillBeLoadedAfterEmpty = true;
+                QueryUtils.sListWillBeLoadedAfterEmpty = true;
             } else {
 
                 // If no earthquakes were found
                 if (earthquakes.size() == 0) {
                     // If the search has finished display a message with an icon
-                    if (!Utils.sSearchingForEarthquakes) {
+                    if (!QueryUtils.sSearchingForEarthquakes) {
                         setMessageVisible(true);
-                        if (Utils.sLoadEarthquakesResultCode == Utils.NO_INTERNET_CONNECTION ||
-                                Utils.sLoadEarthquakesResultCode == Utils.SEARCH_CANCELLED ||
-                                Utils.sLoadEarthquakesResultCode == Utils.SEARCH_RESULT_NULL) {
-                            setMessage(Utils.sLoadEarthquakesResultCode);
+                        if (QueryUtils.sLoadEarthquakesResultCode == QueryUtils.NO_INTERNET_CONNECTION ||
+                                QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_CANCELLED ||
+                                QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_RESULT_NULL) {
+                            setMessage(QueryUtils.sLoadEarthquakesResultCode);
                         } else {
-                            setMessage(Utils.NO_EARTHQUAKES_FOUND);
+                            setMessage(QueryUtils.NO_EARTHQUAKES_FOUND);
                         }
-                        Utils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
+                        QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
                     }
-                    Utils.sListWillBeLoadedAfterEmpty = true;
+                    QueryUtils.sListWillBeLoadedAfterEmpty = true;
                 } else {
 
                     // If one or more earthquakes were found
@@ -132,19 +131,19 @@ public class MainActivity extends AppCompatActivity {
                     setMessageVisible(false);
 
                     // If there were new earthquakes displayed
-                    if (Utils.sLoadEarthquakesResultCode == Utils.SEARCH_RESULT_NON_NULL) {
+                    if (QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_RESULT_NON_NULL) {
                         setEarthquakesListInformationValues(earthquakes.get(0),
                                 earthquakes.get(earthquakes.size() - 1));
                     }
 
                     mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
-                    mEarthquakesListAdapter.setLocation(Utils.sEarthquakesListInformationValues.getLocation());
+                    mEarthquakesListAdapter.setLocation(QueryUtils.sEarthquakesListInformationValues.getLocation());
 
                     // If the search has finished and no previous snack has been shown
-                    if (!Utils.sSearchingForEarthquakes && Utils.sLoadEarthquakesResultCode != Utils.NO_ACTION
-                            && !Utils.sListWillBeLoadedAfterEmpty) {
+                    if (!QueryUtils.sSearchingForEarthquakes && QueryUtils.sLoadEarthquakesResultCode != QueryUtils.NO_ACTION
+                            && !QueryUtils.sListWillBeLoadedAfterEmpty) {
                         Snackbar.make(findViewById(android.R.id.content),
-                                getSnackBarText(Utils.sLoadEarthquakesResultCode),
+                                getSnackBarText(QueryUtils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_LONG).show();
                         if (mMenu != null) {
                             showListInformationAndEarthquakesMapMenuItems(true);
@@ -152,11 +151,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     // Flag used when activity is recreated to indicate that no action is tacking place
-                    Utils.sLoadEarthquakesResultCode = Utils.NO_ACTION;
+                    QueryUtils.sLoadEarthquakesResultCode = QueryUtils.NO_ACTION;
 
-                    Utils.sListWillBeLoadedAfterEmpty = false;
+                    QueryUtils.sListWillBeLoadedAfterEmpty = false;
 
-                    if (mMenu != null && Utils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
+                    if (mMenu != null && QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
                         showListInformationAndEarthquakesMapMenuItems(true);
                     }
                 }
@@ -165,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 checkForSearchingStatusToEnableRefresh();
             }
 
-            if (Utils.sSearchingForEarthquakes) {
+            if (QueryUtils.sSearchingForEarthquakes) {
                 mProgressBar.setVisibility(View.VISIBLE);
             } else {
                 mProgressBar.setVisibility(View.INVISIBLE);
@@ -179,22 +178,22 @@ public class MainActivity extends AppCompatActivity {
         DecimalFormat magnitudesFormatter = new DecimalFormat("0.0");
 
         SimpleDateFormat simpleDateFormatter;
-        if (LanguageUtils.getLocaleLanguage().equals("es")) {
+        if (WordsUtils.getLocaleLanguage().equals("es")) {
             simpleDateFormatter = new SimpleDateFormat("d 'de' MMMM 'del' yyyy, hh:mm aaa", Locale.getDefault());
         } else {
             simpleDateFormatter = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa", Locale.getDefault());
         }
 
-        Utils.sEarthquakesListInformationValues = Utils.sEarthquakesListInformationValuesWhenSearchStarted;
-        Utils.sEarthquakesListInformationValues.
+        QueryUtils.sEarthquakesListInformationValues = QueryUtils.sEarthquakesListInformationValuesWhenSearchStarted;
+        QueryUtils.sEarthquakesListInformationValues.
                 setFirstEarthquakeMag(magnitudesFormatter.format(firstEarthquake.getMagnitude()));
-        Utils.sEarthquakesListInformationValues.
+        QueryUtils.sEarthquakesListInformationValues.
                 setLastEarthquakeMag(magnitudesFormatter.format(lastEarthquake.getMagnitude()));
-        Utils.sEarthquakesListInformationValues.
+        QueryUtils.sEarthquakesListInformationValues.
                 setFirstEarthquakeDate(simpleDateFormatter.format(firstEarthquake.getTimeInMilliseconds()));
-        Utils.sEarthquakesListInformationValues.
+        QueryUtils.sEarthquakesListInformationValues.
                 setLastEarthquakeDate(simpleDateFormatter.format(lastEarthquake.getTimeInMilliseconds()));
-        Utils.sEarthquakesListInformationValues.
+        QueryUtils.sEarthquakesListInformationValues.
                 setNumberOfEarthquakesDisplayed(String.valueOf(mNumberOfEarthquakesOnList));
     }
 
@@ -204,28 +203,28 @@ public class MainActivity extends AppCompatActivity {
         int imageID = 0;
         int textID = 0;
         switch (type) {
-            case Utils.SEARCHING:
+            case QueryUtils.SEARCHING:
                 imageID = R.drawable.ic_message_searching_earthquakes;
                 textID = R.string.searching_earthquakes_text;
                 break;
-            case Utils.NO_INTERNET_CONNECTION:
+            case QueryUtils.NO_INTERNET_CONNECTION:
                 imageID = R.drawable.ic_message_no_internet;
                 textID = R.string.no_internet_connection_text;
                 break;
-            case Utils.SEARCH_CANCELLED:
+            case QueryUtils.SEARCH_CANCELLED:
                 imageID = R.drawable.ic_message_searching_cancelled;
                 textID = R.string.search_cancelled_text;
                 break;
-            case Utils.NO_EARTHQUAKES_FOUND:
+            case QueryUtils.NO_EARTHQUAKES_FOUND:
                 imageID = R.drawable.ic_message_no_earthquakes;
                 textID = R.string.no_earthquakes_found_text;
                 break;
-            case Utils.SEARCH_RESULT_NULL:
+            case QueryUtils.SEARCH_RESULT_NULL:
                 imageID = R.drawable.ic_message_no_server_response;
                 textID = R.string.no_server_response_text;
                 break;
         }
-        if (type != Utils.SEARCH_RESULT_NON_NULL) {
+        if (type != QueryUtils.SEARCH_RESULT_NON_NULL) {
             mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
             mMessageTextView.setText(getString(textID));
         }
@@ -235,16 +234,16 @@ public class MainActivity extends AppCompatActivity {
     private String getSnackBarText(byte type) {
         String snackBarText = null;
         switch (type) {
-            case Utils.NO_INTERNET_CONNECTION:
+            case QueryUtils.NO_INTERNET_CONNECTION:
                 snackBarText = getString(R.string.no_internet_connection_text);
                 break;
-            case Utils.SEARCH_CANCELLED:
+            case QueryUtils.SEARCH_CANCELLED:
                 snackBarText = getString(R.string.search_cancelled_text);
                 break;
-            case Utils.SEARCH_RESULT_NULL:
+            case QueryUtils.SEARCH_RESULT_NULL:
                 snackBarText = getString(R.string.no_server_response_text);
                 break;
-            case Utils.SEARCH_RESULT_NON_NULL:
+            case QueryUtils.SEARCH_RESULT_NON_NULL:
                 snackBarText = getString(R.string.earthquakes_list_updated_text);
                 break;
         }
@@ -275,13 +274,13 @@ public class MainActivity extends AppCompatActivity {
         MenuCompat.setGroupDividerEnabled(menu, true);
         mMenu = menu;
 
-        if (Utils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
+        if (QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
             showListInformationAndEarthquakesMapMenuItems(true);
         } else {
             showListInformationAndEarthquakesMapMenuItems(false);
         }
 
-        if (!Utils.sSearchingForEarthquakes) {
+        if (!QueryUtils.sSearchingForEarthquakes) {
             setupRefreshMenuItem(true);
         } else {
             showListInformationAndEarthquakesMapMenuItems(false);
@@ -295,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_activity_main_action_refresh:
-                if (!Utils.sSearchingForEarthquakes) {
+                if (!QueryUtils.sSearchingForEarthquakes) {
                     doRefreshActions();
                 } else {
                     mMainActivityViewModel.cancelRetrofitRequest();
@@ -322,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
     private void showEarthquakesListInformation() {
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
-                        Utils.createCurrentListAlertDialogMessage(this, Utils.sEarthquakesListInformationValues),
+                        QueryUtils.createCurrentListAlertDialogMessage(this, QueryUtils.sEarthquakesListInformationValues),
                         getString(R.string.menu_activity_main_action_list_information_title));
 
         messageDialogFragment.show(getSupportFragmentManager(),
@@ -335,8 +334,8 @@ public class MainActivity extends AppCompatActivity {
         setupRefreshMenuItem(false);
         mProgressBar.setVisibility(View.VISIBLE);
         showListInformationAndEarthquakesMapMenuItems(false);
-        Utils.sSearchingForEarthquakes = true;
-        setMessage(Utils.SEARCHING);
+        QueryUtils.sSearchingForEarthquakes = true;
+        setMessage(QueryUtils.SEARCHING);
         mMainActivityViewModel.loadEarthquakes();
     }
 
@@ -364,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkForSearchingStatusToEnableRefresh() {
-        if (!Utils.sSearchingForEarthquakes) {
+        if (!QueryUtils.sSearchingForEarthquakes) {
             enableRefresh();
         } else {
             mProgressBar.setVisibility(View.VISIBLE);

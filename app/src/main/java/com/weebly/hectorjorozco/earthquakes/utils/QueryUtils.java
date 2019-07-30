@@ -31,7 +31,7 @@ import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
-public class Utils {
+public class QueryUtils {
 
     private static String mLimit;
     private static String mLocation;
@@ -81,8 +81,8 @@ public class Utils {
         // Two letter code of the language of the device, for example: English (en) Spanish (es)
         String locality = locale.toString().substring(0, 2);
 
-        location = LanguageUtils.removeSpanishAccents(location);
-        location = LanguageUtils.setUsaSearchName(location);
+        location = WordsUtils.removeSpanishAccents(location);
+        location = WordsUtils.setUsaSearchName(location);
         location = " " + location + " ";
 
         List<Earthquake> earthquakeList = new ArrayList<>();
@@ -103,13 +103,13 @@ public class Utils {
 
             // Get the place string from the earthquake feature properties, and splits it in two
             // Strings.
-            splitString = LanguageUtils.splitLocation(context, properties.getPlace(), locality);
+            splitString = WordsUtils.splitLocation(context, properties.getPlace(), locality);
 
             // Changes all the letters of the primary location String (that will be used to filter
             // the results) to lower case, removes any Spanish accents, adds a space at the
             // beginning and end, and replaces the commas with a blank space.
             locationPrimary = splitString[1].toLowerCase(locale);
-            locationPrimary = LanguageUtils.removeSpanishAccents(locationPrimary);
+            locationPrimary = WordsUtils.removeSpanishAccents(locationPrimary);
             locationPrimary = " " + locationPrimary + " ";
             locationPrimary = locationPrimary.replace(',', ' ');
             locationPrimary = locationPrimary.replace('-', ' ');
@@ -132,7 +132,7 @@ public class Utils {
                 // If the primary location contains the location filter AND it is not an special
                 // case, then adds the earthquake data to the List of Earthquake objects
                 if ((locationPrimary.contains(location)) &&
-                        (!LanguageUtils.locationSearchSpecialCase(locationPrimary, location))) {
+                        (!WordsUtils.locationSearchSpecialCase(locationPrimary, location))) {
                     // Get the values for the magnitude, place, time and URL of the previous JSON object,
                     // creates a new Earthquake object with the these values and adds it to the List
                     earthquakeList.add(new Earthquake(
@@ -364,7 +364,6 @@ public class Utils {
         // If there is only one earthquake on the list, set the strings values to singular.
         if (string2.equals("1")) {
             string1 = context.getString(R.string.the_text_singular);
-            string2 = "";
             if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
                 string3 = context.getString(R.string.powerful_text_singular);
             } else {
@@ -394,6 +393,13 @@ public class Utils {
         string5 = values.getLocation();
         if (string5.isEmpty()) {
             string5 = context.getString(R.string.the_whole_world_text);
+        } else {
+            if (WordsUtils.isUnitedStatesAbbreviation(string5) ||
+                    WordsUtils.isUnitedStatesName(string5)) {
+                string5 = context.getString(R.string.earthquakes_list_title_us_name);
+            } else {
+                string5 = WordsUtils.formatLocationText(string5);
+            }
         }
 
         switch (values.getDatePeriod()) {
@@ -411,7 +417,7 @@ public class Utils {
                 break;
             default:
                 string6 = context.getString(R.string.custom_text);
-                string6 = LanguageUtils.changeFirstLetterToLowercase(string6);
+                string6 = WordsUtils.changeFirstLetterToLowercase(string6);
                 break;
         }
 
@@ -425,12 +431,12 @@ public class Utils {
         } else {
             string11 = context.getString(R.string.search_preference_sort_by_date_entry);
         }
-        string11 = LanguageUtils.changeFirstLetterToLowercase(string11);
+        string11 = WordsUtils.changeFirstLetterToLowercase(string11);
 
         string12 = values.getLimit();
 
         String text = String.format
-                (context.getString(R.string.current_list_alert_dialog_message_1), string1, string2, string3,
+                (context.getString(R.string.current_list_alert_dialog_message_1), string2,
                         string4, string5, string6, string7, string8, string9, string10, string11, string12, string13);
 
         return Html.fromHtml(text);

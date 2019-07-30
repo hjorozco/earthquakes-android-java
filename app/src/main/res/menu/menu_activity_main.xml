@@ -18,15 +18,15 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_activity_main_action_list_information"
+        android:id="@+id/menu_activity_main_action_earthquakes_map"
         android:orderInCategory="3"
-        android:title="@string/menu_activity_main_action_list_information_title"
+        android:title="@string/menu_activity_main_action_earthquakes_map_title"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_activity_main_action_earthquakes_map"
+        android:id="@+id/menu_activity_main_action_list_information"
         android:orderInCategory="4"
-        android:title="@string/menu_activity_main_action_earthquakes_map_title"
+        android:title="@string/menu_activity_main_action_list_information_title"
         app:showAsAction="never" />
 
     <group android:id="@+id/menu_activity_main_help_group">

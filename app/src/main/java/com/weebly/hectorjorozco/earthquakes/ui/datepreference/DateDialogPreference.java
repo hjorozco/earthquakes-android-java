@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.preference.DialogPreference;
 
 import com.weebly.hectorjorozco.earthquakes.R;
-import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -93,7 +93,7 @@ public class DateDialogPreference extends DialogPreference {
     private static SimpleDateFormat dateSummaryFormatter() {
 
         SimpleDateFormat simpleDateFormat;
-        if (LanguageUtils.getLocaleLanguage().equals("es")) {
+        if (WordsUtils.getLocaleLanguage().equals("es")) {
             simpleDateFormat = new SimpleDateFormat("d 'de' MMMM 'del' yyyy, hh:mm aaa", Locale.getDefault());
         } else {
             simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa", Locale.getDefault());

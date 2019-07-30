@@ -162,15 +162,15 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
-        Mostrando %1$s &lt;b>%2$s %4$s más %3$s en %5$s&lt;/b> para las siguientes preferencias de
+        Mostrando &lt;b>%1$s %2$s en %3$s&lt;/b> para las siguientes preferencias de
         búsqueda: &lt;br/&gt; &lt;br/&gt;
-        &lt;i>Periodo de tiempo &lt;/i>%6$s &lt;br/&gt;
-        (%7$s a &lt;br/&gt;
-        %8$s). &lt;br/&gt;
-        &lt;i>Magnitud &lt;/i>%9$s a %10$s. &lt;br/&gt;
-        &lt;i>Ordenados por &lt;/i>%11$s. &lt;br/&gt;
-        &lt;i>Máximo número de temblores &lt;/i>%12$s.
-        %13$s
+        &lt;i>Periodo de tiempo &lt;/i>%4$s &lt;br/&gt;
+        (%5$s a &lt;br/&gt;
+        %6$s). &lt;br/&gt;
+        &lt;i>Magnitud &lt;/i>%7$s a %8$s. &lt;br/&gt;
+        &lt;i>Ordenados por &lt;/i>%9$s. &lt;br/&gt;
+        &lt;i>Máximo número de temblores &lt;/i>%10$s.
+        %11$s
     </string>
 
     <string name="current_list_alert_dialog_message_2">

@@ -186,15 +186,15 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
-        Showing %1$s &lt;b>%2$s most %3$s %4$s in %5$s&lt;/b> for the next search preferences:
+        Showing &lt;b>%1$s %2$s in %3$s&lt;/b> for the next search preferences:
         &lt;br/&gt; &lt;br/&gt;
-        &lt;i>Period of time &lt;/i>%6$s &lt;br/&gt;
-        (%7$s to &lt;br/&gt;
-        %8$s). &lt;br/&gt;
-        &lt;i>Magnitude &lt;/i>%9$s to %10$s. &lt;br/&gt;
-        &lt;i>Ordered by &lt;/i>%11$s. &lt;br/&gt;
-        &lt;i>Max number of earthquakes &lt;/i>%12$s.
-        %13$s
+        &lt;i>Period of time &lt;/i>%4$s &lt;br/&gt;
+        (%5$s to &lt;br/&gt;
+        %6$s). &lt;br/&gt;
+        &lt;i>Magnitude &lt;/i>%7$s to %8$s. &lt;br/&gt;
+        &lt;i>Ordered by &lt;/i>%9$s. &lt;br/&gt;
+        &lt;i>Max number of earthquakes &lt;/i>%10$s.
+        %11$s
     </string>
 
     <string name="current_list_alert_dialog_message_2">

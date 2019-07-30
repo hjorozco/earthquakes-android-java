@@ -1,11 +1,9 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.TextUtils;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.EditTextPreference;
@@ -17,7 +15,7 @@ import androidx.preference.SeekBarPreference;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDialogFragmentCompat;
-import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -182,14 +180,14 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
                                 LOCATION_EDIT_TEXT_LENGTH_FILTER)});
 
-                        editText.setText(LanguageUtils.formatLocationPreferenceText(editText.getText().toString()));
+                        editText.setText(WordsUtils.formatLocationText(editText.getText().toString()));
                         editText.selectAll();
                     });
 
             editTextPreference.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
 
-                String editTextPreferenceText = LanguageUtils.formatLocationPreferenceText(preference.getText());
-                if (TextUtils.isEmpty(editTextPreferenceText)) {
+                String editTextPreferenceText = WordsUtils.formatLocationText(preference.getText());
+                if (android.text.TextUtils.isEmpty(editTextPreferenceText)) {
                     return getString(R.string.search_preference_location_not_set_value);
                 }
                 return editTextPreferenceText;

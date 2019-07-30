@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
-import com.weebly.hectorjorozco.earthquakes.utils.LanguageUtils;
-import com.weebly.hectorjorozco.earthquakes.utils.Utils;
+import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -67,7 +67,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 earthquakesWordSuffix = mContext.getString(R.string.earthquakes_list_title_earthquakes_word_suffix);
                 foundWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_word_suffix);
 
-                if (Utils.sEarthquakesListInformationValues.getOrderBy()
+                if (QueryUtils.sEarthquakesListInformationValues.getOrderBy()
                         .equals(mContext.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
                     titlePartTwo = mContext.getString(R.string.earthquakes_list_title_sorted_by_magnitude_text);
                 } else {
@@ -120,11 +120,11 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             // Get the formatted date from the dateObject created from the time in Milliseconds of the
             // current Earthquake object and set this text on the dateTextView.
-            earthquakeViewHolder.dateTextView.setText(LanguageUtils.formatDate(dateObject));
+            earthquakeViewHolder.dateTextView.setText(WordsUtils.formatDate(dateObject));
 
             /// Get the formatted time from the dateObject created from the time in Milliseconds of the
             // current Earthquake object and set this text on the timeTextView.
-            earthquakeViewHolder.timeTextView.setText(LanguageUtils.formatTime(dateObject));
+            earthquakeViewHolder.timeTextView.setText(WordsUtils.formatTime(dateObject));
 
             // Set the color of dateTextView and TimeTextView
             earthquakeViewHolder.dateTextView.setTextColor(magnitudeColor);
@@ -161,16 +161,14 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
     public void setLocation(String location) {
-        // TODO If location is USA add "the"
-
         if (location.isEmpty()) {
             mLocation = mContext.getString(R.string.the_whole_world_text);
         } else {
-            if (LanguageUtils.isUnitedStatesAbbreviation(location) ||
-                    LanguageUtils.isUnitedStatesName(location)) {
+            if (WordsUtils.isUnitedStatesAbbreviation(location) ||
+                    WordsUtils.isUnitedStatesName(location)) {
                 mLocation = mContext.getString(R.string.earthquakes_list_title_us_name);
             } else {
-                mLocation = LanguageUtils.formatLocationPreferenceText(location);
+                mLocation = WordsUtils.formatLocationText(location);
             }
         }
     }
