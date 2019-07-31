@@ -131,7 +131,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         if (editTextPreference != null) {
 
-            // Sets the input type to only whole numbers, filters the lengthemoves all leading zeros if any
+            // Sets the input type to only whole numbers, filters the length, removes all leading zeros if any
             // and shows "20000" when the value is more than 20000
             editTextPreference.setOnBindEditTextListener(
                     editText -> {

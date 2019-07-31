@@ -354,90 +354,83 @@ public class QueryUtils {
     // Creates a message about the list of earthquakes .
     public static CharSequence createCurrentListAlertDialogMessage(Context context, EarthquakesListInformationValues values) {
 
-        String string1, string2, string3, string4, string5, string6, string7, string8, string9,
-                string10, string11, string12, string13, orderBy;
+        String numberOfEarthquakes, earthquakesWord, location, sortedBySuffix, sortedBy, dateRange, firstEarthquakeEndDate, firstEarthquakeStartDate, firstEarthquakeMinMagnitude,
+                firstEarthquakeMaxMagnitude, maxNumberOfEarthquakes, firstAndLastEarthquakesInfoMessage, orderBy;
 
         orderBy = values.getOrderBy();
 
-        string2 = values.getNumberOfEarthquakesDisplayed();
+        numberOfEarthquakes = values.getNumberOfEarthquakesDisplayed();
 
         // If there is only one earthquake on the list, set the strings values to singular.
-        if (string2.equals("1")) {
-            string1 = context.getString(R.string.the_text_singular);
-            if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
-                string3 = context.getString(R.string.powerful_text_singular);
-            } else {
-                string3 = context.getString(R.string.recent_text_singular);
-            }
-            string4 = context.getString(R.string.earthquakes_text_singular);
-            string13 = "";
+        if (numberOfEarthquakes.equals("1")) {
+            earthquakesWord = context.getString(R.string.earthquakes_text_singular);
+            sortedBySuffix = "";
+            firstAndLastEarthquakesInfoMessage = "";
         } else {
             // If there is more than one earthquake on the list, set the strings values to plural
-            string1 = context.getString(R.string.the_text_plural);
-            string4 = context.getString(R.string.earthquakes_text_plural);
-
+            earthquakesWord = context.getString(R.string.earthquakes_text_plural);
+            sortedBySuffix = context.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
             if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
-                string3 = context.getString(R.string.powerful_text_plural);
-                string13 = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
+                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
                         context.getString(R.string.magnitude_text), values.getFirstEarthquakeMag(), values.getLastEarthquakeMag());
 
             } else {
-                string3 = context.getString(R.string.recent_text_plural);
-
-                string13 = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
+                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
                         context.getString(R.string.date_text), values.getFirstEarthquakeDate(), values.getLastEarthquakeDate());
             }
 
         }
 
-        string5 = values.getLocation();
-        if (string5.isEmpty()) {
-            string5 = context.getString(R.string.the_whole_world_text);
+        location = values.getLocation();
+        if (location.isEmpty()) {
+            location = context.getString(R.string.the_whole_world_text);
         } else {
-            if (WordsUtils.isUnitedStatesAbbreviation(string5) ||
-                    WordsUtils.isUnitedStatesName(string5)) {
-                string5 = context.getString(R.string.earthquakes_list_title_us_name);
+            if (WordsUtils.isUnitedStatesAbbreviation(location) ||
+                    WordsUtils.isUnitedStatesName(location)) {
+                location = context.getString(R.string.earthquakes_list_title_us_name);
             } else {
-                string5 = WordsUtils.formatLocationText(string5);
+                location = WordsUtils.formatLocationText(location);
             }
         }
 
         switch (values.getDatePeriod()) {
             case "day":
-                string6 = context.getString(R.string.twenty_four_hours_text);
+                dateRange = context.getString(R.string.twenty_four_hours_text);
                 break;
             case "week":
-                string6 = context.getString(R.string.seven_days_text);
+                dateRange = context.getString(R.string.seven_days_text);
                 break;
             case "month":
-                string6 = context.getString(R.string.thirty_days_text);
+                dateRange = context.getString(R.string.thirty_days_text);
                 break;
             case "year":
-                string6 = context.getString(R.string.three_hundred_sixty_five_days_text);
+                dateRange = context.getString(R.string.three_hundred_sixty_five_days_text);
                 break;
             default:
-                string6 = context.getString(R.string.custom_text);
-                string6 = WordsUtils.changeFirstLetterToLowercase(string6);
+                dateRange = context.getString(R.string.custom_text);
+                dateRange = WordsUtils.changeFirstLetterToLowercase(dateRange);
                 break;
         }
 
-        string7 = values.getEndDate() + " " + values.getEndDateTime();
-        string8 = values.getStartDate() + " " + values.getStartDateTime();
-        string9 = values.getMinMagnitude();
-        string10 = values.getMaxMagnitude();
+        firstEarthquakeEndDate = values.getEndDate() + " " + values.getEndDateTime();
+        firstEarthquakeStartDate = values.getStartDate() + " " + values.getStartDateTime();
+        firstEarthquakeMinMagnitude = values.getMinMagnitude();
+        firstEarthquakeMaxMagnitude = values.getMaxMagnitude();
 
         if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
-            string11 = context.getString(R.string.search_preference_sort_by_magnitude_entry);
+            sortedBy = context.getString(R.string.search_preference_sort_by_magnitude_entry);
         } else {
-            string11 = context.getString(R.string.search_preference_sort_by_date_entry);
+            sortedBy = context.getString(R.string.search_preference_sort_by_date_entry);
         }
-        string11 = WordsUtils.changeFirstLetterToLowercase(string11);
+        sortedBy = WordsUtils.changeFirstLetterToLowercase(sortedBy);
 
-        string12 = values.getLimit();
+        maxNumberOfEarthquakes = String.format(Locale.getDefault(), "%,d", Integer.valueOf(values.getLimit()));
 
         String text = String.format
-                (context.getString(R.string.current_list_alert_dialog_message_1), string2,
-                        string4, string5, string6, string7, string8, string9, string10, string11, string12, string13);
+                (context.getString(R.string.current_list_alert_dialog_message_1), numberOfEarthquakes,
+                        earthquakesWord, location, sortedBySuffix, sortedBy, maxNumberOfEarthquakes, dateRange,
+                        firstEarthquakeStartDate, firstEarthquakeEndDate, firstEarthquakeMinMagnitude,
+                        firstEarthquakeMaxMagnitude, firstAndLastEarthquakesInfoMessage);
 
         return Html.fromHtml(text);
     }

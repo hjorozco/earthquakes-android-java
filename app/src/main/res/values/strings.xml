@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2016 Hector J. Orozco -->
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 Hector J. Orozco -->
 <resources>
 
 
@@ -47,11 +46,11 @@
     <string name="no_server_response_text">No response from the USGS server</string>
     <string name="earthquakes_list_updated_text">Earthquakes list updated</string>
 
-    <string name="earthquakes_list_title">%1$d earthquake%2$s found%3$s in %4$s. %5$s</string>
+    <string name="earthquakes_list_title">%1$d earthquake%2$s found%3$s in %4$s. Sorted%5$s by %6$s.</string>
     <string name="earthquakes_list_title_earthquakes_word_suffix">s</string>
-    <string name="earthquakes_list_title_found_word_suffix" />
-    <string name="earthquakes_list_title_sorted_by_date_text">Sorted by date.</string>
-    <string name="earthquakes_list_title_sorted_by_magnitude_text">Sorted by magnitude.</string>
+    <string name="earthquakes_list_title_found_and_sorted_words_suffix" />
+    <string name="earthquakes_list_title_sorted_by_date_text">date</string>
+    <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitude</string>
     <string name="earthquakes_list_title_us_name">the United States</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
@@ -186,23 +185,22 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
-        Showing &lt;b>%1$s %2$s in %3$s&lt;/b> for the next search preferences:
-        &lt;br/&gt; &lt;br/&gt;
-        &lt;i>Period of time &lt;/i>%4$s &lt;br/&gt;
-        (%5$s to &lt;br/&gt;
-        %6$s). &lt;br/&gt;
-        &lt;i>Magnitude &lt;/i>%7$s to %8$s. &lt;br/&gt;
-        &lt;i>Ordered by &lt;/i>%9$s. &lt;br/&gt;
-        &lt;i>Max number of earthquakes &lt;/i>%10$s.
-        %11$s
+        &lt;br/&gt;Showing &lt;b>%1$s %2$s in %3$s, sorted%4$s by %5$s,&lt;/b> for the next search preferences:
+        &lt;br/&gt;&lt;br/&gt;
+        &lt;i>Max number of earthquakes &lt;/i>%6$s&lt;br/&gt;
+        &lt;i>Date range &lt;/i>%7$s&lt;br/&gt;
+        %8$s to&lt;br/&gt;
+        %9$s&lt;br/&gt;
+        &lt;i>Magnitudes range &lt;/i>%10$s to %11$s
+        %12$s&lt;br/&gt;
     </string>
 
     <string name="current_list_alert_dialog_message_2">
-        &lt;br/&gt; &lt;br/&gt; &lt;br/&gt;
-        &lt;b>%1$s of first earthquake on the list:&lt;/b> &lt;br/&gt;
+        &lt;br/&gt;&lt;br/&gt;
+        &lt;i>%1$s of earthquake on top of the list:&lt;/i> &lt;br/&gt;
         %2$s &lt;br/&gt; &lt;br/&gt;
-        &lt;b>%1$s of last earthquake on the list:&lt;/b> &lt;br/&gt;
-        %3$s.
+        &lt;i>%1$s of earthquake at the bottom of the list:&lt;/i> &lt;br/&gt;
+        %3$s
     </string>
 
     <!-- Other strings used by the "Information" Alert Dialog message.  -->
@@ -219,10 +217,10 @@
     <string name="date_text">Date</string>
     <string name="negative_button_text">More info</string>
     <string name="positive_button_text">OK</string>
-    <string name="twenty_four_hours_text">24 hours</string>
-    <string name="seven_days_text">7 days</string>
-    <string name="thirty_days_text">30 days</string>
-    <string name="three_hundred_sixty_five_days_text">365 days</string>
+    <string name="twenty_four_hours_text">last 24 hours</string>
+    <string name="seven_days_text">last 7 days</string>
+    <string name="thirty_days_text">last 30 days</string>
+    <string name="three_hundred_sixty_five_days_text">last 365 days</string>
     <string name="custom_text">custom</string>
 
 

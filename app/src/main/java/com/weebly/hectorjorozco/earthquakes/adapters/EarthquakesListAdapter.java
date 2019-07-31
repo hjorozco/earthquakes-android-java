@@ -58,25 +58,25 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-            String earthquakesWordSuffix, foundWordSuffix, titlePartTwo;
+            String earthquakesWordSuffix, foundAndOrderedWordSuffix, sortedBy;
             if (mEarthquakes.size() == 1) {
                 earthquakesWordSuffix = "";
-                foundWordSuffix = "";
-                titlePartTwo = "";
+                foundAndOrderedWordSuffix = "";
             } else {
                 earthquakesWordSuffix = mContext.getString(R.string.earthquakes_list_title_earthquakes_word_suffix);
-                foundWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_word_suffix);
+                foundAndOrderedWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
+            }
 
-                if (QueryUtils.sEarthquakesListInformationValues.getOrderBy()
-                        .equals(mContext.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
-                    titlePartTwo = mContext.getString(R.string.earthquakes_list_title_sorted_by_magnitude_text);
-                } else {
-                    titlePartTwo = mContext.getString(R.string.earthquakes_list_title_sorted_by_date_text);
-                }
+            if (QueryUtils.sEarthquakesListInformationValues.getOrderBy()
+                    .equals(mContext.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
+                sortedBy = mContext.getString(R.string.earthquakes_list_title_sorted_by_magnitude_text);
+            } else {
+                sortedBy = mContext.getString(R.string.earthquakes_list_title_sorted_by_date_text);
             }
 
             titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title,
-                    mEarthquakes.size(), earthquakesWordSuffix, foundWordSuffix, mLocation, titlePartTwo));
+                    mEarthquakes.size(), earthquakesWordSuffix, foundAndOrderedWordSuffix, mLocation,
+                    foundAndOrderedWordSuffix, sortedBy));
 
         } else if (holder instanceof EarthquakeViewHolder) {
 
