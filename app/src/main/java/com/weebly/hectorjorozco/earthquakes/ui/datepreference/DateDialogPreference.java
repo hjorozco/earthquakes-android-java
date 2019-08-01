@@ -22,6 +22,7 @@ public class DateDialogPreference extends DialogPreference {
     private long mDateInMilliseconds;
     private long mMinimumDateInMilliseconds;
     private long mMaximumDateInMilliseconds;
+    private boolean toDateChangedManuallyFlag = false;
 
 
     public DateDialogPreference(Context context) {
@@ -49,14 +50,13 @@ public class DateDialogPreference extends DialogPreference {
 
 
     // Save the DateInMilliseconds long value to Shared Preferences and updates the preference summary
-    public void setDateInMilliseconds(long dateInMilliseconds, boolean setByDefinedDateRange) {
+    public void setDateInMilliseconds(long dateInMilliseconds) {
 
-        // If the "to" date was custom saved by the user, then add 11 hours and 59 minutes to it to cover
+        // If the "to" date was changed manually, then add 23 hours and 59 minutes to it to cover
         // that whole day.
-        if(!setByDefinedDateRange &&
-                getKey().equals(getContext().getString(R.string.search_preference_end_date_key))) {
-            long millisecondsOnOneDay = TimeUnit.DAYS.toMillis(1);
-            dateInMilliseconds = dateInMilliseconds + (millisecondsOnOneDay) - (1000*60);
+        if(toDateChangedManuallyFlag) {
+            dateInMilliseconds += (TimeUnit.DAYS.toMillis(1)) - (1000*60);
+            toDateChangedManuallyFlag = false;
         }
 
         mDateInMilliseconds = dateInMilliseconds;
@@ -75,7 +75,8 @@ public class DateDialogPreference extends DialogPreference {
     // Set the initial value of the preference when the preference screen is shown
     @Override
     protected void onSetInitialValue(Object defaultValue) {
-        setDateInMilliseconds(getPersistedLong(mDateInMilliseconds), false);
+        toDateChangedManuallyFlag = false;
+        setDateInMilliseconds(getPersistedLong(mDateInMilliseconds));
     }
 
 
@@ -117,6 +118,10 @@ public class DateDialogPreference extends DialogPreference {
 
     public void setMaximumDateInMilliseconds(long maximumDateInMilliseconds){
         mMaximumDateInMilliseconds = maximumDateInMilliseconds;
+    }
+
+    public void setToDateChangedManuallyFlag(boolean value){
+        toDateChangedManuallyFlag = value;
     }
 
 }

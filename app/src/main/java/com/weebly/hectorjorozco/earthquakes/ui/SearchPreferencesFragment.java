@@ -37,7 +37,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     private SeekBarPreference mMaximumMagnitudeSeekBarPreference;
 
     // Used to flag when the "from" or "to" dates where changed by a predefined date range selected or by
-    // the user changint the date individually
+    // the user changing the date individually
     private boolean mDateRangeChanged;
 
     @Override
@@ -66,6 +66,10 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         mDateRangeListPreference = findPreference(getString(R.string.search_preference_date_range_key));
         mFromDateDialogPreference = findPreference(getString(R.string.search_preference_start_date_key));
         mToDateDialogPreference = findPreference(getString(R.string.search_preference_end_date_key));
+
+        if (mToDateDialogPreference != null) {
+            mToDateDialogPreference.setToDateChangedManuallyFlag(false);
+        }
 
         mMinimumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_minimum_magnitude_key));
         mMaximumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_maximum_magnitude_key));
@@ -125,6 +129,8 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             super.onDisplayPreferenceDialog(preference);
         }
     }
+
+
 
 
     private void setupMaxNumberOfEarthquakesEditTextPreference(EditTextPreference editTextPreference) {
@@ -221,21 +227,20 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             String dateRangeListPreferenceValue = mDateRangeListPreference.getValue();
 
             if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_24_hours_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay, true);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
 
             } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_7_days_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 7, true);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 7);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
 
             } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_30_days_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 30, true);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 30);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
 
             } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_365_days_entry_value))) {
-                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 365, true);
-                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds, true);
-
+                mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 365);
+                mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
             }
         }
     }

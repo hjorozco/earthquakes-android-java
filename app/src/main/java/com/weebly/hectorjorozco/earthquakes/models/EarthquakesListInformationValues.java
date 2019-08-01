@@ -7,8 +7,6 @@ public class EarthquakesListInformationValues {
     private String mDatePeriod;
     private String mStartDate;
     private String mEndDate;
-    private String mStartDateTime;
-    private String mEndDateTime;
     private String mMinMagnitude;
     private String mMaxMagnitude;
     private String mLimit;
@@ -21,16 +19,13 @@ public class EarthquakesListInformationValues {
 
 
     public EarthquakesListInformationValues(String orderBy, String location, String datePeriod,
-                                            String startDate, String endDate, String startDateTime,
-                                            String endDateTime, String minMagnitude, String maxMagnitude,
+                                            String startDate, String endDate, String minMagnitude, String maxMagnitude,
                                             String limit) {
         mOrderBy = orderBy;
         mLocation = location;
         mDatePeriod = datePeriod;
         mStartDate = startDate;
         mEndDate = endDate;
-        mStartDateTime = startDateTime;
-        mEndDateTime = endDateTime;
         mMinMagnitude = minMagnitude;
         mMaxMagnitude = maxMagnitude;
         mLimit = limit;
@@ -54,14 +49,6 @@ public class EarthquakesListInformationValues {
 
     public String getEndDate() {
         return mEndDate;
-    }
-
-    public String getStartDateTime() {
-        return mStartDateTime;
-    }
-
-    public String getEndDateTime() {
-        return mEndDateTime;
     }
 
     public String getMinMagnitude() {

@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.Html;
+import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
@@ -194,14 +195,9 @@ public class QueryUtils {
         long currentTimeInMilliseconds = System.currentTimeMillis();
         String currentTime = new SimpleDateFormat
                 ("HH:mm:ss", Locale.getDefault()).format(currentTimeInMilliseconds);
-        String currentTime12Hours = new SimpleDateFormat
-                ("h:mm a", Locale.getDefault()).format(currentTimeInMilliseconds);
 
         String startDateTime = currentTime;
         String endDateTime = currentTime;
-
-        String startDateTimeForListInfo = currentTime12Hours;
-        String endDateTimeForListInfo = currentTime12Hours;
 
         // Gets the time zone of the device
         TimeZone timeZone = TimeZone.getDefault();
@@ -256,10 +252,11 @@ public class QueryUtils {
                         context.getString(R.string.search_preference_end_date_key),
                         context.getResources().getInteger(R.integer.search_preference_end_date_default_value));
 
-                startDateTime = "00:00:00";
-                startDateTimeForListInfo = "0:00 AM";
-                endDateTime = "23:59:59";
-                endDateTimeForListInfo = "11:59 PM";
+                startDateTime = new SimpleDateFormat
+                        ("HH:mm:ss", Locale.getDefault()).format(startDateInMilliseconds);
+
+                endDateTime = new SimpleDateFormat
+                        ("HH:mm:ss", Locale.getDefault()).format(endDateInMilliseconds);
 
                 startDateTimeOffset = timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
                 endDateTimeOffset = timeZone.getOffset(endDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
@@ -267,15 +264,16 @@ public class QueryUtils {
                 break;
         }
 
-        String startDateForListInfo = dateForDisplayFormatter().format(startDateInMilliseconds);
+        String startDateForListInfo = dateForListInfoFormatter().format(startDateInMilliseconds);
         // Creates the startDate string that will be passed as a parameter to the USGS JSON query.
         startDateJSONQuery = dateForQueryFormatter().format(startDateInMilliseconds)
                 + "T" + startDateTime + startDateTimeOffset + ":00";
-        String endDateForListInfo = dateForDisplayFormatter().format(endDateInMilliseconds);
+        Log.d("TESTING", startDateJSONQuery);
+        String endDateForListInfo = dateForListInfoFormatter().format(endDateInMilliseconds);
         // Creates the endDate string that will be passed as a parameter to the USGS JSON query.
         endDateJSONQuery = dateForQueryFormatter().format(endDateInMilliseconds)
                 + "T" + endDateTime + endDateTimeOffset + ":00";
-
+        Log.d("TESTING", endDateJSONQuery);
         mLocation = sharedPreferences.getString(
                 context.getString(R.string.search_preference_location_key),
                 context.getString(R.string.search_preference_location_default_value)).trim().
@@ -315,7 +313,7 @@ public class QueryUtils {
 
         // Stores the values needed to display the Earthquakes list information message
         sEarthquakesListInformationValuesWhenSearchStarted = new EarthquakesListInformationValues(
-                orderBy, mLocation, datePeriod, startDateForListInfo, endDateForListInfo, startDateTimeForListInfo, endDateTimeForListInfo,
+                orderBy, mLocation, datePeriod, startDateForListInfo, endDateForListInfo,
                 minMagnitude, maxMagnitude, mLimit);
 
         return new EarthquakesQueryParameters(startDateJSONQuery, endDateJSONQuery, queryLimit,
@@ -323,8 +321,26 @@ public class QueryUtils {
     }
 
 
-    private static SimpleDateFormat dateForDisplayFormatter() {
-        return new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+//    private static SimpleDateFormat dateForDisplayFormatter() {
+//        return new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+//    }
+
+
+    /**
+     * Produces the date formatter used for showing the date in the summary.
+     *
+     * @return the SimpleDateFormat used for summary dates
+     */
+    private static SimpleDateFormat dateForListInfoFormatter() {
+
+        SimpleDateFormat simpleDateFormat;
+        if (WordsUtils.getLocaleLanguage().equals("es")) {
+            simpleDateFormat = new SimpleDateFormat("d 'de' MMMM 'del' yyyy, hh:mm aaa", Locale.getDefault());
+        } else {
+            simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa", Locale.getDefault());
+        }
+
+        return simpleDateFormat;
     }
 
     private static SimpleDateFormat dateForQueryFormatter() {
@@ -412,8 +428,8 @@ public class QueryUtils {
                 break;
         }
 
-        firstEarthquakeEndDate = values.getEndDate() + " " + values.getEndDateTime();
-        firstEarthquakeStartDate = values.getStartDate() + " " + values.getStartDateTime();
+        firstEarthquakeEndDate = values.getEndDate();
+        firstEarthquakeStartDate = values.getStartDate();
         firstEarthquakeMinMagnitude = values.getMinMagnitude();
         firstEarthquakeMaxMagnitude = values.getMaxMagnitude();
 
@@ -434,5 +450,8 @@ public class QueryUtils {
 
         return Html.fromHtml(text);
     }
+
+
+    // public static boolean
 
 }

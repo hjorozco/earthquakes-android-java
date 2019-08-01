@@ -1,7 +1,6 @@
 package com.weebly.hectorjorozco.earthquakes.ui.datepreference;
 
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
 
@@ -25,7 +24,8 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
 
     /**
      * Creates a new instance of this fragment.
-      * @param dateDialogPreferenceKey The key of the DialogPreference that will use this fragment
+     *
+     * @param dateDialogPreferenceKey The key of the DialogPreference that will use this fragment
      * @return A new instance of this fragment.
      */
     public static DatePreferenceDialogFragmentCompat newInstance(
@@ -94,8 +94,12 @@ public class DatePreferenceDialogFragmentCompat extends PreferenceDialogFragment
                 // This allows the client to ignore the user value.
                 if (dateDialogPreference.callChangeListener(
                         dateInMilliseconds)) {
+                    if (dateDialogPreference.getKey().equals(
+                            getString(R.string.search_preference_end_date_key))) {
+                        dateDialogPreference.setToDateChangedManuallyFlag(true);
+                    }
                     // Save the value and update the summary
-                    dateDialogPreference.setDateInMilliseconds(dateInMilliseconds, false);
+                    dateDialogPreference.setDateInMilliseconds(dateInMilliseconds);
                 }
             }
         }
