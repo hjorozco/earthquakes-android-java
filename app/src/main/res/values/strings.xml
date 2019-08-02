@@ -81,7 +81,7 @@
     <string name="settings_help_menu_item">Search preferences help</string>
 
     <!-- Maps Activity Title [CHAR LIMIT=NONE] -->
-    <string name="title_activity_earthquakes_map">Earthquakes map</string>
+    <string name="activity_earthquakes_map_label">Earthquakes map</string>
 
     <!-- Help Activity Title [CHAR LIMIT=NONE] -->
     <string name="help_title">Help</string>

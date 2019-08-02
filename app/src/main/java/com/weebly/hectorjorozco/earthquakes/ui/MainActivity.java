@@ -30,6 +30,7 @@ import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // If there were new earthquakes displayed
                     if (QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_RESULT_NON_NULL) {
+                        setEarthquakesListForMapsActivity(earthquakes);
                         setEarthquakesListInformationValues(earthquakes.get(0),
                                 earthquakes.get(earthquakes.size() - 1));
                     }
@@ -171,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    // TODO Modifity to give only 1000 earthquakes
+    private void setEarthquakesListForMapsActivity(List<Earthquake> earthquakes){
+        QueryUtils.sEarthquakesList = earthquakes;
     }
 
 
@@ -294,14 +302,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_activity_main_action_refresh:
-                if (!QueryUtils.sSearchingForEarthquakes) {
-                    doRefreshActions();
-                } else {
-                    mMainActivityViewModel.cancelRetrofitRequest();
-                }
+                selectRefreshOrStopAction();
                 break;
             case R.id.menu_activity_main_action_search_preferences:
                 showSearchPreferences();
+                break;
+            case R.id.menu_activity_main_action_earthquakes_map:
+                showEarthquakesMap();
                 break;
             case R.id.menu_activity_main_action_list_information:
                 showEarthquakesListInformation();
@@ -312,9 +319,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void selectRefreshOrStopAction(){
+        if (!QueryUtils.sSearchingForEarthquakes) {
+            doRefreshActions();
+        } else {
+            mMainActivityViewModel.cancelRetrofitRequest();
+        }
+    }
+
     private void showSearchPreferences() {
         Intent intent = new Intent(this, SearchPreferencesActivity.class);
         startActivity(intent);
+    }
+
+
+    private void showEarthquakesMap(){
+        Intent earthquakesMapIntent = new Intent(this, EarthquakesMapActivity.class);
+        startActivity(earthquakesMapIntent);
     }
 
 

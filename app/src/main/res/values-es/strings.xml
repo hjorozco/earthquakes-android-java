@@ -80,7 +80,7 @@
     <string name="settings_help_menu_item">Preferencias de búsqueda</string>
 
     <!-- Maps Activity Title [CHAR LIMIT=NONE] -->
-    <string name="title_activity_earthquakes_map">Mapa de temblores</string>
+    <string name="activity_earthquakes_map_label">Mapa de temblores</string>
 
 
     <!-- Help Activity Title [CHAR LIMIT=NONE] -->

@@ -68,10 +68,6 @@ public class MainActivityViewModel extends AndroidViewModel {
                                 List<Earthquake> earthquakeList =
                                         QueryUtils.getEarthquakesListFromRetrofitResult(context, retrofitResult);
 
-                                // Assigns the value of the List<Earthquake>, extracted from the Retrofit
-                                // Response, to a variable that will be used by the MAPS activity.
-                                QueryUtils.sEarthquakesList = earthquakeList;
-
                                 setLoadEarthquakesResult(earthquakeList, QueryUtils.SEARCH_RESULT_NON_NULL);
 
                                 if (earthquakeList.size() > 0) {
