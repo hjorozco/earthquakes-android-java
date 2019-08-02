@@ -1,7 +1,6 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
@@ -16,7 +15,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_preferences);
 
-        if (getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -25,9 +24,9 @@ public class SearchPreferencesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId()==android.R.id.home){
-           finish();
-;        }
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }

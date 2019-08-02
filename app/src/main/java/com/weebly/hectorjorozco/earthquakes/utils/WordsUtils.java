@@ -809,4 +809,23 @@ public class WordsUtils {
     }
 
 
+    /**
+     * Produces the date formatter used for showing the date in the date preferences summary and
+     * the list information.
+     *
+     * @return the SimpleDateFormat used for summary dates
+     */
+    public static SimpleDateFormat displayedDateFormatter() {
+
+        SimpleDateFormat simpleDateFormat;
+        if (WordsUtils.getLocaleLanguage().equals("es")) {
+            simpleDateFormat = new SimpleDateFormat("d 'de' MMMM 'de' yyyy, hh:mm aaa", Locale.getDefault());
+        } else {
+            simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa", Locale.getDefault());
+        }
+
+        return simpleDateFormat;
+    }
+
+
 }

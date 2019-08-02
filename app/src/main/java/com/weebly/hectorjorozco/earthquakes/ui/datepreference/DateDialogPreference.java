@@ -34,7 +34,7 @@ public class DateDialogPreference extends DialogPreference {
     }
 
     public DateDialogPreference(Context context, AttributeSet attrs,
-                                int defStyleAttr) {
+                                 int defStyleAttr) {
         this(context, attrs, defStyleAttr, defStyleAttr);
     }
 
@@ -61,7 +61,7 @@ public class DateDialogPreference extends DialogPreference {
 
         mDateInMilliseconds = dateInMilliseconds;
         persistLong(dateInMilliseconds);
-        setSummary(dateSummaryFormatter().format(new Date(mDateInMilliseconds)));
+        setSummary(WordsUtils.displayedDateFormatter().format(new Date(mDateInMilliseconds)));
     }
 
 
@@ -84,23 +84,6 @@ public class DateDialogPreference extends DialogPreference {
     @Override
     public int getDialogLayoutResource() {
         return R.layout.preference_dialog_date;
-    }
-
-    /**
-     * Produces the date formatter used for showing the date in the summary.
-     *
-     * @return the SimpleDateFormat used for summary dates
-     */
-    private static SimpleDateFormat dateSummaryFormatter() {
-
-        SimpleDateFormat simpleDateFormat;
-        if (WordsUtils.getLocaleLanguage().equals("es")) {
-            simpleDateFormat = new SimpleDateFormat("d 'de' MMMM 'del' yyyy, hh:mm aaa", Locale.getDefault());
-        } else {
-            simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa", Locale.getDefault());
-        }
-
-        return simpleDateFormat;
     }
 
 

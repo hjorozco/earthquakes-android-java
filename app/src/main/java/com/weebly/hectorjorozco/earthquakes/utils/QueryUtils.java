@@ -264,12 +264,12 @@ public class QueryUtils {
                 break;
         }
 
-        String startDateForListInfo = dateForListInfoFormatter().format(startDateInMilliseconds);
+        String startDateForListInfo = WordsUtils.displayedDateFormatter().format(startDateInMilliseconds);
         // Creates the startDate string that will be passed as a parameter to the USGS JSON query.
         startDateJSONQuery = dateForQueryFormatter().format(startDateInMilliseconds)
                 + "T" + startDateTime + startDateTimeOffset + ":00";
         Log.d("TESTING", startDateJSONQuery);
-        String endDateForListInfo = dateForListInfoFormatter().format(endDateInMilliseconds);
+        String endDateForListInfo = WordsUtils.displayedDateFormatter().format(endDateInMilliseconds);
         // Creates the endDate string that will be passed as a parameter to the USGS JSON query.
         endDateJSONQuery = dateForQueryFormatter().format(endDateInMilliseconds)
                 + "T" + endDateTime + endDateTimeOffset + ":00";
@@ -321,28 +321,10 @@ public class QueryUtils {
     }
 
 
-//    private static SimpleDateFormat dateForDisplayFormatter() {
-//        return new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
-//    }
-
-
     /**
-     * Produces the date formatter used for showing the date in the summary.
-     *
-     * @return the SimpleDateFormat used for summary dates
+     * Formatter for the date used in the USGS query parameters
+     * @return The formatter.
      */
-    private static SimpleDateFormat dateForListInfoFormatter() {
-
-        SimpleDateFormat simpleDateFormat;
-        if (WordsUtils.getLocaleLanguage().equals("es")) {
-            simpleDateFormat = new SimpleDateFormat("d 'de' MMMM 'del' yyyy, hh:mm aaa", Locale.getDefault());
-        } else {
-            simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa", Locale.getDefault());
-        }
-
-        return simpleDateFormat;
-    }
-
     private static SimpleDateFormat dateForQueryFormatter() {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
@@ -451,7 +433,5 @@ public class QueryUtils {
         return Html.fromHtml(text);
     }
 
-
-    // public static boolean
 
 }

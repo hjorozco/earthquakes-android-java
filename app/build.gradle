@@ -27,8 +27,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
+
+    // Google Maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
     // Settings
     implementation 'androidx.preference:preference:1.1.0-rc01'
+
     // ViewModel and Live Data
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02"
 
