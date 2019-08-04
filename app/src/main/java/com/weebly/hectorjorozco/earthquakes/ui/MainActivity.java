@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
+    public static final int MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP = 1000;
 
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         setupRecyclerView();
 
         setupViewModel();
-
     }
 
 
@@ -178,7 +178,15 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO Modifity to give only 1000 earthquakes
     private void setEarthquakesListForMapsActivity(List<Earthquake> earthquakes){
-        QueryUtils.sEarthquakesList = earthquakes;
+
+        if (earthquakes.size()> MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP){
+            QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap = true;
+            QueryUtils.sEarthquakesList = earthquakes.subList(0, MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP);
+
+        } else {
+            QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap = false;
+            QueryUtils.sEarthquakesList = earthquakes;
+        }
     }
 
 

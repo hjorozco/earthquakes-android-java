@@ -86,6 +86,8 @@ public final class RetrofitImplementation implements Serializable {
                 earthquakesQueryParameters.getMaxMagnitude(),
                 earthquakesQueryParameters.getOrderBy());
 
+        Log.d("TESTING", retrofitServiceCall.toString());
+
         retrofitServiceCall.enqueue(new Callback<Earthquakes>() {
 
             @Override

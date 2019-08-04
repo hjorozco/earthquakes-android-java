@@ -79,10 +79,6 @@
     <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
     <string name="settings_help_menu_item">Preferencias de búsqueda</string>
 
-    <!-- Maps Activity Title [CHAR LIMIT=NONE] -->
-    <string name="activity_earthquakes_map_label">Mapa de temblores</string>
-
-
     <!-- Help Activity Title [CHAR LIMIT=NONE] -->
     <string name="help_title">Ayuda</string>
 
@@ -137,6 +133,15 @@
     <string name="three_hundred_sixty_five_days_ago_text">Hace 365 días</string>
 
     <!-- ********** Activity Search Preferences ********** -->
+
+    <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
+
+    <string name="activity_earthquakes_map_max_number_exceeded_message">
+        Mostrando los primeros %1$s temblores de la lista.</string>
+    <string name="activity_earthquakes_map_label">Mapa de temblores</string>
+
+    <!-- ********** Activity earthquakes map ********** -->
+
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->

@@ -80,9 +80,6 @@
     <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
     <string name="settings_help_menu_item">Search preferences help</string>
 
-    <!-- Maps Activity Title [CHAR LIMIT=NONE] -->
-    <string name="activity_earthquakes_map_label">Earthquakes map</string>
-
     <!-- Help Activity Title [CHAR LIMIT=NONE] -->
     <string name="help_title">Help</string>
 
@@ -159,6 +156,14 @@
     <string name="three_hundred_sixty_five_days_ago_text">365 days ago</string>
 
     <!-- ********** Activity Search Preferences ********** -->
+
+
+    <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
+
+    <string name="activity_earthquakes_map_max_number_exceeded_message">Showing the first %1$s earthquakes of the list.</string>
+    <string name="activity_earthquakes_map_label">Earthquakes map</string>
+
+    <!-- ********** Activity earthquakes map ********** -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->

@@ -49,6 +49,7 @@ public class QueryUtils {
 
     // Used by the map activity
     public static List<Earthquake> sEarthquakesList;
+    public static boolean sMoreThanMaximumNumberOfEarthquakesForMap;
 
     // Used to display the earthquakes list information
     public static EarthquakesListInformationValues

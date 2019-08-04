@@ -4,13 +4,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
@@ -19,11 +19,10 @@ import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 
 public class EarthquakesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
-
-    public static final String LOG_TAG = EarthquakesMapActivity.class.getName();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +37,15 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap){
+
+            Snackbar.make(findViewById(android.R.id.content),
+                    getString(R.string.activity_earthquakes_map_max_number_exceeded_message,
+                            String.format(Locale.getDefault(), "%,d",
+                                    MainActivity.MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP) ),
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -51,12 +59,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap map) {
 
-        GoogleMap mMap = map;
-
-        // mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(0, -100)));
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(0, -100)));
-
         List<Earthquake> earthquakes = QueryUtils.getEarthquakesList();
         Earthquake earthquake;
         LatLng earthquakePosition;
@@ -64,7 +66,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
         for (int i = 0; i < earthquakes.size(); i++) {
 
-            // Gets the Earthquake object on position i
             earthquake = earthquakes.get(i);
 
             earthquakePosition = new LatLng(earthquake.getLatitude(), earthquake.getLongitude());
@@ -75,7 +76,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
             MarkerAttributes markerAttributes = getMarkerAttributes(roundedMagnitude);
 
-            mMap.addMarker(new MarkerOptions()
+            map.addMarker(new MarkerOptions()
                     .position(earthquakePosition)
                     .title(constructEarthquakeTitle(earthquake, magnitudeToDisplay))
                     .snippet(constructEarthquakeSnippet(earthquake.getTimeInMilliseconds()))
@@ -83,9 +84,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     .anchor(0.5f, 0.5f)
                     .alpha(markerAttributes.getAlphaValue())
                     .zIndex(markerAttributes.getZIndex()));
-
-
-            // mMap.addCircle(new CircleOptions().center(earthquakePosition).radius(100000).strokeColor(Color.GREEN).fillColor(Color.argb(64,0,255,0)));
         }
     }
 
@@ -148,14 +146,10 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
      * Class the contains attributes of a marker to be displayed on the earthquakes map.
      */
     private class MarkerAttributes {
-        // The Resource ID  of the marker image to be displayed on the map.
         int mMarkerImageResourceId;
-        // The zIndex of the marker image.
         float mZIndex;
-        // The Alpha value (opacity) of the marker image.
         float mAlphaValue;
 
-        // CONSTRUCTOR
         private MarkerAttributes(int markerImageResourceId, float zIndex, float alphaValue) {
             mMarkerImageResourceId = markerImageResourceId;
             mZIndex = zIndex;
@@ -189,12 +183,4 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
 }
 
-
-//        //GeoJsonLayer layer = new GeoJsonLayer(googleMap, QueryUtils.getJsonResponse());
-//        //layer.addLayerToMap();
-//
-//                // Add a marker in Sydney and move the camera
-////        LatLng sydney = new LatLng(-34, 151);
-////        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-////        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
