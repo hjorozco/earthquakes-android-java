@@ -16,8 +16,10 @@
 
     <dimen name="application_small_text_size">13sp</dimen>
     <dimen name="application_standard_text_size">16sp</dimen>
+    <dimen name="application_big_text_size">20sp</dimen>
 
     <dimen name="earthquake_list_item_magnitude_text_view_size">44dp</dimen>
+    <dimen name="activity_earthquake_details_magnitude_text_view_size">88dp</dimen>
 
     <dimen name="message_icons_size">96dp</dimen>
 

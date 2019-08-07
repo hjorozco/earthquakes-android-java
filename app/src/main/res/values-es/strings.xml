@@ -118,8 +118,11 @@
     <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000. Número límite para una búsqueda.</string>
 
     <string name="search_preference_sort_by_title">Ordenar por</string>
-    <string name="search_preference_sort_by_magnitude_entry">Magnitud</string>
-    <string name="search_preference_sort_by_date_entry">Fecha</string>
+    <string name="search_preference_sort_by_ascending_date_entry">Fecha (ascendente)</string>
+    <string name="search_preference_sort_by_descending_date_entry">Fecha (descendente)</string>
+    <string name="search_preference_sort_by_ascending_magnitude_entry">Magnitud (ascendente)</string>
+    <string name="search_preference_sort_by_descending_magnitude_entry">Magnitud (descendente)</string>
+
 
     <string name="search_preference_location_title">Localidad</string>
     <string name="search_preference_location_not_set_value">Sin definir. Buscará temblores en todo el mundo.</string>
@@ -142,6 +145,12 @@
 
     <!-- ********** Activity earthquakes map ********** -->
 
+
+    <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
+
+    <string name="activity_earthquake_details_label">Detalles del temblor</string>
+
+    <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->

@@ -1,9 +1,14 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.app.SharedElementCallback;
+import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -32,9 +37,10 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
@@ -48,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private Menu mMenu;
     private int mNumberOfEarthquakesOnList;
     private FastScroller mRecyclerViewFastScroller;
+    private int mEarthquakeRecyclerViewPosition;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +64,18 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
+
+        // Workaround for orientation change issue
+        if (savedInstanceState != null) {
+            mEarthquakeRecyclerViewPosition = savedInstanceState.getInt("key", 0);
+        }
+
         setContentView(R.layout.activity_main);
 
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
 
-        mEarthquakesListAdapter = new EarthquakesListAdapter(this);
+        mEarthquakesListAdapter = new EarthquakesListAdapter(this, this);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
 
@@ -70,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         setupRecyclerView();
 
         setupViewModel();
+
+        setupTransitions();
     }
 
 
@@ -89,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerViewFastScrollerViewProvider viewProvider = new RecyclerViewFastScrollerViewProvider();
         mRecyclerViewFastScroller.setRecyclerView(mRecyclerView);
         mRecyclerViewFastScroller.setViewProvider(viewProvider);
+
+        scrollToPosition();
     }
 
 
@@ -176,10 +194,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // TODO Modifity to give only 1000 earthquakes
-    private void setEarthquakesListForMapsActivity(List<Earthquake> earthquakes){
+    private void setEarthquakesListForMapsActivity(List<Earthquake> earthquakes) {
 
-        if (earthquakes.size()> MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP){
+        if (earthquakes.size() > MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP) {
             QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap = true;
             QueryUtils.sEarthquakesList = earthquakes.subList(0, MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP);
 
@@ -327,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void selectRefreshOrStopAction(){
+    private void selectRefreshOrStopAction() {
         if (!QueryUtils.sSearchingForEarthquakes) {
             doRefreshActions();
         } else {
@@ -341,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void showEarthquakesMap(){
+    private void showEarthquakesMap() {
         Intent earthquakesMapIntent = new Intent(this, EarthquakesMapActivity.class);
         startActivity(earthquakesMapIntent);
     }
@@ -403,6 +420,114 @@ public class MainActivity extends AppCompatActivity {
     private void showListInformationAndEarthquakesMapMenuItems(boolean show) {
         mMenu.findItem(R.id.menu_activity_main_action_list_information).setVisible(show);
         mMenu.findItem(R.id.menu_activity_main_action_earthquakes_map).setVisible(show);
+    }
+
+    /**
+     * Implementation of EarthquakesListAdapter.EarthquakesListClickListener
+     * When the title of the list is clicked.
+     */
+    @Override
+    public void onTitleClick() {
+        showEarthquakesListInformation();
+    }
+
+    /**
+     * Implementation of EarthquakesListAdapter.EarthquakesListClickListener
+     * When an earthquake on the list is clicked show a new activity whith details of it.
+     * Implement a transition if Android version is 21 or grater.
+     */
+    @Override
+    public void onEarthquakeClick(Earthquake earthquake, int earthquakeRecyclerViewPosition,
+                                  TextView magnitudeTextView, TextView locationOffsetTextView,
+                                  TextView locationPrimaryTextView, TextView dateTextView) {
+
+        mEarthquakeRecyclerViewPosition = earthquakeRecyclerViewPosition;
+
+        Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
+        intent.putExtra(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, earthquake);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
+            Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
+            Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
+            Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
+            ActivityOptionsCompat activityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4);
+            startActivity(intent, activityOptionsCompat.toBundle());
+        } else {
+            startActivity(intent);
+        }
+    }
+
+
+    /**
+     * Map the shared element names to the RecyclerView ViewHolder Views. (works only for visible RecyclerView elements).
+     * Used to restore exit transitions on rotation.
+     */
+    private void setupTransitions() {
+        setExitSharedElementCallback(
+                new SharedElementCallback() {
+                    @Override
+                    public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+
+                        RecyclerView.ViewHolder selectedViewHolder = mRecyclerView
+                                .findViewHolderForAdapterPosition(mEarthquakeRecyclerViewPosition);
+
+                        if (selectedViewHolder == null) return;
+
+                        sharedElements.put(names.get(0), selectedViewHolder.itemView.
+                                findViewById(R.id.earthquake_list_item_magnitude_text_view));
+                        sharedElements.put(names.get(1), selectedViewHolder.itemView.
+                                findViewById(R.id.earthquake_list_item_location_offset_text_view));
+                        sharedElements.put(names.get(2), selectedViewHolder.itemView.
+                                findViewById(R.id.earthquake_list_item_location_primary_text_view));
+                        sharedElements
+                                .put(names.get(3), selectedViewHolder.itemView.findViewById(R.id.earthquake_list_item_date_text_view));
+
+                    }
+                });
+    }
+
+
+    /**
+     * Scrolls the recycler view to show the last viewed item.
+     */
+    private void scrollToPosition() {
+        mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v,
+                                       int left,
+                                       int top,
+                                       int right,
+                                       int bottom,
+                                       int oldLeft,
+                                       int oldTop,
+                                       int oldRight,
+                                       int oldBottom) {
+                mRecyclerView.removeOnLayoutChangeListener(this);
+                final RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+                View viewAtPosition = null;
+                if (layoutManager != null) {
+                    viewAtPosition = layoutManager.findViewByPosition(mEarthquakeRecyclerViewPosition);
+                }
+                // Scroll to position if the view for the current position is null (not currently part of
+                // layout manager children), or it's not completely visible.
+                if (viewAtPosition == null || layoutManager
+                        .isViewPartiallyVisible(viewAtPosition, false, true)) {
+                    mRecyclerView.post(() -> {
+                        if (layoutManager != null) {
+                            layoutManager.scrollToPosition(mEarthquakeRecyclerViewPosition);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("key", mEarthquakeRecyclerViewPosition);
     }
 
 }

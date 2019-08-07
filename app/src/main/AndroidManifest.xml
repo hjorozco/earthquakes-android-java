@@ -37,7 +37,13 @@
 
         <activity
             android:name=".ui.EarthquakesMapActivity"
-            android:label="@string/activity_earthquakes_map_label" />
+            android:label="@string/activity_earthquakes_map_label"
+            android:theme="@style/AppTheme"/>
+
+        <activity
+            android:name=".ui.EarthquakeDetailsActivity"
+            android:label="@string/activity_earthquake_details_label"
+            android:theme="@style/AppTheme"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

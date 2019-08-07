@@ -31,13 +31,7 @@ public class Earthquakes {
     public Earthquakes() {
     }
 
-    /**
-     * 
-     * @param bbox
-     * @param features
-     * @param type
-     * @param metadata
-     */
+
     public Earthquakes(String type, Metadata metadata, List<Feature> features, List<Double> bbox) {
         super();
         this.type = type;

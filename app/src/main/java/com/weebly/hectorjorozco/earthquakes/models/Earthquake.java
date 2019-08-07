@@ -1,12 +1,15 @@
 package com.weebly.hectorjorozco.earthquakes.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * {@link Earthquake} Represents the data from an Earthquake.
  * It contains the magnitude, the location, and the date of the Earthquake.
  * <p>
  */
 
-public class Earthquake {
+public class Earthquake implements Parcelable {
 
     private double mMagnitude;
     private String mLocationOffset;
@@ -55,4 +58,41 @@ public class Earthquake {
         return mLongitude;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.mMagnitude);
+        dest.writeString(this.mLocationOffset);
+        dest.writeString(this.mLocationPrimary);
+        dest.writeLong(this.mTimeInMilliseconds);
+        dest.writeString(this.mUrl);
+        dest.writeDouble(this.mLatitude);
+        dest.writeDouble(this.mLongitude);
+    }
+
+    protected Earthquake(Parcel in) {
+        this.mMagnitude = in.readDouble();
+        this.mLocationOffset = in.readString();
+        this.mLocationPrimary = in.readString();
+        this.mTimeInMilliseconds = in.readLong();
+        this.mUrl = in.readString();
+        this.mLatitude = in.readDouble();
+        this.mLongitude = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<Earthquake> CREATOR = new Parcelable.Creator<Earthquake>() {
+        @Override
+        public Earthquake createFromParcel(Parcel source) {
+            return new Earthquake(source);
+        }
+
+        @Override
+        public Earthquake[] newArray(int size) {
+            return new Earthquake[size];
+        }
+    };
 }

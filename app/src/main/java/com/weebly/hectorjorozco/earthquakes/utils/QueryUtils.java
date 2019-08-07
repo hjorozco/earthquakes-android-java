@@ -3,12 +3,15 @@ package com.weebly.hectorjorozco.earthquakes.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.Html;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
@@ -19,8 +22,10 @@ import com.weebly.hectorjorozco.earthquakes.models.retrofit.Feature;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Geometry;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Properties;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -324,6 +329,7 @@ public class QueryUtils {
 
     /**
      * Formatter for the date used in the USGS query parameters
+     *
      * @return The formatter.
      */
     private static SimpleDateFormat dateForQueryFormatter() {
@@ -369,15 +375,14 @@ public class QueryUtils {
             // If there is more than one earthquake on the list, set the strings values to plural
             earthquakesWord = context.getString(R.string.earthquakes_text_plural);
             sortedBySuffix = context.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
-            if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
+            if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value)) ||
+                    orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
                 firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
                         context.getString(R.string.magnitude_text), values.getFirstEarthquakeMag(), values.getLastEarthquakeMag());
-
             } else {
                 firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
                         context.getString(R.string.date_text), values.getFirstEarthquakeDate(), values.getLastEarthquakeDate());
             }
-
         }
 
         location = values.getLocation();
@@ -416,10 +421,15 @@ public class QueryUtils {
         firstEarthquakeMinMagnitude = values.getMinMagnitude();
         firstEarthquakeMaxMagnitude = values.getMaxMagnitude();
 
-        if (orderBy.equals(context.getString(R.string.search_preference_sort_by_magnitude_entry_value))) {
-            sortedBy = context.getString(R.string.search_preference_sort_by_magnitude_entry);
-        } else {
-            sortedBy = context.getString(R.string.search_preference_sort_by_date_entry);
+        sortedBy = "";
+        if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
+            sortedBy = context.getString(R.string.search_preference_sort_by_ascending_date_entry);
+        } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_date_entry_value))) {
+            sortedBy = context.getString(R.string.search_preference_sort_by_descending_date_entry);
+        } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value))) {
+            sortedBy = context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry);
+        } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
+            sortedBy = context.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
         }
         sortedBy = WordsUtils.changeFirstLetterToLowercase(sortedBy);
 
@@ -432,6 +442,143 @@ public class QueryUtils {
                         firstEarthquakeMaxMagnitude, firstAndLastEarthquakesInfoMessage);
 
         return Html.fromHtml(text);
+    }
+
+
+    // Helper method that rounds a double to only one decimal place and converts it to a String
+    private static String getMagnitudeText(double magnitude) {
+        int scale = (int) Math.pow(10, 1);
+        double roundedMagnitude = (double) Math.round(magnitude * scale) / scale;
+        String magnitudeText = new DecimalFormat("0.0").format(roundedMagnitude);
+        magnitudeText = magnitudeText.replace(',', '.');
+        return magnitudeText;
+    }
+
+
+    /**
+     * Helper method used to determine the color used to display the earthquake information
+     *
+     * @param magnitude The magnitude of the earthquake.
+     * @return The colors used to display the earthquake information
+     */
+    private static EarthquakeInfoColors getEarthquakeInfoColors(Context context, double magnitude) {
+        EarthquakeInfoColors earthquakeInfoColors;
+        int magnitudeFloor = (int) Math.floor(magnitude);
+        switch (magnitudeFloor) {
+            case 0:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude0),
+                                context.getResources().getColor(R.color.background0));
+                break;
+            case 1:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude1),
+                                context.getResources().getColor(R.color.background1));
+                break;
+            case 2:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude2),
+                                context.getResources().getColor(R.color.background2));
+                break;
+            case 3:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude3),
+                                context.getResources().getColor(R.color.background3));
+                break;
+            case 4:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude4),
+                                context.getResources().getColor(R.color.background4));
+                break;
+            case 5:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude5),
+                                context.getResources().getColor(R.color.background5));
+                break;
+            case 6:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude6),
+                                context.getResources().getColor(R.color.background6));
+                break;
+            case 7:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude7),
+                                context.getResources().getColor(R.color.background7));
+                break;
+            case 8:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude8),
+                                context.getResources().getColor(R.color.background8));
+                break;
+            default:
+                earthquakeInfoColors = new EarthquakeInfoColors
+                        (context.getResources().getColor(R.color.magnitude9plus),
+                                context.getResources().getColor(R.color.background9plus));
+                break;
+        }
+        return earthquakeInfoColors;
+    }
+
+
+    /**
+     * Class that models the colors used to display an earthquake information in the RecyclerView
+     */
+    public static class EarthquakeInfoColors {
+        // The color used in the magnitude circle border, its text and the information texts
+        int mMagnitudeColor;
+        // The background color of the magnitude circle
+        int mMagnitudeBackgroundColor;
+
+        private EarthquakeInfoColors(int magnitudeColor, int magnitudeBackgroundColor) {
+            mMagnitudeColor = magnitudeColor;
+            mMagnitudeBackgroundColor = magnitudeBackgroundColor;
+        }
+
+        int getMagnitudeColor() {
+            return mMagnitudeColor;
+        }
+
+        int getMagnitudeBackgroundColor() {
+            return mMagnitudeBackgroundColor;
+        }
+
+    }
+
+
+    public static void setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
+                                                         TextView locationOffsetTextView, TextView locationPrimaryTextView,
+                                                         TextView dateTextView, TextView timeTextView) {
+        // Set magnitude text
+        String magnitudeToDisplay = QueryUtils.getMagnitudeText(earthquake.getMagnitude());
+        magnitudeTextView.setText(magnitudeToDisplay);
+
+        // Set colors for magnitude circle and text
+        Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
+        GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeTextView.getBackground();
+        QueryUtils.EarthquakeInfoColors earthquakeInfoColors = QueryUtils.getEarthquakeInfoColors(context, roundedMagnitude);
+        int magnitudeColor = earthquakeInfoColors.getMagnitudeColor();
+        int magnitudeBackgroundColor = earthquakeInfoColors.getMagnitudeBackgroundColor();
+        magnitudeCircle.setColor(magnitudeBackgroundColor);
+        magnitudeCircle.setStroke(context.getResources().getDimensionPixelSize(R.dimen.magnitude_circle_stroke_width),
+                magnitudeColor);
+        magnitudeTextView.setTextColor(magnitudeColor);
+
+        locationOffsetTextView.setText(earthquake.getLocationOffset());
+        locationOffsetTextView.setTextColor(magnitudeColor);
+
+        locationPrimaryTextView.setText(earthquake.getLocationPrimary());
+        locationPrimaryTextView.setTextColor(magnitudeColor);
+
+        Date dateObject = new Date(earthquake.getTimeInMilliseconds());
+
+        if (timeTextView != null) {
+            dateTextView.setText(WordsUtils.formatDate(dateObject));
+            timeTextView.setText(WordsUtils.formatTime(dateObject));
+            timeTextView.setTextColor(magnitudeColor);
+        } else {
+            dateTextView.setText(WordsUtils.displayedDateFormatter().format(dateObject));
+        }
+        dateTextView.setTextColor(magnitudeColor);
     }
 
 

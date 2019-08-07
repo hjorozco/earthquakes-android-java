@@ -135,11 +135,16 @@
 
     <string name="search_preference_sort_by_title">Sort By</string>
     <string name="search_preference_sort_by_key" translatable="false">order_by</string>
-    <string name="search_preference_sort_by_default_value" translatable="false">@string/search_preference_sort_by_date_entry_value</string>
-    <string name="search_preference_sort_by_magnitude_entry">Magnitude</string>
-    <string name="search_preference_sort_by_magnitude_entry_value" translatable="false">magnitude</string>
-    <string name="search_preference_sort_by_date_entry">Date</string>
-    <string name="search_preference_sort_by_date_entry_value" translatable="false">time</string>
+    <string name="search_preference_sort_by_default_value" translatable="false">@string/search_preference_sort_by_descending_date_entry_value</string>
+    <string name="search_preference_sort_by_ascending_date_entry">Date (ascending)</string>
+    <string name="search_preference_sort_by_ascending_date_entry_value" translatable="false">time-asc</string>
+    <string name="search_preference_sort_by_descending_date_entry">Date (descending)</string>
+    <string name="search_preference_sort_by_descending_date_entry_value" translatable="false">time</string>
+    <string name="search_preference_sort_by_ascending_magnitude_entry">Magnitude (ascending)</string>
+    <string name="search_preference_sort_by_ascending_magnitude_entry_value" translatable="false">magnitude-asc</string>
+    <string name="search_preference_sort_by_descending_magnitude_entry">Magnitude (descending)</string>
+    <string name="search_preference_sort_by_descending_magnitude_entry_value" translatable="false">magnitude</string>
+
 
     <string name="search_preference_location_title">Location</string>
     <string name="search_preference_location_key" translatable="false">filter_by</string>
@@ -164,6 +169,21 @@
     <string name="activity_earthquakes_map_label">Earthquakes map</string>
 
     <!-- ********** Activity earthquakes map ********** -->
+
+
+    <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
+
+    <string name="activity_earthquake_details_label">Earthquake details</string>
+    <string name="activity_earthquake_details_magnitude_text_view_transition" translatable="false">
+        ctivity_earthquake_details_magnitude_text_view_transition</string>
+    <string name="activity_earthquake_details_location_offset_text_view_transition" translatable="false">
+        activity_earthquake_details_location_offset_text_view_transition</string>
+    <string name="activity_earthquake_details_location_primary_text_view_transition" translatable="false">
+        activity_earthquake_details_location_primary_text_view_transition</string>
+    <string name="activity_earthquake_details_date_text_view_transition" translatable="false">
+        activity_earthquake_details_date_text_view_transition</string>
+
+    <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->

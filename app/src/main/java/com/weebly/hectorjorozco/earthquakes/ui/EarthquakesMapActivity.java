@@ -173,11 +173,9 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
