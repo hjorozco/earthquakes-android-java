@@ -130,10 +130,15 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 latitude, latitudeLetter, longitude, longitudeLetter, mEarthquake.getDepth()));
         coordinatesAndDepthTextView.setTextColor(mTextColor);
 
+        CustomScrollView customScrollView = findViewById(R.id.activity_earthquake_details_custom_scroll_view);
         SupportMapFragment earthquakeDetailsMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.activity_earthquake_details_map);
+
         if (earthquakeDetailsMapFragment != null) {
             earthquakeDetailsMapFragment.getMapAsync(this);
+            // Add the map fragment view to a list of views that intercept touch events on
+            // CustomScrollView for the user to be able to interact with the map inside the ScrollView
+            customScrollView.addInterceptScrollView(earthquakeDetailsMapFragment.getView());
         }
     }
 

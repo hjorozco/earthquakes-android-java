@@ -1,6 +1,7 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.weebly.hectorjorozco.earthquakes.ui.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/activity_earthquake_details_custom_scroll_view"
     android:layout_height="match_parent"
     tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeDetailsActivity">
 
@@ -78,7 +79,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:padding="@dimen/application_standard_padding"
+            android:paddingStart="@dimen/application_standard_padding"
+            android:paddingLeft="@dimen/application_standard_padding"
+            android:paddingEnd="@dimen/application_standard_padding"
+            android:paddingRight="@dimen/application_standard_padding"
+            android:paddingBottom="@dimen/application_standard_padding"
             android:textSize="@dimen/application_standard_text_size"
             android:textStyle="italic"
             tools:text="37.734°N 141.536°E - 38.6 km depth" />
@@ -100,7 +105,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
-</ScrollView>
+</com.weebly.hectorjorozco.earthquakes.ui.CustomScrollView>
