@@ -28,14 +28,16 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquakes_map);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.activity_earthquakes_map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
         }
 
         if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap){
@@ -87,11 +89,11 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         }
     }
 
-    private String constructEarthquakeTitle(Earthquake earthquake, String magnitude) {
+    static String constructEarthquakeTitle(Earthquake earthquake, String magnitude) {
         return magnitude + " - " + earthquake.getLocationOffset() + " " + earthquake.getLocationPrimary();
     }
 
-    private String constructEarthquakeSnippet(long earthquakeTimeInMilliseconds) {
+    static String constructEarthquakeSnippet(long earthquakeTimeInMilliseconds) {
         Date dateObject = new Date(earthquakeTimeInMilliseconds);
         return WordsUtils.formatDate(dateObject) + " " + WordsUtils.formatTime(dateObject);
     }
@@ -103,7 +105,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
      * @param magnitude The magnitude of the earthquake.
      * @return The marker image to be displayed on the map based on the magnitude of the earthquake.
      */
-    private MarkerAttributes getMarkerAttributes(double magnitude) {
+    static MarkerAttributes getMarkerAttributes(double magnitude) {
         MarkerAttributes markerAttributes;
         int magnitudeFloor = (int) Math.floor(magnitude);
         switch (magnitudeFloor) {
@@ -145,7 +147,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     /**
      * Class the contains attributes of a marker to be displayed on the earthquakes map.
      */
-    private class MarkerAttributes {
+    static class MarkerAttributes {
         int mMarkerImageResourceId;
         float mZIndex;
         float mAlphaValue;
@@ -156,15 +158,15 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mAlphaValue = alphaValue;
         }
 
-        private int getMarkerImageResourceId() {
+        int getMarkerImageResourceId() {
             return mMarkerImageResourceId;
         }
 
-        private float getZIndex() {
+        float getZIndex() {
             return mZIndex;
         }
 
-        private float getAlphaValue() {
+        float getAlphaValue() {
             return mAlphaValue;
         }
 

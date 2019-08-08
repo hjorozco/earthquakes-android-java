@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
@@ -189,11 +188,6 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             titleTextView.setOnClickListener(v -> mEarthquakesListClickListener.onTitleClick());
         }
-    }
-
-    // Helper method that returns the color number from the Color Resource ID.
-    private int getColor(int colorResourceId) {
-        return ContextCompat.getColor(mContext, colorResourceId);
     }
 
 }

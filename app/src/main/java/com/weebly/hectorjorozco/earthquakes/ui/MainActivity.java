@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mRecyclerViewFastScroller.setRecyclerView(mRecyclerView);
         mRecyclerViewFastScroller.setViewProvider(viewProvider);
 
-        scrollToPosition();
     }
 
 
@@ -489,45 +488,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-    /**
-     * Scrolls the recycler view to show the last viewed item.
-     */
-    private void scrollToPosition() {
-        mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v,
-                                       int left,
-                                       int top,
-                                       int right,
-                                       int bottom,
-                                       int oldLeft,
-                                       int oldTop,
-                                       int oldRight,
-                                       int oldBottom) {
-                mRecyclerView.removeOnLayoutChangeListener(this);
-                final RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-                View viewAtPosition = null;
-                if (layoutManager != null) {
-                    viewAtPosition = layoutManager.findViewByPosition(mEarthquakeRecyclerViewPosition);
-                }
-                // Scroll to position if the view for the current position is null (not currently part of
-                // layout manager children), or it's not completely visible.
-                if (viewAtPosition == null || layoutManager
-                        .isViewPartiallyVisible(viewAtPosition, false, true)) {
-                    mRecyclerView.post(() -> {
-                        if (layoutManager != null) {
-                            layoutManager.scrollToPosition(mEarthquakeRecyclerViewPosition);
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("key", mEarthquakeRecyclerViewPosition);
     }
-
 }

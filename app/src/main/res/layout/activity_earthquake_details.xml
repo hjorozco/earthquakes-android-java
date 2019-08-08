@@ -7,64 +7,99 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/application_standard_padding">
-
-        <TextView
-            android:id="@+id/activity_earthquake_details_magnitude_text_view"
-            android:layout_width="@dimen/activity_earthquake_details_magnitude_text_view_size"
-            android:layout_height="@dimen/activity_earthquake_details_magnitude_text_view_size"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/magnitude_circle"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:textSize="@dimen/application_big_text_size"
-            android:textStyle="bold"
-            android:transitionName="@string/activity_earthquake_details_magnitude_text_view_transition"
-            tools:text="8.9" />
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/application_standard_margin"
-            android:layout_marginLeft="@dimen/application_standard_margin"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:padding="@dimen/application_standard_padding">
 
             <TextView
-                android:id="@+id/activity_earthquake_details_location_offset_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
+                android:id="@+id/activity_earthquake_details_magnitude_text_view"
+                android:layout_width="@dimen/activity_earthquake_details_magnitude_text_view_size"
+                android:layout_height="@dimen/activity_earthquake_details_magnitude_text_view_size"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/magnitude_circle"
                 android:fontFamily="sans-serif-medium"
-                android:maxLines="1"
-                android:textAllCaps="true"
-                android:textSize="@dimen/application_standard_text_size"
-                android:textStyle="italic"
-                android:transitionName="@string/activity_earthquake_details_location_offset_text_view_transition"
-                tools:text="88km N of" />
-
-            <TextView
-                android:id="@+id/activity_earthquake_details_location_primary_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
+                android:gravity="center"
                 android:textSize="@dimen/application_big_text_size"
                 android:textStyle="bold"
-                android:transitionName="@string/activity_earthquake_details_location_primary_text_view_transition"
-                tools:text="San Francisco, California" />
+                android:transitionName="@string/activity_earthquake_details_magnitude_text_view_transition"
+                tools:text="8.9" />
 
-            <TextView
-                android:id="@+id/activity_earthquake_details_date_and_time_text_view"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/application_standard_text_size"
-                android:textStyle="italic"
-                android:transitionName="@string/activity_earthquake_details_date_text_view_transition"
-                tools:text="Feb 2, 2016 3:00 PM" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/application_standard_margin"
+                android:layout_marginLeft="@dimen/application_standard_margin"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/activity_earthquake_details_location_offset_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/application_standard_text_size"
+                    android:textStyle="italic"
+                    android:transitionName="@string/activity_earthquake_details_location_offset_text_view_transition"
+                    tools:text="88km N of" />
+
+                <TextView
+                    android:id="@+id/activity_earthquake_details_location_primary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:textSize="@dimen/application_big_text_size"
+                    android:textStyle="bold"
+                    android:transitionName="@string/activity_earthquake_details_location_primary_text_view_transition"
+                    tools:text="San Francisco, California" />
+
+                <TextView
+                    android:id="@+id/activity_earthquake_details_date_and_time_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/application_standard_text_size"
+                    android:textStyle="italic"
+                    android:transitionName="@string/activity_earthquake_details_date_text_view_transition"
+                    tools:text="Feb 2, 2016 3:00 PM" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_earthquake_details_coordinates_and_depth_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/application_standard_padding"
+            android:textSize="@dimen/application_standard_text_size"
+            android:textStyle="italic"
+            tools:text="37.734°N 141.536°E - 38.6 km depth" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:paddingStart="@dimen/application_standard_padding"
+            android:paddingLeft="@dimen/application_standard_padding"
+            android:paddingEnd="@dimen/application_standard_padding"
+            android:paddingRight="@dimen/application_standard_padding"
+            android:paddingBottom="@dimen/application_standard_padding">
+
+            <fragment
+                android:id="@+id/activity_earthquake_details_map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

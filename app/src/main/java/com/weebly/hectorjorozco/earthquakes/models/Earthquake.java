@@ -18,9 +18,11 @@ public class Earthquake implements Parcelable {
     private String mUrl;
     private double mLatitude;
     private double mLongitude;
+    private double mDepth;
 
 
-    public Earthquake(double magnitude, String locationOffset, String locationPrimary, long timeInMilliseconds, String url, double latitude, double longitude) {
+    public Earthquake(double magnitude, String locationOffset, String locationPrimary,
+                      long timeInMilliseconds, String url, double latitude, double longitude, double depth) {
         mMagnitude = magnitude;
         mLocationOffset = locationOffset;
         mLocationPrimary = locationPrimary;
@@ -28,6 +30,7 @@ public class Earthquake implements Parcelable {
         mUrl = url;
         mLatitude = latitude;
         mLongitude = longitude;
+        mDepth = depth;
     }
 
     public double getMagnitude() {
@@ -58,6 +61,8 @@ public class Earthquake implements Parcelable {
         return mLongitude;
     }
 
+    public double getDepth(){return mDepth;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -72,6 +77,7 @@ public class Earthquake implements Parcelable {
         dest.writeString(this.mUrl);
         dest.writeDouble(this.mLatitude);
         dest.writeDouble(this.mLongitude);
+        dest.writeDouble(this.mDepth);
     }
 
     protected Earthquake(Parcel in) {
@@ -82,6 +88,7 @@ public class Earthquake implements Parcelable {
         this.mUrl = in.readString();
         this.mLatitude = in.readDouble();
         this.mLongitude = in.readDouble();
+        this.mDepth = in.readDouble();
     }
 
     public static final Parcelable.Creator<Earthquake> CREATOR = new Parcelable.Creator<Earthquake>() {

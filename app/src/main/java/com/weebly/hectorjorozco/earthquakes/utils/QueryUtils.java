@@ -11,7 +11,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
@@ -131,7 +130,8 @@ public class QueryUtils {
                         properties.getTime(),
                         properties.getUrl(),
                         coordinates.get(1),
-                        coordinates.get(0)));
+                        coordinates.get(0),
+                        coordinates.get(2)));
 
                 earthquakesAddedToListCounter++;
 
@@ -149,7 +149,8 @@ public class QueryUtils {
                             properties.getTime(),
                             properties.getUrl(),
                             coordinates.get(1),
-                            coordinates.get(0)));
+                            coordinates.get(0),
+                            coordinates.get(2)));
                     // Increments the counter of the number of earthquakes added to the List of
                     // Earthquakes
                     earthquakesAddedToListCounter++;
@@ -545,7 +546,7 @@ public class QueryUtils {
     }
 
 
-    public static void setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
+    public static int setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
                                                          TextView locationOffsetTextView, TextView locationPrimaryTextView,
                                                          TextView dateTextView, TextView timeTextView) {
         // Set magnitude text
@@ -579,6 +580,8 @@ public class QueryUtils {
             dateTextView.setText(WordsUtils.displayedDateFormatter().format(dateObject));
         }
         dateTextView.setTextColor(magnitudeColor);
+
+        return magnitudeColor;
     }
 
 
