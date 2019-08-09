@@ -1,10 +1,17 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +42,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private Earthquake mEarthquake;
     private int mTextColor;
     private boolean mRotation = false;
+    private WebView mUsgsMapWebView;
+    private LinearLayout mGoogleMapLinearLayout;
+    private CustomScrollView mCustomScrollView;
+    private boolean mUsgsMapLoaded = false;
+    private boolean mGoogleMapLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +116,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     private void setupEarthquakeDetails() {
+
+        mUsgsMapWebView = findViewById(R.id.activity_earthquake_details_usgs_map_web_view);
+        mGoogleMapLinearLayout = findViewById(R.id.activity_earthquake_details_google_map_linear_layout);
+        mCustomScrollView = findViewById(R.id.activity_earthquake_details_custom_scroll_view);
+
         TextView coordinatesAndDepthTextView =
                 findViewById(R.id.activity_earthquake_details_coordinates_and_depth_text_view);
 
@@ -130,15 +147,69 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 latitude, latitudeLetter, longitude, longitudeLetter, mEarthquake.getDepth()));
         coordinatesAndDepthTextView.setTextColor(mTextColor);
 
-        CustomScrollView customScrollView = findViewById(R.id.activity_earthquake_details_custom_scroll_view);
-        SupportMapFragment earthquakeDetailsMapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.activity_earthquake_details_map);
 
-        if (earthquakeDetailsMapFragment != null) {
-            earthquakeDetailsMapFragment.getMapAsync(this);
-            // Add the map fragment view to a list of views that intercept touch events on
-            // CustomScrollView for the user to be able to interact with the map inside the ScrollView
-            customScrollView.addInterceptScrollView(earthquakeDetailsMapFragment.getView());
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                getString(R.string.app_shared_preferences_name), 0);
+        boolean usgsMapType = sharedPreferences.getBoolean(getString(
+                R.string.earthquake_details_map_type_shared_preference_key), true);
+
+        RadioGroup mapTypeRadioGroup = findViewById(R.id.activity_earthquake_details_map_type_radio_group);
+        if (usgsMapType) {
+            mapTypeRadioGroup.check(R.id.activity_earthquake_details_usgs_map_type_radio_button);
+            showUsgsMap();
+        } else {
+            mapTypeRadioGroup.check(R.id.activity_earthquake_details_google_map_type_radio_button);
+            showGoogleMap();
+        }
+
+        mapTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            boolean usgsMapTypeValueToSave;
+            if (checkedId == R.id.activity_earthquake_details_usgs_map_type_radio_button) {
+                showUsgsMap();
+                usgsMapTypeValueToSave = true;
+            } else {
+                showGoogleMap();
+                usgsMapTypeValueToSave = false;
+            }
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(getString(R.string.earthquake_details_map_type_shared_preference_key),
+                    usgsMapTypeValueToSave);
+            editor.apply();
+        });
+
+    }
+
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void showUsgsMap() {
+
+        mUsgsMapWebView.setVisibility(View.VISIBLE);
+        mGoogleMapLinearLayout.setVisibility(View.GONE);
+        if (!mUsgsMapLoaded) {
+            mUsgsMapWebView.getSettings().setJavaScriptEnabled(true);
+            mUsgsMapWebView.getSettings().setDomStorageEnabled(true);
+            mUsgsMapWebView.setWebChromeClient(new WebChromeClient());
+            // TODO Load the real map for the earthquake
+            mUsgsMapWebView.loadUrl("https://earthquake.usgs.gov/earthquakes/eventpage/us600050if/map");
+            mCustomScrollView.addInterceptScrollView(mUsgsMapWebView);
+            mUsgsMapLoaded = true;
+        }
+    }
+
+
+    private void showGoogleMap() {
+        mUsgsMapWebView.setVisibility(View.GONE);
+        mGoogleMapLinearLayout.setVisibility(View.VISIBLE);
+        if (!mGoogleMapLoaded) {
+            SupportMapFragment earthquakeDetailsMapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.activity_earthquake_details_map);
+            if (earthquakeDetailsMapFragment != null) {
+                earthquakeDetailsMapFragment.getMapAsync(this);
+                // Add the map fragment view to a list of views that intercept touch events on
+                // CustomScrollView for the user to be able to interact with the map inside the ScrollView
+                mCustomScrollView.addInterceptScrollView(earthquakeDetailsMapFragment.getView());
+            }
+            mGoogleMapLoaded = true;
         }
     }
 

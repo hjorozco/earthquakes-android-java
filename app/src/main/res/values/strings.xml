@@ -6,13 +6,15 @@
 
     <string name="app_name">Earthquakes</string>
 
-    <!-- Message that will be displayed only the first time the app runs. -->
-    <string name="first_time_message">
-        Thank you for installing this application.\n\n
-        Hector J. Orozco.
-    </string>
-
     <!-- ********** App ********** -->
+
+
+    <!-- ********** APP SHARED PREFERENCES ********** -->
+
+    <string name="app_shared_preferences_name" translatable="false">app_shared_preferences</string>
+    <string name="earthquake_details_map_type_shared_preference_key" translatable="false">map_type</string>
+
+    <!-- ********** APP SHARED PREFERENCES ********** -->
 
 
     <!-- String to be displayed at the top TextView of help_activity.xml layout -->
@@ -189,6 +191,9 @@
     <string name="activity_earthquake_details_south_latitude_letter" translatable="false">S</string>
     <string name="activity_earthquake_details_east_longitude_letter" translatable="false">E</string>
     <string name="activity_earthquake_details_west_longitude_letter">W</string>
+
+    <string name="activity_earthquake_details_usgs_map_type_radio_button_text">USGS map</string>
+    <string name="activity_earthquake_details_google_map_type_radio_button_text">Google map</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 

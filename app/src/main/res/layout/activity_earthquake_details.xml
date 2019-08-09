@@ -1,13 +1,13 @@
 <com.weebly.hectorjorozco.earthquakes.ui.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/activity_earthquake_details_custom_scroll_view"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -88,14 +88,27 @@
             android:textStyle="italic"
             tools:text="37.734°N 141.536°E - 38.6 km depth" />
 
-        <LinearLayout
+        <WebView
+            android:id="@+id/activity_earthquake_details_usgs_map_web_view"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:paddingStart="@dimen/application_standard_padding"
-            android:paddingLeft="@dimen/application_standard_padding"
-            android:paddingEnd="@dimen/application_standard_padding"
-            android:paddingRight="@dimen/application_standard_padding"
-            android:paddingBottom="@dimen/application_standard_padding">
+            android:layout_height="@dimen/activity_earthquake_details_map_height"
+            android:layout_marginStart="@dimen/application_big_margin"
+            android:layout_marginLeft="@dimen/application_big_margin"
+            android:layout_marginEnd="@dimen/application_big_margin"
+            android:layout_marginRight="@dimen/application_big_margin"
+            android:focusableInTouchMode="false"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/activity_earthquake_details_google_map_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_earthquake_details_map_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/application_big_margin"
+            android:layout_marginLeft="@dimen/application_big_margin"
+            android:layout_marginEnd="@dimen/application_big_margin"
+            android:layout_marginRight="@dimen/application_big_margin"
+            android:visibility="gone">
 
             <fragment
                 android:id="@+id/activity_earthquake_details_map"
@@ -104,6 +117,32 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/activity_earthquake_details_map_type_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/application_big_margin"
+            android:layout_marginLeft="@dimen/application_big_margin"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/activity_earthquake_details_usgs_map_type_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_small_text_size"
+                android:text="@string/activity_earthquake_details_usgs_map_type_radio_button_text" />
+
+            <RadioButton
+                android:id="@+id/activity_earthquake_details_google_map_type_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_small_text_size"
+                android:text="@string/activity_earthquake_details_google_map_type_radio_button_text" />
+
+        </RadioGroup>
 
     </LinearLayout>
 
