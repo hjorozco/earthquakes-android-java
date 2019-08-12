@@ -195,6 +195,11 @@
     <string name="activity_earthquake_details_usgs_map_type_radio_button_text">USGS map</string>
     <string name="activity_earthquake_details_google_map_type_radio_button_text">Google map</string>
 
+    <string name="activity_earthquake_details_usgs_map_no_internet_message">
+        An internet connection is needed to see the USGS map. Press here to try loading it again
+        or use the Google map.
+    </string>
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 

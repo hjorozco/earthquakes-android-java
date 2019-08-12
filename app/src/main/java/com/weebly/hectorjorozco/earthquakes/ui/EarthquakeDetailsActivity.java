@@ -6,11 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
@@ -43,10 +45,13 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private int mTextColor;
     private boolean mRotation = false;
     private WebView mUsgsMapWebView;
-    private LinearLayout mGoogleMapLinearLayout;
+    private FrameLayout mGoogleMapLinearLayout;
     private CustomScrollView mCustomScrollView;
+    private TextView mUsgsMapNoInternetTextView;
     private boolean mUsgsMapLoaded = false;
     private boolean mGoogleMapLoaded = false;
+    private boolean mGoogleMapRadioButtonClicked = false;
+    private boolean mOnBackPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +93,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
                 @Override
                 public void onTransitionEnd(Transition transition) {
-                    setupEarthquakeDetails();
+                    if (!mOnBackPressed) {
+                        setupEarthquakeDetails();
+                    }
                 }
 
                 @Override
@@ -120,6 +127,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mUsgsMapWebView = findViewById(R.id.activity_earthquake_details_usgs_map_web_view);
         mGoogleMapLinearLayout = findViewById(R.id.activity_earthquake_details_google_map_linear_layout);
         mCustomScrollView = findViewById(R.id.activity_earthquake_details_custom_scroll_view);
+        mUsgsMapNoInternetTextView = findViewById(R.id.activity_earthquake_details_usgs_map_no_internet_text_view);
 
         TextView coordinatesAndDepthTextView =
                 findViewById(R.id.activity_earthquake_details_coordinates_and_depth_text_view);
@@ -162,6 +170,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             showGoogleMap();
         }
 
+        mUsgsMapNoInternetTextView.setOnClickListener(v -> showUsgsMap());
+
         mapTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             boolean usgsMapTypeValueToSave;
             if (checkedId == R.id.activity_earthquake_details_usgs_map_type_radio_button) {
@@ -170,6 +180,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             } else {
                 showGoogleMap();
                 usgsMapTypeValueToSave = false;
+                mGoogleMapRadioButtonClicked = true;
             }
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(getString(R.string.earthquake_details_map_type_shared_preference_key),
@@ -177,28 +188,36 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             editor.apply();
         });
 
+        findViewById(R.id.activity_earthquake_details_google_map_fab).
+                setOnClickListener(v -> Log.d("TESTING", "fab clicked"));
+
     }
 
 
     @SuppressLint("SetJavaScriptEnabled")
     private void showUsgsMap() {
-
-        mUsgsMapWebView.setVisibility(View.VISIBLE);
         mGoogleMapLinearLayout.setVisibility(View.GONE);
-        if (!mUsgsMapLoaded) {
-            mUsgsMapWebView.getSettings().setJavaScriptEnabled(true);
-            mUsgsMapWebView.getSettings().setDomStorageEnabled(true);
-            mUsgsMapWebView.setWebChromeClient(new WebChromeClient());
-            // TODO Load the real map for the earthquake
-            mUsgsMapWebView.loadUrl("https://earthquake.usgs.gov/earthquakes/eventpage/us600050if/map");
-            mCustomScrollView.addInterceptScrollView(mUsgsMapWebView);
-            mUsgsMapLoaded = true;
+        if (!QueryUtils.internetConnection(this)) {
+            mUsgsMapWebView.setVisibility(View.GONE);
+            mUsgsMapNoInternetTextView.setVisibility(View.VISIBLE);
+        } else {
+            mUsgsMapNoInternetTextView.setVisibility(View.GONE);
+            mUsgsMapWebView.setVisibility(View.VISIBLE);
+            if (!mUsgsMapLoaded) {
+                mUsgsMapWebView.getSettings().setJavaScriptEnabled(true);
+                mUsgsMapWebView.getSettings().setDomStorageEnabled(true);
+                mUsgsMapWebView.setWebChromeClient(new WebChromeClient());
+                mUsgsMapWebView.loadUrl(mEarthquake.getUrl() + "/map");
+                mCustomScrollView.addInterceptScrollView(mUsgsMapWebView);
+                mUsgsMapLoaded = true;
+            }
         }
     }
 
 
     private void showGoogleMap() {
         mUsgsMapWebView.setVisibility(View.GONE);
+        mUsgsMapNoInternetTextView.setVisibility(View.GONE);
         mGoogleMapLinearLayout.setVisibility(View.VISIBLE);
         if (!mGoogleMapLoaded) {
             SupportMapFragment earthquakeDetailsMapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -217,6 +236,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            // Set this flag to true to prevent reloading USGS web view onTransitionEnd callback
+            mOnBackPressed = true;
+            // Fade out view
+            mUsgsMapWebView.animate().alpha(0.0f);
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
@@ -229,7 +252,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         DecimalFormat formatter = new DecimalFormat("0.0");
 
         LatLng earthquakePosition = new LatLng(mEarthquake.getLatitude(), mEarthquake.getLongitude());
@@ -249,6 +271,12 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 .alpha(markerAttributes.getAlphaValue())
                 .zIndex(markerAttributes.getZIndex()));
 
-        if (!mRotation) googleMap.animateCamera(CameraUpdateFactory.newLatLng(earthquakePosition));
+        if (mGoogleMapRadioButtonClicked) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(earthquakePosition, 6.7f));
+            mGoogleMapRadioButtonClicked = false;
+        } else if (!mRotation) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(earthquakePosition, 6.7f));
+        }
     }
 }
+

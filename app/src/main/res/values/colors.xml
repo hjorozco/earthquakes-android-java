@@ -14,8 +14,12 @@
 
     <color name="colorAppBackground">#FFFAFAFA</color>
 
+    <color name="colorGoogleMapLayersFabIcon">#757575</color>
+
     <!-- List divider color -->
-    <color name="light_brown">#D7CCC8</color>           <!-- Brown 200 -->
+    <color name="light_brown">#D7CCC8</color>           <!-- Brown 100 -->
+
+    <color name="ultra_light_brown">#EFEBE9</color>     <!-- Brown 50 -->
 
     <color name="custom_handle_color">#90a4ae</color>
     <color name="custom_bubble_color">#607d8b</color>

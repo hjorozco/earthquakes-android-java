@@ -150,6 +150,11 @@
     <string name="activity_earthquake_details_usgs_map_type_radio_button_text">Mapa del USGS</string>
     <string name="activity_earthquake_details_google_map_type_radio_button_text">Mapa de Google</string>
 
+    <string name="activity_earthquake_details_usgs_map_no_internet_message">
+        Es necesaria una conexión a internet para ver el mapa del USGS. Presiona aquí para tratar de
+        cargarlo de nuevo o utiliza el mapa de Google.
+    </string>
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
