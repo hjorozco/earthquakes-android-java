@@ -200,6 +200,10 @@
         or use the Google map.
     </string>
 
+    <string name="activity_earthquake_details_google_map_default_type_text">Default</string>
+    <string name="activity_earthquake_details_google_map_satellite_type_text">Satellite</string>
+    <string name="activity_earthquake_details_google_map_terrain_type_text">Terrain</string>
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 

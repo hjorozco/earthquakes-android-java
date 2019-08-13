@@ -144,7 +144,7 @@
 
     <string name="activity_earthquake_details_label">Detalles del temblor</string>
     <string name="activity_earthquake_details_coordinates_and_depth_text">
-        %1$.3f\u00B0%2$s %3$.3f\u00B0%4$s | %5$.1f km de profundidad
+        %1$.3f\u00B0%2$s %3$.3f\u00B0%4$s - %5$.1f km de profundidad
     </string>
     <string name="activity_earthquake_details_west_longitude_letter">O</string>
     <string name="activity_earthquake_details_usgs_map_type_radio_button_text">Mapa del USGS</string>
@@ -154,6 +154,10 @@
         Es necesaria una conexión a internet para ver el mapa del USGS. Presiona aquí para tratar de
         cargarlo de nuevo o utiliza el mapa de Google.
     </string>
+
+    <string name="activity_earthquake_details_google_map_default_type_text">Predeterminado</string>
+    <string name="activity_earthquake_details_google_map_satellite_type_text">Satélite</string>
+    <string name="activity_earthquake_details_google_map_terrain_type_text">Relieve</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 

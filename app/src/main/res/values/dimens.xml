@@ -8,6 +8,7 @@
     <dimen name="recycler_view_divider_size">1dp</dimen>
 
     <dimen name="application_tiny_margin">4dp</dimen>
+    <dimen name="application_small_margin">8dp</dimen>
     <dimen name="application_standard_margin">16dp</dimen>
     <dimen name="application_big_margin">32dp</dimen>
 
@@ -30,5 +31,9 @@
     <dimen name="recycler_view_fast_scroll_custom_handle_height">32dp</dimen>
 
     <dimen name="activity_earthquake_details_map_height">300dp</dimen>
+
+    <dimen name="standard_52">52dp</dimen>
+    <dimen name="standard_96">96dp</dimen>
+    <dimen name="standard_140">140dp</dimen>
 
 </resources>
