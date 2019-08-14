@@ -2,12 +2,12 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,18 +31,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.utils.MapsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.text.DecimalFormat;
-
-import static com.weebly.hectorjorozco.earthquakes.ui.EarthquakesMapActivity.constructEarthquakeSnippet;
-import static com.weebly.hectorjorozco.earthquakes.ui.EarthquakesMapActivity.constructEarthquakeTitle;
-import static com.weebly.hectorjorozco.earthquakes.ui.EarthquakesMapActivity.getMarkerAttributes;
 
 
 public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final String EXTRA_EARTHQUAKE = "EXTRA_EARTHQUAKE";
+    private static final String MAP_TYPE_KEY = "MAP_TYPE_KEY";
 
     private Earthquake mEarthquake;
     private int mTextColor;
@@ -51,15 +50,19 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private CustomScrollView mCustomScrollView;
     private TextView mUsgsMapNoInternetTextView;
     private FloatingActionButton mMainFab;
+    private RadioGroup mMapTypeRadioGroup;
     private LinearLayout mLayoutFab1, mLayoutFab2, mLayoutFab3;
-    private View fabBackgroundLayout;
+    private View mFabBackgroundLayout;
+    private GoogleMap mGoogleMap;
     private boolean mUsgsMapLoaded = false;
     private boolean mGoogleMapLoaded = false;
     private boolean mGoogleMapRadioButtonClicked = false;
     private boolean mOnBackPressed = false;
     private boolean mRotation = false;
-    private GoogleMap mGoogleMap;
-    boolean isFabOpen = false;
+    private boolean mIsFabOpen = false;
+    private int mMapType;
+
+
 
 
     @Override
@@ -78,6 +81,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         if (savedInstanceState != null) {
             mRotation = true;
+            mMapType = savedInstanceState.getInt(MAP_TYPE_KEY);
+        } else {
+            mMapType = GoogleMap.MAP_TYPE_NORMAL;
         }
 
 
@@ -138,6 +144,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
      */
     private void setupEarthquakeDetails() {
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         // Set up the TextView that shows the coordinates and depth of the earthquake
         TextView coordinatesAndDepthTextView =
                 findViewById(R.id.activity_earthquake_details_coordinates_and_depth_text_view);
@@ -173,33 +181,32 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         SharedPreferences sharedPreferences = getSharedPreferences(
                 getString(R.string.app_shared_preferences_name), 0);
-        boolean usgsMapType = sharedPreferences.getBoolean(getString(
-                R.string.earthquake_details_map_type_shared_preference_key), true);
 
-        RadioGroup mapTypeRadioGroup = findViewById(R.id.activity_earthquake_details_map_type_radio_group);
-        if (usgsMapType) {
-            mapTypeRadioGroup.check(R.id.activity_earthquake_details_usgs_map_type_radio_button);
-            showUsgsMap();
-        } else {
-            mapTypeRadioGroup.check(R.id.activity_earthquake_details_google_map_type_radio_button);
+        mMapTypeRadioGroup = findViewById(R.id.activity_earthquake_details_map_type_radio_group);
+        if (sharedPreferences.getBoolean(getString(
+                R.string.earthquake_details_map_type_shared_preference_key), true)) {
+            mMapTypeRadioGroup.check(R.id.activity_earthquake_details_google_map_type_radio_button);
             showGoogleMap();
+        } else {
+            mMapTypeRadioGroup.check(R.id.activity_earthquake_details_usgs_map_type_radio_button);
+            showUsgsMap();
         }
 
         mUsgsMapNoInternetTextView.setOnClickListener(v -> showUsgsMap());
 
-        mapTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            boolean usgsMapTypeValueToSave;
-            if (checkedId == R.id.activity_earthquake_details_usgs_map_type_radio_button) {
-                showUsgsMap();
-                usgsMapTypeValueToSave = true;
-            } else {
+        mMapTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            boolean googleMapType;
+            if (checkedId == R.id.activity_earthquake_details_google_map_type_radio_button) {
                 showGoogleMap();
-                usgsMapTypeValueToSave = false;
+                googleMapType = true;
                 mGoogleMapRadioButtonClicked = true;
+            } else {
+                showUsgsMap();
+                googleMapType = false;
             }
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(getString(R.string.earthquake_details_map_type_shared_preference_key),
-                    usgsMapTypeValueToSave);
+                    googleMapType);
             editor.apply();
         });
 
@@ -207,55 +214,46 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mLayoutFab1 = findViewById(R.id.activity_earthquake_details_google_map_fab_1_linear_layout);
         mLayoutFab2 = findViewById(R.id.activity_earthquake_details_google_map_fab_2_linear_layout);
         mLayoutFab3 = findViewById(R.id.activity_earthquake_details_google_map_fab_3_linear_layout);
-        mMainFab = findViewById(R.id.fab);
-        FloatingActionButton fab1 = findViewById(R.id.activity_earthquake_details_google_map_fab_1);
-        FloatingActionButton fab2 = findViewById(R.id.activity_earthquake_details_google_map_fab_2);
-        FloatingActionButton fab3 = findViewById(R.id.activity_earthquake_details_google_map_fab_3);
-        fabBackgroundLayout = findViewById(R.id.activity_earthquake_details_google_map_fab_background);
+        mMainFab = findViewById(R.id.activity_earthquake_details_main_fab);
+        mFabBackgroundLayout = findViewById(R.id.activity_earthquake_details_google_map_fab_background);
 
-        mMainFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isFabOpen) {
-                    showFabMenu();
-                } else {
-                    hideFabMenu();
-                }
+        mMainFab.setOnClickListener(view -> {
+            if (!mIsFabOpen) {
+                mIsFabOpen = true;
+                MapsUtils.showFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
+                        mFabBackgroundLayout, mMainFab, this);
+            } else {
+                mIsFabOpen = false;
+                MapsUtils.hideFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
+                        mFabBackgroundLayout, mMainFab, this);
             }
         });
 
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mGoogleMap.getMapType() != GoogleMap.MAP_TYPE_NORMAL) {
-                    mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                }
+        findViewById(R.id.activity_earthquake_details_google_map_fab_1).setOnClickListener(v -> {
+            mMapType = GoogleMap.MAP_TYPE_NORMAL;
+            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
+                mGoogleMap.setMapType(mMapType);
             }
         });
 
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mGoogleMap.getMapType() != GoogleMap.MAP_TYPE_SATELLITE) {
-                    mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                }
+        findViewById(R.id.activity_earthquake_details_google_map_fab_2).setOnClickListener(v -> {
+            mMapType = GoogleMap.MAP_TYPE_HYBRID;
+            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
+                mGoogleMap.setMapType(mMapType);
             }
         });
 
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mGoogleMap.getMapType() != GoogleMap.MAP_TYPE_TERRAIN) {
-                    mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                }
+        findViewById(R.id.activity_earthquake_details_google_map_fab_3).setOnClickListener(v -> {
+            mMapType = GoogleMap.MAP_TYPE_TERRAIN;
+            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
+                mGoogleMap.setMapType(mMapType);
             }
         });
 
-        fabBackgroundLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideFabMenu();
-            }
+        mFabBackgroundLayout.setOnClickListener(view -> {
+            mIsFabOpen = false;
+            MapsUtils.hideFabMenu(mLayoutFab1,
+                    mLayoutFab2, mLayoutFab3, mFabBackgroundLayout, mMainFab, this);
         });
     }
 
@@ -263,6 +261,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     @SuppressLint("SetJavaScriptEnabled")
     private void showUsgsMap() {
         mGoogleMapLinearLayout.setVisibility(View.GONE);
+        mMapTypeRadioGroup.setVisibility(View.VISIBLE);
         if (!QueryUtils.internetConnection(this)) {
             mUsgsMapWebView.setVisibility(View.GONE);
             mUsgsMapNoInternetTextView.setVisibility(View.VISIBLE);
@@ -300,6 +299,44 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mGoogleMap = googleMap;
+
+        mMapTypeRadioGroup.setVisibility(View.VISIBLE);
+
+        DecimalFormat formatter = new DecimalFormat("0.0");
+
+        LatLng earthquakePosition = new LatLng(mEarthquake.getLatitude(), mEarthquake.getLongitude());
+
+        String magnitudeToDisplay = formatter.format(mEarthquake.getMagnitude());
+        magnitudeToDisplay = magnitudeToDisplay.replace(',', '.');
+        Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
+
+        MapsUtils.MarkerAttributes markerAttributes = MapsUtils.getMarkerAttributes(roundedMagnitude);
+
+        googleMap.addMarker(new MarkerOptions()
+                .position(earthquakePosition)
+                .title(MapsUtils.constructEarthquakeTitleForMarker(mEarthquake, magnitudeToDisplay))
+                .snippet(MapsUtils.constructEarthquakeSnippetForMarker(mEarthquake.getTimeInMilliseconds()))
+                .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
+                .anchor(0.5f, 0.5f)
+                .alpha(markerAttributes.getAlphaValue())
+                .zIndex(markerAttributes.getZIndex()));
+
+        googleMap.setMapType(mMapType);
+
+        if (mGoogleMapRadioButtonClicked) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(earthquakePosition, 6.7f));
+            mGoogleMapRadioButtonClicked = false;
+        } else if (!mRotation) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(earthquakePosition, 6.7f));
+        }
+
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             // Set this flag to true to prevent reloading USGS web view onTransitionEnd callback
@@ -312,109 +349,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    // TODO Save map type and restore on rotation
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(MAP_TYPE_KEY, mMapType);
     }
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        mGoogleMap = googleMap;
-
-        DecimalFormat formatter = new DecimalFormat("0.0");
-
-        LatLng earthquakePosition = new LatLng(mEarthquake.getLatitude(), mEarthquake.getLongitude());
-
-        String magnitudeToDisplay = formatter.format(mEarthquake.getMagnitude());
-        magnitudeToDisplay = magnitudeToDisplay.replace(',', '.');
-        Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
-
-        EarthquakesMapActivity.MarkerAttributes markerAttributes = getMarkerAttributes(roundedMagnitude);
-
-        googleMap.addMarker(new MarkerOptions()
-                .position(earthquakePosition)
-                .title(constructEarthquakeTitle(mEarthquake, magnitudeToDisplay))
-                .snippet(constructEarthquakeSnippet(mEarthquake.getTimeInMilliseconds()))
-                .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
-                .anchor(0.5f, 0.5f)
-                .alpha(markerAttributes.getAlphaValue())
-                .zIndex(markerAttributes.getZIndex()));
-
-        if (mGoogleMapRadioButtonClicked) {
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(earthquakePosition, 6.7f));
-            mGoogleMapRadioButtonClicked = false;
-        } else if (!mRotation) {
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(earthquakePosition, 6.7f));
-        }
-
-    }
-
-
-    private void showFabMenu() {
-        isFabOpen = true;
-        mLayoutFab1.setVisibility(View.VISIBLE);
-        mLayoutFab2.setVisibility(View.VISIBLE);
-        mLayoutFab3.setVisibility(View.VISIBLE);
-        fabBackgroundLayout.setVisibility(View.VISIBLE);
-        mMainFab.animate().rotationBy(180);
-
-        mLayoutFab1.animate().translationY(getResources().getDimension(R.dimen.standard_52));
-        mLayoutFab2.animate().translationY(getResources().getDimension(R.dimen.standard_96));
-        mLayoutFab3.animate().translationY(getResources().getDimension(R.dimen.standard_140))
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        mMainFab.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_brown_24dp));
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
-                    }
-                });
-    }
-
-
-    private void hideFabMenu() {
-        isFabOpen = false;
-        fabBackgroundLayout.setVisibility(View.GONE);
-        mMainFab.animate().rotation(0);
-        mMainFab.setImageDrawable(getResources().getDrawable(R.drawable.ic_layers_brown_24dp));
-        mLayoutFab1.animate().translationY(0);
-        mLayoutFab2.animate().translationY(0);
-        mLayoutFab3.animate().translationY(0).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if (!isFabOpen) {
-                    mLayoutFab1.setVisibility(View.GONE);
-                    mLayoutFab2.setVisibility(View.GONE);
-                    mLayoutFab3.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-            }
-        });
-    }
-
 }
 

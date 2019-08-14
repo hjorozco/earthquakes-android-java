@@ -132,7 +132,7 @@
             android:layout_marginLeft="@dimen/application_big_margin"
             android:layout_marginEnd="@dimen/application_big_margin"
             android:layout_marginRight="@dimen/application_big_margin"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <fragment
                 android:id="@+id/activity_earthquake_details_map"
@@ -154,12 +154,13 @@
                 android:layout_gravity="end"
                 android:clipToPadding="false"
                 android:gravity="center_vertical"
-                android:padding="@dimen/application_standard_padding"
+                android:padding="@dimen/application_small_padding"
                 android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/application_small_margin"
                     android:background="@color/colorAppBackground"
                     android:paddingLeft="@dimen/application_small_padding"
                     android:paddingRight="@dimen/application_small_padding"
@@ -185,12 +186,13 @@
                 android:layout_gravity="end"
                 android:clipToPadding="false"
                 android:gravity="center_vertical"
-                android:padding="@dimen/application_standard_padding"
+                android:padding="@dimen/application_small_padding"
                 android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/application_small_margin"
                     android:background="@color/colorAppBackground"
                     android:paddingLeft="@dimen/application_small_padding"
                     android:paddingRight="@dimen/application_small_padding"
@@ -216,12 +218,13 @@
                 android:layout_gravity="end"
                 android:clipToPadding="false"
                 android:gravity="center_vertical"
-                android:padding="@dimen/application_standard_padding"
+                android:padding="@dimen/application_small_padding"
                 android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/application_small_margin"
                     android:background="@color/colorAppBackground"
                     android:paddingLeft="@dimen/application_small_padding"
                     android:paddingRight="@dimen/application_small_padding"
@@ -241,13 +244,13 @@
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
+                android:id="@+id/activity_earthquake_details_main_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_margin="@dimen/application_standard_margin"
+                android:layout_margin="@dimen/application_small_margin"
                 android:gravity="center_vertical"
-                android:padding="@dimen/application_standard_padding"
+                android:padding="@dimen/application_small_padding"
                 android:tint="@color/colorGoogleMapLayersFabIcon"
                 app:backgroundTint="@color/colorAppBackground"
                 app:fabSize="mini"
@@ -260,16 +263,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/application_big_margin"
-            android:layout_marginLeft="@dimen/application_big_margin"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/activity_earthquake_details_usgs_map_type_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_earthquake_details_usgs_map_type_radio_button_text"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/application_small_text_size" />
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <RadioButton
                 android:id="@+id/activity_earthquake_details_google_map_type_radio_button"
@@ -277,7 +272,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/activity_earthquake_details_google_map_type_radio_button_text"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/application_small_text_size" />
+                android:textSize="@dimen/application_small_text_size"
+                android:theme="@style/radioButtonStyle" />
+
+            <RadioButton
+                android:id="@+id/activity_earthquake_details_usgs_map_type_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_small_text_size"
+                android:text="@string/activity_earthquake_details_usgs_map_type_radio_button_text"
+                android:theme="@style/radioButtonStyle" />
 
         </RadioGroup>
 
