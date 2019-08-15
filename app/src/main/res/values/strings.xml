@@ -13,6 +13,7 @@
 
     <string name="app_shared_preferences_name" translatable="false">app_shared_preferences</string>
     <string name="earthquake_details_map_type_shared_preference_key" translatable="false">map_type</string>
+    <string name="google_map_type_shared_preference_key" translatable="false">google_map_type</string>
 
     <!-- ********** APP SHARED PREFERENCES ********** -->
 

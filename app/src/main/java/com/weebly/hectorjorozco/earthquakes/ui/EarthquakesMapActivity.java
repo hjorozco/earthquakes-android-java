@@ -1,7 +1,9 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -30,13 +32,16 @@ import java.util.Locale;
 
 public class EarthquakesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final String IS_FAB_MENU_OPEN_VALUE_KEY = "IS_FAB_MENU_OPEN_VALUE_KEY";
 
     private LinearLayout mLayoutFab1, mLayoutFab2, mLayoutFab3;
     private View mFabBackgroundLayout;
     private FloatingActionButton mMainFab;
-    private boolean mIsFabOpen = false;
     private GoogleMap mGoogleMap;
-    private int mMapType;
+    private SharedPreferences mSharedPreferences;
+    private int mGoogleMapType;
+    private boolean mIsFabMenuOpen = false;
+    private boolean mRotation = false;
 
 
     @Override
@@ -47,6 +52,17 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        if (savedInstanceState != null) {
+            mRotation = true;
+            mIsFabMenuOpen = savedInstanceState.getBoolean(IS_FAB_MENU_OPEN_VALUE_KEY);
+        }
+
+        // Gets the values saved on Shared Preferences to set them on the map
+        mSharedPreferences = getSharedPreferences(
+                getString(R.string.app_shared_preferences_name), 0);
+        mGoogleMapType = mSharedPreferences.getInt(getString(
+                R.string.google_map_type_shared_preference_key), GoogleMap.MAP_TYPE_NORMAL);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -64,41 +80,46 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         mMainFab = findViewById(R.id.activity_earthquakes_map_main_fab);
         mFabBackgroundLayout = findViewById(R.id.activity_earthquakes_map_fab_background);
 
+        if (mIsFabMenuOpen) {
+            MapsUtils.showFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
+                    mFabBackgroundLayout, mMainFab, this);
+        }
+
         mMainFab.setOnClickListener(view -> {
-            if (!mIsFabOpen) {
-                mIsFabOpen = true;
+            if (!mIsFabMenuOpen) {
+                mIsFabMenuOpen = true;
                 MapsUtils.showFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
                         mFabBackgroundLayout, mMainFab, this);
             } else {
-                mIsFabOpen = false;
+                mIsFabMenuOpen = false;
                 MapsUtils.hideFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
                         mFabBackgroundLayout, mMainFab, this);
             }
         });
 
         findViewById(R.id.activity_earthquakes_map_fab_1).setOnClickListener(v -> {
-            mMapType = GoogleMap.MAP_TYPE_NORMAL;
-            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
-                mGoogleMap.setMapType(mMapType);
+            mGoogleMapType = GoogleMap.MAP_TYPE_NORMAL;
+            if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
+                mGoogleMap.setMapType(mGoogleMapType);
             }
         });
 
         findViewById(R.id.activity_earthquakes_map_fab_2).setOnClickListener(v -> {
-            mMapType = GoogleMap.MAP_TYPE_HYBRID;
-            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
-                mGoogleMap.setMapType(mMapType);
+            mGoogleMapType = GoogleMap.MAP_TYPE_HYBRID;
+            if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
+                mGoogleMap.setMapType(mGoogleMapType);
             }
         });
 
         findViewById(R.id.activity_earthquakes_map_fab_3).setOnClickListener(v -> {
-            mMapType = GoogleMap.MAP_TYPE_TERRAIN;
-            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
-                mGoogleMap.setMapType(mMapType);
+            mGoogleMapType = GoogleMap.MAP_TYPE_TERRAIN;
+            if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
+                mGoogleMap.setMapType(mGoogleMapType);
             }
         });
 
         mFabBackgroundLayout.setOnClickListener(view -> {
-            mIsFabOpen = false;
+            mIsFabMenuOpen = false;
             MapsUtils.hideFabMenu(mLayoutFab1,
                     mLayoutFab2, mLayoutFab3, mFabBackgroundLayout, mMainFab, this);
         });
@@ -155,8 +176,13 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     .zIndex(markerAttributes.getZIndex()));
         }
 
-        firstEarthquakePosition = new LatLng(earthquakes.get(0).getLatitude(), earthquakes.get(0).getLongitude());
-        map.animateCamera(CameraUpdateFactory.newLatLng(firstEarthquakePosition));
+        map.setMapType(mGoogleMapType);
+
+        // Animate the camera only when the activity is created, not after a rotation
+        if (!mRotation) {
+            firstEarthquakePosition = new LatLng(earthquakes.get(0).getLatitude(), earthquakes.get(0).getLongitude());
+            map.animateCamera(CameraUpdateFactory.newLatLng(firstEarthquakePosition));
+        }
 
     }
 
@@ -167,6 +193,27 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(IS_FAB_MENU_OPEN_VALUE_KEY, mIsFabMenuOpen);
+    }
+
+
+    /**
+     * When the activity is destroyed save the values of the map preferences so
+     * they can be restored when the activity is started again.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(getString(R.string.google_map_type_shared_preference_key),
+                mGoogleMapType);
+        editor.apply();
     }
 
 }

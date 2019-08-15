@@ -1,8 +1,6 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
-import android.animation.Animator;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,7 +38,7 @@ import java.text.DecimalFormat;
 public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final String EXTRA_EARTHQUAKE = "EXTRA_EARTHQUAKE";
-    private static final String MAP_TYPE_KEY = "MAP_TYPE_KEY";
+    private static final String IS_FAB_MENU_OPEN_VALUE_KEY = "IS_FAB_MENU_OPEN_VALUE_KEY";
 
     private Earthquake mEarthquake;
     private int mTextColor;
@@ -54,15 +52,15 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private LinearLayout mLayoutFab1, mLayoutFab2, mLayoutFab3;
     private View mFabBackgroundLayout;
     private GoogleMap mGoogleMap;
+    private SharedPreferences mSharedPreferences;
+    private int mGoogleMapType;
+    private boolean mIsGoogleMap;
     private boolean mUsgsMapLoaded = false;
     private boolean mGoogleMapLoaded = false;
     private boolean mGoogleMapRadioButtonClicked = false;
     private boolean mOnBackPressed = false;
     private boolean mRotation = false;
-    private boolean mIsFabOpen = false;
-    private int mMapType;
-
-
+    private boolean mIsFabMenuOpen = false;
 
 
     @Override
@@ -81,11 +79,16 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         if (savedInstanceState != null) {
             mRotation = true;
-            mMapType = savedInstanceState.getInt(MAP_TYPE_KEY);
-        } else {
-            mMapType = GoogleMap.MAP_TYPE_NORMAL;
+            mIsFabMenuOpen = savedInstanceState.getBoolean(IS_FAB_MENU_OPEN_VALUE_KEY);
         }
 
+        // Gets the values saved on Shared Preferences to set them on the map
+        mSharedPreferences = getSharedPreferences(
+                getString(R.string.app_shared_preferences_name), 0);
+        mGoogleMapType = mSharedPreferences.getInt(getString(
+                R.string.google_map_type_shared_preference_key), GoogleMap.MAP_TYPE_NORMAL);
+        mIsGoogleMap = mSharedPreferences.getBoolean(getString(
+                R.string.earthquake_details_map_type_shared_preference_key), true);
 
         // Sets up the views that will be animated on entry and exit for Android versions 21 or up
         TextView magnitudeTextView = findViewById(R.id.activity_earthquake_details_magnitude_text_view);
@@ -179,12 +182,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mCustomScrollView = findViewById(R.id.activity_earthquake_details_custom_scroll_view);
         mUsgsMapNoInternetTextView = findViewById(R.id.activity_earthquake_details_usgs_map_no_internet_text_view);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(
-                getString(R.string.app_shared_preferences_name), 0);
-
         mMapTypeRadioGroup = findViewById(R.id.activity_earthquake_details_map_type_radio_group);
-        if (sharedPreferences.getBoolean(getString(
-                R.string.earthquake_details_map_type_shared_preference_key), true)) {
+        if (mIsGoogleMap) {
             mMapTypeRadioGroup.check(R.id.activity_earthquake_details_google_map_type_radio_button);
             showGoogleMap();
         } else {
@@ -195,19 +194,14 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mUsgsMapNoInternetTextView.setOnClickListener(v -> showUsgsMap());
 
         mMapTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            boolean googleMapType;
             if (checkedId == R.id.activity_earthquake_details_google_map_type_radio_button) {
                 showGoogleMap();
-                googleMapType = true;
+                mIsGoogleMap = true;
                 mGoogleMapRadioButtonClicked = true;
             } else {
                 showUsgsMap();
-                googleMapType = false;
+                mIsGoogleMap = false;
             }
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.earthquake_details_map_type_shared_preference_key),
-                    googleMapType);
-            editor.apply();
         });
 
         // Sets up the Google Map FABs
@@ -217,41 +211,46 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mMainFab = findViewById(R.id.activity_earthquake_details_main_fab);
         mFabBackgroundLayout = findViewById(R.id.activity_earthquake_details_google_map_fab_background);
 
+        if (mIsFabMenuOpen) {
+            MapsUtils.showFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
+                    mFabBackgroundLayout, mMainFab, this);
+        }
+
         mMainFab.setOnClickListener(view -> {
-            if (!mIsFabOpen) {
-                mIsFabOpen = true;
+            if (!mIsFabMenuOpen) {
+                mIsFabMenuOpen = true;
                 MapsUtils.showFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
                         mFabBackgroundLayout, mMainFab, this);
             } else {
-                mIsFabOpen = false;
+                mIsFabMenuOpen = false;
                 MapsUtils.hideFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
                         mFabBackgroundLayout, mMainFab, this);
             }
         });
 
         findViewById(R.id.activity_earthquake_details_google_map_fab_1).setOnClickListener(v -> {
-            mMapType = GoogleMap.MAP_TYPE_NORMAL;
-            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
-                mGoogleMap.setMapType(mMapType);
+            mGoogleMapType = GoogleMap.MAP_TYPE_NORMAL;
+            if (mGoogleMap!=null && mGoogleMap.getMapType() != mGoogleMapType) {
+                mGoogleMap.setMapType(mGoogleMapType);
             }
         });
 
         findViewById(R.id.activity_earthquake_details_google_map_fab_2).setOnClickListener(v -> {
-            mMapType = GoogleMap.MAP_TYPE_HYBRID;
-            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
-                mGoogleMap.setMapType(mMapType);
+            mGoogleMapType = GoogleMap.MAP_TYPE_HYBRID;
+            if (mGoogleMap!=null && mGoogleMap.getMapType() != mGoogleMapType) {
+                mGoogleMap.setMapType(mGoogleMapType);
             }
         });
 
         findViewById(R.id.activity_earthquake_details_google_map_fab_3).setOnClickListener(v -> {
-            mMapType = GoogleMap.MAP_TYPE_TERRAIN;
-            if (mGoogleMap!=null && mGoogleMap.getMapType() != mMapType) {
-                mGoogleMap.setMapType(mMapType);
+            mGoogleMapType = GoogleMap.MAP_TYPE_TERRAIN;
+            if (mGoogleMap!=null && mGoogleMap.getMapType() != mGoogleMapType) {
+                mGoogleMap.setMapType(mGoogleMapType);
             }
         });
 
         mFabBackgroundLayout.setOnClickListener(view -> {
-            mIsFabOpen = false;
+            mIsFabMenuOpen = false;
             MapsUtils.hideFabMenu(mLayoutFab1,
                     mLayoutFab2, mLayoutFab3, mFabBackgroundLayout, mMainFab, this);
         });
@@ -324,7 +323,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 .alpha(markerAttributes.getAlphaValue())
                 .zIndex(markerAttributes.getZIndex()));
 
-        googleMap.setMapType(mMapType);
+        googleMap.setMapType(mGoogleMapType);
 
         if (mGoogleMapRadioButtonClicked) {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(earthquakePosition, 6.7f));
@@ -352,7 +351,22 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(MAP_TYPE_KEY, mMapType);
+        outState.putBoolean(IS_FAB_MENU_OPEN_VALUE_KEY, mIsFabMenuOpen);
+    }
+
+    /**
+     * When the activity is destroyed save the values of the map preferences so
+     * they can be restored when the activity is started again.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(getString(R.string.google_map_type_shared_preference_key),
+                mGoogleMapType);
+        editor.putBoolean(getString(R.string.earthquake_details_map_type_shared_preference_key),
+                mIsGoogleMap);
+        editor.apply();
     }
 }
 
