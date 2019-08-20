@@ -143,9 +143,10 @@
     <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
 
     <string name="activity_earthquake_details_label">Detalles del temblor</string>
-    <string name="activity_earthquake_details_coordinates_and_depth_text">
-        %1$.3f\u00B0%2$s %3$.3f\u00B0%4$s - %5$.1f km de profundidad
+    <string name="activity_earthquake_details_coordinates_text">
+        %1$.3f\u00B0%2$s %3$.3f\u00B0%4$s
     </string>
+    <string name="activity_earthquake_details_depth_text">%1$.1f km de profundidad</string>
     <string name="activity_earthquake_details_west_longitude_letter">O</string>
     <string name="activity_earthquake_details_usgs_map_type_radio_button_text">Mapa del USGS</string>
     <string name="activity_earthquake_details_google_map_type_radio_button_text">Mapa de Google</string>
@@ -158,6 +159,19 @@
     <string name="activity_earthquake_details_google_map_default_type_text">Predeterminado</string>
     <string name="activity_earthquake_details_google_map_satellite_type_text">Satélite</string>
     <string name="activity_earthquake_details_google_map_terrain_type_text">Relieve</string>
+
+    <string name="activity_earthquake_details_intensity_text">Intensidad</string>
+    <string name="activity_earthquake_details_estimated_text">Estimada</string>
+    <string name="activity_earthquake_details_reported_text">Reportada</string>
+    <string name="activity_earthquake_details_alert_text">Alerta</string>
+    <string name="activity_earthquake_details_green_text">VERDE</string>
+    <string name="activity_earthquake_details_yellow_text">AMARILLA</string>
+    <string name="activity_earthquake_details_orange_text">NARANJA</string>
+    <string name="activity_earthquake_details_red_text">ROJA</string>
+    <string name="activity_earthquake_details_tsunami_text">POSIBLE TSUNAMI</string>
+    <string name="activity_earthquake_details_felt_reports_text">Reportes</string>
+    <string name="activity_earthquake_details_report_text">Reportar</string>
+    <string name="activity_earthquake_details_epicenter_text">Epicentro</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 

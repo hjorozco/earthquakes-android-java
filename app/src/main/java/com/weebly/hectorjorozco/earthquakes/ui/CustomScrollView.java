@@ -1,18 +1,15 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ScrollView;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Custom ScrollView that allows a map inside of it to scroll correctly.
+ */
 public class CustomScrollView extends ScrollView {
-
-    List<View> mInterceptScrollViews = new ArrayList<>();
 
     public CustomScrollView(Context context) {
         super(context);
@@ -26,29 +23,35 @@ public class CustomScrollView extends ScrollView {
         super(context, attrs, defStyle);
     }
 
-    public void addInterceptScrollView(View view) {
-        mInterceptScrollViews.add(view);
-    }
-
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        final int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                super.onTouchEvent(ev);
+                break;
 
-        // check if we have any views that should use their own scrolling
-        if (mInterceptScrollViews.size() > 0) {
-            int x = (int) event.getX();
-            int y = (int) event.getY();
-            Rect bounds = new Rect();
+            case MotionEvent.ACTION_MOVE:
+                return false;
 
-            for (View view : mInterceptScrollViews) {
-                view.getHitRect(bounds);
-                if (bounds.contains(x, y)) {
-                    //were touching a view that should intercept scrolling
-                    return false;
-                }
-            }
+            case MotionEvent.ACTION_CANCEL:
+                super.onTouchEvent(ev);
+                break;
+
+            case MotionEvent.ACTION_UP:
+                return false;
+
+            default:
+                break;
         }
 
-        return super.onInterceptTouchEvent(event);
+        return false;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        super.onTouchEvent(ev);
+        return true;
+    }
 }
