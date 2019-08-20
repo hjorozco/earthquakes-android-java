@@ -131,7 +131,12 @@ public class QueryUtils {
                         properties.getUrl(),
                         coordinates.get(1),
                         coordinates.get(0),
-                        coordinates.get(2)));
+                        coordinates.get(2),
+                        properties.getFelt(),
+                        properties.getCdi(),
+                        properties.getMmi(),
+                        properties.getAlert(),
+                        properties.getTsunami()));
 
                 earthquakesAddedToListCounter++;
 
@@ -150,7 +155,12 @@ public class QueryUtils {
                             properties.getUrl(),
                             coordinates.get(1),
                             coordinates.get(0),
-                            coordinates.get(2)));
+                            coordinates.get(2),
+                            properties.getFelt(),
+                            properties.getCdi(),
+                            properties.getMmi(),
+                            properties.getAlert(),
+                            properties.getTsunami()));
                     // Increments the counter of the number of earthquakes added to the List of
                     // Earthquakes
                     earthquakesAddedToListCounter++;
@@ -462,91 +472,91 @@ public class QueryUtils {
      * @param magnitude The magnitude of the earthquake.
      * @return The colors used to display the earthquake information
      */
-    private static EarthquakeInfoColors getEarthquakeInfoColors(Context context, double magnitude) {
-        EarthquakeInfoColors earthquakeInfoColors;
+    private static EarthquakeColors getEarthquakeColors(Context context, double magnitude) {
+        EarthquakeColors earthquakeColors;
         int magnitudeFloor = (int) Math.floor(magnitude);
         switch (magnitudeFloor) {
             case 0:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude0),
                                 context.getResources().getColor(R.color.background0));
                 break;
             case 1:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude1),
                                 context.getResources().getColor(R.color.background1));
                 break;
             case 2:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude2),
                                 context.getResources().getColor(R.color.background2));
                 break;
             case 3:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude3),
                                 context.getResources().getColor(R.color.background3));
                 break;
             case 4:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude4),
                                 context.getResources().getColor(R.color.background4));
                 break;
             case 5:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude5),
                                 context.getResources().getColor(R.color.background5));
                 break;
             case 6:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude6),
                                 context.getResources().getColor(R.color.background6));
                 break;
             case 7:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude7),
                                 context.getResources().getColor(R.color.background7));
                 break;
             case 8:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude8),
                                 context.getResources().getColor(R.color.background8));
                 break;
             default:
-                earthquakeInfoColors = new EarthquakeInfoColors
+                earthquakeColors = new EarthquakeColors
                         (context.getResources().getColor(R.color.magnitude9plus),
                                 context.getResources().getColor(R.color.background9plus));
                 break;
         }
-        return earthquakeInfoColors;
+        return earthquakeColors;
     }
 
 
     /**
      * Class that models the colors used to display an earthquake information in the RecyclerView
      */
-    public static class EarthquakeInfoColors {
+    public static class EarthquakeColors {
         // The color used in the magnitude circle border, its text and the information texts
         int mMagnitudeColor;
         // The background color of the magnitude circle
         int mMagnitudeBackgroundColor;
 
-        private EarthquakeInfoColors(int magnitudeColor, int magnitudeBackgroundColor) {
+        private EarthquakeColors(int magnitudeColor, int magnitudeBackgroundColor) {
             mMagnitudeColor = magnitudeColor;
             mMagnitudeBackgroundColor = magnitudeBackgroundColor;
         }
 
-        int getMagnitudeColor() {
+        public int getMagnitudeColor() {
             return mMagnitudeColor;
         }
 
-        int getMagnitudeBackgroundColor() {
+        public int getMagnitudeBackgroundColor() {
             return mMagnitudeBackgroundColor;
         }
 
     }
 
 
-    public static int setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
+    public static EarthquakeColors setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
                                                          TextView locationOffsetTextView, TextView locationPrimaryTextView,
                                                          TextView dateTextView, TextView timeTextView) {
         // Set magnitude text
@@ -556,9 +566,9 @@ public class QueryUtils {
         // Set colors for magnitude circle and text
         Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeTextView.getBackground();
-        QueryUtils.EarthquakeInfoColors earthquakeInfoColors = QueryUtils.getEarthquakeInfoColors(context, roundedMagnitude);
-        int magnitudeColor = earthquakeInfoColors.getMagnitudeColor();
-        int magnitudeBackgroundColor = earthquakeInfoColors.getMagnitudeBackgroundColor();
+        EarthquakeColors earthquakeColors = QueryUtils.getEarthquakeColors(context, roundedMagnitude);
+        int magnitudeColor = earthquakeColors.getMagnitudeColor();
+        int magnitudeBackgroundColor = earthquakeColors.getMagnitudeBackgroundColor();
         magnitudeCircle.setColor(magnitudeBackgroundColor);
         magnitudeCircle.setStroke(context.getResources().getDimensionPixelSize(R.dimen.magnitude_circle_stroke_width),
                 magnitudeColor);
@@ -581,7 +591,7 @@ public class QueryUtils {
         }
         dateTextView.setTextColor(magnitudeColor);
 
-        return magnitudeColor;
+        return earthquakeColors;
     }
 
 

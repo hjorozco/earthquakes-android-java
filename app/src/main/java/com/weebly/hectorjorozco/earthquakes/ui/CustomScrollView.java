@@ -50,4 +50,5 @@ public class CustomScrollView extends ScrollView {
 
         return super.onInterceptTouchEvent(event);
     }
+
 }

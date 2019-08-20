@@ -19,10 +19,15 @@ public class Earthquake implements Parcelable {
     private double mLatitude;
     private double mLongitude;
     private double mDepth;
-
+    private int mFelt;
+    private double mCdi;
+    private double mMmi;
+    private String mAlert;
+    private int mTsunami;
 
     public Earthquake(double magnitude, String locationOffset, String locationPrimary,
-                      long timeInMilliseconds, String url, double latitude, double longitude, double depth) {
+                      long timeInMilliseconds, String url, double latitude, double longitude, double depth,
+                      int felt, double cdi, double mmi, String alert, int tsunami) {
         mMagnitude = magnitude;
         mLocationOffset = locationOffset;
         mLocationPrimary = locationPrimary;
@@ -31,6 +36,11 @@ public class Earthquake implements Parcelable {
         mLatitude = latitude;
         mLongitude = longitude;
         mDepth = depth;
+        mFelt = felt;
+        mCdi = cdi;
+        mMmi = mmi;
+        mAlert = alert;
+        mTsunami = tsunami;
     }
 
     public double getMagnitude() {
@@ -61,7 +71,29 @@ public class Earthquake implements Parcelable {
         return mLongitude;
     }
 
-    public double getDepth(){return mDepth;}
+    public double getDepth() {
+        return mDepth;
+    }
+
+    public int getFelt() {
+        return mFelt;
+    }
+
+    public double getCdi() {
+        return mCdi;
+    }
+
+    public double getMmi() {
+        return mMmi;
+    }
+
+    public String getAlert() {
+        return mAlert;
+    }
+
+    public int getTsunami() {
+        return mTsunami;
+    }
 
     @Override
     public int describeContents() {
@@ -70,25 +102,35 @@ public class Earthquake implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(this.mMagnitude);
-        dest.writeString(this.mLocationOffset);
-        dest.writeString(this.mLocationPrimary);
-        dest.writeLong(this.mTimeInMilliseconds);
-        dest.writeString(this.mUrl);
-        dest.writeDouble(this.mLatitude);
-        dest.writeDouble(this.mLongitude);
-        dest.writeDouble(this.mDepth);
+        dest.writeDouble(mMagnitude);
+        dest.writeString(mLocationOffset);
+        dest.writeString(mLocationPrimary);
+        dest.writeLong(mTimeInMilliseconds);
+        dest.writeString(mUrl);
+        dest.writeDouble(mLatitude);
+        dest.writeDouble(mLongitude);
+        dest.writeDouble(mDepth);
+        dest.writeInt(mFelt);
+        dest.writeDouble(mCdi);
+        dest.writeDouble(mMmi);
+        dest.writeString(mAlert);
+        dest.writeInt(mTsunami);
     }
 
     protected Earthquake(Parcel in) {
-        this.mMagnitude = in.readDouble();
-        this.mLocationOffset = in.readString();
-        this.mLocationPrimary = in.readString();
-        this.mTimeInMilliseconds = in.readLong();
-        this.mUrl = in.readString();
-        this.mLatitude = in.readDouble();
-        this.mLongitude = in.readDouble();
-        this.mDepth = in.readDouble();
+        mMagnitude = in.readDouble();
+        mLocationOffset = in.readString();
+        mLocationPrimary = in.readString();
+        mTimeInMilliseconds = in.readLong();
+        mUrl = in.readString();
+        mLatitude = in.readDouble();
+        mLongitude = in.readDouble();
+        mDepth = in.readDouble();
+        mFelt = in.readInt();
+        mCdi = in.readDouble();
+        mMmi = in.readDouble();
+        mAlert = in.readString();
+        mTsunami = in.readInt();
     }
 
     public static final Parcelable.Creator<Earthquake> CREATOR = new Parcelable.Creator<Earthquake>() {
