@@ -96,6 +96,8 @@ public class QueryUtils {
         // Get the list of "feature" objects from the retrofit result. Each feature is an earthquake.
         List<Feature> featuresList = retrofitResult.getFeatures();
 
+        Log.d("TESTING", retrofitResult.getMetadata().getUrl());
+
         //Iterate the list of features until the end of the list or until the number of
         // added earthquakes is the same as the limit set by the user.
         int earthquakesAddedToListCounter = 0;
@@ -564,7 +566,7 @@ public class QueryUtils {
         magnitudeTextView.setText(magnitudeToDisplay);
 
         // Set colors for magnitude circle and text
-        Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
+        double roundedMagnitude = Double.parseDouble(magnitudeToDisplay);
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeTextView.getBackground();
         EarthquakeColors earthquakeColors = QueryUtils.getEarthquakeColors(context, roundedMagnitude);
         int magnitudeColor = earthquakeColors.getMagnitudeColor();

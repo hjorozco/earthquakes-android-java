@@ -3,10 +3,12 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -36,6 +38,8 @@ import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.text.DecimalFormat;
 
+import static android.view.View.GONE;
+
 
 public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -63,6 +67,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private boolean mOnBackPressed = false;
     private boolean mRotation = false;
     private boolean mIsFabMenuOpen = false;
+
+    private String[] romanNumerals = new String[]{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"};
 
 
     @Override
@@ -177,30 +183,77 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mMapTypeRadioGroup = findViewById(R.id.activity_earthquake_details_map_type_radio_group);
         mMapTypeRadioGroup.setVisibility(View.VISIBLE);
 
-
         TextView intensityLabelTextView =
                 findViewById(R.id.activity_earthquake_details_intensity_label_text_view);
         intensityLabelTextView.setTextColor(mMagnitudeColor);
-
+        LinearLayout intensityValuesLinearLayout = findViewById(R.id.activity_earthquake_details_intensity_values_linear_layout);
+        LinearLayout estimatedIntensityLinearLayout =
+                findViewById(R.id.activity_earthquake_details_estimated_intensity_linear_layout);
         TextView estimatedLabelTextView =
                 findViewById(R.id.activity_earthquake_details_estimated_label_text_view);
         estimatedLabelTextView.setTextColor(mMagnitudeColor);
-
         TextView estimatedValueTextView =
                 findViewById(R.id.activity_earthquake_details_estimated_value_text_view);
         estimatedValueTextView.setTextColor(mMagnitudeColor);
-
+        LinearLayout reportedIntensityLinearLayout =
+                findViewById(R.id.activity_earthquake_details_reported_intensity_linear_layout);
         TextView reportedLabelTextView =
                 findViewById(R.id.activity_earthquake_details_reported_label_text_view);
         reportedLabelTextView.setTextColor(mMagnitudeColor);
-
         TextView reportedValueTextView =
                 findViewById(R.id.activity_earthquake_details_reported_value_text_view);
         reportedValueTextView.setTextColor(mMagnitudeColor);
 
+        Log.d("TESTING", "Estimated " + mEarthquake.getMmi() + " - Reported " + mEarthquake.getCdi() + " - Alert " + mEarthquake.getAlert() + " - Tsunami " + mEarthquake.getTsunami() + " - Felt " + mEarthquake.getFelt());
+
+        int roundedMmi = (int) Math.round(mEarthquake.getMmi());
+        int roundedCdi = (int) Math.round(mEarthquake.getCdi());
+        if (roundedMmi < 1 && roundedCdi <1) {
+            intensityLabelTextView.setVisibility(GONE);
+            intensityValuesLinearLayout.setVisibility(GONE);
+        } else {
+            if (roundedMmi<1){
+                estimatedIntensityLinearLayout.setVisibility(GONE);
+            } else {
+                estimatedValueTextView.setText(romanNumerals[roundedMmi]);
+            }
+            if (roundedCdi<1){
+                reportedIntensityLinearLayout.setVisibility(GONE);
+            } else {
+                reportedValueTextView.setText(romanNumerals[roundedCdi]);
+            }
+        }
+
+        LinearLayout alertLinearLayout = findViewById(R.id.activity_earthquake_details_alert_linear_layout);
         TextView alertLabelTextView =
                 findViewById(R.id.activity_earthquake_details_alert_label_text_view);
         alertLabelTextView.setTextColor(mMagnitudeColor);
+        TextView alertValueTextView =
+                findViewById(R.id.activity_earthquake_details_alert_value_text_view);
+
+        String alertText = mEarthquake.getAlert();
+        if (alertText==null){
+            alertLinearLayout.setVisibility(GONE);
+        } else {
+            alertValueTextView.setText(alertText.toUpperCase());
+            int alertValueTextColor = 0;
+            switch (alertText){
+                case "green":
+                    alertValueTextColor = Color.GREEN;
+                    break;
+                case "yellow":
+                    alertValueTextColor = Color.YELLOW;
+                    break;
+                case "orange":
+                    alertValueTextColor = 0;
+                    break;
+                case "red":
+                    alertValueTextColor = Color.RED;
+                    break;
+            }
+            alertValueTextView.setTextColor(alertValueTextColor);
+
+        }
 
         TextView tsunamiTextView =
                 findViewById(R.id.activity_earthquake_details_tsunami_text_view);
@@ -214,19 +267,19 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 findViewById(R.id.activity_earthquake_details_felt_reports_value_text_view);
         feltReportsValueTextView.setTextColor(mMagnitudeColor);
 
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_enabled}, // enabled
-                new int[] {-android.R.attr.state_enabled}, // disabled
-                new int[] {-android.R.attr.state_checked}, // unchecked
-                new int[] { android.R.attr.state_pressed}  // pressed
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_enabled}, // enabled
+                new int[]{-android.R.attr.state_enabled}, // disabled
+                new int[]{-android.R.attr.state_checked}, // unchecked
+                new int[]{android.R.attr.state_pressed}  // pressed
         };
-        int[] magnitudeBackGroundColors = new int[] {
+        int[] magnitudeBackGroundColors = new int[]{
                 mMagnitudeBackgroundColor,
                 mMagnitudeBackgroundColor,
                 mMagnitudeBackgroundColor,
                 mMagnitudeBackgroundColor,
         };
-        int[] magnitudeColors = new int[] {
+        int[] magnitudeColors = new int[]{
                 mMagnitudeColor,
                 mMagnitudeColor,
                 mMagnitudeColor,
@@ -246,9 +299,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         TextView coordinatesValueTextView =
                 findViewById(R.id.activity_earthquake_details_coordinates_value_text_view);
-
-        TextView depthValueTextView =
-                findViewById(R.id.activity_earthquake_details_depth_value_text_view);
 
         double latitude, longitude;
         String latitudeLetter, longitudeLetter;
@@ -270,11 +320,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         }
 
         coordinatesValueTextView.setText(getString(R.string.activity_earthquake_details_coordinates_text,
-                latitude, latitudeLetter, longitude, longitudeLetter));
+                latitude, latitudeLetter, longitude, longitudeLetter, mEarthquake.getDepth()));
         coordinatesValueTextView.setTextColor(mMagnitudeColor);
-        depthValueTextView.setText(getString(R.string.activity_earthquake_details_depth_text,
-                mEarthquake.getDepth()));
-        depthValueTextView.setTextColor(mMagnitudeColor);
     }
 
 
@@ -363,12 +410,12 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     @SuppressLint("SetJavaScriptEnabled")
     private void showUsgsMap() {
         mUsgsMapFrameLayout.setVisibility(View.VISIBLE);
-        mGoogleMapFrameLayout.setVisibility(View.GONE);
+        mGoogleMapFrameLayout.setVisibility(GONE);
         if (!QueryUtils.internetConnection(this)) {
-            mUsgsMapWebView.setVisibility(View.GONE);
+            mUsgsMapWebView.setVisibility(GONE);
             mUsgsMapNoInternetTextView.setVisibility(View.VISIBLE);
         } else {
-            mUsgsMapNoInternetTextView.setVisibility(View.GONE);
+            mUsgsMapNoInternetTextView.setVisibility(GONE);
             mUsgsMapWebView.setVisibility(View.VISIBLE);
             if (!mUsgsMapLoaded) {
                 mUsgsMapWebView.getSettings().setJavaScriptEnabled(true);
@@ -382,9 +429,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     private void showGoogleMap() {
-        mUsgsMapWebView.setVisibility(View.GONE);
-        mUsgsMapNoInternetTextView.setVisibility(View.GONE);
-        mUsgsMapFrameLayout.setVisibility(View.GONE);
+        mUsgsMapWebView.setVisibility(GONE);
+        mUsgsMapNoInternetTextView.setVisibility(GONE);
+        mUsgsMapFrameLayout.setVisibility(GONE);
         mGoogleMapFrameLayout.setVisibility(View.VISIBLE);
         if (!mGoogleMapLoaded) {
             SupportMapFragment earthquakeDetailsMapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -408,7 +455,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         String magnitudeToDisplay = formatter.format(mEarthquake.getMagnitude());
         magnitudeToDisplay = magnitudeToDisplay.replace(',', '.');
-        Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
+        double roundedMagnitude = Double.parseDouble(magnitudeToDisplay);
 
         MapsUtils.MarkerAttributes markerAttributes = MapsUtils.getMarkerAttributes(roundedMagnitude);
 
