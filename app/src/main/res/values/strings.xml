@@ -207,14 +207,14 @@
     <string name="activity_earthquake_details_google_map_terrain_type_text">Terrain</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensity</string>
-    <string name="activity_earthquake_details_estimated_text">Estimated</string>
-    <string name="activity_earthquake_details_reported_text">Reported</string>
+    <string name="activity_earthquake_details_estimated_text">Estimated intensity</string>
+    <string name="activity_earthquake_details_reported_text">Reported intensity</string>
     <string name="activity_earthquake_details_alert_text">Alert</string>
     <string name="activity_earthquake_details_green_text">GREEN</string>
     <string name="activity_earthquake_details_yellow_text">YELLOW</string>
     <string name="activity_earthquake_details_orange_text">ORANGE</string>
     <string name="activity_earthquake_details_red_text">RED</string>
-    <string name="activity_earthquake_details_tsunami_text">Possible tsunami!</string>
+    <string name="activity_earthquake_details_tsunami_text">Possible tsunami</string>
     <string name="activity_earthquake_details_felt_reports_text">Felt reports</string>
     <string name="activity_earthquake_details_report_text">Report</string>
     <string name="activity_earthquake_details_epicenter_text">Epicenter</string>

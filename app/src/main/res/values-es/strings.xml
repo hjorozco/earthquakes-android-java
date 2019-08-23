@@ -167,7 +167,7 @@
     <string name="activity_earthquake_details_yellow_text">AMARILLA</string>
     <string name="activity_earthquake_details_orange_text">NARANJA</string>
     <string name="activity_earthquake_details_red_text">ROJA</string>
-    <string name="activity_earthquake_details_tsunami_text">¡Posible tsunami!</string>
+    <string name="activity_earthquake_details_tsunami_text">Posible tsunami</string>
     <string name="activity_earthquake_details_felt_reports_text">Reportes</string>
     <string name="activity_earthquake_details_report_text">Reportar</string>
     <string name="activity_earthquake_details_epicenter_text">Epicentro</string>

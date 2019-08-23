@@ -170,9 +170,11 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             earthquakeLinearLayout.setOnClickListener((View v) ->
             {
                 int earthquakeRecyclerViewPosition = getAdapterPosition();
-                mEarthquakesListClickListener.onEarthquakeClick(mEarthquakes.get(earthquakeRecyclerViewPosition - 1),
-                        earthquakeRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
-                        locationPrimaryTextView, dateTextView);
+                if (earthquakeRecyclerViewPosition > 0) {
+                    mEarthquakesListClickListener.onEarthquakeClick(mEarthquakes.get(earthquakeRecyclerViewPosition - 1),
+                            earthquakeRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
+                            locationPrimaryTextView, dateTextView);
+                }
             });
         }
     }

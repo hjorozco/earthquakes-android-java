@@ -34,9 +34,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
     private static final String IS_FAB_MENU_OPEN_VALUE_KEY = "IS_FAB_MENU_OPEN_VALUE_KEY";
 
-    private LinearLayout mLayoutFab1, mLayoutFab2, mLayoutFab3;
-    private View mFabBackgroundLayout;
-    private FloatingActionButton mMainFab;
     private GoogleMap mGoogleMap;
     private SharedPreferences mSharedPreferences;
     private int mGoogleMapType;
@@ -74,26 +71,26 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         }
 
         // Sets up the Google Map FABs
-        mLayoutFab1 = findViewById(R.id.activity_earthquakes_map_fab_1_linear_layout);
-        mLayoutFab2 = findViewById(R.id.activity_earthquakes_map_fab_2_linear_layout);
-        mLayoutFab3 = findViewById(R.id.activity_earthquakes_map_fab_3_linear_layout);
-        mMainFab = findViewById(R.id.activity_earthquakes_map_main_fab);
-        mFabBackgroundLayout = findViewById(R.id.activity_earthquakes_map_fab_background);
+        LinearLayout layoutFabLayer1 = findViewById(R.id.activity_earthquakes_map_fab_layer_1_linear_layout);
+        LinearLayout layoutFabLayer2 = findViewById(R.id.activity_earthquakes_map_fab_layer_2_linear_layout);
+        LinearLayout layoutFabLayer3 = findViewById(R.id.activity_earthquakes_map_fab_layer_3_linear_layout);
+        FloatingActionButton layersFab = findViewById(R.id.activity_earthquakes_map_layers_fab);
+        View fabBackgroundLayout = findViewById(R.id.activity_earthquakes_map_fab_background);
 
         if (mIsFabMenuOpen) {
-            MapsUtils.showFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
-                    mFabBackgroundLayout, mMainFab, this);
+            MapsUtils.showFabMenu(layoutFabLayer1, layoutFabLayer2, layoutFabLayer3,
+                    fabBackgroundLayout, layersFab, this);
         }
 
-        mMainFab.setOnClickListener(view -> {
+        layersFab.setOnClickListener(view -> {
             if (!mIsFabMenuOpen) {
                 mIsFabMenuOpen = true;
-                MapsUtils.showFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
-                        mFabBackgroundLayout, mMainFab, this);
+                MapsUtils.showFabMenu(layoutFabLayer1, layoutFabLayer2, layoutFabLayer3,
+                        fabBackgroundLayout, layersFab, this);
             } else {
                 mIsFabMenuOpen = false;
-                MapsUtils.hideFabMenu(mLayoutFab1, mLayoutFab2, mLayoutFab3,
-                        mFabBackgroundLayout, mMainFab, this);
+                MapsUtils.hideFabMenu(layoutFabLayer1, layoutFabLayer2, layoutFabLayer3,
+                        fabBackgroundLayout, layersFab, this);
             }
         });
 
@@ -118,10 +115,10 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             }
         });
 
-        mFabBackgroundLayout.setOnClickListener(view -> {
+        fabBackgroundLayout.setOnClickListener(view -> {
             mIsFabMenuOpen = false;
-            MapsUtils.hideFabMenu(mLayoutFab1,
-                    mLayoutFab2, mLayoutFab3, mFabBackgroundLayout, mMainFab, this);
+            MapsUtils.hideFabMenu(layoutFabLayer1,
+                    layoutFabLayer2, layoutFabLayer3, fabBackgroundLayout, layersFab, this);
         });
 
 
@@ -145,9 +142,9 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
      * installed Google Play services and returned to the app.
      */
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(GoogleMap googleMap) {
 
-        mGoogleMap = map;
+        mGoogleMap = googleMap;
 
         List<Earthquake> earthquakes = QueryUtils.getEarthquakesList();
         Earthquake earthquake;
@@ -162,11 +159,11 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
             String magnitudeToDisplay = formatter.format(earthquake.getMagnitude());
             magnitudeToDisplay = magnitudeToDisplay.replace(',', '.');
-            Double roundedMagnitude = Double.valueOf(magnitudeToDisplay);
+            double roundedMagnitude = Double.parseDouble(magnitudeToDisplay);
 
             MapsUtils.MarkerAttributes markerAttributes = MapsUtils.getMarkerAttributes(roundedMagnitude);
 
-            map.addMarker(new MarkerOptions()
+            googleMap.addMarker(new MarkerOptions()
                     .position(earthquakePosition)
                     .title(MapsUtils.constructEarthquakeTitleForMarker(earthquake, magnitudeToDisplay))
                     .snippet(MapsUtils.constructEarthquakeSnippetForMarker(earthquake.getTimeInMilliseconds()))
@@ -176,12 +173,13 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     .zIndex(markerAttributes.getZIndex()));
         }
 
-        map.setMapType(mGoogleMapType);
+        googleMap.setMapType(mGoogleMapType);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
 
         // Animate the camera only when the activity is created, not after a rotation
         if (!mRotation) {
             firstEarthquakePosition = new LatLng(earthquakes.get(0).getLatitude(), earthquakes.get(0).getLongitude());
-            map.animateCamera(CameraUpdateFactory.newLatLng(firstEarthquakePosition));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(firstEarthquakePosition));
         }
 
     }

@@ -10,7 +10,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
 
     private void setupViewModel() {
-        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mMainActivityViewModel.getEarthquakes().observe(this, earthquakes -> {
 
             mNumberOfEarthquakesOnList = 0;
@@ -442,8 +442,11 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         mEarthquakeRecyclerViewPosition = earthquakeRecyclerViewPosition;
 
+
         Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
-        intent.putExtra(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, earthquake);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, earthquake);
+        intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());

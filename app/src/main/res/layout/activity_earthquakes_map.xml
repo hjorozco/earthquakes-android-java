@@ -24,7 +24,7 @@
         android:visibility="gone" />
 
     <LinearLayout
-        android:id="@+id/activity_earthquakes_map_fab_1_linear_layout"
+        android:id="@+id/activity_earthquakes_map_fab_layer_1_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -48,7 +48,7 @@
             android:id="@+id/activity_earthquakes_map_fab_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorGoogleMapLayersFabIcon"
+            android:tint="@color/colorPrimaryLight"
             app:backgroundTint="@color/colorAppBackground"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_default_map_brown_24dp" />
@@ -56,7 +56,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/activity_earthquakes_map_fab_2_linear_layout"
+        android:id="@+id/activity_earthquakes_map_fab_layer_2_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -80,7 +80,7 @@
             android:id="@+id/activity_earthquakes_map_fab_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorGoogleMapLayersFabIcon"
+            android:tint="@color/colorPrimaryLight"
             app:backgroundTint="@color/colorAppBackground"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_satellite_map_brown_24dp" />
@@ -88,7 +88,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/activity_earthquakes_map_fab_3_linear_layout"
+        android:id="@+id/activity_earthquakes_map_fab_layer_3_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -112,7 +112,7 @@
             android:id="@+id/activity_earthquakes_map_fab_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorGoogleMapLayersFabIcon"
+            android:tint="@color/colorPrimaryLight"
             app:backgroundTint="@color/colorAppBackground"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_terrain_map_brown_24dp" />
@@ -120,14 +120,14 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_earthquakes_map_main_fab"
+        android:id="@+id/activity_earthquakes_map_layers_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="@dimen/application_small_margin"
         android:gravity="center_vertical"
         android:padding="@dimen/application_small_padding"
-        android:tint="@color/colorGoogleMapLayersFabIcon"
+        android:tint="@color/colorPrimaryLight"
         app:backgroundTint="@color/colorAppBackground"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_layers_brown_24dp" />

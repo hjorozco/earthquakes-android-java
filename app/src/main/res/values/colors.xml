@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#5D4037</color>      <!-- Brown 700 -->
     <color name="colorAccent">#DD2C00</color>           <!-- Deep Orange A700 -->
 
-    <color name="colorListTitle">#A1887F</color>        <!-- Brown 300 -->
+    <color name="colorPrimaryLight">#A1887F</color>     <!-- Brown 300 -->
 
     <!-- Scrim colors -->
     <color name="colorScrim">#40000000</color>
@@ -13,8 +13,6 @@
     <color name="colorDisableMenuItem">#BDBDBD</color>
 
     <color name="colorAppBackground">#FFFAFAFA</color>
-
-    <color name="colorGoogleMapLayersFabIcon">#A1887F</color>  <!-- Brown 300 -->
 
     <!-- List divider color -->
     <color name="light_brown">#D7CCC8</color>           <!-- Brown 100 -->
@@ -72,5 +70,10 @@
     <!-- Magnitude color and background color for an earthquake with magnitude over 9 -->
     <color name="magnitude9plus">#000000</color>  <!-- (Black) -->
     <color name="background9plus">#B0BEC5</color>  <!-- (Blue Grey 200) -->
+
+    <color name="colorAlertGreen">#43A047</color>       <!-- Green 600  -->
+    <color name="colorAlertYellow">#FDD835</color>      <!-- Yellow 600  -->
+    <color name="colorAlertOrange">#FB8C00</color>      <!-- Orange 600  -->
+    <color name="colorAlertRed">#E53935</color>         <!-- Red 600  -->
 
 </resources>
