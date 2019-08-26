@@ -172,7 +172,39 @@
     <string name="activity_earthquake_details_report_text">Reportar</string>
     <string name="activity_earthquake_details_epicenter_text">Epicentro</string>
 
+    <string name="menu_activity_earthquake_details_action_info_title">Información</string>
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
+
+
+    <!-- ********** ACTIVITY EARTHQUAKE DETAILS HELP ********** -->
+
+    <string name="activity_earthquakes_information_label">Información sobre los detalles del temblor</string>
+
+    <string name="activity_earthquakes_information_magnitude_title">Magnitude</string>
+    <string name="activity_earthquakes_information_magnitude_text">The magnitude is a number that
+        characterizes the relative size of an earthquake. It measures the energy released at the
+        source of the earthquake and is determined from measurements on seismographs.\n\n
+        Several magnitude scales have been defined, but one of the most commonly used is the local
+        magnitude (ML), commonly referred to as "Richter magnitude".\n\nOn this app, the magnitude
+        of the earthquake is the number located inside the colored circle. Earthquakes with a magnitude
+        less than 3 will be displayed in green, with a magnitude between 3 and 5.9 in orange, with a
+        magnitude between 6 and 7.9 in red, and earthquakes with a magnitude more than 8 will be
+        displayed in purple or black.
+    </string>
+    <string name="activity_earthquakes_information_intensity_title">Magnitude</string>
+    <string name="activity_earthquakes_information_intensity_text">The magnitude is a number that
+        characterizes the relative size of an earthquake. It measures the energy released at the
+        source of the earthquake and is determined from measurements on seismographs.\n\n
+        Several magnitude scales have been defined, but one of the most commonly used is the local
+        magnitude (ML), commonly referred to as "Richter magnitude".\n\nOn this app, the magnitude
+        of the earthquake is the number located inside the colored circle. Earthquakes with a magnitude
+        less than 3 will be displayed in green, with a magnitude between 3 and 5.9 in orange, with a
+        magnitude between 6 and 7.9 in red, and earthquakes with a magnitude more than 8 will be
+        displayed in purple or black.
+    </string>
+
+    <!-- ********** Activity Earthquake details help ********** -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->

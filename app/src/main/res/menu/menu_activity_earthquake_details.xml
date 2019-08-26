@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeDetailsActivity">
+
+    <item
+        android:id="@+id/menu_activity_earthquake_details_action_help"
+        android:icon="@drawable/ic_info_outline_white_24dp"
+        android:title="@string/menu_activity_earthquake_details_action_info_title"
+        app:showAsAction="ifRoom" />
+
+</menu>

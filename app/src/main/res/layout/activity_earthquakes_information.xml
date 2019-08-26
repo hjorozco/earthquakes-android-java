@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/application_standard_padding"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/activity_earthquakes_information_magnitude_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_earthquakes_information_magnitude_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/activity_earthquakes_information_magnitude_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:text="@string/activity_earthquakes_information_magnitude_text"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/activity_earthquakes_information_intensity_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:text="@string/activity_earthquakes_information_intensity_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/activity_earthquakes_information_intensity_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:text="@string/activity_earthquakes_information_intensity_text"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -165,6 +167,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
      */
     private void setupEarthquakeDetails() {
 
+        // Used to assign vector drawables to the Google Map layers fab in API 19
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         setupDetailsOnTopOfMap();
@@ -176,6 +179,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupDetailsOnTopOfMap() {
 
         findViewById(R.id.activity_earthquake_details_on_top_of_map_linear_layout).setVisibility(View.VISIBLE);
@@ -183,9 +187,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mMapTypeRadioGroup = findViewById(R.id.activity_earthquake_details_map_type_radio_group);
         mMapTypeRadioGroup.setVisibility(View.VISIBLE);
 
+        // Intensity views
         TextView intensityLabelTextView =
                 findViewById(R.id.activity_earthquake_details_intensity_label_text_view);
         intensityLabelTextView.setTextColor(mMagnitudeColor);
+
         LinearLayout intensityValuesLinearLayout = findViewById(R.id.activity_earthquake_details_intensity_values_linear_layout);
         LinearLayout estimatedIntensityLinearLayout =
                 findViewById(R.id.activity_earthquake_details_estimated_intensity_linear_layout);
@@ -224,6 +230,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             }
         }
 
+        // Alert Views
         LinearLayout alertLinearLayout = findViewById(R.id.activity_earthquake_details_alert_linear_layout);
         TextView alertLabelTextView =
                 findViewById(R.id.activity_earthquake_details_alert_label_text_view);
@@ -259,6 +266,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             alertValueTextView.setTextColor(alertValueTextColor);
         }
 
+        // Tsunami views
         TextView tsunamiTextView =
                 findViewById(R.id.activity_earthquake_details_tsunami_text_view);
         tsunamiTextView.setTextColor(mMagnitudeColor);
@@ -267,6 +275,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             tsunamiTextView.setVisibility(GONE);
         }
 
+        // Felt views
         TextView feltReportsLabelTextView =
                 findViewById(R.id.activity_earthquake_details_felt_reports_label_text_view);
         feltReportsLabelTextView.setTextColor(mMagnitudeColor);
@@ -302,6 +311,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         feltReportsButton.setRippleColor(magnitudeBackGroundColorStateList);
         feltReportsButton.setStrokeColor(magnitudeColorStateList);
 
+        // Location views
         TextView coordinatesAndDepthLabelTextView =
                 findViewById(R.id.activity_earthquake_details_coordinates_and_depth_label_text_view);
         coordinatesAndDepthLabelTextView.setTextColor(mMagnitudeColor);
@@ -502,14 +512,28 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_earthquake_details, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            // Set this flag to true to prevent reloading USGS web view onTransitionEnd callback
-            mOnBackPressed = true;
-            // Fade out view
-            mUsgsMapWebView.animate().alpha(0.0f);
-            onBackPressed();
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                // Set this flag to true to prevent reloading USGS web view onTransitionEnd callback
+                mOnBackPressed = true;
+                // Fade out view
+                mUsgsMapWebView.animate().alpha(0.0f);
+                onBackPressed();
+                break;
+            case R.id.menu_activity_earthquake_details_action_help:
+                Intent intent = new Intent(this, EarthquakesInformationActivity.class);
+                startActivity(intent);
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

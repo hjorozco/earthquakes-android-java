@@ -219,7 +219,38 @@
     <string name="activity_earthquake_details_report_text">Report</string>
     <string name="activity_earthquake_details_epicenter_text">Epicenter</string>
 
+    <string name="menu_activity_earthquake_details_action_info_title">Information</string>
+
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
+
+
+    <!-- ********** ACTIVITY EARTHQUAKES INFORMATION ********** -->
+
+    <string name="activity_earthquakes_information_label">Earthquake details information</string>
+
+    <string name="activity_earthquakes_information_magnitude_title">Magnitude</string>
+    <string name="activity_earthquakes_information_magnitude_text">The magnitude is a number that
+        characterizes the relative size of an earthquake. It measures the energy released at the
+        source of the earthquake and is determined from measurements on seismographs.\n\n
+        Several magnitude scales have been defined, but one of the most commonly used is the local
+        magnitude (ML), commonly referred to as "Richter magnitude".\n\nOn this app, the magnitude
+        of the earthquake is the number located inside the colored circle. Earthquakes with a magnitude
+        less than 3 will be displayed in green, with a magnitude between 3 and 5.9 in orange, with a
+        magnitude between 6 and 7.9 in red, and earthquakes with a magnitude more than 8 will be
+        displayed in purple or black.
+    </string>
+
+    <string name="activity_earthquakes_information_intensity_title">Intensity</string>
+    <string name="activity_earthquakes_information_intensity_text">The intensity is a number (written
+        as a Roman numeral) describing the severity of an earthquake in terms of its effects on the
+        earth\'s surface and on humans and their structures. Several scales exist, but one of the most
+        commonly used is the Modified Mercalli scale. There are many intensities for an earthquake,
+        depending on where you are, unlike the magnitude, which is one number for each earthquake.
+    </string>
+
+
+    <!-- ********** Activity Earthquakes information ********** -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->
