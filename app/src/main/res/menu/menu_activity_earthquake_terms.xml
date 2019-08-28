@@ -4,9 +4,9 @@
     tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeDetailsActivity">
 
     <item
-        android:id="@+id/menu_activity_earthquake_details_action_earthquake_terms"
-        android:icon="@drawable/ic_info_outline_white_24dp"
-        android:title="@string/menu_activity_earthquake_details_action_earthquake_terms_title"
+        android:id="@+id/menu_activity_earthquake_terms_action_help"
+        android:icon="@drawable/ic_help_outline_white_24dp"
+        android:title="@string/menu_activity_earthquake_terms_action_help_title"
         app:showAsAction="ifRoom" />
 
 </menu>

@@ -4,7 +4,7 @@
 
     <!-- ********** APP ********** -->
 
-    <string name="app_name">Temblores</string>
+    <string name="app_name">Sismos</string>
 
     <!-- ********** App ********** -->
 
@@ -33,15 +33,15 @@
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
     <string name="near_the">Localidad</string>
 
-    <string name="searching_earthquakes_text">Buscando temblores</string>
+    <string name="searching_earthquakes_text">Buscando sismos</string>
 
     <string name="no_internet_connection_text">No hay conexión a internet</string>
     <string name="search_cancelled_text">Busqueda cancelada</string>
     <string name="no_server_response_text">No hay respuesta del servidor de USGS</string>
-    <string name="earthquakes_list_updated_text">Lista de temblores actualizada</string>
+    <string name="earthquakes_list_updated_text">Lista de sismos actualizada</string>
 
-    <string name="earthquakes_list_title">%1$d temblor%2$s encontrado%3$s en %4$s. Ordenado%5$s por %6$s.</string>
-    <string name="earthquakes_list_title_earthquakes_word_suffix">es</string>
+    <string name="earthquakes_list_title">%1$d sismo%2$s encontrado%3$s en %4$s. Ordenado%5$s por %6$s.</string>
+    <string name="earthquakes_list_title_earthquakes_word_suffix">s</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix">s</string>
     <string name="earthquakes_list_title_sorted_by_date_text">fecha</string>
     <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitud</string>
@@ -50,7 +50,7 @@
     <!-- String to be displayed when there is not data to show on the ListView of
     earthquake_activity -->
     <string name="no_earthquakes_found_text">
-        No se encontraron temblores
+        No se encontraron sismos
     </string>
 
     <string name="menu_activity_main_action_refresh_title">Actualizar la lista</string>
@@ -58,7 +58,9 @@
     <string name="menu_activity_main_action_search_preferences_title">
         Preferencias de búsqueda</string>
     <string name="menu_activity_main_action_list_information_title">Información de la lista</string>
-    <string name="menu_activity_main_action_earthquakes_map_title">Mapa de temblores</string>
+    <string name="menu_activity_main_action_earthquakes_map_title">Mapa de sismos</string>
+    <string name="menu_activity_main_action_earthquake_terms_title">
+        @string/activity_earthquake_terms_label</string>
     <string name="menu_activity_main_action_help_title">Ayuda</string>
     <string name="menu_activity_main_action_about_title">Acerca de</string>
 
@@ -106,9 +108,9 @@
 
     <string name="search_preferences_other_preferences_category_title">Preferencias generales</string>
 
-    <string name="search_preference_max_number_of_earthquakes_title">Número máximo de temblores</string>
-    <string name="search_preference_max_number_of_earthquakes_not_set_text">Sin definir. Mostrará un máximo de 20,000 temblores.</string>
-    <string name="search_preference_max_number_of_earthquakes_zero_text">0. No mostrará ningún temblor.</string>
+    <string name="search_preference_max_number_of_earthquakes_title">Número máximo de sismos</string>
+    <string name="search_preference_max_number_of_earthquakes_not_set_text">Sin definir. Mostrará un máximo de 20,000 sismos.</string>
+    <string name="search_preference_max_number_of_earthquakes_zero_text">0. No mostrará ningún sismo.</string>
     <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000. Número límite para una búsqueda.</string>
 
     <string name="search_preference_sort_by_title">Ordenar por</string>
@@ -119,7 +121,7 @@
 
 
     <string name="search_preference_location_title">Localidad</string>
-    <string name="search_preference_location_not_set_value">Sin definir. Buscará temblores en todo el mundo.</string>
+    <string name="search_preference_location_not_set_value">Sin definir. Buscará sismos en todo el mundo.</string>
 
     <string name="most_recent_date_text">A</string>
     <string name="past_date_text">De</string>
@@ -134,15 +136,15 @@
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
 
     <string name="activity_earthquakes_map_max_number_exceeded_message">
-        Mostrando los primeros %1$s temblores de la lista.</string>
-    <string name="activity_earthquakes_map_label">Mapa de temblores</string>
+        Mostrando los primeros %1$s sismos de la lista.</string>
+    <string name="activity_earthquakes_map_label">Mapa de sismos</string>
 
     <!-- ********** Activity earthquakes map ********** -->
 
 
     <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
 
-    <string name="activity_earthquake_details_label">Detalles del temblor</string>
+    <string name="activity_earthquake_details_label">Detalles del sismo</string>
     <string name="activity_earthquake_details_coordinates_text">
         %1$.3f\u00B0%2$s %3$.3f\u00B0%4$s - %5$.1f km de profundidad
     </string>
@@ -172,54 +174,109 @@
     <string name="activity_earthquake_details_report_text">Reportar</string>
     <string name="activity_earthquake_details_epicenter_text">Epicentro</string>
 
-    <string name="menu_activity_earthquake_details_action_info_title">Información</string>
+    <string name="menu_activity_earthquake_details_action_earthquake_terms_title">
+        @string/activity_earthquake_terms_label</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
-    <!-- ********** ACTIVITY EARTHQUAKE DETAILS HELP ********** -->
+    <!-- ********** ACTIVITY EARTHQUAKE TERMS ********** -->
 
-    <string name="activity_earthquakes_information_label">Información sobre los detalles del temblor</string>
+    <string name="activity_earthquake_terms_label">Conceptos de sismos</string>
 
-    <string name="activity_earthquakes_information_magnitude_title">Magnitude</string>
-    <string name="activity_earthquakes_information_magnitude_text">The magnitude is a number that
-        characterizes the relative size of an earthquake. It measures the energy released at the
-        source of the earthquake and is determined from measurements on seismographs.\n\n
-        Several magnitude scales have been defined, but one of the most commonly used is the local
-        magnitude (ML), commonly referred to as "Richter magnitude".\n\nOn this app, the magnitude
-        of the earthquake is the number located inside the colored circle. Earthquakes with a magnitude
-        less than 3 will be displayed in green, with a magnitude between 3 and 5.9 in orange, with a
-        magnitude between 6 and 7.9 in red, and earthquakes with a magnitude more than 8 will be
-        displayed in purple or black.
-    </string>
-    <string name="activity_earthquakes_information_intensity_title">Magnitude</string>
-    <string name="activity_earthquakes_information_intensity_text">The magnitude is a number that
-        characterizes the relative size of an earthquake. It measures the energy released at the
-        source of the earthquake and is determined from measurements on seismographs.\n\n
-        Several magnitude scales have been defined, but one of the most commonly used is the local
-        magnitude (ML), commonly referred to as "Richter magnitude".\n\nOn this app, the magnitude
-        of the earthquake is the number located inside the colored circle. Earthquakes with a magnitude
-        less than 3 will be displayed in green, with a magnitude between 3 and 5.9 in orange, with a
-        magnitude between 6 and 7.9 in red, and earthquakes with a magnitude more than 8 will be
-        displayed in purple or black.
+    <string name="activity_earthquake_terms_magnitude_title">Magnitud</string>
+    <string name="activity_earthquake_terms_magnitude_text">La magnitud es un número que
+        caracteriza el tamaño relativo de un sismo. Mide la energía liberada en la fuente del
+        sismo y se determina a partir de mediciones en sismógrafos.\n\nSe han definido varias
+        escalas de magnitud, pero una de las más utilizadas es la magnitud local (ML), comúnmente
+        conocida como "magnitud de Richter".
     </string>
 
-    <!-- ********** Activity Earthquake details help ********** -->
+    <string name="activity_earthquake_terms_richter_magnitude_scale_title">Escala de magnitud de Richter</string>
+    <string name="activity_earthquake_terms_richter_magnitude_scale_text">1.0–1.9 (Micro). Micro sismo, no se siente, o se
+        siente raramente. Es registrado por sismógrafos. Continuos/varios millones por año.\n\n2.0–2.9
+        (Menor). Algunas personas lo sienten un poco. Sin daños a edificios. Más de un millón por año.
+        \n\n3.0–3.9 (Menor). A menudo lo sienten las personas, pero rara vez causa daños. La sacudida
+        de objetos dentro de edificios puede ser notable. Más de 100,000 por año.\n\n4.0–4.9 (Ligero).
+        Sacudida notable de objetos dentro de edifiios y ruidos notables. Sentido por la mayoría de
+        las personas en el área afectada. Ligeramente sentido fuera de esa área. Generalmente no causa
+        daños o produce daños mínimos. Daño moderado a significativo muy improbable. Algunos objetos
+        pueden caerse de sus estantes o volcarse. 10,000 a 15,000 por año.\n\n5.0–5.9 (Moderado). Puede
+        causar daños de diversa gravedad a edificios mal construidos. A lo sumo, no daños o daños leves
+        a todos los demás edificios. Sentido por todas las personas. 1,000 a 1,500 por año.\n\n6.0–6.9
+        (Fuerte). Daño a un número moderado de estructuras bien construidas en zonas pobladas. Las
+        estructuras resistentes a sismos sobreviven con daños leves a moderados. Las estructuras mal
+        diseñadas reciben daños moderados a severos. Se siente en áreas más amplias; hasta cientos de
+        millas / kilómetros del epicentro. Genera sacudidas fuertes a violentas en el área epicentral.
+        100 a 150 por año.\n\n7.0–7.9 (Mayor). Causa daños a la mayoría de los edificios, algunos
+        colapsan parcialmente o completamente o reciben daños severos. Es probable que las estructuras
+        bien diseñadas tengan daños. Se siente a grandes distancias con daños mayores limitados
+        principalmente a 250 km del epicentro. 10 a 20 por año.\n\n8.0–8.9 (Enorme). Daños importantes
+        a edificios, estructuras probablemente son destruidas. Causará daños moderados a fuertes en
+        edificios robustos o resistentes a sismos. Daños en grandes áreas. Se siente en regiones
+        muy grandes. Uno por año.\n\n9.0 y más (Enorme). Destrucción total o casi total - daños graves
+        o colapso de todos los edificios. Grandes daños y sacudidas se extienden a lugares distantes.
+        Cambios permanentes en la topografía del suelo. Uno cada 10 a 50 años.
+    </string>
+
+    <string name="activity_earthquake_terms_intensity_title">Intensidad</string>
+    <string name="activity_earthquake_terms_intensity_definition">La intensidad es un número
+        (escrito como un número romano) que describe la gravedad de un sismo en términos de sus
+        efectos sobre la superficie de la tierra y sobre los humanos y sus estructuras.\n\nExisten varias
+        escalas, pero una de las más utilizadas es la escala de Mercalli modificada.\n\nHay muchas
+        intensidades para un sismo, dependiendo de dónde te encuentres, a diferencia de la
+        magnitud, que es una sola para cada sismo.\n\nLa intensidad estimada se genera con datos
+        recopilados por instrumentos. La intensidad reportada se genera con datos proporcionados por
+        personas que reportan el terremoto.
+    </string>
+
+    <string name="activity_earthquake_terms_modified_mercalli_intensity_scale_title">
+        Escala de intensidad de Mercalli modificada</string>
+    <string name="activity_earthquake_terms_modified_mercalli_intensity_scale_text">
+        I. No se siente excepto por unos pocos en condiciones especialmente favorables. \ N \ nII. Sentido solo por
+        algunas personas en reposo, especialmente en los pisos superiores de los edificios. \ n \ nIII. Me sentí bastante notable
+        por personas en interiores, especialmente en pisos superiores de edificios. Mucha gente no lo reconoce
+        como un terremoto Los automóviles de pie pueden balancearse ligeramente. Vibraciones similares al paso
+        de un camión. \ n \ nIV. Fieltro en el interior por muchos, al aire libre por pocos durante el día.
+        Por la noche, algunos despertaban. Platos, ventanas, puertas perturbadas; las paredes hacen un crujido.
+        Sensación como un camión pesado golpeando el edificio. Los automóviles de pie se balancearon notablemente. \ N \ nV.
+        Sentido por casi todos; Muchos despertaron. Algunos platos, ventanas rotas. Objetos inestables
+        volcado Los relojes de péndulo pueden detenerse. \ N \ nVI. Sentido por todos, muchos asustados. Algo pesado
+        muebles movidos; Algunas instancias de yeso caído. Daño leve. \ N \ nVII. Daño insignificante
+        en edificios de buen diseño y construcción; Ligero a moderado en bien construido ordinario
+        estructuras; daños considerables en estructuras mal construidas o mal diseñadas; algunas chimeneas
+        roto. \ n \ nVIII. Daño Slgith en estructuras especialmente diseñadas; daño considerable en
+        Edificios ordinarios con colapso parcial. Gran daño en mal construido
+        estructuras Caída de chimeneas, pilas de fábricas, columnas, monumentos, muros. Muebles pesados
+        volcado. \ n \ nIX. Daño considerable en estructuras especialmente diseñadas; marco bien diseñado
+        estructuras arrojadas de la plomada. Gran daño en edificios sustanciales, con colapso parcial.
+        Los edificios se desplazaron de los cimientos. \ N \ nX. Algunas estructuras de madera bien construidas destruidas; más
+        estructuras de mampostería y marcos destruidas con cimientos. Rieles doblados. \ N \ nXI. Pocos, si alguno
+        Las estructuras de mampostería permanecen en pie. Puentes destruidos. Los rieles se doblaron mucho. \ N \ nXII. Daño total.
+        Las líneas de visión y el nivel están distorsionadas. Objetos lanzados al aire.
+    </string>
+
+    <string name="menu_activity_earthquake_terms_action_help_title">Ayuda</string>
+    <string name="activity_earthquake_terms_help_dialog_fragment_message">\nPresiona una palabra
+        para mostrar su información.\n\nPresiona de nuevo para ocultarla.\n
+    </string>
+
+    <!-- ********** Activity Earthquake terms ********** -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->
-    <string name="email_subject">Aplicación de Reporte de temblores.</string>
+    <string name="email_subject">Aplicación de Reporte de sismos.</string>
     <string name="email_chooser">Selecciona una aplicación para mandar un correo electrónico a
         Hector J. Orozco &#8230;</string>
 
     <!-- String displayed at the bottom of the Configuration Screen -->
     <string name="settings_help_message_text">
-        El tiempo que tomará la búsqueda de temblores será mayor mientras:\n
+        El tiempo que tomará la búsqueda de sismos será mayor mientras:\n
         - menor sea la magnitud mínima,\n
         - mayor sea la diferencia entre las magnitudes mínima y máxima,\n
         - mayor sea el periodo de tiempo.\n\n
         El periodo de tiempo va hacia atrás, de la fecha más reciente a la fecha más antigua.\n\n
-        El número máximo de temblores que pueden ser desplegados en la lista es de 20,000.\n\n
+        El número máximo de sismos que pueden ser desplegados en la lista es de 20,000.\n\n
         Una vez ingresadas las preferencias de búsqueda, da clic en la flecha hacia atrás
         en la esquina superior izquierda de la pantalla para buscar temblores.
     </string>
@@ -232,7 +289,7 @@
     <string name="current_list_alert_dialog_message_1">
         &lt;br/&gt;Mostrando &lt;b>%1$s %2$s en %3$s, ordenado%4$s por %5$s,&lt;/b> para las siguientes preferencias de
         búsqueda:&lt;br/&gt;&lt;br/&gt;
-        &lt;i>Máximo número de temblores &lt;/i>%6$s&lt;br/&gt;
+        &lt;i>Máximo número de sismos &lt;/i>%6$s&lt;br/&gt;
         &lt;i>Rango de fechas &lt;/i>%7$s&lt;br/&gt;
         %8$s a&lt;br/&gt;
         %9$s&lt;br/&gt;
@@ -242,17 +299,17 @@
 
     <string name="current_list_alert_dialog_message_2">
         &lt;br/&gt;&lt;br/&gt;
-        &lt;i>%1$s del primer temblor en la lista:&lt;/i> &lt;br/&gt;
+        &lt;i>%1$s del primer sismo en la lista:&lt;/i> &lt;br/&gt;
         %2$s &lt;br/&gt; &lt;br/&gt;
-        &lt;i>%1$s del último temblor en la lista:&lt;/i> &lt;br/&gt;
+        &lt;i>%1$s del último sismo en la lista:&lt;/i> &lt;br/&gt;
         %3$s
     </string>
 
     <!-- Other strings used by the "Information" Alert Dialog message.  -->
     <string name="the_text_singular">el</string>
     <string name="the_text_plural">los</string>
-    <string name="earthquakes_text_singular">temblor</string>
-    <string name="earthquakes_text_plural">temblores</string>
+    <string name="earthquakes_text_singular">sismo</string>
+    <string name="earthquakes_text_plural">sismos</string>
     <string name="powerful_text_singular">poderoso</string>
     <string name="powerful_text_plural">poderosos</string>
     <string name="recent_text_singular">reciente</string>
@@ -267,7 +324,6 @@
     <string name="thirty_days_text">últimos 30 días</string>
     <string name="three_hundred_sixty_five_days_text">últimos 365 días</string>
     <string name="custom_text">personalizado</string>
-
 
 
 </resources>

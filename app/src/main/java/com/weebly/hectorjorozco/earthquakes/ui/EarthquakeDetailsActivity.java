@@ -528,8 +528,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 mUsgsMapWebView.animate().alpha(0.0f);
                 onBackPressed();
                 break;
-            case R.id.menu_activity_earthquake_details_action_help:
-                Intent intent = new Intent(this, EarthquakesInformationActivity.class);
+            case R.id.menu_activity_earthquake_details_action_earthquake_terms:
+                Intent intent = new Intent(this, EarthquakesTermsActivity.class);
                 startActivity(intent);
                 break;
         }

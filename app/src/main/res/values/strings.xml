@@ -67,6 +67,8 @@
     <string name="menu_activity_main_action_list_information_title">List information</string>
     <string name="menu_activity_main_action_earthquakes_map_title">Earthquakes map</string>
     <string name="menu_activity_main_action_help_title">Help</string>
+    <string name="menu_activity_main_action_earthquake_terms_title">
+        @string/activity_earthquake_terms_label</string>
     <string name="menu_activity_main_action_about_title">About</string>
 
     <string name="activity_main_image_view_content_description" translatable="false">
@@ -219,38 +221,97 @@
     <string name="activity_earthquake_details_report_text">Report</string>
     <string name="activity_earthquake_details_epicenter_text">Epicenter</string>
 
-    <string name="menu_activity_earthquake_details_action_info_title">Information</string>
+    <string name="menu_activity_earthquake_details_action_earthquake_terms_title">
+        @string/activity_earthquake_terms_label</string>
 
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
-    <!-- ********** ACTIVITY EARTHQUAKES INFORMATION ********** -->
+    <!-- ********** ACTIVITY EARTHQUAKE TERMS ********** -->
 
-    <string name="activity_earthquakes_information_label">Earthquake details information</string>
+    <string name="activity_earthquake_terms_label">Earthquake concepts</string>
+    <string name="activity_earthquake_terms_arrow_image_view_content_description" translatable="false">
+        Arrow</string>
 
-    <string name="activity_earthquakes_information_magnitude_title">Magnitude</string>
-    <string name="activity_earthquakes_information_magnitude_text">The magnitude is a number that
+    <string name="activity_earthquake_terms_magnitude_title">Magnitude</string>
+    <string name="activity_earthquake_terms_magnitude_text">The magnitude is a number that
         characterizes the relative size of an earthquake. It measures the energy released at the
-        source of the earthquake and is determined from measurements on seismographs.\n\n
-        Several magnitude scales have been defined, but one of the most commonly used is the local
-        magnitude (ML), commonly referred to as "Richter magnitude".\n\nOn this app, the magnitude
-        of the earthquake is the number located inside the colored circle. Earthquakes with a magnitude
-        less than 3 will be displayed in green, with a magnitude between 3 and 5.9 in orange, with a
-        magnitude between 6 and 7.9 in red, and earthquakes with a magnitude more than 8 will be
-        displayed in purple or black.
+        source of the earthquake and is determined from measurements on seismographs.\n\nSeveral
+        magnitude scales have been defined, but one of the most commonly used is the local
+        magnitude (ML), commonly referred to as "Richter magnitude".
     </string>
 
-    <string name="activity_earthquakes_information_intensity_title">Intensity</string>
-    <string name="activity_earthquakes_information_intensity_text">The intensity is a number (written
+    <string name="activity_earthquake_terms_richter_magnitude_scale_title">Magnitude scale - Richter</string>
+    <string name="activity_earthquake_terms_richter_magnitude_scale_text">1.0–1.9 (Micro). Microearthquake, not felt,
+        or felt rarely. Recorded by seismographs. Continual/several million per year.\n\n2.0–2.9
+        (Minor). Felt slightly by some people. No damage to buildings. Over one million per year.
+        \n\n3.0–3.9 (Minor). Often felt by people, but very rarely causes damage. Shaking of indoor
+        objects can be noticeable. Over 100,000 per year.\n\n4.0–4.9 (Light). Noticeable shaking of
+        indoor objects and rattling noises. Felt by most people in the affected area. Slightly felt
+        outside. Generally causes none to minimal damage. Moderate to significant damage very
+        unlikely. Some objects may fall off shelves or be knocked over. 10,000 to 15,000 per year.
+        \n\n5.0–5.9 (Moderate). Can cause damage of varying severity to poorly constructed buildings.
+        At most, none to slight damage to all other buildings. Felt by everyone. 1,000 to 1,500 per
+        year.\n\n6.0–6.9 (Strong). Damage to a moderate number of well-built structures in populated
+        areas. Earthquake-resistant structures survive with slight to moderate damage. Poorly designed
+        structures receive moderate to severe damage. Felt in wider areas; up to hundreds of
+        miles/kilometers from the epicenter. Strong to violent shaking in epicentral area. 100 to
+        150 per year.\n\n7.0–7.9 (Major). Causes damage to most buildings, some to partially or
+        completely collapse or receive severe damage. Well-designed structures are likely to receive
+        damage. Felt across great distances with major damage mostly limited to 250 km from epicenter.
+        10 to 20 per year.\n\n8.0–8.9 (Great). Major damage to buildings, structures likely to be
+        destroyed. Will cause moderate to heavy damage to sturdy or earthquake-resistant buildings.
+        Damaging in large areas. Felt in extremely large regions. One per year.\n\n9.0 and greater
+        (Great). At or near total destruction – severe damage or collapse to all buildings. Heavy
+        damage and shaking extends to distant locations. Permanent changes in ground topography. One
+        per 10 to 50 years.
+    </string>
+
+    <string name="activity_earthquake_terms_intensity_title">Intensity</string>
+    <string name="activity_earthquake_terms_intensity_definition">The intensity is a number (written
         as a Roman numeral) describing the severity of an earthquake in terms of its effects on the
-        earth\'s surface and on humans and their structures. Several scales exist, but one of the most
-        commonly used is the Modified Mercalli scale. There are many intensities for an earthquake,
+        earth\'s surface and on humans and their structures.\n\nSeveral scales exist, but one of the most
+        commonly used is the Modified Mercalli scale.\n\nThere are many intensities for an earthquake,
         depending on where you are, unlike the magnitude, which is one number for each earthquake.
+        \n\nThe estimated intensity is generated with data gathered by instruments. The reported
+        intensity is generated with data given by people who reports the earthquake.
     </string>
 
+    <string name="activity_earthquake_terms_modified_mercalli_intensity_scale_title">
+        Intensity scale - modified Mercalli</string>
+    <string name="activity_earthquake_terms_modified_mercalli_intensity_scale_text">
+        I. Not felt except by a very few under especially favorable conditions.\n\nII. Felt only by
+        a few persons at rest, especially on upper floors of buildings.\n\nIII. Felt quite noticeably
+        by persons indoors, especially on upper floors of buildings. Many people do not recognize it
+        as an earthquake. Standing motor cars may rock slightly. Vibrations similar to the passing
+        of a truck.\n\nIV. Felt indoors by many, outdoors by few during the day.
+        At night, some awakened. Dishes, windows, doors disturbed; walls make cracking sound.
+        Sensation like heavy truck striking building. Standing motor cars rocked noticeably.\n\nV.
+        Felt by nearly everyone; many awakened. Some dishes, windows broken. Unstable objects
+        overturned. Pendulum clocks may stop.\n\nVI. Felt by all, many frightened. Some heavy
+        furniture moved; a few instances of fallen plaster. Slight damage.\n\nVII. Negligible damage
+        in buildings of good design and construction; slight to moderate in well-built ordinary
+        structures; considerable damage in poorly built or badly designed structures; some chimneys
+        broken.\n\nVIII. Slgith damage in specially designed structures; considerable damage in
+        ordinary buildings with partial collapse. Great damage in poorly built
+        structures. Fall of chimneys, factory stacks, columns, monuments, walls. Heavy furniture
+        overturned.\n\nIX. Considerable damage in specially designed structures; well-designed frame
+        structures thrown out of plumb. Great damage in substantial buildings, with partial collapse.
+        Buildings shifted off foundations.\n\nX. Some well-built wooden structures destroyed; most
+        masonry and frame structures destroyed with foundations. Rails bent.\n\nXI. Few, if any
+        masonry structures remain standing. Bridges destroyed. Rails bent greatly.\n\nXII. Total damage.
+        Lines of sight and level are distorted. Objects thrown into the air.
+    </string>
 
-    <!-- ********** Activity Earthquakes information ********** -->
+    <string name="menu_activity_earthquake_terms_action_help_title">Help</string>
+    <string name="activity_earthquake_terms_help_dialog_fragment_message">\nPress on a word to show
+        its information.\n\nPress again to hide it.\n</string>
+    <string name="activity_earthquake_terms_help_dialog_fragment_tag" translatable="false">
+        activity_earthquake_terms_help_dialog_fragment_tag
+    </string>
+
+    <!-- ********** Activity Earthquake terms ********** -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->
