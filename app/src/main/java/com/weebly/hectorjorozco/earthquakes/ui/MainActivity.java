@@ -337,9 +337,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             case R.id.menu_activity_main_action_list_information:
                 showEarthquakesListInformation();
                 break;
-            case R.id.menu_activity_main_action_earthquake_terms:
-                showEarthquakeTerms();
-                break;
             case R.id.menu_activity_main_action_help:
                 break;
             case R.id.menu_activity_main_action_about:
@@ -377,12 +374,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
-    }
-
-
-    private void showEarthquakeTerms(){
-        Intent intent = new Intent(this, EarthquakesTermsActivity.class);
-        startActivity(intent);
     }
 
 

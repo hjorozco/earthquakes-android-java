@@ -6,7 +6,7 @@
     <item
         android:id="@+id/menu_activity_earthquake_details_action_earthquake_terms"
         android:icon="@drawable/ic_info_outline_white_24dp"
-        android:title="@string/menu_activity_earthquake_details_action_earthquake_terms_title"
+        android:title="@string/menu_activity_earthquake_details_action_earthquake_concepts_title"
         app:showAsAction="ifRoom" />
 
 </menu>

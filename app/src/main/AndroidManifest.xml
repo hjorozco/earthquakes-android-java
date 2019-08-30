@@ -44,8 +44,8 @@
             android:theme="@style/AppTheme"/>
 
         <activity
-            android:name=".ui.EarthquakesTermsActivity"
-            android:label="@string/activity_earthquake_terms_label"
+            android:name=".ui.EarthquakeConceptsActivity"
+            android:label="@string/activity_earthquake_concepts_label"
             android:theme="@style/AppTheme"/>
 
         <!--

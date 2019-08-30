@@ -13,8 +13,15 @@ import java.util.Date;
 
 public class MapsUtils {
 
-    public static String constructEarthquakeTitleForMarker(Earthquake earthquake, String magnitude) {
-        return magnitude + " - " + earthquake.getLocationOffset() + " " + earthquake.getLocationPrimary();
+    public static String constructEarthquakeTitleForMarker(Earthquake earthquake, String magnitude, Context context) {
+
+        String locationPrimary = earthquake.getLocationPrimary();
+        if (locationPrimary.isEmpty()){
+            locationPrimary= context.getString(R.string.activity_main_no_earthquake_location_text);
+            locationPrimary = locationPrimary.toLowerCase();
+        }
+
+        return magnitude + " - " + earthquake.getLocationOffset() + " " + locationPrimary;
     }
 
     public static String constructEarthquakeSnippetForMarker(long earthquakeTimeInMilliseconds) {
@@ -42,7 +49,7 @@ public class MapsUtils {
                 markerAttributes = new MarkerAttributes(R.drawable.ic_mag_2, 2.0f, 0.8f);
                 break;
             case 3:
-                markerAttributes = new MarkerAttributes(R.drawable.ic_mag_3, 3.0f, 0.9f);
+                markerAttributes = new MarkerAttributes(R.drawable.ic_mag_3, 3.0f, 0.8f);
                 break;
             case 4:
                 markerAttributes = new MarkerAttributes(R.drawable.ic_mag_4, 4.0f, 0.9f);
@@ -51,7 +58,7 @@ public class MapsUtils {
                 markerAttributes = new MarkerAttributes(R.drawable.ic_mag_5, 5.0f, 0.9f);
                 break;
             case 6:
-                markerAttributes = new MarkerAttributes(R.drawable.ic_mag_6, 6.0f, 1.0f);
+                markerAttributes = new MarkerAttributes(R.drawable.ic_mag_6, 6.0f, 0.9f);
                 break;
             case 7:
                 markerAttributes = new MarkerAttributes(R.drawable.ic_mag_7, 7.0f, 1.0f);

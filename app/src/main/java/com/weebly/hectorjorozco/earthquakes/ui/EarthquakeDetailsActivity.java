@@ -105,11 +105,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView locationPrimaryTextView = findViewById(R.id.activity_earthquake_details_location_primary_text_view);
         TextView dateAndTimeTextView = findViewById(R.id.activity_earthquake_details_date_and_time_text_view);
 
-        QueryUtils.EarthquakeColors earthquakeColors = QueryUtils.setupEarthquakeInformationOnViews(
+        QueryUtils.setupEarthquakeInformationOnViews(
                 this, mEarthquake, magnitudeTextView, locationOffsetTextView,
                 locationPrimaryTextView, dateAndTimeTextView, null);
-        mMagnitudeColor = earthquakeColors.getMagnitudeColor();
-        mMagnitudeBackgroundColor = earthquakeColors.getMagnitudeBackgroundColor();
+        mMagnitudeColor = getResources().getColor(R.color.colorPrimary);
+        mMagnitudeBackgroundColor = getResources().getColor(R.color.colorPrimaryLight);
 
         // If Android version is 21 or up set a transition for the elements in the top of the activity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -222,11 +222,13 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 estimatedIntensityLinearLayout.setVisibility(GONE);
             } else {
                 estimatedValueTextView.setText(romanNumerals[roundedMmi]);
+                estimatedValueTextView.setTextColor(getIntensityColor(roundedMmi));
             }
             if (roundedCdi<1){
                 reportedIntensityLinearLayout.setVisibility(GONE);
             } else {
                 reportedValueTextView.setText(romanNumerals[roundedCdi]);
+                reportedValueTextView.setTextColor(getIntensityColor(roundedCdi));
             }
         }
 
@@ -311,36 +313,108 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         feltReportsButton.setRippleColor(magnitudeBackGroundColorStateList);
         feltReportsButton.setStrokeColor(magnitudeColorStateList);
 
-        // Location views
+        // Epicenter location views
         TextView coordinatesAndDepthLabelTextView =
-                findViewById(R.id.activity_earthquake_details_coordinates_and_depth_label_text_view);
+                findViewById(R.id.activity_earthquake_details_epicenter_label_text_view);
         coordinatesAndDepthLabelTextView.setTextColor(mMagnitudeColor);
 
         TextView coordinatesValueTextView =
                 findViewById(R.id.activity_earthquake_details_coordinates_value_text_view);
 
-        double latitude, longitude;
-        String latitudeLetter, longitudeLetter;
+        double latitude, longitude, depth;
+        String coordinatesText, middleText, depthText, latitudeLetter, longitudeLetter, emptyString;
 
-        if (mEarthquake.getLatitude() < 0) {
-            latitude = mEarthquake.getLatitude() * -1;
-            latitudeLetter = getString(R.string.activity_earthquake_details_south_latitude_letter);
+        emptyString = getString(R.string.empty_string);
+        latitude = mEarthquake.getLatitude();
+        longitude = mEarthquake.getLongitude();
+        depth = mEarthquake.getDepth();
+
+        if (latitude==QueryUtils.LAT_LONG_NULL_VALUE && longitude==QueryUtils.LAT_LONG_NULL_VALUE
+                && depth==QueryUtils.DEPTH_NULL_VALUE) {
+            coordinatesValueTextView.setVisibility(GONE);
         } else {
-            latitude = mEarthquake.getLatitude();
-            latitudeLetter = getString(R.string.activity_earthquake_details_north_latitude_letter);
-        }
+            coordinatesValueTextView.setVisibility(View.VISIBLE);
+            if ((latitude!=QueryUtils.LAT_LONG_NULL_VALUE && longitude!=QueryUtils.LAT_LONG_NULL_VALUE)
+                    && depth!=QueryUtils.DEPTH_NULL_VALUE) {
+                middleText = getString(R.string.activity_earthquake_details_three_spaces_text);
+            } else {
+                middleText = emptyString;
+            }
 
-        if (mEarthquake.getLongitude() < 0) {
-            longitude = mEarthquake.getLongitude() * -1;
-            longitudeLetter = getString(R.string.activity_earthquake_details_west_longitude_letter);
-        } else {
-            longitude = mEarthquake.getLongitude();
-            longitudeLetter = getString(R.string.activity_earthquake_details_east_longitude_letter);
-        }
+            if (latitude==QueryUtils.LAT_LONG_NULL_VALUE && longitude==QueryUtils.LAT_LONG_NULL_VALUE) {
+               coordinatesText = emptyString;
+            } else {
+                if (latitude < 0) {
+                    latitude = -latitude;
+                    latitudeLetter = getString(R.string.activity_earthquake_details_south_latitude_letter);
+                } else {
+                    latitudeLetter = getString(R.string.activity_earthquake_details_north_latitude_letter);
+                }
 
-        coordinatesValueTextView.setText(getString(R.string.activity_earthquake_details_coordinates_text,
-                latitude, latitudeLetter, longitude, longitudeLetter, mEarthquake.getDepth()));
-        coordinatesValueTextView.setTextColor(mMagnitudeColor);
+                if (longitude < 0) {
+                    longitude = -longitude;
+                    longitudeLetter = getString(R.string.activity_earthquake_details_west_longitude_letter);
+                } else {
+                    longitudeLetter = getString(R.string.activity_earthquake_details_east_longitude_letter);
+                }
+                coordinatesText = getString(R.string.activity_earthquake_details_coordinates_text, latitude, latitudeLetter, longitude, longitudeLetter);
+            }
+
+            if (depth== QueryUtils.DEPTH_NULL_VALUE){
+                depthText = emptyString;
+            } else {
+                depthText =getString(R.string.activity_earthquake_details_depth_text, depth);
+            }
+
+            coordinatesValueTextView.setText(getString(R.string.activity_earthquake_details_coordinates_and_depth_text,
+                    coordinatesText, middleText, depthText));
+            coordinatesValueTextView.setTextColor(mMagnitudeColor);
+
+        }
+    }
+
+
+    private int getIntensityColor(int intensity){
+        int intensityColor=0;
+        switch(intensity){
+            case 1:
+                intensityColor = getResources().getColor(R.color.colorIntensity1);
+                break;
+            case 2:
+                intensityColor = getResources().getColor(R.color.colorIntensity2);
+                break;
+            case 3:
+                intensityColor = getResources().getColor(R.color.colorIntensity3);
+                break;
+            case 4:
+                intensityColor = getResources().getColor(R.color.colorIntensity4);
+                break;
+            case 5:
+                intensityColor = getResources().getColor(R.color.colorIntensity5);
+                break;
+            case 6:
+                intensityColor = getResources().getColor(R.color.colorIntensity6);
+                break;
+            case 7:
+                intensityColor = getResources().getColor(R.color.colorIntensity7);
+                break;
+            case 8:
+                intensityColor = getResources().getColor(R.color.colorIntensity8);
+                break;
+            case 9:
+                intensityColor = getResources().getColor(R.color.colorIntensity9);
+                break;
+            case 10:
+                intensityColor = getResources().getColor(R.color.colorIntensity10);
+                break;
+            case 11:
+                intensityColor = getResources().getColor(R.color.colorIntensity11);
+                break;
+            case 12:
+                intensityColor = getResources().getColor(R.color.colorIntensity12);
+                break;
+        }
+        return intensityColor;
     }
 
 
@@ -490,7 +564,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         googleMap.addMarker(new MarkerOptions()
                 .position(mEarthquakePosition)
-                .title(MapsUtils.constructEarthquakeTitleForMarker(mEarthquake, magnitudeToDisplay))
+                .title(MapsUtils.constructEarthquakeTitleForMarker(mEarthquake, magnitudeToDisplay, this))
                 .snippet(MapsUtils.constructEarthquakeSnippetForMarker(mEarthquake.getTimeInMilliseconds()))
                 .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
                 .anchor(0.5f, 0.5f)
@@ -529,7 +603,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 onBackPressed();
                 break;
             case R.id.menu_activity_earthquake_details_action_earthquake_terms:
-                Intent intent = new Intent(this, EarthquakesTermsActivity.class);
+                Intent intent = new Intent(this, EarthquakeConceptsActivity.class);
                 startActivity(intent);
                 break;
         }

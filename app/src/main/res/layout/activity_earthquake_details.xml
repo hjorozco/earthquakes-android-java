@@ -216,7 +216,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/activity_earthquake_details_coordinates_and_depth_label_text_view"
+                android:id="@+id/activity_earthquake_details_epicenter_label_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/application_small_margin"

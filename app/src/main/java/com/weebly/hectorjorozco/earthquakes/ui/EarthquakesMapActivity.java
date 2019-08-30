@@ -165,7 +165,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
             googleMap.addMarker(new MarkerOptions()
                     .position(earthquakePosition)
-                    .title(MapsUtils.constructEarthquakeTitleForMarker(earthquake, magnitudeToDisplay))
+                    .title(MapsUtils.constructEarthquakeTitleForMarker(earthquake, magnitudeToDisplay, this))
                     .snippet(MapsUtils.constructEarthquakeSnippetForMarker(earthquake.getTimeInMilliseconds()))
                     .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
                     .anchor(0.5f, 0.5f)

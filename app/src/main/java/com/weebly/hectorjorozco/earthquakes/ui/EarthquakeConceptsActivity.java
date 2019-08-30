@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.weebly.hectorjorozco.earthquakes.R;
-import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 
-public class EarthquakesTermsActivity extends AppCompatActivity {
+public class EarthquakeConceptsActivity extends AppCompatActivity {
 
     private static final String ARE_CONCEPTS_SHOWN_KEY = "ARE_CONCEPTS_SHOWN_KEY";
     private static final float HALF_ROTATION = 180;
@@ -21,14 +20,16 @@ public class EarthquakesTermsActivity extends AppCompatActivity {
     private static final int MAGNITUDE_SCALE_CONCEPT_INDEX = 1;
     private static final int INTENSITY_CONCEPT_INDEX = 2;
     private static final int INTENSITY_SCALE_CONCEPT_INDEX = 3;
+    private static final int ALERT_CONCEPT_INDEX = 4;
+    private static final int TSUNAMI_CONCEPT_INDEX = 5;
 
     // Used to save the status (true for visible, false for gone) of each concept.
-    private boolean[] mAreConceptsShown = new boolean[]{false, false, false, false};
+    private boolean[] mAreConceptsShown = new boolean[]{false, false, false, false, false, false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earthquake_terms);
+        setContentView(R.layout.activity_earthquake_concepts);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -39,6 +40,7 @@ public class EarthquakesTermsActivity extends AppCompatActivity {
         }
 
         setupAllEarthquakeConceptsViews();
+
     }
 
 
@@ -67,6 +69,18 @@ public class EarthquakesTermsActivity extends AppCompatActivity {
                 findViewById(R.id.activity_earthquake_terms_modified_mercalli_intensity_scale_text_view),
                 findViewById(R.id.activity_earthquake_terms_modified_mercalli_intensity_scale_title_arrow_image_view),
                 INTENSITY_SCALE_CONCEPT_INDEX);
+
+        // Alert information views
+        setupEarthquakeConceptViews(findViewById(R.id.activity_earthquake_concepts_alert_title_linear_layout),
+                findViewById(R.id.activity_earthquake_concepts_alert_text_view),
+                findViewById(R.id.activity_earthquake_concepts_alert_title_arrow_image_view),
+                ALERT_CONCEPT_INDEX);
+
+        // Alert information views
+        setupEarthquakeConceptViews(findViewById(R.id.activity_earthquake_concepts_tsunami_title_linear_layout),
+                findViewById(R.id.activity_earthquake_concepts_tsunami_text_view),
+                findViewById(R.id.activity_earthquake_concepts_tsunami_title_arrow_image_view),
+                TSUNAMI_CONCEPT_INDEX);
     }
 
 
@@ -97,19 +111,7 @@ public class EarthquakesTermsActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-
-    private void showEarthquakeTermsHelp() {
-        MessageDialogFragment messageDialogFragment =
-                MessageDialogFragment.newInstance(
-                        getString(R.string.activity_earthquake_terms_help_dialog_fragment_message),
-                        getString(R.string.menu_activity_earthquake_terms_action_help_title));
-
-        messageDialogFragment.show(getSupportFragmentManager(),
-                getString(R.string.activity_earthquake_terms_help_dialog_fragment_tag));
     }
 
 

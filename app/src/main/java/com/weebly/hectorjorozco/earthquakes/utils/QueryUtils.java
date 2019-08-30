@@ -51,6 +51,9 @@ public class QueryUtils {
     public static final byte SEARCH_RESULT_NULL = 5;
     public static final byte SEARCH_CANCELLED = 6;
 
+    public static final double LAT_LONG_NULL_VALUE = 1000;
+    public static final double DEPTH_NULL_VALUE = -1;
+
     // Used by the map activity
     public static List<Earthquake> sEarthquakesList;
     public static boolean sMoreThanMaximumNumberOfEarthquakesForMap;
@@ -109,9 +112,43 @@ public class QueryUtils {
             Geometry geometry = feature.getGeometry();
             List<Double> coordinates = geometry.getCoordinates();
 
+            // Checks for null values on place
+            String place;
+            if (properties.getPlace()==null){
+                place = "";
+            } else {
+                place = properties.getPlace();
+            }
+
+            // Checks for null values on latitude
+            double latitude;
+            if (coordinates.get(1)==null){
+                latitude = LAT_LONG_NULL_VALUE;
+            } else {
+                latitude = coordinates.get(1);
+            }
+
+            // Checks for null values on longitude
+            double longitude;
+            if (coordinates.get(0)==null){
+                longitude = LAT_LONG_NULL_VALUE;
+            } else {
+                longitude = coordinates.get(0);
+            }
+
+            // Checks for null values of longitude
+
+            // Checks for null values on depth
+            double depth;
+            if (coordinates.get(2)==null){
+                depth = DEPTH_NULL_VALUE;
+            } else {
+                depth = coordinates.get(2);
+            }
+
             // Get the place string from the earthquake feature properties, and splits it in two
             // Strings.
-            splitString = WordsUtils.splitLocation(context, properties.getPlace(), locality);
+            splitString = WordsUtils.splitLocation(context, place, locality);
 
             // Changes all the letters of the primary location String (that will be used to filter
             // the results) to lower case, removes any Spanish accents, adds a space at the
@@ -131,9 +168,9 @@ public class QueryUtils {
                         splitString[1],
                         properties.getTime(),
                         properties.getUrl(),
-                        coordinates.get(1),
-                        coordinates.get(0),
-                        coordinates.get(2),
+                        latitude,
+                        longitude,
+                        depth,
                         properties.getFelt(),
                         properties.getCdi(),
                         properties.getMmi(),
@@ -155,9 +192,9 @@ public class QueryUtils {
                             splitString[1],
                             properties.getTime(),
                             properties.getUrl(),
-                            coordinates.get(1),
-                            coordinates.get(0),
-                            coordinates.get(2),
+                            latitude,
+                            longitude,
+                            depth,
                             properties.getFelt(),
                             properties.getCdi(),
                             properties.getMmi(),
@@ -558,7 +595,7 @@ public class QueryUtils {
     }
 
 
-    public static EarthquakeColors setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
+    public static void setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
                                                          TextView locationOffsetTextView, TextView locationPrimaryTextView,
                                                          TextView dateTextView, TextView timeTextView) {
         // Set magnitude text
@@ -576,10 +613,14 @@ public class QueryUtils {
                 magnitudeColor);
         magnitudeTextView.setTextColor(magnitudeColor);
 
-        locationOffsetTextView.setText(earthquake.getLocationOffset());
-        locationOffsetTextView.setTextColor(magnitudeColor);
+        String locationPrimary = earthquake.getLocationPrimary();
+        if (locationPrimary.isEmpty()){
+            locationPrimary= context.getString(R.string.activity_main_no_earthquake_location_text);
+        }
 
-        locationPrimaryTextView.setText(earthquake.getLocationPrimary());
+        locationOffsetTextView.setText(earthquake.getLocationOffset());
+        locationPrimaryTextView.setText(locationPrimary);
+        locationOffsetTextView.setTextColor(magnitudeColor);
         locationPrimaryTextView.setTextColor(magnitudeColor);
 
         Date dateObject = new Date(earthquake.getTimeInMilliseconds());
@@ -592,8 +633,6 @@ public class QueryUtils {
             dateTextView.setText(WordsUtils.displayedDateFormatter().format(dateObject));
         }
         dateTextView.setTextColor(magnitudeColor);
-
-        return earthquakeColors;
     }
 
 
