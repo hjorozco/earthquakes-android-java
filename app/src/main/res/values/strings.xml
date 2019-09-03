@@ -203,8 +203,8 @@
     <string name="activity_earthquake_details_east_longitude_letter" translatable="false">E</string>
     <string name="activity_earthquake_details_west_longitude_letter">W</string>
 
-    <string name="activity_earthquake_details_usgs_map_type_radio_button_text">USGS map</string>
-    <string name="activity_earthquake_details_google_map_type_radio_button_text">Google map</string>
+    <string name="activity_earthquake_details_usgs_map_type_radio_button_text">USGS</string>
+    <string name="activity_earthquake_details_google_map_type_radio_button_text">Google</string>
 
     <string name="activity_earthquake_details_usgs_map_no_internet_message">
         An internet connection is needed to see the USGS map. Press here to try loading it again
@@ -227,6 +227,7 @@
     <string name="activity_earthquake_details_felt_reports_text">Felt reports</string>
     <string name="activity_earthquake_details_report_text">Report</string>
     <string name="activity_earthquake_details_epicenter_text">Epicenter</string>
+    <string name="activity_earthquake_details_open_usgs_website_button_text">Open USGS web page</string>
 
     <string name="menu_activity_earthquake_details_action_earthquake_concepts_title">
         Concepts used in earthquake details</string>

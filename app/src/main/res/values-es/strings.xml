@@ -173,6 +173,7 @@
     <string name="activity_earthquake_details_felt_reports_text">Reportes</string>
     <string name="activity_earthquake_details_report_text">Reportar</string>
     <string name="activity_earthquake_details_epicenter_text">Epicentro</string>
+    <string name="activity_earthquake_details_open_usgs_website_button_text">Ir a la página web del USGS (en inglés)</string>
 
     <string name="menu_activity_earthquake_details_action_earthquake_concepts_title">
         Concepts usados en los detalles del sismo</string>

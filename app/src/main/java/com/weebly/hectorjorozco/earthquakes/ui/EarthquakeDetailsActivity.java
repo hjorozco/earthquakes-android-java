@@ -369,7 +369,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             coordinatesValueTextView.setText(getString(R.string.activity_earthquake_details_coordinates_and_depth_text,
                     coordinatesText, middleText, depthText));
             coordinatesValueTextView.setTextColor(mMagnitudeColor);
-
         }
     }
 

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_earthquake_details_on_top_of_map_linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/application_big_margin"
+    android:layout_marginEnd="@dimen/application_big_margin"
+    android:layout_marginBottom="@dimen/application_standard_margin"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/activity_earthquake_details_intensity_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/application_small_margin"
+        android:text="@string/activity_earthquake_details_intensity_text"
+        android:textSize="@dimen/application_standard_text_size"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/activity_earthquake_details_intensity_values_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/application_standard_margin"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/activity_earthquake_details_estimated_intensity_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/activity_earthquake_details_estimated_label_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/application_small_margin"
+                android:text="@string/activity_earthquake_details_estimated_text"
+                android:textSize="@dimen/application_standard_text_size" />
+
+            <TextView
+                android:id="@+id/activity_earthquake_details_estimated_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/application_standard_margin"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/activity_earthquake_details_reported_intensity_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/activity_earthquake_details_reported_label_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/application_small_margin"
+                android:text="@string/activity_earthquake_details_reported_text"
+                android:textSize="@dimen/application_standard_text_size" />
+
+            <TextView
+                android:id="@+id/activity_earthquake_details_reported_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_earthquake_details_alert_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/application_standard_margin">
+
+        <TextView
+            android:id="@+id/activity_earthquake_details_alert_label_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/application_small_margin"
+            android:text="@string/activity_earthquake_details_alert_text"
+            android:textSize="@dimen/application_standard_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/activity_earthquake_details_alert_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/application_standard_margin"
+            android:textSize="@dimen/application_standard_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/activity_earthquake_details_tsunami_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/application_standard_margin"
+        android:text="@string/activity_earthquake_details_tsunami_text"
+        android:textSize="@dimen/application_standard_text_size"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/application_standard_margin"
+        android:layout_marginBottom="@dimen/application_standard_margin">
+
+        <TextView
+            android:id="@+id/activity_earthquake_details_felt_reports_label_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/application_small_margin"
+            android:text="@string/activity_earthquake_details_felt_reports_text"
+            android:textSize="@dimen/application_standard_text_size"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/activity_earthquake_details_felt_reports_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/application_standard_margin"
+            android:textSize="@dimen/application_standard_text_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_earthquake_details_felt_reports_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_earthquake_details_report_text"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/activity_earthquake_details_epicenter_label_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_earthquake_details_epicenter_text"
+        android:textSize="@dimen/application_standard_text_size"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/activity_earthquake_details_coordinates_value_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/application_standard_text_size"
+        tools:text="37.734°N 141.536°E - 38.6 km depth" />
+
+</LinearLayout>
