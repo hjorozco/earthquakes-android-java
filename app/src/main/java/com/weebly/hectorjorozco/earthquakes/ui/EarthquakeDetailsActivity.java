@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -193,16 +194,16 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         intensityLabelTextView.setTextColor(mMagnitudeColor);
 
         LinearLayout intensityValuesLinearLayout = findViewById(R.id.activity_earthquake_details_intensity_values_linear_layout);
-        LinearLayout estimatedIntensityLinearLayout =
-                findViewById(R.id.activity_earthquake_details_estimated_intensity_linear_layout);
+        FlexboxLayout estimatedIntensityFlexboxLayout =
+                findViewById(R.id.activity_earthquake_details_estimated_intensity_flex_box_layout);
         TextView estimatedLabelTextView =
                 findViewById(R.id.activity_earthquake_details_estimated_label_text_view);
         estimatedLabelTextView.setTextColor(mMagnitudeColor);
         TextView estimatedValueTextView =
                 findViewById(R.id.activity_earthquake_details_estimated_value_text_view);
         estimatedValueTextView.setTextColor(mMagnitudeColor);
-        LinearLayout reportedIntensityLinearLayout =
-                findViewById(R.id.activity_earthquake_details_reported_intensity_linear_layout);
+        FlexboxLayout reportedIntensityFlexboxLayout =
+                findViewById(R.id.activity_earthquake_details_reported_intensity_flex_box_layout);
         TextView reportedLabelTextView =
                 findViewById(R.id.activity_earthquake_details_reported_label_text_view);
         reportedLabelTextView.setTextColor(mMagnitudeColor);
@@ -219,13 +220,13 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             intensityValuesLinearLayout.setVisibility(GONE);
         } else {
             if (roundedMmi<1){
-                estimatedIntensityLinearLayout.setVisibility(GONE);
+                estimatedIntensityFlexboxLayout.setVisibility(GONE);
             } else {
                 estimatedValueTextView.setText(romanNumerals[roundedMmi]);
                 estimatedValueTextView.setTextColor(getIntensityColor(roundedMmi));
             }
             if (roundedCdi<1){
-                reportedIntensityLinearLayout.setVisibility(GONE);
+                reportedIntensityFlexboxLayout.setVisibility(GONE);
             } else {
                 reportedValueTextView.setText(romanNumerals[roundedCdi]);
                 reportedValueTextView.setTextColor(getIntensityColor(roundedCdi));
@@ -233,7 +234,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         }
 
         // Alert Views
-        LinearLayout alertLinearLayout = findViewById(R.id.activity_earthquake_details_alert_linear_layout);
+        FlexboxLayout alertFlexboxLayout = findViewById(R.id.activity_earthquake_details_alert_flex_box_layout);
         TextView alertLabelTextView =
                 findViewById(R.id.activity_earthquake_details_alert_label_text_view);
         alertLabelTextView.setTextColor(mMagnitudeColor);
@@ -242,7 +243,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         String alertText = mEarthquake.getAlert();
         if (alertText==null){
-            alertLinearLayout.setVisibility(GONE);
+            alertFlexboxLayout.setVisibility(GONE);
         } else {
             int alertValueTextColor = 0;
             String alertTextValueText = "";
