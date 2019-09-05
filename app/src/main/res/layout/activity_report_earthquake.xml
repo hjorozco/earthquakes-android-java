@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/activity_report_earthquake_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="@dimen/application_standard_padding"
+        android:text="@string/activity_earthquake_report_no_internet_message"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/application_small_text_size"
+        android:visibility="gone" />
+
+    <WebView
+        android:id="@+id/activity_report_earthquake_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+</FrameLayout>

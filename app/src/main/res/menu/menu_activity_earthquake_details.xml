@@ -4,9 +4,14 @@
     tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeDetailsActivity">
 
     <item
-        android:id="@+id/menu_activity_earthquake_details_action_earthquake_terms"
-        android:icon="@drawable/ic_info_outline_white_24dp"
-        android:title="@string/menu_activity_earthquake_details_action_earthquake_concepts_title"
+        android:id="@+id/menu_activity_earthquake_details_action_glossary"
+        android:icon="@drawable/ic_open_book_white_24dp"
+        android:title="@string/menu_activity_earthquake_details_action_glossary_title"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_activity_earthquake_details_action_web_page"
+        android:title="@string/menu_activity_earthquake_details_action_web_page_title"
+        app:showAsAction="never" />
 
 </menu>

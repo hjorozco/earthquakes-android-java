@@ -19,6 +19,7 @@
             android:id="@+id/activity_earthquake_details_usgs_map_no_internet_text_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="@dimen/application_standard_padding"
             android:background="@color/ultra_light_brown"
             android:focusableInTouchMode="false"
             android:gravity="center"

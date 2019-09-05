@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +52,11 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         RecyclerView.ViewHolder viewHolder;
         if (viewType == TITTLE_TYPE) {
-            viewHolder = new TitleViewHolder(LayoutInflater.from(mContext).inflate(R.layout.title_list_item, parent, false));
+            viewHolder = new TitleViewHolder(LayoutInflater.from(mContext).inflate(
+                    R.layout.title_list_item, parent, false));
         } else {
-            viewHolder = new EarthquakeViewHolder(LayoutInflater.from(mContext).inflate(R.layout.earthquake_list_item, parent, false));
+            viewHolder = new EarthquakeViewHolder(LayoutInflater.from(mContext).inflate(
+                    R.layout.earthquake_list_item, parent, false));
         }
         return viewHolder;
 
@@ -166,6 +169,17 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
             dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
             timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                magnitudeTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
+                locationOffsetTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
+                locationPrimaryTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
+                dateTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
+            }
 
             earthquakeLinearLayout.setOnClickListener((View v) ->
             {

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
-public class EarthquakeConceptsActivity extends AppCompatActivity {
+public class GlossaryActivity extends AppCompatActivity {
 
     private static final String ARE_CONCEPTS_SHOWN_KEY = "ARE_CONCEPTS_SHOWN_KEY";
     private static final float HALF_ROTATION = 180;
@@ -29,7 +29,7 @@ public class EarthquakeConceptsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earthquake_concepts);
+        setContentView(R.layout.activity_glossary);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

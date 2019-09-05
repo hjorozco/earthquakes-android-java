@@ -44,8 +44,18 @@
             android:theme="@style/AppTheme"/>
 
         <activity
-            android:name=".ui.EarthquakeConceptsActivity"
+            android:name=".ui.GlossaryActivity"
             android:label="@string/activity_earthquake_concepts_label"
+            android:theme="@style/AppTheme"/>
+
+        <activity
+            android:name=".ui.EarthquakeWebPageActivity"
+            android:label="@string/activity_earthquake_web_site_label"
+            android:theme="@style/AppTheme"/>
+
+        <activity
+            android:name=".ui.ReportEarthquakeActivity"
+            android:label="@string/activity_earthquake_report_label"
             android:theme="@style/AppTheme"/>
 
         <!--

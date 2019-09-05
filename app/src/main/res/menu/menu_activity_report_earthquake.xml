@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeDetailsActivity">
+    tools:context="com.weebly.hectorjorozco.earthquakes.ui.ReportEarthquakeActivity">
 
     <item
-        android:id="@+id/menu_activity_earthquake_terms_action_help"
+        android:id="@+id/menu_activity_report_earthquake_action_help"
         android:icon="@drawable/ic_help_outline_white_24dp"
-        android:title="@string/menu_activity_earthquake_terms_action_help_title"
+        android:title="@string/menu_activity_report_earthquake_action_help_title"
         app:showAsAction="ifRoom" />
 
 </menu>

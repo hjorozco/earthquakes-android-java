@@ -2,7 +2,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_earthquake_details_on_top_of_map_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,32 +28,6 @@
         android:orientation="vertical">
 
         <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/activity_earthquake_details_estimated_intensity_flex_box_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:alignContent="stretch"
-            app:alignItems="stretch"
-            app:flexWrap="wrap">
-
-            <TextView
-                android:id="@+id/activity_earthquake_details_estimated_label_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/application_small_margin"
-                android:text="@string/activity_earthquake_details_estimated_text"
-                android:textSize="@dimen/application_standard_text_size" />
-
-            <TextView
-                android:id="@+id/activity_earthquake_details_estimated_value_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/application_standard_margin"
-                android:textSize="@dimen/application_standard_text_size"
-                android:textStyle="bold" />
-
-        </com.google.android.flexbox.FlexboxLayout>
-
-        <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/activity_earthquake_details_reported_intensity_flex_box_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,6 +45,31 @@
 
             <TextView
                 android:id="@+id/activity_earthquake_details_reported_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/activity_earthquake_details_estimated_intensity_flex_box_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap">
+
+            <TextView
+                android:id="@+id/activity_earthquake_details_estimated_label_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/application_small_margin"
+                android:text="@string/activity_earthquake_details_estimated_text"
+                android:textSize="@dimen/application_standard_text_size" />
+
+            <TextView
+                android:id="@+id/activity_earthquake_details_estimated_value_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/application_standard_text_size"

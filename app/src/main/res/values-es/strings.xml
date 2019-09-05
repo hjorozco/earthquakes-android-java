@@ -153,8 +153,8 @@
     <string name="activity_earthquake_details_google_map_type_radio_button_text">Mapa de Google</string>
 
     <string name="activity_earthquake_details_usgs_map_no_internet_message">
-        Es necesaria una conexión a internet para ver el mapa del USGS. Presiona aquí para tratar de
-        cargarlo de nuevo o utiliza el mapa de Google.
+        No hay conexión a Internet.\n\nPresione aquí para cargar el mapa nuevamente una vez que se
+        restablezca la conexión.
     </string>
 
     <string name="activity_earthquake_details_google_map_default_type_text">Predeterminado</string>
@@ -175,15 +175,17 @@
     <string name="activity_earthquake_details_epicenter_text">Epicentro</string>
     <string name="activity_earthquake_details_open_usgs_website_button_text">Ir a la página web del USGS (en inglés)</string>
 
-    <string name="menu_activity_earthquake_details_action_earthquake_concepts_title">
-        Concepts usados en los detalles del sismo</string>
+    <string name="menu_activity_earthquake_details_action_glossary_title">Glosario</string>
+    <string name="menu_activity_earthquake_details_action_web_page_title">
+        Página web del sismo (en inglés)</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
     <!-- ********** ACTIVITY EARTHQUAKE TERMS ********** -->
 
-    <string name="activity_earthquake_concepts_label">Concepts</string>
+    <string name="activity_earthquake_concepts_label">
+        @string/menu_activity_earthquake_details_action_glossary_title</string>
 
     <string name="activity_earthquake_concepts_title_text">Conceptos usados en los detalles del sismo:
     </string>
@@ -296,7 +298,28 @@
         para mostrar su información.\n\nPresiona de nuevo para ocultarla.\n
     </string>
 
-    <!-- ********** Activity Earthquake terms ********** -->
+    <!-- ********** Activity glossary ********** -->
+
+
+    <!-- ACTIVITY EARTHQUAKE WEB SITE -->
+
+    <string name="activity_earthquake_web_site_label">Página web del sismo</string>
+
+    <!-- Activity earthquake web site -->
+
+
+    <!-- ACTIVITY EARTHQUAKE REPORT -->
+
+    <string name="activity_earthquake_report_label">Página web para reportar sismo</string>
+    <string name="activity_earthquake_report_snack_bar_text">
+        Presiona \"Select Language\" para cambiar a español</string>
+    <string name="activity_earthquake_report_no_internet_message">
+        No hay conexión a Internet.\n\nPresione aquí para cargar la página web nuevamente una vez que se
+        restablezca la conexión.
+    </string>
+    <string name="menu_activity_report_earthquake_action_help_title">Ayuda</string>
+
+    <!-- Activity earthquake report -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->

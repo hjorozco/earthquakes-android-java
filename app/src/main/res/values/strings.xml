@@ -191,12 +191,9 @@
         activity_earthquake_details_location_primary_text_view_transition</string>
     <string name="activity_earthquake_details_date_text_view_transition" translatable="false">
         activity_earthquake_details_date_text_view_transition</string>
-    <string name="activity_earthquake_details_coordinates_and_depth_text" translatable="false">%1$s%2$s%3$s</string>
     <string name="activity_earthquake_details_coordinates_text" translatable="false">
         %1$.3f\u00B0%2$s %3$.3f\u00B0%4$s
     </string>
-    <string name="activity_earthquake_details_three_spaces_text" translatable="false">
-        \u0020\u0020\u0020</string>
     <string name="activity_earthquake_details_depth_text">%1$.1f km depth</string>
     <string name="activity_earthquake_details_north_latitude_letter" translatable="false">N</string>
     <string name="activity_earthquake_details_south_latitude_letter" translatable="false">S</string>
@@ -207,8 +204,7 @@
     <string name="activity_earthquake_details_google_map_type_radio_button_text">Google</string>
 
     <string name="activity_earthquake_details_usgs_map_no_internet_message">
-        An internet connection is needed to see the USGS map. Press here to try loading it again
-        or use the Google map.
+        No internet connection.\n\nPress here to load the map again once the connection is restored.
     </string>
 
     <string name="activity_earthquake_details_google_map_default_type_text">Default</string>
@@ -229,16 +225,18 @@
     <string name="activity_earthquake_details_epicenter_text">Epicenter</string>
     <string name="activity_earthquake_details_open_usgs_website_button_text">Open USGS web page</string>
 
-    <string name="menu_activity_earthquake_details_action_earthquake_concepts_title">
-        Concepts used in earthquake details</string>
+    <string name="menu_activity_earthquake_details_action_glossary_title">Glossary</string>
+    <string name="menu_activity_earthquake_details_action_web_page_title">
+        @string/activity_earthquake_web_site_label</string>
 
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
-    <!-- ********** ACTIVITY EARTHQUAKE TERMS ********** -->
+    <!-- ********** ACTIVITY GLOSSARY ********** -->
 
-    <string name="activity_earthquake_concepts_label">Concepts</string>
+    <string name="activity_earthquake_concepts_label">
+        @string/menu_activity_earthquake_details_action_glossary_title</string>
     <string name="activity_earthquake_concepts_arrow_image_view_content_description" translatable="false">
         Arrow</string>
 
@@ -347,7 +345,26 @@
         activity_earthquake_terms_help_dialog_fragment_tag
     </string>
 
-    <!-- ********** Activity Earthquake terms ********** -->
+    <!-- ********** Activity glossary ********** -->
+
+
+    <!-- ACTIVITY EARTHQUAKE WEB SITE -->
+
+    <string name="activity_earthquake_web_site_label">Earthquake web page</string>
+
+    <!-- Activity earthquake web site -->
+
+
+    <!-- ACTIVITY EARTHQUAKE REPORT -->
+
+    <string name="activity_earthquake_report_label">Report earthquake web page</string>
+    <string name="activity_earthquake_report_snack_bar_text"/>
+    <string name="activity_earthquake_report_no_internet_message">
+        No internet connection.\n\nPress here to load the web page again once the connection is restored.
+    </string>
+    <string name="menu_activity_report_earthquake_action_help_title">Help</string>
+
+    <!-- Activity earthquake report -->
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->

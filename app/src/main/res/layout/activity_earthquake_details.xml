@@ -16,7 +16,7 @@
 
         <include layout="@layout/activity_earthquake_details_section_primary" />
 
-        <include layout="@layout/activity_earthquake_details_section_in_top_of_map" />
+        <include layout="@layout/activity_earthquake_details_section_top_of_map" />
 
         <include layout="@layout/activity_earthquake_details_section_maps" />
 

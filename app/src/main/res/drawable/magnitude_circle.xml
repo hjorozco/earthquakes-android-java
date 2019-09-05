@@ -17,7 +17,7 @@
         android:color="@android:color/darker_gray" />
 
     <size
-        android:height="44dp"
-        android:width="44dp" />
+        android:height="@dimen/earthquake_list_item_magnitude_text_view_size"
+        android:width="@dimen/earthquake_list_item_magnitude_text_view_size" />
 
 </shape>
