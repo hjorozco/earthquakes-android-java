@@ -314,8 +314,11 @@
     <string name="activity_earthquake_report_snack_bar_text">
         Presiona \"Select Language\" para cambiar a español</string>
     <string name="activity_earthquake_report_no_internet_message">
-        No hay conexión a Internet.\n\nPresione aquí para cargar la página web nuevamente una vez que se
-        restablezca la conexión.
+        No hay conexión a Internet.\n\nUna vez que se restablezca la conexión presiona aquí para
+        cargar la página web nuevamente.
+    </string>
+    <string name="activity_earthquake_report_loading_error_message">
+        Error al cargar la página web.\n\nPresiona aquí para cargarla nuevamente.
     </string>
     <string name="menu_activity_report_earthquake_action_help_title">Ayuda</string>
 

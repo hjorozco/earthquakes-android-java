@@ -360,7 +360,10 @@
     <string name="activity_earthquake_report_label">Report earthquake web page</string>
     <string name="activity_earthquake_report_snack_bar_text"/>
     <string name="activity_earthquake_report_no_internet_message">
-        No internet connection.\n\nPress here to load the web page again once the connection is restored.
+        No internet connection.\n\nOnce the connection is restored press here to load the web page again.
+    </string>
+    <string name="activity_earthquake_report_loading_error_message">
+        Error when loading the web page.\n\nPress here to load it again.
     </string>
     <string name="menu_activity_report_earthquake_action_help_title">Help</string>
 

@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="@dimen/application_standard_padding"
-        android:text="@string/activity_earthquake_report_no_internet_message"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/application_small_text_size"
         android:visibility="gone" />
