@@ -24,7 +24,6 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private WebView mWebView;
-    private boolean mError = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,12 +50,13 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
         if (QueryUtils.internetConnection(this)) {
             progressBar.setVisibility(View.VISIBLE);
             mTextView.setVisibility(GONE);
+            mWebView.setVisibility(View.GONE);
             mWebView.setWebViewClient(WebViewUtils.setupWebViewClient(
                     getString(R.string.activity_earthquake_report_loading_error_message),
                     mTextView, mWebView, progressBar));
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setDomStorageEnabled(true);
-            mWebView.loadUrl(getIntent().getStringExtra(EARTHQUAKE_URL_EXTRA_KEY) + "");
+            mWebView.loadUrl(getIntent().getStringExtra(EARTHQUAKE_URL_EXTRA_KEY));
         } else {
             mTextView.setVisibility(View.VISIBLE);
             mTextView.setText(getString(R.string.activity_earthquake_report_no_internet_message));

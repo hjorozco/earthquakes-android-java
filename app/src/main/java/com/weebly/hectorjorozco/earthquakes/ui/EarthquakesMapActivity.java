@@ -59,7 +59,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         mSharedPreferences = getSharedPreferences(
                 getString(R.string.app_shared_preferences_name), 0);
         mGoogleMapType = mSharedPreferences.getInt(getString(
-                R.string.google_map_type_shared_preference_key), GoogleMap.MAP_TYPE_NORMAL);
+                R.string.activity_earthquakes_map_google_map_type_shared_preference_key), GoogleMap.MAP_TYPE_NORMAL);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -98,6 +98,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mGoogleMapType = GoogleMap.MAP_TYPE_NORMAL;
             if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
                 mGoogleMap.setMapType(mGoogleMapType);
+                saveGoogleMapTypeOnSharedPreferences(mGoogleMapType);
             }
         });
 
@@ -105,6 +106,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mGoogleMapType = GoogleMap.MAP_TYPE_HYBRID;
             if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
                 mGoogleMap.setMapType(mGoogleMapType);
+                saveGoogleMapTypeOnSharedPreferences(mGoogleMapType);
             }
         });
 
@@ -112,6 +114,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mGoogleMapType = GoogleMap.MAP_TYPE_TERRAIN;
             if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
                 mGoogleMap.setMapType(mGoogleMapType);
+                saveGoogleMapTypeOnSharedPreferences(mGoogleMapType);
             }
         });
 
@@ -131,6 +134,14 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                                     MainActivity.MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP)),
                     Snackbar.LENGTH_LONG).show();
         }
+    }
+
+
+    private void saveGoogleMapTypeOnSharedPreferences(int googleMapType){
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(getString(R.string.activity_earthquakes_map_google_map_type_shared_preference_key),
+                googleMapType);
+        editor.apply();
     }
 
     /**
@@ -198,20 +209,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(IS_FAB_MENU_OPEN_VALUE_KEY, mIsFabMenuOpen);
-    }
-
-
-    /**
-     * When the activity is destroyed save the values of the map preferences so
-     * they can be restored when the activity is started again.
-     */
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putInt(getString(R.string.google_map_type_shared_preference_key),
-                mGoogleMapType);
-        editor.apply();
     }
 
 }

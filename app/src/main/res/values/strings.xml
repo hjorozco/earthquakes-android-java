@@ -14,8 +14,9 @@
     <!-- ********** APP SHARED PREFERENCES ********** -->
 
     <string name="app_shared_preferences_name" translatable="false">app_shared_preferences</string>
-    <string name="earthquake_details_map_type_shared_preference_key" translatable="false">map_type</string>
-    <string name="google_map_type_shared_preference_key" translatable="false">google_map_type</string>
+    <string name="activity_earthquake_details_map_type_shared_preference_key" translatable="false">activity_earthquake_details_map_type</string>
+    <string name="activity_earthquake_details_google_map_type_shared_preference_key" translatable="false">activity_earthquake_details_google_map_type</string>
+    <string name="activity_earthquakes_map_google_map_type_shared_preference_key" translatable="false">activity_earthquakes_map_google_map_type</string>
 
     <!-- ********** APP SHARED PREFERENCES ********** -->
 
@@ -200,11 +201,15 @@
     <string name="activity_earthquake_details_east_longitude_letter" translatable="false">E</string>
     <string name="activity_earthquake_details_west_longitude_letter">W</string>
 
-    <string name="activity_earthquake_details_usgs_map_type_radio_button_text">USGS</string>
-    <string name="activity_earthquake_details_google_map_type_radio_button_text">Google</string>
+    <string name="activity_earthquake_details_usgs_map_type_radio_button_text" translatable="false">USGS</string>
+    <string name="activity_earthquake_details_google_map_type_radio_button_text" translatable="false">Google</string>
 
     <string name="activity_earthquake_details_usgs_map_no_internet_message">
-        No internet connection.\n\nPress here to load the map again once the connection is restored.
+        No internet connection.\n\nOnce the connection is restored press here to load the USGS map again.
+    </string>
+
+    <string name="activity_earthquake_details_usgs_map_loading_error_message">
+        Error when loading the USGS map.\n\nPress here to load it again.
     </string>
 
     <string name="activity_earthquake_details_google_map_default_type_text">Default</string>
@@ -212,8 +217,34 @@
     <string name="activity_earthquake_details_google_map_terrain_type_text">Terrain</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensity</string>
+    <string name="activity_earthquake_details_magnitude_intensity_comparison_message">
+        &lt;br/&gt;Magnitude and intensity measure different characteristics of earthquakes.&lt;br/&gt;&lt;br/&gt;
+        &lt;b>Magnitude&lt;/b> measures the energy released at the source of the earthquake and is
+        determined from measurements on seismographs.&lt;br/&gt;&lt;br/&gt;&lt;b>Intensity&lt;/b> measures the
+        strength of shaking produced by the earthquake at a certain location and is determined from
+        effects on people, human structures, and the natural environment.&lt;br/&gt;</string>
+    <string name="activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_title">
+        Magnitude / Intensity Comparison
+    </string>
+    <string name="activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_tag" translatable="false">
+        activity_earthquake_details_magnitude_intensity_comparison_message_dialog_fragment_tag
+    </string>
     <string name="activity_earthquake_details_estimated_text">Estimated intensity</string>
     <string name="activity_earthquake_details_reported_text">Reported intensity</string>
+    <string-array name="activity_earthquake_details_roman_numerals">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+        <item>VI</item>
+        <item>VII</item>
+        <item>VIII</item>
+        <item>IX</item>
+        <item>X</item>
+        <item>XI</item>
+        <item>XII</item>
+    </string-array>
     <string name="activity_earthquake_details_alert_text">Alert</string>
     <string name="activity_earthquake_details_green_text">GREEN</string>
     <string name="activity_earthquake_details_yellow_text">YELLOW</string>
@@ -229,6 +260,36 @@
     <string name="menu_activity_earthquake_details_action_web_page_title">
         @string/activity_earthquake_web_site_label</string>
 
+    <string-array name="activity_earthquake_details_magnitude_information_array">
+        <item>&lt;br/&gt;&lt;b>Micro earthquake&lt;/b>. Not felt. Recorded only by seismographs.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Micro earthquake&lt;/b>. Not felt, or felt rarely. Recorded by seismographs.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Minor earthquake&lt;/b>. Felt slightly by some people. No damage to buildings.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Minor earthquake&lt;/b>. Often felt by people, but very rarely causes damage. Shaking of indoor
+        objects can be noticeable.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Light earthquake&lt;/b>. Noticeable shaking of indoor objects and rattling noises. Felt by most
+        people in the affected area. Slightly felt outside. Generally causes none to minimal damage.
+        Moderate to significant damage very unlikely. Some objects may fall off shelves or be knocked
+        over.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Moderate earthquake&lt;/b>. Can cause damage of varying severity to poorly constructed buildings.
+        At most, none to slight damage to all other buildings. Felt by everyone.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Strong earthquake&lt;/b>. Damage to a moderate number of well-built structures in populated
+        areas. Earthquake-resistant structures survive with slight to moderate damage. Poorly designed
+        structures receive moderate to severe damage. Felt in wider areas; up to hundreds of
+        miles/kilometers from the epicenter. Strong to violent shaking in epicentral area.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Major earthquake&lt;/b>. Causes damage to most buildings, some partially or completely collapse
+        or receive severe damage. Well-designed structures are likely to receive damage. Felt across
+        great distances with major damage mostly limited to 250 km from epicenter.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Great earthquake&lt;/b>. Major damage to buildings, structures likely to be destroyed. Will
+        cause moderate to heavy damage to sturdy or earthquake-resistant buildings. Damaging in
+        large areas. Felt in extremely large regions.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Great earthquake&lt;/b>. At or near total destruction – severe damage or collapse to all buildings. Heavy
+        damage and shaking extends to distant locations. Permanent changes in ground topography.&lt;br/&gt;</item>
+    </string-array>
+    <string name="activity_earthquake_details_magnitude_information_dialog_fragment_title">
+        Magnitude %1$s on Richter scale</string>
+    <string name="activity_earthquake_details_magnitude_information_dialog_fragment_tag" translatable="false">
+        activity_earthquake_details_magnitude_information_dialog_fragment_tag
+    </string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
@@ -253,7 +314,9 @@
 
     <string name="activity_earthquake_concepts_richter_magnitude_scale_title">Magnitude scale - Richter</string>
     <string name="activity_earthquake_concepts_richter_magnitude_scale_text">
-        1.0–1.9 (Micro). Microearthquake, not felt, or felt rarely. Recorded by seismographs.
+        0.0-0.9 (Micro). Microearthquake. Not felt. Recorded only by seismographs.
+        Continual/several million per year.
+        \n\n1.0–1.9 (Micro). Microearthquake, not felt, or felt rarely. Recorded by seismographs.
         Continual/several million per year.
         \n\n2.0–2.9 (Minor). Felt slightly by some people. No damage to buildings. Over one million per year.
         \n\n3.0–3.9 (Minor). Often felt by people, but very rarely causes damage. Shaking of indoor
@@ -275,9 +338,9 @@
         great distances with major damage mostly limited to 250 km from epicenter. 10 to 20 per year.
         \n\n8.0–8.9 (Great). Major damage to buildings, structures likely to be destroyed. Will
         cause moderate to heavy damage to sturdy or earthquake-resistant buildings. Damaging in
-        large areas. Felt in extremely large regions. One per year.
+        large areas. Felt in extremely large regions. On average, one per year.
         \n\n9.0 and greater (Great). At or near total destruction – severe damage or collapse to all buildings. Heavy
-        damage and shaking extends to distant locations. Permanent changes in ground topography. One
+        damage and shaking extends to distant locations. Permanent changes in ground topography. On average, one
         per 10 to 50 years.
     </string>
 
@@ -357,8 +420,8 @@
 
     <!-- ACTIVITY EARTHQUAKE REPORT -->
 
-    <string name="activity_earthquake_report_label">Report earthquake web page</string>
-    <string name="activity_earthquake_report_snack_bar_text"/>
+    <string name="activity_earthquake_report_label">Report earthquake</string>
+    <string name="activity_earthquake_report_snack_bar_text" />
     <string name="activity_earthquake_report_no_internet_message">
         No internet connection.\n\nOnce the connection is restored press here to load the web page again.
     </string>

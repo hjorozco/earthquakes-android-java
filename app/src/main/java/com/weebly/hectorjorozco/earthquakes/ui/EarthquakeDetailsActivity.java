@@ -6,16 +6,16 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -35,8 +35,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.utils.MapsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.WebViewUtils;
 
 import java.text.DecimalFormat;
 
@@ -69,9 +71,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private boolean mRotation = false;
     private boolean mIsFabMenuOpen = false;
 
-    private String[] romanNumerals = new String[]
-            {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,15 +95,17 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mSharedPreferences = getSharedPreferences(
                 getString(R.string.app_shared_preferences_name), 0);
         mGoogleMapType = mSharedPreferences.getInt(getString(
-                R.string.google_map_type_shared_preference_key), GoogleMap.MAP_TYPE_NORMAL);
+                R.string.activity_earthquake_details_google_map_type_shared_preference_key), GoogleMap.MAP_TYPE_NORMAL);
         mIsGoogleMap = mSharedPreferences.getBoolean(getString(
-                R.string.earthquake_details_map_type_shared_preference_key), true);
+                R.string.activity_earthquake_details_map_type_shared_preference_key), true);
 
         // Sets up the views that will be animated on entry and exit for Android versions 21 or up
         TextView magnitudeTextView = findViewById(R.id.activity_earthquake_details_magnitude_text_view);
         TextView locationOffsetTextView = findViewById(R.id.activity_earthquake_details_location_offset_text_view);
         TextView locationPrimaryTextView = findViewById(R.id.activity_earthquake_details_location_primary_text_view);
         TextView dateAndTimeTextView = findViewById(R.id.activity_earthquake_details_date_and_time_text_view);
+
+        magnitudeTextView.setOnClickListener(v -> showMagnitudeMessage());
 
         QueryUtils.setupEarthquakeInformationOnViews(
                 this, mEarthquake, magnitudeTextView, locationOffsetTextView,
@@ -192,6 +193,12 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView intensityLabelTextView =
                 findViewById(R.id.activity_earthquake_details_intensity_label_text_view);
         intensityLabelTextView.setTextColor(mMagnitudeColor);
+        intensityLabelTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMagnitudeIntensityMessage();
+            }
+        });
 
         LinearLayout intensityValuesLinearLayout = findViewById(R.id.activity_earthquake_details_intensity_values_linear_layout);
         FlexboxLayout estimatedIntensityFlexboxLayout =
@@ -211,24 +218,25 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 findViewById(R.id.activity_earthquake_details_reported_value_text_view);
         reportedValueTextView.setTextColor(mMagnitudeColor);
 
-        Log.d("TESTING", "Estimated " + mEarthquake.getMmi() + " - Reported " + mEarthquake.getCdi() + " - Alert " + mEarthquake.getAlert() + " - Tsunami " + mEarthquake.getTsunami() + " - Felt " + mEarthquake.getFelt());
-
         int roundedMmi = (int) Math.round(mEarthquake.getMmi());
         int roundedCdi = (int) Math.round(mEarthquake.getCdi());
+
         if (roundedMmi < 1 && roundedCdi < 1) {
             intensityLabelTextView.setVisibility(GONE);
             intensityValuesLinearLayout.setVisibility(GONE);
         } else {
+            String[] romanNumerals =
+                    getResources().getStringArray(R.array.activity_earthquake_details_roman_numerals);
             if (roundedMmi < 1) {
                 estimatedIntensityFlexboxLayout.setVisibility(GONE);
             } else {
-                estimatedValueTextView.setText(romanNumerals[roundedMmi]);
+                estimatedValueTextView.setText(romanNumerals[roundedMmi-1]);
                 estimatedValueTextView.setTextColor(getIntensityColor(roundedMmi));
             }
             if (roundedCdi < 1) {
                 reportedIntensityFlexboxLayout.setVisibility(GONE);
             } else {
-                reportedValueTextView.setText(romanNumerals[roundedCdi]);
+                reportedValueTextView.setText(romanNumerals[roundedCdi-1]);
                 reportedValueTextView.setTextColor(getIntensityColor(roundedCdi));
             }
         }
@@ -425,7 +433,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         mUsgsMapNoInternetTextView.setOnClickListener(v -> showUsgsMap());
 
+
         mMapTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
             if (checkedId == R.id.activity_earthquake_details_google_map_type_radio_button) {
                 showGoogleMap();
                 mIsGoogleMap = true;
@@ -434,6 +444,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 showUsgsMap();
                 mIsGoogleMap = false;
             }
+            editor.putBoolean(getString(R.string.activity_earthquake_details_map_type_shared_preference_key),
+                    mIsGoogleMap);
+            editor.apply();
         });
     }
 
@@ -476,6 +489,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             mGoogleMapType = GoogleMap.MAP_TYPE_NORMAL;
             if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
                 mGoogleMap.setMapType(mGoogleMapType);
+                saveGoogleMapTypeOnSharedPreferences(mGoogleMapType);
             }
         });
 
@@ -483,6 +497,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             mGoogleMapType = GoogleMap.MAP_TYPE_HYBRID;
             if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
                 mGoogleMap.setMapType(mGoogleMapType);
+                saveGoogleMapTypeOnSharedPreferences(mGoogleMapType);
             }
         });
 
@@ -490,6 +505,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             mGoogleMapType = GoogleMap.MAP_TYPE_TERRAIN;
             if (mGoogleMap != null && mGoogleMap.getMapType() != mGoogleMapType) {
                 mGoogleMap.setMapType(mGoogleMapType);
+                saveGoogleMapTypeOnSharedPreferences(mGoogleMapType);
             }
         });
 
@@ -501,23 +517,43 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
+    private void saveGoogleMapTypeOnSharedPreferences(int googleMapType) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(getString(R.string.activity_earthquake_details_google_map_type_shared_preference_key),
+                googleMapType);
+        editor.apply();
+    }
+
+
     @SuppressLint("SetJavaScriptEnabled")
     private void showUsgsMap() {
         mUsgsMapFrameLayout.setVisibility(View.VISIBLE);
         mGoogleMapFrameLayout.setVisibility(GONE);
-        if (!QueryUtils.internetConnection(this)) {
-            mUsgsMapWebView.setVisibility(GONE);
-            mUsgsMapNoInternetTextView.setVisibility(View.VISIBLE);
-        } else {
+
+        ProgressBar progressBar = findViewById(R.id.activity_earthquake_details_usgs_map_progress_bar);
+
+        if (QueryUtils.internetConnection(this)) {
+            progressBar.setVisibility(View.VISIBLE);
             mUsgsMapNoInternetTextView.setVisibility(GONE);
-            mUsgsMapWebView.setVisibility(View.VISIBLE);
+            mUsgsMapWebView.setVisibility(GONE);
             if (!mUsgsMapLoaded) {
+                mUsgsMapWebView.setWebViewClient(WebViewUtils.setupWebViewClient(
+                        getString(R.string.activity_earthquake_details_usgs_map_loading_error_message),
+                        mUsgsMapNoInternetTextView, mUsgsMapWebView, progressBar));
                 mUsgsMapWebView.getSettings().setJavaScriptEnabled(true);
                 mUsgsMapWebView.getSettings().setDomStorageEnabled(true);
-                mUsgsMapWebView.setWebChromeClient(new WebChromeClient());
                 mUsgsMapWebView.loadUrl(mEarthquake.getUrl() + "/map");
                 mUsgsMapLoaded = true;
+            } else {
+                mUsgsMapWebView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(GONE);
             }
+        } else {
+            mUsgsMapNoInternetTextView.setVisibility(View.VISIBLE);
+            mUsgsMapNoInternetTextView.setText(getString(R.string.activity_earthquake_details_usgs_map_no_internet_message));
+            mUsgsMapWebView.setVisibility(GONE);
+            progressBar.setVisibility(GONE);
+
         }
     }
 
@@ -572,7 +608,34 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         } else if (!mRotation) {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mEarthquakePosition, 6.7f));
         }
+    }
 
+
+    private void showMagnitudeMessage() {
+
+        String magnitudeText = QueryUtils.getMagnitudeText(mEarthquake.getMagnitude());
+        int magnitude = (int) Double.parseDouble(magnitudeText);
+
+        String[] magnitudeMessages = getResources().getStringArray(R.array.activity_earthquake_details_magnitude_information_array);
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        Html.fromHtml(magnitudeMessages[magnitude]),
+                        getString(R.string.activity_earthquake_details_magnitude_information_dialog_fragment_title, magnitudeText));
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
+    }
+
+
+    private void showMagnitudeIntensityMessage(){
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        Html.fromHtml(getString(
+                                R.string.activity_earthquake_details_magnitude_intensity_comparison_message)),
+                        getString(R.string.activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_title));
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_tag));
     }
 
 
@@ -599,8 +662,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 break;
             case R.id.menu_activity_earthquake_details_action_web_page:
                 showEarthquakeWebSiteActivity();
-//                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEarthquake.getUrl()));
-//                startActivity(websiteIntent);
                 break;
         }
 
@@ -608,16 +669,16 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void showEarthquakeWebSiteActivity(){
+    private void showEarthquakeWebSiteActivity() {
         Intent intent = new Intent(this, EarthquakeWebPageActivity.class);
         intent.putExtra(EarthquakeWebPageActivity.EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl());
         startActivity(intent);
     }
 
 
-    private void showReportEarthquakeActivity(){
+    private void showReportEarthquakeActivity() {
         Intent intent = new Intent(this, ReportEarthquakeActivity.class);
-        intent.putExtra(ReportEarthquakeActivity.REPORT_EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl()+"/tellus");
+        intent.putExtra(ReportEarthquakeActivity.REPORT_EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl() + "/tellus");
         startActivity(intent);
     }
 
@@ -626,21 +687,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(IS_FAB_MENU_OPEN_VALUE_KEY, mIsFabMenuOpen);
-    }
-
-    /**
-     * When the activity is destroyed save the values of the map preferences so
-     * they can be restored when the activity is started again.
-     */
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putInt(getString(R.string.google_map_type_shared_preference_key),
-                mGoogleMapType);
-        editor.putBoolean(getString(R.string.earthquake_details_map_type_shared_preference_key),
-                mIsGoogleMap);
-        editor.apply();
     }
 }
 

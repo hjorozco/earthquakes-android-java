@@ -2,11 +2,13 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,7 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.WebViewUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
+
+import static android.view.View.GONE;
 
 public class ReportEarthquakeActivity extends AppCompatActivity {
 
@@ -44,16 +49,23 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void showReportEarthquakeWebsite() {
+        ProgressBar progressBar = findViewById(R.id.activity_report_earthquake_progress_bar);
+
         if (QueryUtils.internetConnection(this)) {
+            progressBar.setVisibility(View.VISIBLE);
             mTextView.setVisibility(View.GONE);
-            mWebView.setVisibility(View.VISIBLE);
-            mWebView.setWebChromeClient(new WebChromeClient());
+            mWebView.setVisibility(View.GONE);
+            mWebView.setWebViewClient(WebViewUtils.setupWebViewClient(
+                    getString(R.string.activity_earthquake_report_loading_error_message),
+                    mTextView, mWebView, progressBar));
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setDomStorageEnabled(true);
             mWebView.loadUrl(getIntent().getStringExtra(REPORT_EARTHQUAKE_URL_EXTRA_KEY));
         } else {
             mTextView.setVisibility(View.VISIBLE);
+            mTextView.setText(getString(R.string.activity_earthquake_report_no_internet_message));
             mWebView.setVisibility(View.GONE);
+            progressBar.setVisibility(GONE);
         }
     }
 
@@ -72,10 +84,25 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
                 showHelpSnackBar();
                 break;
             case android.R.id.home:
-                onBackPressed();
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();
+                } else {
+                    onBackPressed();
+                }
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+            mWebView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
     private void showHelpSnackBar() {
         Snackbar.make(findViewById(android.R.id.content),

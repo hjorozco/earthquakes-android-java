@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2016 Hector J. Orozco -->
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 Hector J. Orozco -->
 <resources>
 
     <!-- ********** APP ********** -->
@@ -149,12 +148,12 @@
     <string name="activity_earthquake_details_label">Detalles del sismo</string>
     <string name="activity_earthquake_details_depth_text">%1$.1f km de profundidad</string>
     <string name="activity_earthquake_details_west_longitude_letter">O</string>
-    <string name="activity_earthquake_details_usgs_map_type_radio_button_text">Mapa del USGS</string>
-    <string name="activity_earthquake_details_google_map_type_radio_button_text">Mapa de Google</string>
 
     <string name="activity_earthquake_details_usgs_map_no_internet_message">
-        No hay conexión a Internet.\n\nPresione aquí para cargar el mapa nuevamente una vez que se
-        restablezca la conexión.
+        No hay conexión a Internet.\n\nUna vez que se restablezca la conexión presione aquí para cargar el mapa de USGS nuevamente.
+    </string>
+    <string name="activity_earthquake_details_usgs_map_loading_error_message">
+        Error al cargar el mapa de USGS.\n\nPresione aquí para cargarlo nuevamente.
     </string>
 
     <string name="activity_earthquake_details_google_map_default_type_text">Predeterminado</string>
@@ -162,6 +161,15 @@
     <string name="activity_earthquake_details_google_map_terrain_type_text">Relieve</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensidad</string>
+    <string name="activity_earthquake_details_magnitude_intensity_comparison_message">
+        &lt;br/&gt;La magnitud y la intensidad miden diferentes características de los sismos.&lt;br/&gt;&lt;br/&gt;
+        La &lt;b>magnitud&lt;/b> mide la energía liberada en el origen del terremoto y se determina a
+        partir de mediciones en sismógrafos.&lt;br/&gt;&lt;br/&gt;La &lt;b>intensidad&lt;/b> mide la fuerza de las
+        sacudidas producidas por el terremoto en un lugar determinado y se determina a partir de sus
+        efectos sobre las personas, las construcciones y el medio ambiente natural.&lt;br/&gt;</string>
+    <string name="activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_title">
+        Comparación de Magnitud e Intensidad
+    </string>
     <string name="activity_earthquake_details_estimated_text">Estimada</string>
     <string name="activity_earthquake_details_reported_text">Reportada</string>
     <string name="activity_earthquake_details_alert_text">Alerta</string>
@@ -178,6 +186,38 @@
     <string name="menu_activity_earthquake_details_action_glossary_title">Glosario</string>
     <string name="menu_activity_earthquake_details_action_web_page_title">
         Página web del sismo (en inglés)</string>
+
+    <string-array name="activity_earthquake_details_magnitude_information_array">
+        <item>&lt;br/&gt;&lt;b>Micro sismo&lt;/b>. No se siente. Es registrado solo por sismógrafos.&lt;br/&gt;</item>
+        <item>Micro sismo, no se siente, o se siente raramente. Es registrado por
+        sismógrafos.</item>
+        <item>Menor. Algunas personas lo sienten un poco. Sin daños a edificios.</item>
+        <item>Menor. A menudo lo sienten las personas, pero rara vez causa daños. La sacudida
+        de objetos dentro de edificios puede ser notable.</item>
+        <item>Leve. Sacudida notable de objetos dentro de edifiios y ruidos notables.
+        Sentido por la mayoría de las personas en el área afectada. Ligeramente sentido fuera de esa
+        área. Generalmente no causa daños o produce daños mínimos. Daño moderado a significativo muy
+        improbable. Algunos objetos pueden caerse de sus estantes o volcarse.</item>
+        <item>Moderado. Puede causar daños de diversa gravedad a edificios mal construidos.
+        No daños o daños leves a todos los demás edificios. Sentido por todas las personas.</item>
+        <item>Fuerte. Daño a un número moderado de estructuras bien construidas en zonas
+        pobladas. Las estructuras resistentes a sismos sobreviven con daños leves a moderados. Las
+        estructuras mal diseñadas reciben daños moderados a severos. Se siente en áreas más amplias;
+        hasta cientos de millas / kilómetros del epicentro. Genera sacudidas fuertes a violentas en
+        el área epicentral.</item>
+        <item>Mayor. Causa daños a la mayoría de los edificios, algunos colapsan parcialmente,
+        completamente o reciben daños severos. Es probable que las estructuras bien diseñadas
+        tengan daños. Se siente a grandes distancias con daños mayores limitados principalmente a 250
+        km del epicentro.</item>
+        <item>Enorme. Daños importantes a edificios, estructuras probablemente son destruidas.
+        Causará daños moderados a fuertes en edificios robustos o resistentes a sismos. Daños en
+        grandes áreas. Se siente en regiones muy grandes.</item>
+        <item>Enorme. Destrucción total o casi total - daños graves o colapso de todos los
+        edificios. Grandes daños y sacudidas se extienden a lugares distantes. Cambios permanentes
+        en la topografía del suelo.</item>
+    </string-array>
+    <string name="activity_earthquake_details_magnitude_information_dialog_fragment_title">
+        Magnitud %1$s en la escala de Richter</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
@@ -200,7 +240,9 @@
 
     <string name="activity_earthquake_concepts_richter_magnitude_scale_title">Escala de magnitud de Richter</string>
     <string name="activity_earthquake_concepts_richter_magnitude_scale_text">
-        1.0–1.9 (Micro). Micro sismo, no se siente, o se siente raramente. Es registrado por
+        0.0–0.9 (Micro) Micro sismo. No se siente. Es registrado solo por sismógrafos.
+        Continuos/varios millones por año.
+        \n\n1.0–1.9 (Micro). Micro sismo, no se siente, o se siente raramente. Es registrado por
         sismógrafos. Continuos/varios millones por año.
         \n\n2.0–2.9 (Menor). Algunas personas lo sienten un poco. Sin daños a edificios. Más de un
         millón por año.
@@ -224,10 +266,10 @@
         km del epicentro. 10 a 20 por año.
         \n\n8.0–8.9 (Enorme). Daños importantes a edificios, estructuras probablemente son destruidas.
         Causará daños moderados a fuertes en edificios robustos o resistentes a sismos. Daños en
-        grandes áreas. Se siente en regiones muy grandes. Uno por año.
+        grandes áreas. Se siente en regiones muy grandes. En promedio, uno por año.
         \n\n9.0 y más (Enorme). Destrucción total o casi total - daños graves o colapso de todos los
         edificios. Grandes daños y sacudidas se extienden a lugares distantes. Cambios permanentes
-        en la topografía del suelo. Uno cada 10 a 50 años.
+        en la topografía del suelo. En promedio, uno cada 10 a 50 años.
     </string>
 
     <string name="activity_earthquake_concepts_intensity_title">Intensidad</string>
@@ -310,7 +352,7 @@
 
     <!-- ACTIVITY EARTHQUAKE REPORT -->
 
-    <string name="activity_earthquake_report_label">Página web para reportar sismo</string>
+    <string name="activity_earthquake_report_label">Reportar sismo</string>
     <string name="activity_earthquake_report_snack_bar_text">
         Presiona \"Select Language\" para cambiar a español</string>
     <string name="activity_earthquake_report_no_internet_message">

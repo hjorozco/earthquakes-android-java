@@ -496,7 +496,7 @@ public class QueryUtils {
 
 
     // Helper method that rounds a double to only one decimal place and converts it to a String
-    private static String getMagnitudeText(double magnitude) {
+    public static String getMagnitudeText(double magnitude) {
         int scale = (int) Math.pow(10, 1);
         double roundedMagnitude = (double) Math.round(magnitude * scale) / scale;
         String magnitudeText = new DecimalFormat("0.0").format(roundedMagnitude);
