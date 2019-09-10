@@ -4,14 +4,28 @@
     tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeDetailsActivity">
 
     <item
-        android:id="@+id/menu_activity_earthquake_details_action_glossary"
-        android:icon="@drawable/ic_open_book_white_24dp"
-        android:title="@string/menu_activity_earthquake_details_action_glossary_title"
+        android:id="@+id/menu_activity_earthquake_details_action_favorites"
+        android:icon="@drawable/ic_star_border_white_24dp"
+        android:title="@string/menu_activity_earthquake_details_action_add_to_favorites_title"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_activity_earthquake_details_action_web_page"
         android:title="@string/menu_activity_earthquake_details_action_web_page_title"
         app:showAsAction="never" />
+
+    <group android:id="@+id/menu_activity_earthquake_details_help_group">
+
+        <item
+            android:id="@+id/menu_activity_earthquake_details_action_glossary"
+            android:title="@string/menu_activity_earthquake_details_action_glossary_title"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_activity_earthquake_details_action_help"
+            android:title="@string/menu_activity_earthquake_details_action_information_title"
+            app:showAsAction="never" />
+
+    </group>
 
 </menu>

@@ -161,14 +161,20 @@
     <string name="activity_earthquake_details_google_map_terrain_type_text">Relieve</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensidad</string>
-    <string name="activity_earthquake_details_magnitude_intensity_comparison_message">
-        &lt;br/&gt;La magnitud y la intensidad miden diferentes características de los sismos.&lt;br/&gt;&lt;br/&gt;
-        La &lt;b>magnitud&lt;/b> mide la energía liberada en el origen del terremoto y se determina a
+    <string name="activity_earthquake_details_information_message">
+        &lt;br/&gt;Presiona la &lt;i>magnitud&lt;/i> (en el círculo de color), las &lt;i>intensidades&lt;/i> o
+        la &lt;i>alerta&lt;/i> para ver una descripción de las mismas. No todos los sismos tendrán
+        información de intensidades o alerta. Un mensaje de &lt;i>posible tsunami&lt;/i> es generado
+        solamente por sismos fuertes en regiones oceánicas. No indica que un tsunami realmente
+        sucedió o sucederá.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;La &lt;i>magnitud&lt;/i> y la &lt;i>intensidad&lt;/i> miden diferentes
+        características de los sismos.&lt;br/&gt;&lt;br/&gt;La &lt;b>magnitud&lt;/b> mide la energía liberada en el origen del terremoto y se determina a
         partir de mediciones en sismógrafos.&lt;br/&gt;&lt;br/&gt;La &lt;b>intensidad&lt;/b> mide la fuerza de las
-        sacudidas producidas por el terremoto en un lugar determinado y se determina a partir de sus
-        efectos sobre las personas, las construcciones y el medio ambiente natural.&lt;br/&gt;</string>
-    <string name="activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_title">
-        Comparación de Magnitud e Intensidad
+        sacudidas producidas por el terremoto en un lugar específico y se determina a partir de sus
+        efectos sobre las personas, las construcciones y el medio ambiente natural. La intensidad
+        estimada se genera con datos recopilados por instrumentos. La intensidad reportada se genera
+        con datos proporcionados por personas que reportan el sismo.&lt;br/&gt;</string>
+    <string name="activity_earthquake_details_information_dialog_fragment_title">
+        @string/menu_activity_earthquake_details_action_information_title
     </string>
     <string name="activity_earthquake_details_estimated_text">Estimada</string>
     <string name="activity_earthquake_details_reported_text">Reportada</string>
@@ -183,41 +189,95 @@
     <string name="activity_earthquake_details_epicenter_text">Epicentro</string>
     <string name="activity_earthquake_details_open_usgs_website_button_text">Ir a la página web del USGS (en inglés)</string>
 
+    <string name="menu_activity_earthquake_details_action_add_to_favorites_title">Agregar a favoritos</string>
+    <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Remover de favoritos</string>
+    <string name="menu_activity_earthquake_details_action_information_title">Ayuda</string>
     <string name="menu_activity_earthquake_details_action_glossary_title">Glosario</string>
     <string name="menu_activity_earthquake_details_action_web_page_title">
         Página web del sismo (en inglés)</string>
 
     <string-array name="activity_earthquake_details_magnitude_information_array">
         <item>&lt;br/&gt;&lt;b>Micro sismo&lt;/b>. No se siente. Es registrado solo por sismógrafos.&lt;br/&gt;</item>
-        <item>Micro sismo, no se siente, o se siente raramente. Es registrado por
-        sismógrafos.</item>
-        <item>Menor. Algunas personas lo sienten un poco. Sin daños a edificios.</item>
-        <item>Menor. A menudo lo sienten las personas, pero rara vez causa daños. La sacudida
-        de objetos dentro de edificios puede ser notable.</item>
-        <item>Leve. Sacudida notable de objetos dentro de edifiios y ruidos notables.
+        <item>&lt;br/&gt;&lt;b>Micro sismo&lt;/b>. No se siente, o se siente raramente. Es registrado por
+        sismógrafos.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo menor&lt;/b>. Algunas personas lo sienten un poco. Sin daños a edificios.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo menor&lt;/b>. A menudo lo sienten las personas, pero rara vez causa daños. La sacudida
+        de objetos dentro de edificios puede ser notable.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo leve&lt;/b>. Sacudida notable de objetos dentro de edifiios y ruidos notables.
         Sentido por la mayoría de las personas en el área afectada. Ligeramente sentido fuera de esa
         área. Generalmente no causa daños o produce daños mínimos. Daño moderado a significativo muy
-        improbable. Algunos objetos pueden caerse de sus estantes o volcarse.</item>
-        <item>Moderado. Puede causar daños de diversa gravedad a edificios mal construidos.
-        No daños o daños leves a todos los demás edificios. Sentido por todas las personas.</item>
-        <item>Fuerte. Daño a un número moderado de estructuras bien construidas en zonas
+        improbable. Algunos objetos pueden caerse de sus estantes o volcarse.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo moderado&lt;/b>. Puede causar daños de diversa gravedad a edificios mal construidos.
+        No daños o daños leves a todos los demás edificios. Sentido por todas las personas.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo fuerte&lt;/b>. Daño a un número moderado de estructuras bien construidas en zonas
         pobladas. Las estructuras resistentes a sismos sobreviven con daños leves a moderados. Las
         estructuras mal diseñadas reciben daños moderados a severos. Se siente en áreas más amplias;
         hasta cientos de millas / kilómetros del epicentro. Genera sacudidas fuertes a violentas en
-        el área epicentral.</item>
-        <item>Mayor. Causa daños a la mayoría de los edificios, algunos colapsan parcialmente,
+        el área epicentral.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo mayor&lt;/b>. Causa daños a la mayoría de los edificios, algunos colapsan parcialmente,
         completamente o reciben daños severos. Es probable que las estructuras bien diseñadas
         tengan daños. Se siente a grandes distancias con daños mayores limitados principalmente a 250
-        km del epicentro.</item>
-        <item>Enorme. Daños importantes a edificios, estructuras probablemente son destruidas.
+        km del epicentro.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo enorme&lt;/b>. Daños importantes a edificios, estructuras probablemente son destruidas.
         Causará daños moderados a fuertes en edificios robustos o resistentes a sismos. Daños en
-        grandes áreas. Se siente en regiones muy grandes.</item>
-        <item>Enorme. Destrucción total o casi total - daños graves o colapso de todos los
+        grandes áreas. Se siente en regiones muy grandes.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo enorme&lt;/b>. Destrucción total o casi total - daños graves o colapso de todos los
         edificios. Grandes daños y sacudidas se extienden a lugares distantes. Cambios permanentes
-        en la topografía del suelo.</item>
+        en la topografía del suelo.&lt;br/&gt;</item>
     </string-array>
     <string name="activity_earthquake_details_magnitude_information_dialog_fragment_title">
-        Magnitud %1$s en la escala de Richter</string>
+        Magnitud %1$s en la escala de Richter.</string>
+
+    <string-array name="activity_earthquake_details_intensity_information_array">
+        <item>&lt;br/&gt;&lt;b>Sismo que no se siente&lt;/b>. Sentido solo por unas pocas personas en condiciones
+            especialmente favorables.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo débil&lt;/b>. Sentido solo por algunas personas en reposo, especialmente en
+            los pisos superiores de los edificios.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo débil&lt;/b>. Sentido notablemente por personas en interiores, especialmente
+            en pisos superiores de edificios. Mucha gente no lo reconoce como un sismo. Los
+            automóviles estacionados pueden balancearse ligeramente. Vibraciones similares al paso
+            de un camión.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo leve&lt;/b>. Sentido en interiores por muchas personas, al aire libre por
+            pocas durante el día. Por la noche, algunos despiertan. Platos, ventanas y puertas se
+            mueven; las paredes crujen. Sensación como de un camión pesado golpeando el edificio.
+            Los automóviles estacionados se balancean notablemente.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo moderado&lt;/b>. Sentido por casi todas las personas; muchas despiertan.
+            Algunos platos y ventanas rotas. Objetos inestables volcados. Los relojes de péndulo
+            pueden detenerse.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo fuerte&lt;/b>. Sentido por todas las personas, muchas se asustan. Algunos
+            muebles pesados se mueven; yeso caído en algunas ocasiones. Daños leves.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo muy fuerte&lt;/b>. Daños insignificantes en edificios bien construidos y
+            diseñados; daño ligeros a moderado en estructuras ordinarias bien construidas; daños
+            considerables en estructuras mal construidas o mal diseñadas; algunas chimeneas rotas.
+            &lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo severo&lt;/b>. Daños leves en estructuras especialmente diseñadas; daños
+            considerable en edificios ordinarios con colapso parcial. Grandes daños en estructuras
+            mal construidas. Caída de chimeneas, pilas de objetos en fábricas, columnas, monumentos
+            y muros. Muebles pesados volcados.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo violento&lt;/b>. Daño considerable en estructuras especialmente diseñadas;
+            marcos de estructuras descuadrados. Grandes daños en edificios grandes, con colapso
+            parcial. Los edificios se desplazan de sus cimientos.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo extremo&lt;/b>. Algunas estructuras de madera bien construidas son
+            destruidas; la mayor parte de las estructuras de mampostería y marcos son destruidas con
+            sus cimientos. Rieles doblados.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo extremo&lt;/b>. Pocas, si es que algunas, estructuras de mampostería
+            permanecen en pie. Puentes destruidos. Los rieles se doblan mucho.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Sismo extremo&lt;/b>. Daño total. Las Líneas de visión y los niveles se
+            distorsionan. Objetos son lanzados al aire.&lt;br/&gt;</item>
+    </string-array>
+    <string name="activity_earthquake_details_intensity_information_dialog_fragment_title">
+        Intensidad %1$s %2$s en la escala de Mercalli modificada.</string>
+    <string name="activity_earthquake_details_reported_intensity_type">reportada</string>
+    <string name="activity_earthquake_details_estimated_intensity_type">estimada</string>
+
+    <string-array name="activity_earthquake_details_alert_information_array">
+        <item>&lt;br/&gt;Poco o ningún impacto económico. Sin muertes.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;Impacto económico y respuesta regional. Muy pocas muertes.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;Impacto económico y respuesta a escala nacional. Algunas muertes.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;Gran impacto económico y respuesta internacional. Muchas muertes.&lt;br/&gt;</item>
+    </string-array>
+    <string name="activity_earthquake_details_alert_information_dialog_fragment_title">
+        Alerta %1$s.</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
@@ -301,7 +361,7 @@
         \n\nV (Moderado). Sentido por casi todas las personas; muchas despiertan. Algunos platos y ventanas
         rotas. Objetos inestables volcados. Los relojes de péndulo pueden detenerse.
         \n\nVI. (Fuerte) Sentido por todas las personas, muchas se asustan. Algunos muebles pesados se
-        mueven; yeso caído en algunas ocasiones. Daño leve.
+        mueven; yeso caído en algunas ocasiones. Daños leves.
         \n\nVII (Muy fuerte). Daños insignificantes en edificios bien construidos y diseñados; daño ligeros a
         moderado en estructuras ordinarias bien construidas; daños considerables en estructuras mal
         construidas o mal diseñadas; algunas chimeneas rotas.
@@ -321,11 +381,10 @@
 
     <string name="activity_earthquake_concepts_alert_title">Alerta</string>
     <string name="activity_earthquake_concepts_alert_text">
-        VERDE - poco o ningún impacto.
-        \n\nAMARILLA - impacto y respuesta regional.
-        \n\nNARANJA -
-        impacto y respuesta a escala nacional.
-        \n\nROJA - gran impacto y respuesta internacional.
+        VERDE - poco o ningún impacto económico. Sin muertes.
+        \n\nAMARILLA - impacto económico y respuesta regional. Muy pocas muertes.
+        \n\nNARANJA - impacto económico y respuesta a escala nacional. Algunas muertes.
+        \n\nROJA - gran impacto económico y respuesta internacional. Muchas muertes.
     </string>
 
     <string name="activity_earthquake_concepts_tsunami_title">Posible tsunami</string>

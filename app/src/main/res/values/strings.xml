@@ -217,20 +217,26 @@
     <string name="activity_earthquake_details_google_map_terrain_type_text">Terrain</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensity</string>
-    <string name="activity_earthquake_details_magnitude_intensity_comparison_message">
-        &lt;br/&gt;Magnitude and intensity measure different characteristics of earthquakes.&lt;br/&gt;&lt;br/&gt;
-        &lt;b>Magnitude&lt;/b> measures the energy released at the source of the earthquake and is
-        determined from measurements on seismographs.&lt;br/&gt;&lt;br/&gt;&lt;b>Intensity&lt;/b> measures the
-        strength of shaking produced by the earthquake at a certain location and is determined from
-        effects on people, human structures, and the natural environment.&lt;br/&gt;</string>
-    <string name="activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_title">
-        Magnitude / Intensity Comparison
+    <string name="activity_earthquake_details_information_message">
+        &lt;br/&gt;Press on the &lt;i>magnitude&lt;/i> (in the colored circle), the &lt;i>intensities&lt;/i>, or the &lt;i>alert&lt;/i>
+        to see a description of them. Not all earthquakes will have intensities or alert information.
+        A &lt;i>possible tsunami&lt;/i> message is generated only by a strong earthquake
+        in oceanic regions. It does not indicate that  a tsunami actually did or will exist.
+        &lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;i>Magnitude&lt;/i> and &lt;i>intensity&lt;/i> measure different
+        characteristics of earthquakes.&lt;br/&gt;&lt;br/&gt;&lt;b>Magnitude&lt;/b> measures the energy released at
+        the source of the earthquake and is determined from measurements on seismographs.&lt;br/&gt;&lt;br/&gt;
+        &lt;b>Intensity&lt;/b> measures the strength of shaking produced by the earthquake at a certain
+        location and is determined from effects on people, human structures, and the natural
+        environment. The estimated intensity is generated with data gathered by instruments. The reported
+        intensity is generated with data given by people who reports the earthquake.&lt;br/&gt;</string>
+    <string name="activity_earthquake_details_information_dialog_fragment_title">
+        @string/menu_activity_earthquake_details_action_information_title
     </string>
-    <string name="activity_earthquake_details_magnitude_intensity_comparison_dialog_fragment_tag" translatable="false">
-        activity_earthquake_details_magnitude_intensity_comparison_message_dialog_fragment_tag
+    <string name="activity_earthquake_details_information_dialog_fragment_tag" translatable="false">
+        activity_earthquake_details_information_dialog_fragment_tag
     </string>
-    <string name="activity_earthquake_details_estimated_text">Estimated intensity</string>
-    <string name="activity_earthquake_details_reported_text">Reported intensity</string>
+    <string name="activity_earthquake_details_estimated_text">Estimated</string>
+    <string name="activity_earthquake_details_reported_text">Reported</string>
     <string-array name="activity_earthquake_details_roman_numerals">
         <item>I</item>
         <item>II</item>
@@ -256,6 +262,9 @@
     <string name="activity_earthquake_details_epicenter_text">Epicenter</string>
     <string name="activity_earthquake_details_open_usgs_website_button_text">Open USGS web page</string>
 
+    <string name="menu_activity_earthquake_details_action_add_to_favorites_title">Add to favorites</string>
+    <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Remove from favorites</string>
+    <string name="menu_activity_earthquake_details_action_information_title">Help</string>
     <string name="menu_activity_earthquake_details_action_glossary_title">Glossary</string>
     <string name="menu_activity_earthquake_details_action_web_page_title">
         @string/activity_earthquake_web_site_label</string>
@@ -286,9 +295,56 @@
         damage and shaking extends to distant locations. Permanent changes in ground topography.&lt;br/&gt;</item>
     </string-array>
     <string name="activity_earthquake_details_magnitude_information_dialog_fragment_title">
-        Magnitude %1$s on Richter scale</string>
+        Magnitude %1$s on Richter scale.</string>
     <string name="activity_earthquake_details_magnitude_information_dialog_fragment_tag" translatable="false">
         activity_earthquake_details_magnitude_information_dialog_fragment_tag
+    </string>
+
+    <string-array name="activity_earthquake_details_intensity_information_array">
+        <item>&lt;br/&gt;&lt;b>Not felt earthquake&lt;/b>. Felt only by a very few under especially favorable conditions.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Weak earthquake&lt;/b>. Felt only by a few persons at rest, especially on upper floors of buildings.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Weak earthquake&lt;/b>. Felt quite noticeably by persons indoors, especially on upper floors of buildings.
+        Many people do not recognize it as an earthquake. Standing motor cars may rock slightly.
+        Vibrations similar to the passing of a truck.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Light earthquake&lt;/b>. Felt indoors by many, outdoors by few during the day. At night, some awakened.
+        Dishes, windows, doors disturbed; walls make cracking sound. Sensation like heavy truck
+        striking building. Standing motor cars rocked noticeably.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Moderate earthquake&lt;/b>. Felt by nearly everyone; many awakened. Some dishes, windows broken. Unstable objects
+        overturned. Pendulum clocks may stop.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Strong earthquake&lt;/b>. Felt by all, many frightened. Some heavy furniture moved; a few instances of fallen
+        plaster. Slight damage.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Very strong earthquake&lt;/b>. Negligible damage in buildings of good design and construction; slight to moderate
+        in well-built ordinary structures; considerable damage in poorly built or badly designed
+        structures; some chimneys broken.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Severe earthquake&lt;/b>. Slight damage in specially designed structures; considerable damage in ordinary
+        buildings with partial collapse. Great damage in poorly built structures. Fall of chimneys,
+        factory stacks, columns, monuments, walls. Heavy furniture overturned.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Violent earthquake&lt;/b>. Considerable damage in specially designed structures; well-designed frame structures
+        thrown out of plumb. Great damage in substantial buildings, with partial collapse. Buildings
+        shifted off foundations.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Extreme earthquake&lt;/b>. Some well-built wooden structures destroyed; most masonry and frame structures
+        destroyed with foundations. Rails bent.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Extreme earthquake&lt;/b>. Few, if any masonry structures remain standing. Bridges destroyed. Rails bent greatly.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;&lt;b>Extreme earthquake&lt;/b>. Total damage. Lines of sight and level distorted. Objects thrown into the air.&lt;br/&gt;</item>
+    </string-array>
+    <string name="activity_earthquake_details_intensity_information_dialog_fragment_title">
+        %1$s intensity %2$s on modified Mercalli scale.</string>
+    <string name="activity_earthquake_details_intensity_information_dialog_fragment_tag" translatable="false">
+        activity_earthquake_details_intensity_information_dialog_fragment_tag
+    </string>
+    <string name="activity_earthquake_details_reported_intensity_type">Reported</string>
+    <string name="activity_earthquake_details_estimated_intensity_type">Estimated</string>
+
+    <string-array name="activity_earthquake_details_alert_information_array">
+        <item>&lt;br/&gt;Little or not economic impact. No fatalities.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;Regional economic impact and response. Very few fatalities.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;National scale economic impact and response. Some fatalities.&lt;br/&gt;</item>
+        <item>&lt;br/&gt;Great economic impact and international response. A lot of fatalities.&lt;br/&gt;</item>
+    </string-array>
+    <string name="activity_earthquake_details_alert_information_dialog_fragment_title">
+        Alert %1$s.</string>
+    <string name="activity_earthquake_details_alert_information_dialog_fragment_tag" translatable="false">
+        activity_earthquake_details_alert_information_dialog_fragment_tag
     </string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
@@ -383,16 +439,15 @@
         \n\nX (Extreme). Some well-built wooden structures destroyed; most masonry and frame structures
         destroyed with foundations. Rails bent.
         \n\nXI (Extreme). Few, if any masonry structures remain standing. Bridges destroyed. Rails bent greatly.
-        \n\nXII (Extreme). Total damage. Lines of sight and level are distorted. Objects thrown into the air.
+        \n\nXII (Extreme). Total damage. Lines of sight and level distorted. Objects thrown into the air.
     </string>
 
     <string name="activity_earthquake_concepts_alert_title">Alert</string>
     <string name="activity_earthquake_concepts_alert_text">
-        GREEN little or no impact.
-        \n\nYELLOW regional impact and response.
-        \n\nORANGE national scale
-        impact and response.
-        \n\nRED great impact and international response.
+        GREEN little or not economic impact. No fatalities.
+        \n\nYELLOW regional economic impact and response. Very few fatalities.
+        \n\nORANGE national scale economic impact and response. Some fatalities.
+        \n\nRED great economic impact and international response. A lot of fatalities.
     </string>
 
     <string name="activity_earthquake_concepts_tsunami_title">Possible tsunami</string>

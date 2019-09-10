@@ -337,6 +337,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             case R.id.menu_activity_main_action_list_information:
                 showEarthquakesListInformation();
                 break;
+            case R.id.menu_activity_main_action_glossary:
+                startActivity(new Intent(this, GlossaryActivity.class));
+                break;
             case R.id.menu_activity_main_action_help:
                 break;
             case R.id.menu_activity_main_action_about:

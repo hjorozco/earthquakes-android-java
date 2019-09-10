@@ -32,14 +32,20 @@
     <group android:id="@+id/menu_activity_main_help_group">
 
         <item
-            android:id="@+id/menu_activity_main_action_help"
+            android:id="@+id/menu_activity_main_action_glossary"
             android:orderInCategory="5"
+            android:title="@string/menu_activity_earthquake_details_action_glossary_title"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_activity_main_action_help"
+            android:orderInCategory="6"
             android:title="@string/menu_activity_main_action_help_title"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/menu_activity_main_action_about"
-            android:orderInCategory="6"
+            android:orderInCategory="7"
             android:title="@string/menu_activity_main_action_about_title"
             app:showAsAction="never" />
     </group>

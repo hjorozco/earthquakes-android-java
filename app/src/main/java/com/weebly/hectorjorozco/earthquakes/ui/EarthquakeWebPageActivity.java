@@ -69,7 +69,7 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (mWebView.canGoBack()) {
+            if (mWebView!=null && mWebView.canGoBack()) {
                 mWebView.goBack();
             } else {
                 onBackPressed();
@@ -80,7 +80,7 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView!=null && mWebView.canGoBack()) {
             mWebView.goBack();
             return true;
         }

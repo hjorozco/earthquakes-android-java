@@ -6,7 +6,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -84,7 +83,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
                 showHelpSnackBar();
                 break;
             case android.R.id.home:
-                if (mWebView.canGoBack()) {
+                if (mWebView!=null && mWebView.canGoBack()) {
                     mWebView.goBack();
                 } else {
                     onBackPressed();
@@ -96,7 +95,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView!=null && mWebView.canGoBack()) {
             mWebView.goBack();
             return true;
         }

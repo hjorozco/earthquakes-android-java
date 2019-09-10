@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
@@ -45,6 +46,9 @@ public class GlossaryActivity extends AppCompatActivity {
 
 
     private void setupAllEarthquakeConceptsViews() {
+
+        // Used to assign vector drawables in API 19
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         // Magnitude information views
         setupEarthquakeConceptViews(findViewById(R.id.activity_earthquake_terms_magnitude_title_linear_layout),
@@ -95,11 +99,23 @@ public class GlossaryActivity extends AppCompatActivity {
 
         linearLayout.setOnClickListener(v -> {
             if (mAreConceptsShown[conceptIndex]) {
+                float rotation;
+                if (imageView.getRotation()< HALF_ROTATION) {
+                    rotation = imageView.getRotation();
+                } else {
+                    rotation = HALF_ROTATION;
+                }
                 textView.setVisibility(View.GONE);
-                imageView.animate().rotationBy(-HALF_ROTATION);
+                imageView.animate().rotationBy(-rotation);
             } else {
+                float rotation;
+                if (imageView.getRotation()>-HALF_ROTATION && imageView.getRotation()!=0) {
+                    rotation = - (HALF_ROTATION + imageView.getRotation());
+                } else {
+                    rotation= HALF_ROTATION;
+                }
                 textView.setVisibility(View.VISIBLE);
-                imageView.animate().rotationBy(HALF_ROTATION);
+                imageView.animate().rotationBy(rotation);
             }
             mAreConceptsShown[conceptIndex] = !mAreConceptsShown[conceptIndex];
         });
