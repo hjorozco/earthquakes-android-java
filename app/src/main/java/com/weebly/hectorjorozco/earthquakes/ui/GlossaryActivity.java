@@ -1,5 +1,6 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ public class GlossaryActivity extends AppCompatActivity {
     private static final int INTENSITY_SCALE_CONCEPT_INDEX = 3;
     private static final int ALERT_CONCEPT_INDEX = 4;
     private static final int TSUNAMI_CONCEPT_INDEX = 5;
+
+    private boolean mIsAnimationFinished = true;
 
     // Used to save the status (true for visible, false for gone) of each concept.
     private boolean[] mAreConceptsShown = new boolean[]{false, false, false, false, false, false};
@@ -98,27 +101,41 @@ public class GlossaryActivity extends AppCompatActivity {
         }
 
         linearLayout.setOnClickListener(v -> {
-            if (mAreConceptsShown[conceptIndex]) {
-                float rotation;
-                if (imageView.getRotation()< HALF_ROTATION) {
-                    rotation = imageView.getRotation();
+
+            if (mIsAnimationFinished) {
+                mIsAnimationFinished = false;
+                if (mAreConceptsShown[conceptIndex]) {
+                    textView.setVisibility(View.GONE);
+                    imageView.animate().rotationBy(-HALF_ROTATION).setListener(setupAnimatorListener());
                 } else {
-                    rotation = HALF_ROTATION;
+                    textView.setVisibility(View.VISIBLE);
+                    imageView.animate().rotationBy(HALF_ROTATION).setListener(setupAnimatorListener());
                 }
-                textView.setVisibility(View.GONE);
-                imageView.animate().rotationBy(-rotation);
-            } else {
-                float rotation;
-                if (imageView.getRotation()>-HALF_ROTATION && imageView.getRotation()!=0) {
-                    rotation = - (HALF_ROTATION + imageView.getRotation());
-                } else {
-                    rotation= HALF_ROTATION;
-                }
-                textView.setVisibility(View.VISIBLE);
-                imageView.animate().rotationBy(rotation);
+                mAreConceptsShown[conceptIndex] = !mAreConceptsShown[conceptIndex];
             }
-            mAreConceptsShown[conceptIndex] = !mAreConceptsShown[conceptIndex];
         });
+    }
+
+
+    private Animator.AnimatorListener setupAnimatorListener() {
+        return new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mIsAnimationFinished = true;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        };
     }
 
 

@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/application_small_margin"
         android:text="@string/activity_earthquake_details_intensity_text"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/application_standard_text_size"
         android:textStyle="bold" />
 
@@ -41,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/application_small_margin"
                 android:text="@string/activity_earthquake_details_reported_text"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size" />
 
             <TextView
@@ -66,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/application_small_margin"
                 android:text="@string/activity_earthquake_details_estimated_text"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size" />
 
             <TextView
@@ -94,6 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/application_small_margin"
             android:text="@string/activity_earthquake_details_alert_text"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:textStyle="bold" />
 
@@ -113,6 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/application_standard_margin"
         android:text="@string/activity_earthquake_details_tsunami_text"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/application_standard_text_size"
         android:textStyle="bold" />
 
@@ -130,14 +135,15 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/application_small_margin"
             android:text="@string/activity_earthquake_details_felt_reports_text"
-            android:textSize="@dimen/application_standard_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size" />
 
         <TextView
             android:id="@+id/activity_earthquake_details_felt_reports_value_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/application_standard_margin"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size" />
 
         <com.google.android.material.button.MaterialButton
@@ -155,8 +161,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/activity_earthquake_details_epicenter_text"
-        android:textSize="@dimen/application_standard_text_size"
-        android:textStyle="italic" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/application_standard_text_size" />
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/activity_earthquake_details_epicenter_values_flex_box_layout"
@@ -171,13 +177,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/application_standard_margin"
-            android:textSize="@dimen/application_standard_text_size"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size" />
 
         <TextView
             android:id="@+id/activity_earthquake_details_depth_value_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/application_standard_text_size"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size" />
 
     </com.google.android.flexbox.FlexboxLayout>
 
