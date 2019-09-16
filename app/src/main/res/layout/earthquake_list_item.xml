@@ -4,6 +4,7 @@
     android:id="@+id/earthquake_list_item_main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:paddingStart="@dimen/application_standard_padding"
     android:paddingLeft="@dimen/application_standard_padding"
     android:paddingTop="@dimen/application_small_padding"

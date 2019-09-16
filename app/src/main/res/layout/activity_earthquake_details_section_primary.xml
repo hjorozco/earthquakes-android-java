@@ -4,22 +4,28 @@
     android:id="@+id/activity_earthquake_details_primary_details_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/application_standard_margin"
-    android:layout_marginTop="@dimen/application_standard_margin"
-    android:layout_marginEnd="@dimen/application_standard_margin"
-    android:layout_marginBottom="@dimen/application_standard_margin">
+    android:layout_margin="@dimen/application_standard_margin"
+    android:baselineAligned="false">
 
-    <TextView
-        android:id="@+id/activity_earthquake_details_magnitude_text_view"
-        android:layout_width="@dimen/activity_earthquake_details_magnitude_text_view_size"
-        android:layout_height="@dimen/activity_earthquake_details_magnitude_text_view_size"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/magnitude_circle"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:textSize="@dimen/application_big_text_size"
-        android:textStyle="bold"
-        tools:text="8.9" />
+    <LinearLayout
+        android:id="@+id/activity_earthquake_details_magnitude_text_view_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/activity_earthquake_details_magnitude_text_view"
+            android:layout_width="@dimen/activity_earthquake_details_magnitude_text_view_size"
+            android:layout_height="@dimen/activity_earthquake_details_magnitude_text_view_size"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/magnitude_circle"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:textSize="@dimen/application_big_text_size"
+            android:textStyle="bold"
+            tools:text="8.9" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"

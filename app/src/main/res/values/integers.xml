@@ -10,5 +10,6 @@
     <integer name="search_preference_start_date_default_value">0</integer>
 
     <integer name="message_icons_view_port_size">512</integer>
-    
+
+    <integer name="activity_glosary_title_weight">1000</integer>
 </resources>

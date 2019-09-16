@@ -100,12 +100,18 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 R.string.activity_earthquake_details_map_type_shared_preference_key), true);
 
         // Sets up the views that will be animated on entry and exit for Android versions 21 or up
-        TextView magnitudeTextView = findViewById(R.id.activity_earthquake_details_magnitude_text_view);
-        TextView locationOffsetTextView = findViewById(R.id.activity_earthquake_details_location_offset_text_view);
-        TextView locationPrimaryTextView = findViewById(R.id.activity_earthquake_details_location_primary_text_view);
-        TextView dateAndTimeTextView = findViewById(R.id.activity_earthquake_details_date_and_time_text_view);
+        TextView magnitudeTextView =
+                findViewById(R.id.activity_earthquake_details_magnitude_text_view);
+        TextView locationOffsetTextView =
+                findViewById(R.id.activity_earthquake_details_location_offset_text_view);
+        TextView locationPrimaryTextView =
+                findViewById(R.id.activity_earthquake_details_location_primary_text_view);
+        TextView dateAndTimeTextView =
+                findViewById(R.id.activity_earthquake_details_date_and_time_text_view);
+        LinearLayout magnitudeTextViewLinearLayout =
+                findViewById(R.id.activity_earthquake_details_magnitude_text_view_linear_layout);
 
-        magnitudeTextView.setOnClickListener(v -> showMagnitudeMessage());
+        magnitudeTextViewLinearLayout.setOnClickListener(v -> showMagnitudeMessage());
 
         QueryUtils.setupEarthquakeInformationOnViews(
                 this, mEarthquake, magnitudeTextView, locationOffsetTextView,

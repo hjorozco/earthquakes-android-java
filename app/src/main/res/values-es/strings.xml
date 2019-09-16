@@ -289,111 +289,180 @@
     <string name="activity_earthquake_concepts_label">
         @string/menu_activity_earthquake_details_action_glossary_title</string>
 
-    <string name="activity_earthquake_concepts_title_text">Conceptos usados en los detalles del sismo:
+    <string name="activity_glossary_earthquake_title">Sismo</string>
+    <string name="activity_glossary_earthquake_definition">
+        Un &lt;b>sismo&lt;/b> (también conocido como &lt;b>terremoto&lt;/b> o &lt;b>temblor&lt;/b>) es el movimiento
+        de la superficie de la Tierra producido por la liberación repentina de energía en la
+        litósfera &lt;i>(la parte externa rígida de la tierra)&lt;/i> que crea ondas sísmicas.&lt;br/&gt;&lt;br/&gt;
+        Los sismos pueden variar en tamaño desde aquellos que son tan débiles que no pueden sentirse
+        hasta aquellos lo suficientemente violentos como para tumbar a la gente y destruir ciudades
+        enteras.
     </string>
 
-    <string name="activity_earthquake_concepts_magnitude_title">Magnitud</string>
-    <string name="activity_earthquake_concepts_magnitude_text">
-        La magnitud es un número que caracteriza el tamaño relativo de un sismo. Mide la energía
-        liberada en la fuente del sismo y se determina a partir de mediciones en sismógrafos.
-        \n\nSe han definido varias escalas de magnitud, pero una de las más utilizadas es la magnitud
-        local (ML), comúnmente conocida como "magnitud de Richter".
+    <string name="activity_glossary_epicenter_title">Epicentro</string>
+    <string name="activity_glossary_epicenter_definition">
+        En sismología, el &lt;b>epicentro&lt;/b> es el punto en la superficie de la Tierra localizado
+        directamente sobre un hipocentro o foco &lt;i>(el punto donde se origina un terremoto o una
+        explosión subterránea)&lt;i>.
     </string>
 
-    <string name="activity_earthquake_concepts_richter_magnitude_scale_title">Escala de magnitud de Richter</string>
-    <string name="activity_earthquake_concepts_richter_magnitude_scale_text">
-        0.0–0.9 (Micro) Micro sismo. No se siente. Es registrado solo por sismógrafos.
+    <string name="activity_glossary_fault_title">Falla</string>
+    <string name="activity_glossary_fault_definition">
+        Una &lt;b>falla&lt;/b> es una grieta en la corteza terrestre. Típicamente, las fallas están
+        asociadas con, o forman, los límites entre las placas tectónicas de la Tierra.&lt;br/&gt;&lt;br/&gt;En
+        una falla activa, las piezas de la corteza terrestre a lo largo de una falla se mueven con
+        el tiempo. Las rocas en movimiento pueden causar sismos.
+    </string>
+
+    <string name="activity_glossary_magnitude_title">Magnitud</string>
+    <string name="activity_glossary_magnitude_definition">
+        La &lt;b>magnitud&lt;/b> es un número que caracteriza el tamaño relativo de un sismo. Mide la
+        energía liberada en la fuente del sismo y se determina a partir de mediciones en sismógrafos.
+        &lt;br/&gt;&lt;br/&gt;Se han definido varias escalas de magnitud, pero una de las más utilizadas es la
+        &lt;i>magnitud local (ML)&lt;/i>, comúnmente conocida como &lt;i>escala de magnitud de Richter&lt;/i>.
+    </string>
+
+    <string name="activity_glossary_richter_title">Escala de magnitud de Richter</string>
+    <string name="activity_glossary_richter_definition">
+        La &lt;b>escala de magnitud de Richter&lt;b> es una escala de números utilizada para indicar la
+        potencia (o magnitud) de los sismos. &lt;i>Charles Richter&lt;/i> desarrolló la escala de Richter en 1935.
+        Su escala funcionó como un sismograma, medido por un tipo particular de sismómetro a una
+        distancia de 100 kilómetros (62 millas) del terremoto.&lt;br/&gt;&lt;br/&gt;Los terremotos de 4.5 o más
+        en la escala de Richter se pueden medir en todo el mundo. Un terremoto de un tamaño de 3.0
+        es aproximadamente 10 veces la amplitud de uno de 2.0. La energía que se libera aumenta en
+        un factor de aproximadamente 32.&lt;br/&gt;&lt;br/&gt;Cada aumento de 1 en la escala de Richter
+        corresponde a un aumento de amplitud por un factor de 10; por lo tanto, es una escala
+        logarítmica.&lt;br/&gt;&lt;br/&gt;El terremoto con la mayor magnitud registrada fue el &lt;i>Gran Terremoto
+        chileno&lt;/i>. Tuvo una magnitud de 9.5 en la escala de Richter y ocurrió en 1960. Alrededor
+        de 6,000 personas murieron a causa del terremoto. Ningún terremoto ha alcanzado 10 o más
+        en la escala de Richter.
+    </string>
+
+    <string name="activity_glossary_richter_values_title">Escala de magnitud de Richter (valores)</string>
+    <string name="activity_glossary_richter_values_definition">
+        &lt;b>0.0–0.9 (Micro).&lt;/b> Micro sismo. No se siente. Es registrado solo por sismógrafos.
         Continuos/varios millones por año.
-        \n\n1.0–1.9 (Micro). Micro sismo, no se siente, o se siente raramente. Es registrado por
+        &lt;br/&gt;&lt;br/&gt;&lt;b>1.0–1.9 (Micro).&lt;/b> Micro sismo, no se siente, o se siente raramente. Es registrado por
         sismógrafos. Continuos/varios millones por año.
-        \n\n2.0–2.9 (Menor). Algunas personas lo sienten un poco. Sin daños a edificios. Más de un
+        &lt;br/&gt;&lt;br/&gt;&lt;b>2.0–2.9 (Menor).&lt;/b> Algunas personas lo sienten un poco. Sin daños a edificios. Más de un
         millón por año.
-        \n\n3.0–3.9 (Menor). A menudo lo sienten las personas, pero rara vez causa daños. La sacudida
+        &lt;br/&gt;&lt;br/&gt;&lt;b>3.0–3.9 (Menor).&lt;/b> A menudo lo sienten las personas, pero rara vez causa daños. La sacudida
         de objetos dentro de edificios puede ser notable. Más de 100,000 por año.
-        \n\n4.0–4.9 (Leve). Sacudida notable de objetos dentro de edifiios y ruidos notables.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>4.0–4.9 (Leve).&lt;/b> Sacudida notable de objetos dentro de edifiios y ruidos notables.
         Sentido por la mayoría de las personas en el área afectada. Ligeramente sentido fuera de esa
         área. Generalmente no causa daños o produce daños mínimos. Daño moderado a significativo muy
         improbable. Algunos objetos pueden caerse de sus estantes o volcarse. 10,000 a 15,000 por año.
-        \n\n5.0–5.9 (Moderado). Puede causar daños de diversa gravedad a edificios mal construidos.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>5.0–5.9 (Moderado).&lt;/b> Puede causar daños de diversa gravedad a edificios mal construidos.
         A lo sumo, no daños o daños leves a todos los demás edificios. Sentido por todas las personas.
         1,000 a 1,500 por año.
-        \n\n6.0–6.9 (Fuerte). Daño a un número moderado de estructuras bien construidas en zonas
+        &lt;br/&gt;&lt;br/&gt;&lt;b>6.0–6.9 (Fuerte).&lt;/b> Daño a un número moderado de estructuras bien construidas en zonas
         pobladas. Las estructuras resistentes a sismos sobreviven con daños leves a moderados. Las
         estructuras mal diseñadas reciben daños moderados a severos. Se siente en áreas más amplias;
         hasta cientos de millas / kilómetros del epicentro. Genera sacudidas fuertes a violentas en
         el área epicentral. 100 a 150 por año.
-        \n\n7.0–7.9 (Mayor). Causa daños a la mayoría de los edificios, algunos colapsan parcialmente
+        &lt;br/&gt;&lt;br/&gt;&lt;b>7.0–7.9 (Mayor).&lt;/b> Causa daños a la mayoría de los edificios, algunos colapsan parcialmente
         o completamente o reciben daños severos. Es probable que las estructuras bien diseñadas
         tengan daños. Se siente a grandes distancias con daños mayores limitados principalmente a 250
         km del epicentro. 10 a 20 por año.
-        \n\n8.0–8.9 (Enorme). Daños importantes a edificios, estructuras probablemente son destruidas.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>8.0–8.9 (Enorme).&lt;/b> Daños importantes a edificios, estructuras probablemente son destruidas.
         Causará daños moderados a fuertes en edificios robustos o resistentes a sismos. Daños en
         grandes áreas. Se siente en regiones muy grandes. En promedio, uno por año.
-        \n\n9.0 y más (Enorme). Destrucción total o casi total - daños graves o colapso de todos los
+        &lt;br/&gt;&lt;br/&gt;&lt;b>9.0 y más (Enorme).&lt;/b> Destrucción total o casi total - daños graves o colapso de todos los
         edificios. Grandes daños y sacudidas se extienden a lugares distantes. Cambios permanentes
         en la topografía del suelo. En promedio, uno cada 10 a 50 años.
     </string>
 
-    <string name="activity_earthquake_concepts_intensity_title">Intensidad</string>
-    <string name="activity_earthquake_concepts_intensity_definition">
-        La intensidad es un número (escrito como un número romano) que describe la gravedad de un
-        sismo en términos de sus efectos sobre la superficie de la tierra y sobre los humanos y sus
-        estructuras.
-        \n\nExisten varias escalas, pero una de las más utilizadas es la escala de Mercalli modificada.
-        \n\nHay muchas intensidades para un sismo, dependiendo de dónde te encuentres, a diferencia de la
-        magnitud, que es una sola para cada sismo.
-        \n\nLa intensidad estimada se genera con datos recopilados por instrumentos. La intensidad
-        reportada se genera con datos proporcionados por personas que reportan el sismo.
+    <string name="activity_glossary_intensity_title">Intensidad</string>
+    <string name="activity_glossary_intensity_definition">
+        La &lt;b>intensidad&lt;/b> es un número &lt;i>(escrito como un número romano)&lt;/i> que describe la
+        gravedad de un sismo en términos de sus efectos sobre la superficie de la tierra y sobre
+        los humanos y sus estructuras.&lt;br/&gt;&lt;br/&gt;Existen varias escalas de intensidad, pero una de
+        las más utilizadas es la escala de Mercalli modificada.&lt;br/&gt;&lt;br/&gt;Hay muchas intensidades
+        para un sismo, dependiendo de dónde te encuentres, a diferencia de la magnitud, que es una
+        sola para cada sismo.&lt;br/&gt;&lt;br/&gt;La intensidad estimada se genera con datos recopilados por
+        instrumentos. La intensidad reportada se genera con datos proporcionados por personas que
+        reportan el sismo.
     </string>
 
-    <string name="activity_earthquake_concepts_modified_mercalli_intensity_scale_title">
-        Escala de intensidad de Mercalli modificada</string>
-    <string name="activity_earthquake_concepts_modified_mercalli_intensity_scale_text">
-        I (No se siente). No se siente excepto por unas pocas personas en condiciones especialmente
+    <string name="activity_glossary_mercalli_title">
+        Escala de intensidad Mercalli modificada</string>
+    <string name="activity_glossary_mercalli_definition">
+        La &lt;b>escala de intensidad de Mercalli modificada&lt;/b> es una escala para medir la intensidad
+        de los terremotos. A diferencia de la escala de Richter, la escala de Mercalli no toma en
+        cuenta la energía de un terremoto directamente. Más bien, clasifica los terremotos por los
+        efectos que tienen &lt;i>(y la destrucción que causan)&lt;/i>. Cuando hay poco daño, la escala describe
+        cómo las personas sintieron el terremoto, o cuántas personas lo sintieron.&lt;br/&gt;&lt;br/&gt;Muy a
+        menudo, los no geólogos usan esta escala, porque es más fácil para las personas describir
+        qué daño causó un terremoto, que hacer cálculos para obtener un valor en la escala de
+        Richter.&lt;br/&gt;&lt;br/&gt;Los valores varían de &lt;i>I - Instrumental&lt;/i> a &lt;i>XII - Catastrófico&lt;/i>.
+    </string>
+
+    <string name="activity_glossary_mercalli_values_title">
+        Escala de intensidad Mercalli modificada (valores)</string>
+    <string name="activity_glossary_mercalli_values_definition">
+        &lt;b>I (No se siente).&lt;/b> No se siente excepto por unas pocas personas en condiciones especialmente
         favorables.
-        \n\nII (Débil). Sentido solo por algunas personas en reposo, especialmente en los pisos superiores
+        &lt;br/&gt;&lt;br/&gt;&lt;b>II (Débil).&lt;/b> Sentido solo por algunas personas en reposo, especialmente en los pisos superiores
         de los edificios.
-        \n\nIII (Débil). Sentido notablemente por personas en interiores, especialmente en pisos superiores
+        &lt;br/&gt;&lt;br/&gt;&lt;b>III (Débil).&lt;/b> Sentido notablemente por personas en interiores, especialmente en pisos superiores
         de edificios. Mucha gente no lo reconoce como un sismo. Los automóviles estacionados pueden
         balancearse ligeramente. Vibraciones similares al paso de un camión.
-        \n\nIV (Leve). Sentido en interiores por muchas personas, al aire libre por pocas durante el día.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>IV (Leve).&lt;/b> Sentido en interiores por muchas personas, al aire libre por pocas durante el día.
         Por la noche, algunos despiertan. Platos, ventanas y puertas se mueven; las paredes crujen.
         Sensación como de un camión pesado golpeando el edificio. Los automóviles estacionados se
         balancean notablemente.
-        \n\nV (Moderado). Sentido por casi todas las personas; muchas despiertan. Algunos platos y ventanas
+        &lt;br/&gt;&lt;br/&gt;&lt;b>V (Moderado).&lt;/b> Sentido por casi todas las personas; muchas despiertan. Algunos platos y ventanas
         rotas. Objetos inestables volcados. Los relojes de péndulo pueden detenerse.
-        \n\nVI. (Fuerte) Sentido por todas las personas, muchas se asustan. Algunos muebles pesados se
+        &lt;br/&gt;&lt;br/&gt;&lt;b>VI (Fuerte).&lt;/b> Sentido por todas las personas, muchas se asustan. Algunos muebles pesados se
         mueven; yeso caído en algunas ocasiones. Daños leves.
-        \n\nVII (Muy fuerte). Daños insignificantes en edificios bien construidos y diseñados; daño ligeros a
+        &lt;br/&gt;&lt;br/&gt;&lt;b>VII (Muy fuerte).&lt;/b> Daños insignificantes en edificios bien construidos y diseñados; daño ligeros a
         moderado en estructuras ordinarias bien construidas; daños considerables en estructuras mal
         construidas o mal diseñadas; algunas chimeneas rotas.
-        \n\nVIII (Severo). Daños leves en estructuras especialmente diseñadas; daños considerable en edificios
+        &lt;br/&gt;&lt;br/&gt;&lt;b>VIII (Severo).&lt;/b> Daños leves en estructuras especialmente diseñadas; daños considerable en edificios
         ordinarios con colapso parcial. Grandes daños en estructuras mal construidas. Caída de chimeneas,
         pilas de objetos en fábricas, columnas, monumentos y muros. Muebles pesados volcados.
-        \n\nIX (Violento). Daño considerable en estructuras especialmente diseñadas; marcos de estructuras
+        &lt;br/&gt;&lt;br/&gt;&lt;b>IX (Violento).&lt;/b> Daño considerable en estructuras especialmente diseñadas; marcos de estructuras
         descuadrados. Grandes daños en edificios grandes, con colapso parcial. Los edificios se
         desplazan de sus cimientos.
-        \n\nX (Extremo). Algunas estructuras de madera bien construidas son destruidas; la mayor parte de las
+        &lt;br/&gt;&lt;br/&gt;&lt;b>X (Extremo).&lt;/b> Algunas estructuras de madera bien construidas son destruidas; la mayor parte de las
         estructuras de mampostería y marcos son destruidas con sus cimientos. Rieles doblados.
-        \n\nXI (Extremo). Pocas, si es que algunas, estructuras de mampostería permanecen en pie. Puentes
+        &lt;br/&gt;&lt;br/&gt;&lt;b>XI (Extremo).&lt;/b> Pocas, si es que algunas, estructuras de mampostería permanecen en pie. Puentes
         destruidos. Los rieles se doblan mucho.
-        \n\nXII (Extremo). Daño total. Las Líneas de visión y los niveles se distorsionan. Objetos son
+        &lt;br/&gt;&lt;br/&gt;&lt;b>XII (Extremo).&lt;/b> Daño total. Las Líneas de visión y los niveles se distorsionan. Objetos son
         lanzados al aire.
     </string>
 
-    <string name="activity_earthquake_concepts_alert_title">Alerta</string>
-    <string name="activity_earthquake_concepts_alert_text">
-        VERDE - poco o ningún impacto económico. Sin muertes.
-        \n\nAMARILLA - impacto económico y respuesta regional. Muy pocas muertes.
-        \n\nNARANJA - impacto económico y respuesta a escala nacional. Algunas muertes.
-        \n\nROJA - gran impacto económico y respuesta internacional. Muchas muertes.
+    <string name="activity_glossary_seismograph_title">Sismógrafo</string>
+    <string name="activity_glossary_seismograph_definition">
+        Un &lt;b>sismógrafo&lt;/b> o &lt;i>sismómetro&lt;/i> es un instrumento que mide los movimientos del
+        suelo, incluidos los generados por sismos, explosiones nucleares y otras fuentes. Los
+        registros de ondas sísmicas llamadas sismogramas permiten mapear el interior de la Tierra,
+        y ubicar y medir el tamaño de esas diferentes fuentes.&lt;br/&gt;&lt;br/&gt;La palabra deriva de la
+        palabra griega, &lt;i>seismós&lt;/i>, un temblor o sismo.
     </string>
 
-    <string name="activity_earthquake_concepts_tsunami_title">Posible tsunami</string>
-    <string name="activity_earthquake_concepts_tsunami_text">
-        Los sismos fuertes en regiones oceánicas pueden desencadenar un tsunami. Este mensaje no
-        indica si un tsunami realmente existió o existirá. El USGS no es responsable de producir
-        advertencias de tsunami.
+    <string name="activity_glossary_seismology_title">Sismología</string>
+    <string name="activity_glossary_seismology_definition">
+        La &lt;b>sismología&lt;/b> (del griego antiguo &lt;i>seismós&lt;/i> que significa &lt;i>sismo&lt;/i> y
+        &lt;i>logía&lt;/i> que significa &lt;i>estudio de&lt;/i>) es el estudio científico de los sismos y la
+        propagación de ondas elásticas a través de la Tierra o de otros cuerpos similares a los
+        planetas.&lt;br/&gt;&lt;br/&gt;La sismología también incluye estudios de los efectos ambientales de los sismos,
+        como tsunamis, así como diversas fuentes sísmicas, como procesos volcánicos, tectónicos,
+        oceánicos, atmosféricos y artificiales, como explosiones.
+    </string>
+
+    <string name="activity_glossary_tectonic_title">Placas tectónicas</string>
+    <string name="activity_glossary_tectonic_definition">
+        Las &lt;b>placas tectónicas&lt;/b> son placas grandes, delgadas y relativamente rígidas que se
+        mueven entre sí en la superficie exterior de la Tierra.&lt;br/&gt;&lt;br/&gt;Las observaciones muestran
+        que la mayoría de los sismos están asociados con los límites de las placas tectónicas.
+    </string>
+
+    <string name="activity_glossary_tsunami_title">Tsunami</string>
+    <string name="activity_glossary_tsunami_definition">
+        Un &lt;b>tsunami&lt;/b> es una ola marina de origen local o distante que resulta de los
+        desplazamientos del fondo marino a gran escala asociados con grandes terremotos, grandes
+        deslizamientos de submarinos o la explosión de islas volcánicas.
     </string>
 
     <string name="menu_activity_earthquake_terms_action_help_title">Ayuda</string>

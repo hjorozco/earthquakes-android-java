@@ -13,218 +13,543 @@
         android:orientation="vertical"
         android:padding="@dimen/application_small_padding">
 
+        <!-- Earthquake -->
+
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_magnitude_title_linear_layout"
+            android:id="@+id/activity_glossary_earthquake_title_linear_layout"
             android:layout_width="match_parent"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_magnitude_title_text_view"
+                android:id="@+id/activity_glossary_earthquake_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_magnitude_title"
+                android:text="@string/activity_glossary_earthquake_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_magnitude_title_arrow_image_view"
+                android:id="@+id/activity_glossary_earthquake_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_magnitude_definition_text_view"
+            android:id="@+id/activity_glossary_earthquake_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_magnitude_text"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
+
+        <!-- Epicenter -->
+
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_title_linear_layout"
+            android:id="@+id/activity_glossary_epicenter_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_title_text_view"
+                android:id="@+id/activity_glossary_epicenter_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_richter_magnitude_scale_title"
+                android:text="@string/activity_glossary_epicenter_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_title_arrow_image_view"
+                android:id="@+id/activity_glossary_epicenter_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_text_view"
+            android:id="@+id/activity_glossary_epicenter_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_richter_magnitude_scale_text"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
+
+        <!-- Fault -->
+
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_intensity_title_linear_layout"
+            android:id="@+id/activity_glossary_fault_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginTop="@dimen/application_standard_margin"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_intensity_title_text_view"
+                android:id="@+id/activity_glossary_fault_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_intensity_title"
+                android:text="@string/activity_glossary_fault_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_intensity_title_arrow_image_view"
+                android:id="@+id/activity_glossary_fault_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_intensity_definition_text_view"
+            android:id="@+id/activity_glossary_fault_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_intensity_definition"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
+
+        <!-- Intensity -->
+
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_title_linear_layout"
+            android:id="@+id/activity_glossary_intensity_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginTop="@dimen/application_standard_margin"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_title_text_view"
+                android:id="@+id/activity_glossary_intensity_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_modified_mercalli_intensity_scale_title"
+                android:text="@string/activity_glossary_intensity_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_title_arrow_image_view"
+                android:id="@+id/activity_glossary_intensity_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_text_view"
+            android:id="@+id/activity_glossary_intensity_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_modified_mercalli_intensity_scale_text"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
+
+        <!-- Magnitude -->
+
         <LinearLayout
-            android:id="@+id/activity_earthquake_concepts_alert_title_linear_layout"
+            android:id="@+id/activity_glossary_magnitude_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_concepts_alert_title_text_view"
+                android:id="@+id/activity_glossary_magnitude_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_alert_title"
+                android:text="@string/activity_glossary_magnitude_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_concepts_alert_title_arrow_image_view"
+                android:id="@+id/activity_glossary_magnitude_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_concepts_alert_text_view"
+            android:id="@+id/activity_glossary_magnitude_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_alert_text"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
+
+        <!-- Modified Mercalli intensity scale -->
+
         <LinearLayout
-            android:id="@+id/activity_earthquake_concepts_tsunami_title_linear_layout"
+            android:id="@+id/activity_glossary_mercalli_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginTop="@dimen/application_standard_margin"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_concepts_tsunami_title_text_view"
+                android:id="@+id/activity_glossary_mercalli_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_tsunami_title"
+                android:text="@string/activity_glossary_mercalli_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_concepts_tsunami_title_arrow_image_view"
+                android:id="@+id/activity_glossary_mercalli_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_concepts_tsunami_text_view"
+            android:id="@+id/activity_glossary_mercalli_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_tsunami_text"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+        <!-- Modified Mercalli intensity scale values -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_mercalli_values_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_mercalli_values_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_mercalli_values_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_mercalli_values_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_mercalli_values_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+        <!-- Richter magnitude scale -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_richter_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_richter_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_richter_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_richter_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_richter_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+        <!-- Richter magnitude scale values -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_richter_values_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_richter_values_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_richter_values_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_richter_values_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_richter_values_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+
+        <!-- Seismograph -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_seismograph_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_seismograph_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_seismograph_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_seismograph_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_seismograph_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+
+        <!-- Seismology -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_seismology_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_seismology_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_seismology_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_seismology_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_seismology_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+
+        <!-- Tectonic plates -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_tectonic_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_tectonic_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_tectonic_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_tectonic_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_tectonic_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+
+        <!-- Tsunami -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_tsunami_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_tsunami_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_tsunami_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_tsunami_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_tsunami_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />

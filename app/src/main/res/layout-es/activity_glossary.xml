@@ -14,217 +14,182 @@
         android:padding="@dimen/application_small_padding">
 
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_magnitude_title_linear_layout"
+            android:id="@+id/activity_glossary_magnitude_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_magnitude_title_text_view"
+                android:id="@+id/activity_glossary_magnitude_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_magnitude_title"
+                android:text="@string/activity_glossary_magnitude_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_magnitude_title_arrow_image_view"
+                android:id="@+id/activity_glossary_magnitude_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_magnitude_definition_text_view"
+            android:id="@+id/activity_glossary_magnitude_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_magnitude_text"
+            android:text="@string/activity_glossary_magnitude_definition"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_title_linear_layout"
+            android:id="@+id/activity_glossary_richter_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_title_text_view"
+                android:id="@+id/activity_glossary_richter_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_richter_magnitude_scale_title"
+                android:text="@string/activity_glossary_richter_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_title_arrow_image_view"
+                android:id="@+id/activity_glossary_richter_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_richter_magnitude_scale_text_view"
+            android:id="@+id/activity_glossary_richter_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_richter_magnitude_scale_text"
+            android:text="@string/activity_glossary_richter_definition"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_intensity_title_linear_layout"
+            android:id="@+id/activity_glossary_intensity_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_intensity_title_text_view"
+                android:id="@+id/activity_glossary_intensity_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_intensity_title"
+                android:text="@string/activity_glossary_intensity_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_intensity_title_arrow_image_view"
+                android:id="@+id/activity_glossary_intensity_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_intensity_definition_text_view"
+            android:id="@+id/activity_glossary_intensity_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_intensity_definition"
+            android:text="@string/activity_glossary_intensity_definition"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_title_linear_layout"
+            android:id="@+id/activity_glossary_mercalli_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_title_text_view"
+                android:id="@+id/activity_glossary_mercalli_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_modified_mercalli_intensity_scale_title"
+                android:text="@string/activity_glossary_mercalli_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_title_arrow_image_view"
+                android:id="@+id/activity_glossary_mercalli_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_terms_modified_mercalli_intensity_scale_text_view"
+            android:id="@+id/activity_glossary_mercalli_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_modified_mercalli_intensity_scale_text"
+            android:text="@string/activity_glossary_mercalli_definition"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
+
         <LinearLayout
-            android:id="@+id/activity_earthquake_concepts_alert_title_linear_layout"
+            android:id="@+id/activity_glossary_tsunami_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_earthquake_concepts_alert_title_text_view"
+                android:id="@+id/activity_glossary_tsunami_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_alert_title"
+                android:text="@string/activity_glossary_tsunami_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_earthquake_concepts_alert_title_arrow_image_view"
+                android:id="@+id/activity_glossary_tsunami_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_earthquake_concepts_alert_text_view"
+            android:id="@+id/activity_glossary_tsunami_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_alert_text"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/application_standard_text_size"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/activity_earthquake_concepts_tsunami_title_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            tools:ignore="UseCompoundDrawables">
-
-            <TextView
-                android:id="@+id/activity_earthquake_concepts_tsunami_title_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_earthquake_concepts_tsunami_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/application_standard_text_size"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_earthquake_concepts_tsunami_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_earthquake_concepts_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/activity_earthquake_concepts_tsunami_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_concepts_tsunami_text"
+            android:text="@string/activity_glossary_tsunami_definition"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />

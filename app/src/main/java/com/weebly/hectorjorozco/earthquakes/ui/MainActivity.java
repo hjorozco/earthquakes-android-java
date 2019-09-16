@@ -11,6 +11,7 @@ import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mEarthquakesListAdapter);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
 
         // Sets up the fast scroller

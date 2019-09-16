@@ -5,14 +5,10 @@
     android:id="@+id/title_list_item_text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:fontFamily="sans-serif-medium"
-    android:paddingStart="@dimen/application_standard_padding"
-    android:paddingLeft="@dimen/application_standard_padding"
-    android:paddingTop="@dimen/application_small_padding"
-    android:paddingEnd="@dimen/application_standard_padding"
-    android:paddingRight="@dimen/application_standard_padding"
-    android:paddingBottom="@dimen/application_small_padding"
-    android:textSize="@dimen/application_standard_text_size"
+    android:padding="@dimen/application_standard_padding"
     android:textColor="@color/colorPrimary"
+    android:textSize="@dimen/application_standard_text_size"
     tools:text="200 earthquakes found" />
 

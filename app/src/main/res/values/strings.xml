@@ -359,106 +359,173 @@
 
     <string name="activity_earthquake_concepts_label">
         @string/menu_activity_earthquake_details_action_glossary_title</string>
-    <string name="activity_earthquake_concepts_arrow_image_view_content_description" translatable="false">
+    <string name="activity_glossary_arrow_image_view_content_description" translatable="false">
         Arrow</string>
 
-    <string name="activity_earthquake_concepts_title_text">Concepts used in earthquake details:</string>
-
-    <string name="activity_earthquake_concepts_magnitude_title">Magnitude</string>
-    <string name="activity_earthquake_concepts_magnitude_text">
-        The magnitude is a number that characterizes the relative size of an earthquake. It measures
-        the energy released at the source of the earthquake and is determined from measurements on
-        seismographs.
-        \n\nSeveral magnitude scales have been defined, but one of the most commonly used is the local
-        magnitude (ML), commonly referred to as "Richter magnitude".
+    <string name="activity_glossary_earthquake_title">Earthquake</string>
+    <string name="activity_glossary_earthquake_definition">
+        An &lt;b>earthquake&lt;/b> (also known as a &lt;i>quake&lt;/i>, &lt;i>tremor&lt;/i> or &lt;i>temblor&lt;/i>) is the
+        shaking of the surface of the Earth, resulting from the sudden release of energy in the
+        Earth\'s lithosphere &lt;i>(the rigid outer part of the earth)&lt;/i> that creates seismic waves.
+        &lt;br/&gt;&lt;br/&gt;Earthquakes can range in size from those that are so weak that they cannot be felt
+        to those violent enough to toss people around and destroy whole cities.
     </string>
 
-    <string name="activity_earthquake_concepts_richter_magnitude_scale_title">Magnitude scale - Richter</string>
-    <string name="activity_earthquake_concepts_richter_magnitude_scale_text">
-        0.0-0.9 (Micro). Microearthquake. Not felt. Recorded only by seismographs.
+    <string name="activity_glossary_epicenter_title">Epicenter</string>
+    <string name="activity_glossary_epicenter_definition">
+        In seismology, the &lt;b>epicenter&lt;/b> is the point on the Earth\'s surface directly above a
+        hypocenter or focus &lt;i>(the point where an earthquake or an underground explosion
+        originates)&lt;/i>.
+    </string>
+
+    <string name="activity_glossary_fault_title">Fault</string>
+    <string name="activity_glossary_fault_definition">
+        A &lt;b>fault&lt;/b> is a crack in the Earth\'s crust. Typically, faults are associated with, or
+        form, the boundaries between Earth\'s tectonic plates.&lt;br/&gt;&lt;br/&gt;In an active fault, the
+        pieces of the Earth\'s crust along a fault move over time. The moving rocks can cause
+        earthquakes.
+    </string>
+
+    <string name="activity_glossary_intensity_title">Intensity</string>
+    <string name="activity_glossary_intensity_definition">
+        The &lt;b>intensity&lt;/b> is a number &lt;i>(written as a Roman numeral)&lt;/i> describing the severity
+        of an earthquake in terms of its effects on the earth\'s surface and on humans and their
+        structures.&lt;br/&gt;&lt;br/&gt;Several intensity scales exist, but one of the most commonly used is the
+        Modified Mercalli scale.&lt;br/&gt;&lt;br/&gt;There are many intensities for an earthquake, depending on where you are, unlike the
+        magnitude, which is one number for each earthquake.&lt;br/&gt;&lt;br/&gt;The estimated intensity is generated with data gathered by instruments. The reported
+        intensity is generated with data given by people who reports the earthquake.
+    </string>
+
+    <string name="activity_glossary_magnitude_title">Magnitude</string>
+    <string name="activity_glossary_magnitude_definition">
+        The &lt;b>magnitude&lt;/b> is a number that characterizes the relative size of an earthquake. It
+        measures the energy released at the source of the earthquake and is determined from
+        measurements on seismographs.&lt;br/&gt;&lt;br/&gt;Several magnitude scales have been defined, but one
+        of the most commonly used is the &lt;i>local magnitude (ML)&lt;/i>, commonly referred to as
+        &lt;i>Richter magnitude scale&lt;/i>.
+    </string>
+
+    <string name="activity_glossary_mercalli_title">
+        Modified Mercalli intensity scale</string>
+    <string name="activity_glossary_mercalli_definition">
+        The &lt;b>Modified Mercalli intensity scale&lt;/b> is a scale to measure the intensity of
+        earthquakes. Unlike with the Richter scale, the Mercalli scale does not take into account
+        energy of an earthquake directly. Rather, it classifies earthquakes by the effects they have
+        &lt;i>(and the destruction they cause)&lt;/i>. When there is little damage, the scale describes how
+        people felt the earthquake, or how many people felt it.&lt;br/&gt;&lt;br/&gt;Very often, non-geologists
+        use this scale, because it is easier for people to describe what damage an earthquake
+        caused, than to do calculations to get a value on the Richter scale.&lt;br/&gt;&lt;br/&gt;Values range
+        from &lt;i>I - Instrumental&lt;/i> to &lt;i>XII - Catastrophic&lt;/i>.
+    </string>
+
+    <string name="activity_glossary_mercalli_values_title">
+        Modified Mercalli intensity scale (values)</string>
+    <string name="activity_glossary_mercalli_values_definition">
+        &lt;b>I (Not Felt).&lt;/b> Not felt except by a very few under especially favorable conditions.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>II (Weak).&lt;/b> Felt only by a few persons at rest, especially on upper floors of buildings.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>III (Weak).&lt;/b> Felt quite noticeably by persons indoors, especially on upper floors of buildings.
+        Many people do not recognize it as an earthquake. Standing motor cars may rock slightly.
+        Vibrations similar to the passing of a truck.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>IV (Light).&lt;/b> Felt indoors by many, outdoors by few during the day. At night, some awakened.
+        Dishes, windows, doors disturbed; walls make cracking sound. Sensation like heavy truck
+        striking building. Standing motor cars rocked noticeably.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>V (Moderate).&lt;/b> Felt by nearly everyone; many awakened. Some dishes, windows broken. Unstable objects
+        overturned. Pendulum clocks may stop.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>VI (Strong).&lt;/b> Felt by all, many frightened. Some heavy furniture moved; a few instances of fallen
+        plaster. Slight damage.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>VII (Very strong).&lt;/b> Negligible damage in buildings of good design and construction; slight to moderate
+        in well-built ordinary structures; considerable damage in poorly built or badly designed
+        structures; some chimneys broken.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>VIII (Severe).&lt;/b> Slight damage in specially designed structures; considerable damage in ordinary
+        buildings with partial collapse. Great damage in poorly built structures. Fall of chimneys,
+        factory stacks, columns, monuments, walls. Heavy furniture overturned.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>IX (Violent).&lt;/b> Considerable damage in specially designed structures; well-designed frame structures
+        thrown out of plumb. Great damage in substantial buildings, with partial collapse. Buildings
+        shifted off foundations.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>X (Extreme).&lt;/b> Some well-built wooden structures destroyed; most masonry and frame structures
+        destroyed with foundations. Rails bent.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>XI (Extreme).&lt;/b> Few, if any masonry structures remain standing. Bridges destroyed. Rails bent greatly.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>XII (Extreme).&lt;/b> Total damage. Lines of sight and level distorted. Objects thrown into the air.
+    </string>
+
+    <string name="activity_glossary_richter_title">Richter magnitude scale</string>
+    <string name="activity_glossary_richter_definition">
+        The &lt;b>Richter magnitude scale&lt;/b> is a scale of numbers used to tell the power
+        (or magnitude) of earthquakes. &lt;i>Charles Richter&lt;/i> developed the Richter Scale in 1935. His
+        scale worked like a seismogram, measured by a particular type of seismometer at a distance
+        of 100 kilometers (62 mi) from the earthquake.&lt;br/&gt;&lt;br/&gt;Earthquakes 4.5 or higher on the
+        Richter scale can be measured all over the world. An earthquake a size that scores 3.0 is
+        about 10 times the amplitude of one that scores 2.0. The energy that is released increases
+        by a factor of about 32.&lt;br/&gt;&lt;br/&gt;Every increase of 1 on the Richter scale corresponds to
+        an increase in amplitude by a factor of 10; therefore, it is a logarithmic scale.&lt;br/&gt;&lt;br/&gt;
+        The earthquake with the biggest recorded magnitude was the &lt;i>Great Chilean Earthquake&lt;i>.
+        It had a magnitude of 9.5 on the Richter scale and occurred in 1960. Around 6,000 people
+        died because of the earthquake. No earthquake has ever hit 10+ on the Richter Scale.
+    </string>
+
+    <string name="activity_glossary_richter_values_title">Richter magnitude scale (values)</string>
+    <string name="activity_glossary_richter_values_definition">
+        &lt;b>0.0-0.9 (Micro).&lt;/b> Microearthquake. Not felt. Recorded only by seismographs.
         Continual/several million per year.
-        \n\n1.0–1.9 (Micro). Microearthquake, not felt, or felt rarely. Recorded by seismographs.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>1.0–1.9 (Micro).&lt;/b> Microearthquake, not felt, or felt rarely. Recorded by seismographs.
         Continual/several million per year.
-        \n\n2.0–2.9 (Minor). Felt slightly by some people. No damage to buildings. Over one million per year.
-        \n\n3.0–3.9 (Minor). Often felt by people, but very rarely causes damage. Shaking of indoor
+        &lt;br/&gt;&lt;br/&gt;&lt;b>2.0–2.9 (Minor).&lt;/b> Felt slightly by some people. No damage to buildings. Over one million per year.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>3.0–3.9 (Minor).&lt;/b> Often felt by people, but very rarely causes damage. Shaking of indoor
         objects can be noticeable. Over 100,000 per year.
-        \n\n4.0–4.9 (Light). Noticeable shaking of indoor objects and rattling noises. Felt by most
+        &lt;br/&gt;&lt;br/&gt;&lt;b>4.0–4.9 (Light).&lt;/b> Noticeable shaking of indoor objects and rattling noises. Felt by most
         people in the affected area. Slightly felt outside. Generally causes none to minimal damage.
         Moderate to significant damage very unlikely. Some objects may fall off shelves or be knocked
         over. 10,000 to 15,000 per year.
-        \n\n5.0–5.9 (Moderate). Can cause damage of varying severity to poorly constructed buildings.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>5.0–5.9 (Moderate).&lt;/b> Can cause damage of varying severity to poorly constructed buildings.
         At most, none to slight damage to all other buildings. Felt by everyone. 1,000 to 1,500 per
         year.
-        \n\n6.0–6.9 (Strong). Damage to a moderate number of well-built structures in populated
+        &lt;br/&gt;&lt;br/&gt;&lt;b>6.0–6.9 (Strong).&lt;/b> Damage to a moderate number of well-built structures in populated
         areas. Earthquake-resistant structures survive with slight to moderate damage. Poorly designed
         structures receive moderate to severe damage. Felt in wider areas; up to hundreds of
         miles/kilometers from the epicenter. Strong to violent shaking in epicentral area. 100 to
         150 per year.
-        \n\n7.0–7.9 (Major). Causes damage to most buildings, some to partially or completely collapse
+        &lt;br/&gt;&lt;br/&gt;&lt;b>7.0–7.9 (Major).&lt;/b> Causes damage to most buildings, some to partially or completely collapse
         or receive severe damage. Well-designed structures are likely to receive damage. Felt across
         great distances with major damage mostly limited to 250 km from epicenter. 10 to 20 per year.
-        \n\n8.0–8.9 (Great). Major damage to buildings, structures likely to be destroyed. Will
+        &lt;br/&gt;&lt;br/&gt;&lt;b>8.0–8.9 (Great).&lt;/b> Major damage to buildings, structures likely to be destroyed. Will
         cause moderate to heavy damage to sturdy or earthquake-resistant buildings. Damaging in
         large areas. Felt in extremely large regions. On average, one per year.
-        \n\n9.0 and greater (Great). At or near total destruction – severe damage or collapse to all buildings. Heavy
+        &lt;br/&gt;&lt;br/&gt;&lt;b>9.0 and greater (Great).&lt;/b> At or near total destruction – severe damage or collapse to all buildings. Heavy
         damage and shaking extends to distant locations. Permanent changes in ground topography. On average, one
         per 10 to 50 years.
     </string>
 
-    <string name="activity_earthquake_concepts_intensity_title">Intensity</string>
-    <string name="activity_earthquake_concepts_intensity_definition">
-        The intensity is a number (written
-        as a Roman numeral) describing the severity of an earthquake in terms of its effects on the
-        earth\'s surface and on humans and their structures.
-        \n\nSeveral scales exist, but one of the most commonly used is the Modified Mercalli scale.
-        \n\nThere are many intensities for an earthquake, depending on where you are, unlike the
-        magnitude, which is one number for each earthquake.
-        \n\nThe estimated intensity is generated with data gathered by instruments. The reported
-        intensity is generated with data given by people who reports the earthquake.
+    <string name="activity_glossary_seismograph_title">Seismograph</string>
+    <string name="activity_glossary_seismograph_definition">
+        A &lt;b>seismograph&lt;/b> or &lt;i>seismometer&lt;/i> is an instrument that measures motions of the
+        ground, including those generated by earthquakes, nuclear explosions and other sources.
+        Records of seismic waves called seismograms allow to map the interior of the Earth, and
+        locate and measure the size of those different sources.&lt;br/&gt;&lt;br/&gt;The word derives from the
+        Greek word, &lt;i>seismós&lt;/i>, a shaking or quake.
     </string>
 
-    <string name="activity_earthquake_concepts_modified_mercalli_intensity_scale_title">
-        Intensity scale - modified Mercalli</string>
-    <string name="activity_earthquake_concepts_modified_mercalli_intensity_scale_text">
-        I (Not Felt). Not felt except by a very few under especially favorable conditions.
-        \n\nII (Weak). Felt only by a few persons at rest, especially on upper floors of buildings.
-        \n\nIII (Weak). Felt quite noticeably by persons indoors, especially on upper floors of buildings.
-        Many people do not recognize it as an earthquake. Standing motor cars may rock slightly.
-        Vibrations similar to the passing of a truck.
-        \n\nIV (Light). Felt indoors by many, outdoors by few during the day. At night, some awakened.
-        Dishes, windows, doors disturbed; walls make cracking sound. Sensation like heavy truck
-        striking building. Standing motor cars rocked noticeably.
-        \n\nV (Moderate) Felt by nearly everyone; many awakened. Some dishes, windows broken. Unstable objects
-        overturned. Pendulum clocks may stop.
-        \n\nVI (Strong). Felt by all, many frightened. Some heavy furniture moved; a few instances of fallen
-        plaster. Slight damage.
-        \n\nVII (Very strong). Negligible damage in buildings of good design and construction; slight to moderate
-        in well-built ordinary structures; considerable damage in poorly built or badly designed
-        structures; some chimneys broken.
-        \n\nVIII (Severe). Slight damage in specially designed structures; considerable damage in ordinary
-        buildings with partial collapse. Great damage in poorly built structures. Fall of chimneys,
-        factory stacks, columns, monuments, walls. Heavy furniture overturned.
-        \n\nIX (Violent). Considerable damage in specially designed structures; well-designed frame structures
-        thrown out of plumb. Great damage in substantial buildings, with partial collapse. Buildings
-        shifted off foundations.
-        \n\nX (Extreme). Some well-built wooden structures destroyed; most masonry and frame structures
-        destroyed with foundations. Rails bent.
-        \n\nXI (Extreme). Few, if any masonry structures remain standing. Bridges destroyed. Rails bent greatly.
-        \n\nXII (Extreme). Total damage. Lines of sight and level distorted. Objects thrown into the air.
+    <string name="activity_glossary_seismology_title">Seismology</string>
+    <string name="activity_glossary_seismology_definition">
+        &lt;b>Seismology&lt;/b> (from Ancient Greek &lt;i>seismós&lt;/i> meaning &lt;i>earthquake&lt;/i> and &lt;i>logía&lt;/i>
+        meaning &lt;i>study of&lt;/i>) is the scientific study of earthquakes and the propagation of
+        elastic waves through the Earth or through other planet-like bodies.&lt;br/&gt;&lt;br/&gt;The field also includes
+        studies of earthquake environmental effects such as tsunamis as well as diverse seismic
+        sources such as volcanic, tectonic, oceanic, atmospheric, and artificial processes such as
+        explosions.
     </string>
 
-    <string name="activity_earthquake_concepts_alert_title">Alert</string>
-    <string name="activity_earthquake_concepts_alert_text">
-        GREEN little or not economic impact. No fatalities.
-        \n\nYELLOW regional economic impact and response. Very few fatalities.
-        \n\nORANGE national scale economic impact and response. Some fatalities.
-        \n\nRED great economic impact and international response. A lot of fatalities.
+    <string name="activity_glossary_tectonic_title">Tectonic plates</string>
+    <string name="activity_glossary_tectonic_definition">
+        The &lt;b>tectonic plates&lt;/b> are the large, thin, relatively rigid plates that move relative
+        to one another on the outer surface of the Earth.&lt;br/&gt;&lt;br/&gt;Observations show that most
+        earthquakes are associated with tectonic plate boundaries.
     </string>
 
-    <string name="activity_earthquake_concepts_tsunami_title">Possible tsunami</string>
-    <string name="activity_earthquake_concepts_tsunami_text">
-        Strong earthquakes in oceanic regions can trigger a tsunami. This message does not indicate
-        if a tsunami actually did or will exist. The USGS is not responsible for Tsunami warnings.
+    <string name="activity_glossary_tsunami_title">Tsunami</string>
+    <string name="activity_glossary_tsunami_definition">
+        A &lt;b>tsunami&lt;/b> is a sea wave of local or distant origin that results from large-scale
+        seafloor displacements associated with large earthquakes, major submarine slides, or
+        exploding volcanic islands.
     </string>
 
     <string name="menu_activity_earthquake_terms_action_help_title">Help</string>
