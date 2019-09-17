@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.futuremind.recyclerviewfastscroll.FastScroller
         android:id="@+id/activity_main_recycler_view_fast_scroller"
@@ -31,18 +31,30 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/application_standard_margin" />
 
-        <TextView
-            android:id="@+id/activity_main_message_text_view"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawablePadding="@dimen/application_big_padding"
-            android:padding="@dimen/application_big_padding"
-            android:text="@string/searching_earthquakes_text"
-            android:textAlignment="center"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorPrimary"
-            tools:visibility="visible" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/activity_main_message_image_view"/>
+
+            <TextView
+                android:id="@+id/activity_main_message_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/application_big_padding"
+                android:text="@string/searching_earthquakes_text"
+                android:textAlignment="center"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/colorPrimary"
+                tools:visibility="visible" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

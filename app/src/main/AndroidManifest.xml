@@ -50,7 +50,7 @@
 
         <activity
             android:name=".ui.EarthquakeWebPageActivity"
-            android:label="@string/activity_earthquake_web_site_label"
+            android:label="@string/activity_earthquake_web_page_label"
             android:theme="@style/AppTheme"/>
 
         <activity

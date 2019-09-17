@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
@@ -19,6 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private RecyclerView mRecyclerView;
     private MainActivityViewModel mMainActivityViewModel;
     private TextView mMessageTextView;
+    private ImageView mMessageImageView;
     private ProgressBar mProgressBar;
     private Menu mMenu;
     private int mNumberOfEarthquakesOnList;
@@ -76,7 +82,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         mEarthquakesListAdapter = new EarthquakesListAdapter(this, this);
+        mMessageImageView = findViewById(R.id.activity_main_message_image_view);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
 
@@ -238,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         int textID = 0;
         switch (type) {
             case QueryUtils.SEARCHING:
-                imageID = R.drawable.ic_message_searching_earthquakes;
+                imageID = R.drawable.ic_earthquakes;
                 textID = R.string.searching_earthquakes_text;
                 break;
             case QueryUtils.NO_INTERNET_CONNECTION:
@@ -259,7 +268,24 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 break;
         }
         if (type != QueryUtils.SEARCH_RESULT_NON_NULL) {
-            mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
+            mMessageImageView.setImageDrawable(getResources().getDrawable(imageID));
+
+            if (type == QueryUtils.SEARCHING) {
+                Animation mAnimation = new TranslateAnimation(
+                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                        TranslateAnimation.RELATIVE_TO_PARENT, 0.04f);
+                mAnimation.setDuration(300);
+                mAnimation.setRepeatCount(-1);
+                mAnimation.setRepeatMode(Animation.REVERSE);
+                mAnimation.setInterpolator(new LinearInterpolator());
+                mMessageImageView.setAnimation(mAnimation);
+            } else {
+                mMessageImageView.getAnimation().cancel();
+            }
+
+            // mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
             mMessageTextView.setText(getString(textID));
         }
     }
@@ -289,6 +315,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private void setMessageVisible(boolean showMessage) {
         if (showMessage) {
             mRecyclerView.setVisibility(View.GONE);
+            mMessageImageView.setVisibility(View.VISIBLE);
             mMessageTextView.setVisibility(View.VISIBLE);
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
@@ -297,6 +324,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             } else {
                 mRecyclerViewFastScroller.setVisibility(View.INVISIBLE);
             }
+            mMessageImageView.setVisibility(View.GONE);
             mMessageTextView.setVisibility(View.GONE);
         }
     }

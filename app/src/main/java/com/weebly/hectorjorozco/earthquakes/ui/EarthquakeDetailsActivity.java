@@ -41,6 +41,7 @@ import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFrag
 import com.weebly.hectorjorozco.earthquakes.utils.MapsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WebViewUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.text.DecimalFormat;
 
@@ -665,7 +666,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void showPossibleTsunamiMessage(){
+    private void showPossibleTsunamiMessage() {
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(R.string.activity_earthquake_details_possible_tsunami_dialog_fragment_message)),
@@ -708,9 +709,13 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     private void showEarthquakeWebSiteActivity() {
-        Intent intent = new Intent(this, EarthquakeWebPageActivity.class);
-        intent.putExtra(EarthquakeWebPageActivity.EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl());
-        startActivity(intent);
+        if (WordsUtils.getLocaleLanguage().equals("es")) {
+            QueryUtils.openWebPageInGoogleChrome(this, mEarthquake.getUrl());
+        } else {
+            Intent intent = new Intent(this, EarthquakeWebPageActivity.class);
+            intent.putExtra(EarthquakeWebPageActivity.EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl());
+            startActivity(intent);
+        }
     }
 
 

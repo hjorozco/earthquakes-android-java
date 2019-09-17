@@ -6,26 +6,27 @@
     <item
         android:id="@+id/menu_activity_main_action_refresh"
         android:icon="@drawable/ic_stop_white_24dp"
-        android:orderInCategory="1"
         android:title="@string/menu_activity_main_action_stop_title"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_activity_main_action_search_preferences"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:orderInCategory="2"
         android:title="@string/menu_activity_main_action_search_preferences_title"
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_activity_main_action_favorites"
+        android:title="@string/menu_activity_main_action_favorites_title"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_activity_main_action_earthquakes_map"
-        android:orderInCategory="3"
         android:title="@string/menu_activity_main_action_earthquakes_map_title"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_activity_main_action_list_information"
-        android:orderInCategory="4"
         android:title="@string/menu_activity_main_action_list_information_title"
         app:showAsAction="never" />
 
@@ -33,19 +34,16 @@
 
         <item
             android:id="@+id/menu_activity_main_action_glossary"
-            android:orderInCategory="5"
             android:title="@string/menu_activity_earthquake_details_action_glossary_title"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/menu_activity_main_action_help"
-            android:orderInCategory="6"
             android:title="@string/menu_activity_main_action_help_title"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/menu_activity_main_action_about"
-            android:orderInCategory="7"
             android:title="@string/menu_activity_main_action_about_title"
             app:showAsAction="never" />
     </group>

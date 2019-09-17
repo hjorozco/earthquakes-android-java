@@ -27,6 +27,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private WebView mWebView;
+    private String mReportEarthquakeUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        mReportEarthquakeUrl = getIntent().getStringExtra(REPORT_EARTHQUAKE_URL_EXTRA_KEY);
 
         mWebView = findViewById(R.id.activity_report_earthquake_web_view);
         mTextView = findViewById(R.id.activity_report_earthquake_text_view);
@@ -59,7 +62,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
                     mTextView, mWebView, progressBar));
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setDomStorageEnabled(true);
-            mWebView.loadUrl(getIntent().getStringExtra(REPORT_EARTHQUAKE_URL_EXTRA_KEY));
+            mWebView.loadUrl(mReportEarthquakeUrl);
         } else {
             mTextView.setVisibility(View.VISIBLE);
             mTextView.setText(getString(R.string.activity_earthquake_report_no_internet_message));
@@ -72,7 +75,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_report_earthquake, menu);
-        return WordsUtils.getLocaleLanguage().equals("es");
+        return true;
     }
 
 
@@ -81,6 +84,9 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_activity_report_earthquake_action_help:
                 showHelpSnackBar();
+                break;
+            case R.id.menu_activity_report_earthquake_action_chrome:
+                QueryUtils.openWebPageInGoogleChrome(this, mReportEarthquakeUrl);
                 break;
             case android.R.id.home:
                 if (mWebView!=null && mWebView.canGoBack()) {

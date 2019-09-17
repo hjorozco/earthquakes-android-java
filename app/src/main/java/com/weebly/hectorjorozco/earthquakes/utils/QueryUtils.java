@@ -1,11 +1,14 @@
 package com.weebly.hectorjorozco.earthquakes.utils;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
@@ -584,11 +587,11 @@ public class QueryUtils {
             mMagnitudeBackgroundColor = magnitudeBackgroundColor;
         }
 
-        public int getMagnitudeColor() {
+        int getMagnitudeColor() {
             return mMagnitudeColor;
         }
 
-        public int getMagnitudeBackgroundColor() {
+        int getMagnitudeBackgroundColor() {
             return mMagnitudeBackgroundColor;
         }
 
@@ -635,5 +638,18 @@ public class QueryUtils {
         dateTextView.setTextColor(magnitudeColor);
     }
 
+
+    public static void openWebPageInGoogleChrome(Context context, String earthquakeUrl){
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(earthquakeUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setPackage("com.android.chrome");
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            // Chrome browser presumably not installed so allow user to choose instead
+            intent.setPackage(null);
+            context.startActivity(intent);
+        }
+    }
 
 }

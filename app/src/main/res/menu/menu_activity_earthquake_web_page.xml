@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.weebly.hectorjorozco.earthquakes.ui.ReportEarthquakeActivity">
+    tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakeWebPageActivity">
 
     <item
-        android:id="@+id/menu_activity_report_earthquake_action_chrome"
+        android:id="@+id/menu_activity_earthquake_web_page_action_chrome"
         android:title="@string/menu_activity_earthquake_web_page_action_chrome_title"
         app:showAsAction="never" />
 
