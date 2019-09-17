@@ -13,118 +13,55 @@
         android:orientation="vertical"
         android:padding="@dimen/application_small_padding">
 
+        <!-- Epicenter -->
+
         <LinearLayout
-            android:id="@+id/activity_glossary_magnitude_title_linear_layout"
+            android:id="@+id/activity_glossary_epicenter_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/activity_glossary_magnitude_title_text_view"
+                android:id="@+id/activity_glossary_epicenter_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_glossary_magnitude_title"
+                android:text="@string/activity_glossary_epicenter_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/activity_glossary_magnitude_title_arrow_image_view"
+                android:id="@+id/activity_glossary_epicenter_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_glossary_magnitude_definition_text_view"
+            android:id="@+id/activity_glossary_epicenter_definition_text_view"
             android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_glossary_magnitude_definition"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/activity_glossary_richter_title_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            tools:ignore="UseCompoundDrawables">
 
-            <TextView
-                android:id="@+id/activity_glossary_richter_title_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_glossary_richter_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/application_standard_text_size"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_richter_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/activity_glossary_richter_definition_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_glossary_richter_definition"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/application_standard_text_size"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/activity_glossary_intensity_title_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            tools:ignore="UseCompoundDrawables">
-
-            <TextView
-                android:id="@+id/activity_glossary_intensity_title_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/application_small_padding"
-                android:text="@string/activity_glossary_intensity_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/application_standard_text_size"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_intensity_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/activity_glossary_intensity_definition_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_glossary_intensity_definition"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/application_standard_text_size"
-            android:visibility="gone" />
+        <!-- Modified Mercalli intensity scale -->
 
         <LinearLayout
             android:id="@+id/activity_glossary_mercalli_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
@@ -132,6 +69,7 @@
                 android:id="@+id/activity_glossary_mercalli_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_mercalli_title"
                 android:textColor="@color/colorPrimary"
@@ -142,6 +80,7 @@
                 android:id="@+id/activity_glossary_mercalli_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
@@ -152,16 +91,439 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_glossary_mercalli_definition"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Modified Mercalli intensity scale values -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_mercalli_values_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_mercalli_values_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_mercalli_values_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_mercalli_values_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_mercalli_values_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Richter magnitude scale -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_richter_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_richter_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_richter_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_richter_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_richter_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Richter magnitude scale values -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_richter_values_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_richter_values_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_richter_values_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_richter_values_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_richter_values_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Fault -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_fault_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_fault_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_fault_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_fault_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_fault_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 
 
+        <!-- Intensity -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_intensity_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_intensity_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_intensity_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_intensity_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_intensity_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Magnitude -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_magnitude_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_magnitude_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_magnitude_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_magnitude_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_magnitude_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Tectonic plates -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_tectonic_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_tectonic_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_tectonic_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_tectonic_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_tectonic_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Earthquake -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_earthquake_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_earthquake_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_earthquake_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_earthquake_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_earthquake_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+
+        <!-- Seismograph -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_seismograph_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_seismograph_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_seismograph_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_seismograph_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_seismograph_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- Seismology -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_seismology_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_seismology_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_seismology_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_seismology_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_seismology_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:visibility="gone" />
+
+
+        <!-- Tsunami -->
+
         <LinearLayout
             android:id="@+id/activity_glossary_tsunami_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
@@ -169,6 +531,7 @@
                 android:id="@+id/activity_glossary_tsunami_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_tsunami_title"
                 android:textColor="@color/colorPrimary"
@@ -179,18 +542,61 @@
                 android:id="@+id/activity_glossary_tsunami_title_arrow_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_glossary_tsunami_text_view"
+            android:id="@+id/activity_glossary_tsunami_definition_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
-            android:text="@string/activity_glossary_tsunami_definition"
             android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- USGS -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_usgs_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_usgs_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_usgs_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_usgs_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_usgs_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="@dimen/application_small_margin"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 

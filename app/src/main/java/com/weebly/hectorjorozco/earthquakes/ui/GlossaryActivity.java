@@ -33,8 +33,9 @@ public class GlossaryActivity extends AppCompatActivity {
     private static final int SEISMOLOGY_CONCEPT_INDEX = 10;
     private static final int TECTONIC_CONCEPT_INDEX = 11;
     private static final int TSUNAMI_CONCEPT_INDEX = 12;
+    private static final int USGS_CONCEPT_INDEX = 13;
 
-    private static final int NUMBER_OF_CONCEPTS = 13;
+    private static final int NUMBER_OF_CONCEPTS = 14;
 
     private boolean mIsAnimationFinished = true;
 
@@ -164,6 +165,13 @@ public class GlossaryActivity extends AppCompatActivity {
         setupEarthquakeConceptViews(findViewById(R.id.activity_glossary_tsunami_title_linear_layout),
                 tsunamiTextView, findViewById(R.id.activity_glossary_tsunami_title_arrow_image_view),
                 TSUNAMI_CONCEPT_INDEX);
+
+        // USGS
+        TextView usgsTextView = findViewById(R.id.activity_glossary_usgs_definition_text_view);
+        usgsTextView.setText(Html.fromHtml(getString(R.string.activity_glossary_usgs_definition)));
+        setupEarthquakeConceptViews(findViewById(R.id.activity_glossary_usgs_title_linear_layout),
+                usgsTextView, findViewById(R.id.activity_glossary_usgs_title_arrow_image_view),
+                USGS_CONCEPT_INDEX);
     }
 
 

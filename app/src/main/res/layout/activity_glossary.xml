@@ -18,8 +18,8 @@
         <LinearLayout
             android:id="@+id/activity_glossary_earthquake_title_linear_layout"
             android:layout_width="match_parent"
-            android:background="?android:attr/selectableItemBackground"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
@@ -60,7 +61,6 @@
             android:id="@+id/activity_glossary_epicenter_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -89,6 +89,7 @@
         <TextView
             android:id="@+id/activity_glossary_epicenter_definition_text_view"
             android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
@@ -103,7 +104,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
@@ -133,6 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
@@ -145,7 +146,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
@@ -177,6 +177,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
 
@@ -186,7 +187,6 @@
             android:id="@+id/activity_glossary_magnitude_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -219,6 +219,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
 
@@ -229,7 +230,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
@@ -261,6 +261,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
         <!-- Modified Mercalli intensity scale values -->
@@ -270,7 +271,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
@@ -302,6 +302,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
         <!-- Richter magnitude scale -->
@@ -310,7 +311,6 @@
             android:id="@+id/activity_glossary_richter_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -343,6 +343,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
         <!-- Richter magnitude scale values -->
@@ -351,7 +352,6 @@
             android:id="@+id/activity_glossary_richter_values_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -384,6 +384,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
 
@@ -393,7 +394,6 @@
             android:id="@+id/activity_glossary_seismograph_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -426,6 +426,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
 
@@ -435,7 +436,6 @@
             android:id="@+id/activity_glossary_seismology_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -466,6 +466,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
@@ -477,7 +478,6 @@
             android:id="@+id/activity_glossary_tectonic_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -510,6 +510,7 @@
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             android:visibility="gone" />
 
 
@@ -519,7 +520,6 @@
             android:id="@+id/activity_glossary_tsunami_title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/application_standard_margin"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
@@ -551,6 +551,49 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/application_small_padding"
             android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/application_standard_text_size"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:visibility="gone" />
+
+
+        <!-- USGS -->
+
+        <LinearLayout
+            android:id="@+id/activity_glossary_usgs_title_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/activity_glossary_usgs_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/activity_glosary_title_weight"
+                android:padding="@dimen/application_small_padding"
+                android:text="@string/activity_glossary_usgs_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_standard_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/activity_glossary_usgs_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_glossary_usgs_definition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/application_small_padding"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="@dimen/application_small_margin"
             android:textSize="@dimen/application_standard_text_size"
             android:visibility="gone" />
 

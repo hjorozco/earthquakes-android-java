@@ -45,7 +45,7 @@
 
         <activity
             android:name=".ui.GlossaryActivity"
-            android:label="@string/activity_earthquake_concepts_label"
+            android:label="@string/activity_glossary_label"
             android:theme="@style/AppTheme"/>
 
         <activity
