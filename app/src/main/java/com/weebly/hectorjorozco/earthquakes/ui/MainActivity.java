@@ -20,9 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -269,23 +267,12 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         }
         if (type != QueryUtils.SEARCH_RESULT_NON_NULL) {
             mMessageImageView.setImageDrawable(getResources().getDrawable(imageID));
-
             if (type == QueryUtils.SEARCHING) {
-                Animation mAnimation = new TranslateAnimation(
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0.04f);
-                mAnimation.setDuration(300);
-                mAnimation.setRepeatCount(-1);
-                mAnimation.setRepeatMode(Animation.REVERSE);
-                mAnimation.setInterpolator(new LinearInterpolator());
-                mMessageImageView.setAnimation(mAnimation);
+                mMessageImageView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
+                mMessageTextView.setVisibility(View.GONE);
             } else {
-                mMessageImageView.getAnimation().cancel();
+                mMessageImageView.clearAnimation();
             }
-
-            // mMessageTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageID, 0, 0);
             mMessageTextView.setText(getString(textID));
         }
     }

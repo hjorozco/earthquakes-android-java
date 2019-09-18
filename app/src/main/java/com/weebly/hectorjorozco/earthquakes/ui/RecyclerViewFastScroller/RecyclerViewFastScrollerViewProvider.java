@@ -23,7 +23,7 @@ public class RecyclerViewFastScrollerViewProvider extends ScrollerViewProvider {
         int width = getContext().getResources().getDimensionPixelSize(R.dimen.recycler_view_fast_scroll_custom_handle_width);
         int height = getContext().getResources().getDimensionPixelSize(R.dimen.recycler_view_fast_scroll_custom_handle_height);
         handle.setLayoutParams(new ViewGroup.LayoutParams(width, height));
-        Utils.setBackground(handle, getRectangle(width, height, ContextCompat.getColor(getContext(), android.R.color.darker_gray)));
+        Utils.setBackground(handle, getRectangle(width, height, ContextCompat.getColor(getContext(), R.color.colorPrimaryLight)));
         handle.setVisibility(View.VISIBLE);
         return handle;
     }

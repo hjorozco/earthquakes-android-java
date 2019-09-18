@@ -28,8 +28,8 @@
 
     <dimen name="fab_size">32dp</dimen>
 
-    <dimen name="recycler_view_fast_scroll_custom_handle_width">4dp</dimen>
-    <dimen name="recycler_view_fast_scroll_custom_handle_height">32dp</dimen>
+    <dimen name="recycler_view_fast_scroll_custom_handle_width">6dp</dimen>
+    <dimen name="recycler_view_fast_scroll_custom_handle_height">24dp</dimen>
 
     <dimen name="activity_earthquake_details_map_height">300dp</dimen>
     <dimen name="activity_earthquake_details_report_button_stroke_width">1dp</dimen>
