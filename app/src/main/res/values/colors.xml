@@ -6,6 +6,8 @@
 
     <color name="colorPrimaryLight">#A1887F</color>     <!-- Brown 300 -->
 
+    <color name="colorSearchPreferenceIcons">#8D6E63</color>  <!-- Brown 400 -->
+
     <!-- Scrim colors -->
     <color name="colorScrim">#40000000</color>
     <color name="colorScrimDark">#80000000</color>

@@ -1,6 +1,8 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -31,7 +33,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
-import com.weebly.hectorjorozco.earthquakes.ui.RecyclerViewFastScroller.RecyclerViewFastScrollerViewProvider;
+import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private int mNumberOfEarthquakesOnList;
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
-
+    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mMessageImageView = findViewById(R.id.activity_main_message_image_view);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
+
+        mMediaPlayer = new MediaPlayer();
 
         setMessage(QueryUtils.SEARCHING);
 
@@ -156,6 +160,12 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     // If one or more earthquakes were found
                     mNumberOfEarthquakesOnList = earthquakes.size();
                     setMessageVisible(false);
+
+                    // If not searching for earthquakes stop the sound
+                    if (!QueryUtils.sSearchingForEarthquakes) {
+                        mMediaPlayer.stop();
+                        QueryUtils.sIsPlayingSound = false;
+                    }
 
                     // If there were new earthquakes displayed
                     if (QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_RESULT_NON_NULL) {
@@ -270,11 +280,25 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             if (type == QueryUtils.SEARCHING) {
                 mMessageImageView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
                 mMessageTextView.setVisibility(View.GONE);
+                if (QueryUtils.getSoundSearchPreference(this) && !QueryUtils.sIsPlayingSound) {
+                    playEarthquakeSound();
+                }
             } else {
                 mMessageImageView.clearAnimation();
+                mMediaPlayer.stop();
+                QueryUtils.sIsPlayingSound = false;
             }
             mMessageTextView.setText(getString(textID));
         }
+    }
+
+
+    private void playEarthquakeSound() {
+        mMediaPlayer = MediaPlayer.create(this, R.raw.earthquake_sound);
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mMediaPlayer.setLooping(true);
+        mMediaPlayer.start();
+        QueryUtils.sIsPlayingSound = true;
     }
 
 
@@ -518,5 +542,19 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("key", mEarthquakeRecyclerViewPosition);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMediaPlayer.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (QueryUtils.getSoundSearchPreference(this) && QueryUtils.sIsPlayingSound) {
+            playEarthquakeSound();
+        }
     }
 }

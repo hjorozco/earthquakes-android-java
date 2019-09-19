@@ -4,33 +4,6 @@
     android:title="@string/activity_search_preferences_label">
 
     <PreferenceCategory
-        app:key="@string/search_preferences_other_preferences_category_key"
-        app:title="@string/search_preferences_other_preferences_category_title">
-
-        <EditTextPreference
-            android:defaultValue="@string/search_preference_max_number_of_earthquakes_default_value"
-            android:key="@string/search_preference_max_number_of_earthquakes_key"
-            android:title="@string/search_preference_max_number_of_earthquakes_title"
-            app:icon="@drawable/ic_max_number_of_earthquakes_brown_24dp" />
-
-        <ListPreference
-            android:defaultValue="@string/search_preference_sort_by_default_value"
-            android:entries="@array/search_preference_sort_by_entries"
-            android:entryValues="@array/search_preference_sort_by_entry_values"
-            android:key="@string/search_preference_sort_by_key"
-            android:title="@string/search_preference_sort_by_title"
-            app:icon="@drawable/ic_sort_brown_24dp"
-            app:useSimpleSummaryProvider="true" />
-
-        <EditTextPreference
-            android:defaultValue="@string/search_preference_location_default_value"
-            android:key="@string/search_preference_location_key"
-            android:title="@string/search_preference_location_title"
-            app:icon="@drawable/ic_location_brown_24dp" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         app:key="@string/search_preferences_date_preferences_category_key"
         app:title="@string/search_preferences_date_preferences_category_title">
 
@@ -41,19 +14,22 @@
             android:key="@string/search_preference_date_range_key"
             android:title="@string/search_preference_date_range_title"
             app:icon="@drawable/ic_date_range_brown_24dp"
+            app:singleLineTitle="false"
             app:useSimpleSummaryProvider="true" />
 
         <com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference
             android:defaultValue="@integer/search_preference_start_date_default_value"
             android:key="@string/search_preference_start_date_key"
             android:title="@string/search_preference_start_date_title"
-            app:icon="@drawable/ic_date_range_from_brown_24dp" />
+            app:icon="@drawable/ic_date_range_from_brown_24dp"
+            app:singleLineTitle="false" />
 
         <com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference
             android:defaultValue="@integer/search_preference_end_date_default_value"
             android:key="@string/search_preference_end_date_key"
             android:title="@string/search_preference_end_date_title"
-            app:icon="@drawable/ic_date_range_to_brown_24dp" />
+            app:icon="@drawable/ic_date_range_to_brown_24dp"
+            app:singleLineTitle="false" />
 
     </PreferenceCategory>
 
@@ -67,7 +43,8 @@
             android:max="@integer/search_preferences_magnitudes_maximum_value"
             android:title="@string/search_preference_minimum_magnitude_title"
             app:icon="@drawable/ic_minimum_magnitude_brown_24dp"
-            app:min="@integer/search_preferences_magnitudes_minimum_value" />
+            app:min="@integer/search_preferences_magnitudes_minimum_value"
+            app:singleLineTitle="false" />
 
         <SeekBarPreference
             android:defaultValue="@integer/search_preference_maximum_magnitude_default_value"
@@ -75,7 +52,45 @@
             android:max="@integer/search_preferences_magnitudes_maximum_value"
             android:title="@string/search_preference_maximum_magnitude_title"
             app:icon="@drawable/ic_maximum_magnitude_brown_24dp"
-            app:min="@integer/search_preferences_magnitudes_minimum_value" />
+            app:min="@integer/search_preferences_magnitudes_minimum_value"
+            app:singleLineTitle="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="@string/search_preferences_other_preferences_category_key"
+        app:title="@string/search_preferences_other_preferences_category_title">
+
+        <EditTextPreference
+            android:defaultValue="@string/search_preference_max_number_of_earthquakes_default_value"
+            android:key="@string/search_preference_max_number_of_earthquakes_key"
+            android:title="@string/search_preference_max_number_of_earthquakes_title"
+            app:icon="@drawable/ic_max_number_of_earthquakes_brown_24dp"
+            app:singleLineTitle="false" />
+
+        <ListPreference
+            android:defaultValue="@string/search_preference_sort_by_default_value"
+            android:entries="@array/search_preference_sort_by_entries"
+            android:entryValues="@array/search_preference_sort_by_entry_values"
+            android:key="@string/search_preference_sort_by_key"
+            android:title="@string/search_preference_sort_by_title"
+            app:icon="@drawable/ic_sort_brown_24dp"
+            app:singleLineTitle="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/search_preference_location_default_value"
+            android:key="@string/search_preference_location_key"
+            android:title="@string/search_preference_location_title"
+            app:icon="@drawable/ic_location_brown_24dp"
+            app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/search_preference_sound_default_value"
+            android:key="@string/search_preference_sound_key"
+            android:title="@string/search_preference_sound_title"
+            app:icon="@drawable/ic_speaker_brown_24dp"
+            app:singleLineTitle="false" />
 
     </PreferenceCategory>
 

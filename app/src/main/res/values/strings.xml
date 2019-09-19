@@ -163,6 +163,10 @@
     <string name="search_preference_location_not_set_value">Not set. Will search for earthquakes in the whole world.</string>
 
 
+    <string name="search_preference_sound_title">Play sound when searching for earthquakes</string>
+    <string name="search_preference_sound_key" translatable="false">sound</string>
+
+
     <string name="most_recent_date_text">To</string>
     <string name="past_date_text">From</string>
     <string name="today_text">Today</string>

@@ -71,6 +71,7 @@ public class QueryUtils {
     public static byte sLoadEarthquakesResultCode = NO_ACTION;
     public static boolean sListWillBeLoadedAfterEmpty = true;
     public static boolean sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
+    public static boolean sIsPlayingSound = false;
 
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context,
@@ -650,6 +651,13 @@ public class QueryUtils {
             intent.setPackage(null);
             context.startActivity(intent);
         }
+    }
+
+    public static boolean getSoundSearchPreference(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).
+                getBoolean(context.getString(R.string.search_preference_sound_key),
+                context.getResources().getBoolean(R.bool.search_preference_sound_default_value));
+
     }
 
 }

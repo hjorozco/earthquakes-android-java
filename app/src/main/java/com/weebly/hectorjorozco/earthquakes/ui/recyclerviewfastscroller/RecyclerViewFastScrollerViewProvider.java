@@ -1,4 +1,4 @@
-package com.weebly.hectorjorozco.earthquakes.ui.RecyclerViewFastScroller;
+package com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller;
 
 import android.graphics.drawable.ShapeDrawable;
 

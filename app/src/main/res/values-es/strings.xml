@@ -125,6 +125,8 @@
     <string name="search_preference_location_title">Localidad</string>
     <string name="search_preference_location_not_set_value">Sin definir. Buscará sismos en todo el mundo.</string>
 
+    <string name="search_preference_sound_title">Reproducir sonido al buscar terremotos</string>
+
     <string name="most_recent_date_text">A</string>
     <string name="past_date_text">De</string>
     <string name="today_text">Hoy</string>
