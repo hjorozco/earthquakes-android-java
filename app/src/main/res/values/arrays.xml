@@ -14,6 +14,13 @@
         <item>@string/search_preference_sort_by_descending_magnitude_entry_value</item>
     </string-array>
 
+    <string-array name="search_prefernce_sort_by_summaries">
+        <item>@string/search_preference_sort_by_ascending_date_summary</item>
+        <item>@string/search_preference_sort_by_descending_date_summary</item>
+        <item>@string/search_preference_sort_by_ascending_magnitude_summary</item>
+        <item>@string/search_preference_sort_by_descending_magnitude_summary</item>
+    </string-array>
+
     <string-array name="search_preference_date_range_entries">
         <item>@string/search_preference_date_range_last_24_hours_entry</item>
         <item>@string/search_preference_date_range_last_7_days_entry</item>

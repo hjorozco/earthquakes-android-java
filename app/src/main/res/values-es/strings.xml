@@ -87,16 +87,16 @@
         @string/menu_activity_main_action_search_preferences_title</string>
 
 
-    <string name="search_preferences_magnitudes_category_title">Preferecias de magnitud</string>
+    <string name="search_preferences_magnitudes_category_title">Magnitud</string>
 
-    <string name="search_preference_minimum_magnitude_title">Magnitud mínima</string>
+    <string name="search_preference_minimum_magnitude_title">Mínima</string>
 
-    <string name="search_preference_maximum_magnitude_title">Magnitud máxima</string>
+    <string name="search_preference_maximum_magnitude_title">Máxima</string>
 
 
-    <string name="search_preferences_date_preferences_category_title">Preferencias de fecha</string>
+    <string name="search_preferences_date_preferences_category_title">Fecha</string>
 
-    <string name="search_preference_date_range_title">Rango de fechas</string>
+    <string name="search_preference_date_range_title">Rango</string>
     <string name="search_preference_date_range_custom_entry">Rango personalizado</string>
     <string name="search_preference_date_range_last_24_hours_entry">Últimas 24 horas</string>
     <string name="search_preference_date_range_last_7_days_entry">Últimos 7 días</string>
@@ -108,7 +108,7 @@
     <string name="search_preference_start_date_title">@string/past_date_text</string>
 
 
-    <string name="search_preferences_other_preferences_category_title">Preferencias generales</string>
+    <string name="search_preferences_other_preferences_category_title">Generales</string>
 
     <string name="search_preference_max_number_of_earthquakes_title">Número máximo de sismos</string>
     <string name="search_preference_max_number_of_earthquakes_not_set_text">Sin definir. Mostrará un máximo de 20,000 sismos.</string>
@@ -121,11 +121,20 @@
     <string name="search_preference_sort_by_ascending_magnitude_entry">Magnitud (ascendente)</string>
     <string name="search_preference_sort_by_descending_magnitude_entry">Magnitud (descendente)</string>
 
+    <string name="search_preference_sort_by_date_text">Fecha</string>
+    <string name="search_preference_sort_by_magnitude_text">Magnitud</string>
+    <string name="search_preference_sort_by_ascending_text">Ascendente</string>
+    <string name="search_preference_sort_by_descending_text">Descendente</string>
+
+    <string name="search_preference_sort_by_ascending_date_summary">Fecha ascendente</string>
+    <string name="search_preference_sort_by_descending_date_summary">Fecha descendente</string>
+    <string name="search_preference_sort_by_ascending_magnitude_summary">Magnitud ascendente</string>
+    <string name="search_preference_sort_by_descending_magnitude_summary">Magnitud descendente</string>
 
     <string name="search_preference_location_title">Localidad</string>
     <string name="search_preference_location_not_set_value">Sin definir. Buscará sismos en todo el mundo.</string>
 
-    <string name="search_preference_sound_title">Reproducir sonido al buscar terremotos</string>
+    <string name="search_preference_sound_title">Reproducir sonido de sismo al buscar</string>
 
     <string name="most_recent_date_text">A</string>
     <string name="past_date_text">De</string>

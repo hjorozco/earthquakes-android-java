@@ -9,9 +9,7 @@ import androidx.preference.DialogPreference;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 // Class that handles the value of the DialogPreference that is saved on SharedPreferences
@@ -34,7 +32,7 @@ public class DateDialogPreference extends DialogPreference {
     }
 
     public DateDialogPreference(Context context, AttributeSet attrs,
-                                 int defStyleAttr) {
+                                int defStyleAttr) {
         this(context, attrs, defStyleAttr, defStyleAttr);
     }
 
@@ -54,8 +52,8 @@ public class DateDialogPreference extends DialogPreference {
 
         // If the "to" date was changed manually, then add 23 hours and 59 minutes to it to cover
         // that whole day.
-        if(toDateChangedManuallyFlag) {
-            dateInMilliseconds += (TimeUnit.DAYS.toMillis(1)) - (1000*60);
+        if (toDateChangedManuallyFlag) {
+            dateInMilliseconds += (TimeUnit.DAYS.toMillis(1)) - (1000 * 60);
             toDateChangedManuallyFlag = false;
         }
 
@@ -76,34 +74,42 @@ public class DateDialogPreference extends DialogPreference {
     @Override
     protected void onSetInitialValue(Object defaultValue) {
         toDateChangedManuallyFlag = false;
-        setDateInMilliseconds(getPersistedLong(mDateInMilliseconds));
+
+        // The first time the preference is created defaultValue is not null
+        long defaultValueLong;
+        if (defaultValue!=null){
+            defaultValueLong = (long) defaultValue;
+        } else {
+            defaultValueLong = mDateInMilliseconds;
+        }
+        setDateInMilliseconds(getPersistedLong(defaultValueLong));
     }
 
 
     // Set the layout resource for the DialogPreference
     @Override
     public int getDialogLayoutResource() {
-        return R.layout.preference_dialog_date;
+        return R.layout.dialog_preference_date;
     }
 
 
-    long getMinimumDateInMilliseconds(){
+    long getMinimumDateInMilliseconds() {
         return mMinimumDateInMilliseconds;
     }
 
-    public void setMinimumDateInMilliseconds(long minimumDateInMilliseconds){
+    public void setMinimumDateInMilliseconds(long minimumDateInMilliseconds) {
         mMinimumDateInMilliseconds = minimumDateInMilliseconds;
     }
 
-    long getMaximumDateInMilliseconds(){
+    long getMaximumDateInMilliseconds() {
         return mMaximumDateInMilliseconds;
     }
 
-    public void setMaximumDateInMilliseconds(long maximumDateInMilliseconds){
+    public void setMaximumDateInMilliseconds(long maximumDateInMilliseconds) {
         mMaximumDateInMilliseconds = maximumDateInMilliseconds;
     }
 
-    public void setToDateChangedManuallyFlag(boolean value){
+    public void setToDateChangedManuallyFlag(boolean value) {
         toDateChangedManuallyFlag = value;
     }
 

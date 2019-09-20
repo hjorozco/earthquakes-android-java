@@ -6,6 +6,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.CheckBoxPreference;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -15,6 +16,8 @@ import androidx.preference.SeekBarPreference;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDialogFragmentCompat;
+import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByDialogPreference;
+import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByPreferenceDialogFragmentCompat;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.util.Calendar;
@@ -35,6 +38,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     private DateDialogPreference mToDateDialogPreference;
     private SeekBarPreference mMinimumMagnitudeSeekBarPreference;
     private SeekBarPreference mMaximumMagnitudeSeekBarPreference;
+    private CheckBoxPreference mPlaySoundPreference;
 
     // Used to flag when the "from" or "to" dates where changed by a predefined date range selected or by
     // the user changing the date individually
@@ -78,6 +82,9 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         setupMinimumMagnitudeSeekBarPreference(mMinimumMagnitudeSeekBarPreference);
         setupMaximumMagnitudeSeekBarPreference(mMaximumMagnitudeSeekBarPreference);
 
+        mPlaySoundPreference = findPreference(getString(R.string.search_preference_sound_key));
+        setupPlaySoundPreferenceIcon();
+
     }
 
 
@@ -107,6 +114,9 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         } else if (key.equals(getString(R.string.search_preference_maximum_magnitude_key))) {
             mMaximumMagnitudeSeekBarPreference.setSummary(String.valueOf(mMaximumMagnitudeSeekBarPreference.getValue()));
+
+        } else if (key.equals(getString(R.string.search_preference_sound_key))){
+            setupPlaySoundPreferenceIcon();
         }
     }
 
@@ -122,15 +132,22 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             dialogFragment.setTargetFragment(this, 0);
             if (getFragmentManager() != null) {
                 dialogFragment.show(getFragmentManager(),
-                        "androidx.preference.PreferenceDialogFragmentCompat");
+                        getString(R.string.date_preference_dialog_fragment_compat_tag));
+            }
+        } else if (preference instanceof SortByDialogPreference) {
+            // Display a SortByPreferenceDialogFragmentCompat
+            DialogFragment dialogFragment = SortByPreferenceDialogFragmentCompat
+                    .newInstance(preference.getKey());
+            dialogFragment.setTargetFragment(this, 1);
+            if (getFragmentManager() != null) {
+                dialogFragment.show(getFragmentManager(),
+                        getString(R.string.sort_by_preference_dialog_fragment_compat_tag));
             }
         } else {
             // Call the super class method that handles the predefined DialogPreferences
             super.onDisplayPreferenceDialog(preference);
         }
     }
-
-
 
 
     private void setupMaxNumberOfEarthquakesEditTextPreference(EditTextPreference editTextPreference) {
@@ -267,6 +284,15 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         // Saves the maximum magnitude value only if it is more than or equal to the minimum magnitude
         seekBarPreference.setOnPreferenceChangeListener((preference, newValue) ->
                 (Integer) newValue >= mMinimumMagnitudeSeekBarPreference.getValue());
+    }
+
+
+    private void setupPlaySoundPreferenceIcon(){
+        if (mPlaySoundPreference.isChecked()){
+            mPlaySoundPreference.setIcon(R.drawable.ic_speaker_on_brown_24dp);
+        } else {
+            mPlaySoundPreference.setIcon(R.drawable.ic_speaker_off_brown_24dp);
+        }
     }
 
 }

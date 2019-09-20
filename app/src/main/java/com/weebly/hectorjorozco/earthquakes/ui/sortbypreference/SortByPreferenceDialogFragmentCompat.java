@@ -2,38 +2,34 @@ package com.weebly.hectorjorozco.earthquakes.ui.sortbypreference;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
+import android.widget.RadioGroup;
 
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 
 // Class that handles the DialogPreference dialog fragment shown to the user
 
 public class SortByPreferenceDialogFragmentCompat extends PreferenceDialogFragmentCompat {
 
-
-    private DatePicker mDatePicker;
+    private RadioGroup mDateMagnitudeRadioGroup;
+    private RadioGroup mAscendingDescendingRadioGroup;
 
 
     /**
      * Creates a new instance of this fragment.
      *
-     * @param dateDialogPreferenceKey The key of the DialogPreference that will use this fragment
+     * @param sortByDialogPreferenceKey The key of the DialogPreference that will use this fragment
      * @return A new instance of this fragment.
      */
     public static SortByPreferenceDialogFragmentCompat newInstance(
-            String dateDialogPreferenceKey) {
+            String sortByDialogPreferenceKey) {
         final SortByPreferenceDialogFragmentCompat
                 sortByPreferenceDialogFragmentCompat = new SortByPreferenceDialogFragmentCompat();
         final Bundle bundle = new Bundle(1);
-        bundle.putString(ARG_KEY, dateDialogPreferenceKey);
+        bundle.putString(ARG_KEY, sortByDialogPreferenceKey);
         sortByPreferenceDialogFragmentCompat.setArguments(bundle);
         return sortByPreferenceDialogFragmentCompat;
     }
@@ -44,35 +40,38 @@ public class SortByPreferenceDialogFragmentCompat extends PreferenceDialogFragme
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        mDatePicker = view.findViewById(R.id.date_picker);
+        mDateMagnitudeRadioGroup =
+                view.findViewById(R.id.dialog_preference_sort_by_date_magnitude_radio_group);
+        mAscendingDescendingRadioGroup =
+                view.findViewById(R.id.dialog_preference_sort_by_ascending_descending_radio_group);
 
-        if (mDatePicker == null) {
-            throw new IllegalStateException("Dialog view must contain a DatePicker with id 'date_picker'");
-        }
-
-        // Get the date in milliseconds from the preference that opened the dialog
-        Long dateInMilliseconds = null;
+        // Get the "Sort by" entry value from the preference that opened the dialog
+        int sortByEntryValue = -1;
         DialogPreference preference = getPreference();
         if (preference instanceof SortByDialogPreference) {
-            dateInMilliseconds =
-                    ((SortByDialogPreference) preference).getDateInMilliseconds();
+            sortByEntryValue =
+                    ((SortByDialogPreference) preference).getSortByEntryValue();
         }
 
-        // Set the time to the DatePicker
-        if (dateInMilliseconds != null) {
-
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(new Date(dateInMilliseconds));
-            mDatePicker.init(calendar.get(
-                    Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH),
-                    null);
-
-            if (preference.getKey().equals(getString(R.string.search_preference_start_date_key))) {
-                mDatePicker.setMaxDate(((SortByDialogPreference) preference).getMaximumDateInMilliseconds());
-            } else {
-                mDatePicker.setMinDate(((SortByDialogPreference) preference).getMinimumDateInMilliseconds());
+        // Set radio groups to the checked states corresponding to the sort by entry value
+        if (sortByEntryValue != -1) {
+            switch (sortByEntryValue) {
+                case 0:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_date_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_ascending_radio_button);
+                    break;
+                case 1:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_date_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_descending_radio_button);
+                    break;
+                case 2:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_magnitude_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_ascending_radio_button);
+                    break;
+                case 3:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_magnitude_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_descending_radio_button);
+                    break;
             }
         }
     }
@@ -83,8 +82,23 @@ public class SortByPreferenceDialogFragmentCompat extends PreferenceDialogFragme
         if (positiveResult) {
 
             // Generate the value to save
-            Calendar calendar = new GregorianCalendar(mDatePicker.getYear(), mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
-            long dateInMilliseconds = calendar.getTimeInMillis();
+            int dateMagnitudeValue, ascendingDescendingValue, sortByEntryValue;
+
+            if (mDateMagnitudeRadioGroup.getCheckedRadioButtonId() ==
+                    R.id.dialog_preference_sort_by_date_radio_button) {
+                dateMagnitudeValue = 0;
+            } else {
+                dateMagnitudeValue = 2;
+            }
+
+            if (mAscendingDescendingRadioGroup.getCheckedRadioButtonId() ==
+                    R.id.dialog_preference_sort_by_ascending_radio_button) {
+                ascendingDescendingValue = 0;
+            } else {
+                ascendingDescendingValue = 1;
+            }
+
+            sortByEntryValue = dateMagnitudeValue + ascendingDescendingValue;
 
             // Get the related Preference and save the value
             DialogPreference preference = getPreference();
@@ -93,13 +107,9 @@ public class SortByPreferenceDialogFragmentCompat extends PreferenceDialogFragme
                         ((SortByDialogPreference) preference);
                 // This allows the client to ignore the user value.
                 if (sortByDialogPreference.callChangeListener(
-                        dateInMilliseconds)) {
-                    if (sortByDialogPreference.getKey().equals(
-                            getString(R.string.search_preference_end_date_key))) {
-                        sortByDialogPreference.setToDateChangedManuallyFlag(true);
-                    }
+                        sortByEntryValue)) {
                     // Save the value and update the summary
-                    sortByDialogPreference.setDateInMilliseconds(dateInMilliseconds);
+                    sortByDialogPreference.setSortByEntryValue(sortByEntryValue);
                 }
             }
         }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/application_standard_margin"
+        android:layout_marginEnd="@dimen/application_standard_margin"
+        android:layout_marginTop="@dimen/application_standard_margin"
+        android:paddingBottom="@dimen/application_tiny_padding"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/dialog_preference_sort_by_date_magnitude_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/application_standard_margin"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/dialog_preference_sort_by_date_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/application_standard_margin"
+                android:paddingStart="@dimen/application_standard_padding"
+                android:paddingEnd="@dimen/application_standard_padding"
+                android:text="@string/search_preference_sort_by_date_text"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <RadioButton
+                android:id="@+id/dialog_preference_sort_by_magnitude_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/application_standard_padding"
+                android:paddingEnd="@dimen/application_standard_padding"
+                android:text="@string/search_preference_sort_by_magnitude_text"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <RadioGroup
+            android:id="@+id/dialog_preference_sort_by_ascending_descending_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/dialog_preference_sort_by_ascending_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/application_standard_margin"
+                android:paddingStart="@dimen/application_standard_padding"
+                android:paddingEnd="@dimen/application_standard_padding"
+                android:text="@string/search_preference_sort_by_ascending_text"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <RadioButton
+                android:id="@+id/dialog_preference_sort_by_descending_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/application_standard_padding"
+                android:paddingEnd="@dimen/application_standard_padding"
+                android:text="@string/search_preference_sort_by_descending_text"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

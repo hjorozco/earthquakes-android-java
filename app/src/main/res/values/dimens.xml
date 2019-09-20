@@ -11,6 +11,7 @@
     <dimen name="application_small_margin">8dp</dimen>
     <dimen name="application_standard_margin">16dp</dimen>
     <dimen name="application_big_margin">32dp</dimen>
+    <dimen name="application_huge_margin">48dp</dimen>
 
     <dimen name="application_tiny_padding">4dp</dimen>
     <dimen name="application_small_padding">8dp</dimen>

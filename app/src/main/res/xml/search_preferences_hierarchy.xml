@@ -68,15 +68,12 @@
             app:icon="@drawable/ic_max_number_of_earthquakes_brown_24dp"
             app:singleLineTitle="false" />
 
-        <ListPreference
-            android:defaultValue="@string/search_preference_sort_by_default_value"
-            android:entries="@array/search_preference_sort_by_entries"
-            android:entryValues="@array/search_preference_sort_by_entry_values"
+        <com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByDialogPreference
+            android:defaultValue="@integer/search_preference_sort_by_default_value"
             android:key="@string/search_preference_sort_by_key"
             android:title="@string/search_preference_sort_by_title"
-            app:icon="@drawable/ic_sort_brown_24dp"
-            app:singleLineTitle="false"
-            app:useSimpleSummaryProvider="true" />
+            app:icon="@drawable/ic_sort_descending_brown_24dp"
+            app:singleLineTitle="false" />
 
         <EditTextPreference
             android:defaultValue="@string/search_preference_location_default_value"
@@ -89,7 +86,7 @@
             android:defaultValue="@bool/search_preference_sound_default_value"
             android:key="@string/search_preference_sound_key"
             android:title="@string/search_preference_sound_title"
-            app:icon="@drawable/ic_speaker_brown_24dp"
+            app:icon="@drawable/ic_speaker_on_brown_24dp"
             app:singleLineTitle="false" />
 
     </PreferenceCategory>

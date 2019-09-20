@@ -100,20 +100,20 @@
     <string name="activity_search_preferences_label">@string/menu_activity_main_action_search_preferences_title</string>
 
 
-    <string name="search_preferences_magnitudes_category_title">Magnitude preferences</string>
+    <string name="search_preferences_magnitudes_category_title">Magnitude</string>
     <string name="search_preferences_magnitudes_category_key" translatable="false">magnitudes</string>
 
-    <string name="search_preference_minimum_magnitude_title">Minimum magnitude</string>
+    <string name="search_preference_minimum_magnitude_title">Minimum</string>
     <string name="search_preference_minimum_magnitude_key" translatable="false">minimum_magnitude</string>
 
-    <string name="search_preference_maximum_magnitude_title">Maximum magnitude</string>
+    <string name="search_preference_maximum_magnitude_title">Maximum</string>
     <string name="search_preference_maximum_magnitude_key" translatable="false">maximum_magnitude</string>
 
 
-    <string name="search_preferences_date_preferences_category_title">Date preferences</string>
+    <string name="search_preferences_date_preferences_category_title">Date</string>
     <string name="search_preferences_date_preferences_category_key" translatable="false">time</string>
 
-    <string name="search_preference_date_range_title">Date range</string>
+    <string name="search_preference_date_range_title">Range</string>
     <string name="search_preference_date_range_key" translatable="false">date_period</string>
     <string name="search_preference_date_range_default_value" translatable="false">@string/search_preference_date_range_last_30_days_entry_value</string>
     <string name="search_preference_date_range_custom_entry">Custom range</string>
@@ -133,19 +133,24 @@
     <string name="search_preference_start_date_title">@string/past_date_text</string>
     <string name="search_preference_start_date_key" translatable="false">start_date</string>
 
+    <string name="date_preference_dialog_fragment_compat_tag" translatable="false">
+        search_preferences_date_preference_dialog_fragment_compat_tag
+    </string>
 
-    <string name="search_preferences_other_preferences_category_title">General preferences</string>
+
+    <string name="search_preferences_other_preferences_category_title">General</string>
     <string name="search_preferences_other_preferences_category_key" translatable="false">other_preferences</string>
 
-    <string name="search_preference_max_number_of_earthquakes_title">Max number of earthquakes</string>
+    <string name="search_preference_max_number_of_earthquakes_title">Maximum number of earthquakes</string>
     <string name="search_preference_max_number_of_earthquakes_key" translatable="false">limit</string>
     <string name="search_preference_max_number_of_earthquakes_default_value" translatable="false">10</string>
     <string name="search_preference_max_number_of_earthquakes_not_set_text">Not set. Will display a maximum of 20,000 earthquakes.</string>
     <string name="search_preference_max_number_of_earthquakes_zero_text">0. Will not display any earthquake.</string>
     <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000. Limit number for a search.</string>
 
-    <string name="search_preference_sort_by_title">Sort By</string>
+    <string name="search_preference_sort_by_title">Sort by</string>
     <string name="search_preference_sort_by_key" translatable="false">order_by</string>
+    <string name="search_preference_sort_by_key_2" translatable="false">order_by_2</string>
     <string name="search_preference_sort_by_default_value" translatable="false">@string/search_preference_sort_by_descending_date_entry_value</string>
     <string name="search_preference_sort_by_ascending_date_entry">Date (ascending)</string>
     <string name="search_preference_sort_by_ascending_date_entry_value" translatable="false">time-asc</string>
@@ -157,13 +162,28 @@
     <string name="search_preference_sort_by_descending_magnitude_entry_value" translatable="false">magnitude</string>
 
 
+    <string name="search_preference_sort_by_date_text">Date</string>
+    <string name="search_preference_sort_by_magnitude_text">Magnitude</string>
+    <string name="search_preference_sort_by_ascending_text">Ascending</string>
+    <string name="search_preference_sort_by_descending_text">Descending</string>
+
+    <string name="search_preference_sort_by_ascending_date_summary">Ascending date</string>
+    <string name="search_preference_sort_by_descending_date_summary">Descending date</string>
+    <string name="search_preference_sort_by_ascending_magnitude_summary">Ascending magnitude</string>
+    <string name="search_preference_sort_by_descending_magnitude_summary">Descending magnitude</string>
+
+    <string name="sort_by_preference_dialog_fragment_compat_tag" translatable="false">
+        search_preference_sort_by_preference_dialog_fragment_compat_tag
+    </string>
+
+
     <string name="search_preference_location_title">Location</string>
     <string name="search_preference_location_key" translatable="false">filter_by</string>
     <string name="search_preference_location_default_value" translatable="false" />
     <string name="search_preference_location_not_set_value">Not set. Will search for earthquakes in the whole world.</string>
 
 
-    <string name="search_preference_sound_title">Play sound when searching for earthquakes</string>
+    <string name="search_preference_sound_title">Play earthquake sound when searching</string>
     <string name="search_preference_sound_key" translatable="false">sound</string>
 
 

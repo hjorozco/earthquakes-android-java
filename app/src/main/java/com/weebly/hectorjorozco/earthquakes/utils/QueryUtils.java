@@ -118,7 +118,7 @@ public class QueryUtils {
 
             // Checks for null values on place
             String place;
-            if (properties.getPlace()==null){
+            if (properties.getPlace() == null) {
                 place = "";
             } else {
                 place = properties.getPlace();
@@ -126,7 +126,7 @@ public class QueryUtils {
 
             // Checks for null values on latitude
             double latitude;
-            if (coordinates.get(1)==null){
+            if (coordinates.get(1) == null) {
                 latitude = LAT_LONG_NULL_VALUE;
             } else {
                 latitude = coordinates.get(1);
@@ -134,7 +134,7 @@ public class QueryUtils {
 
             // Checks for null values on longitude
             double longitude;
-            if (coordinates.get(0)==null){
+            if (coordinates.get(0) == null) {
                 longitude = LAT_LONG_NULL_VALUE;
             } else {
                 longitude = coordinates.get(0);
@@ -144,7 +144,7 @@ public class QueryUtils {
 
             // Checks for null values on depth
             double depth;
-            if (coordinates.get(2)==null){
+            if (coordinates.get(2) == null) {
                 depth = DEPTH_NULL_VALUE;
             } else {
                 depth = coordinates.get(2);
@@ -234,9 +234,12 @@ public class QueryUtils {
         SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
 
         // Gets a String with the value of the "Sort by" setting.
-        String orderBy = sharedPreferences.getString(
+        String[] sortByEntryValues =
+                context.getResources().getStringArray(R.array.search_preference_sort_by_entry_values);
+        int sortByEntryValue = sharedPreferences.getInt(
                 context.getString(R.string.search_preference_sort_by_key),
-                context.getString(R.string.search_preference_sort_by_default_value));
+                context.getResources().getInteger(R.integer.search_preference_sort_by_default_value));
+        String sortBy = sortByEntryValues[sortByEntryValue];
 
 
         // Gets an integer with the value of the "minimum magnitude" setting and converts it to a String
@@ -373,11 +376,11 @@ public class QueryUtils {
 
         // Stores the values needed to display the Earthquakes list information message
         sEarthquakesListInformationValuesWhenSearchStarted = new EarthquakesListInformationValues(
-                orderBy, mLocation, datePeriod, startDateForListInfo, endDateForListInfo,
+                sortBy, mLocation, datePeriod, startDateForListInfo, endDateForListInfo,
                 minMagnitude, maxMagnitude, mLimit);
 
         return new EarthquakesQueryParameters(startDateJSONQuery, endDateJSONQuery, queryLimit,
-                minMagnitude, maxMagnitude, orderBy);
+                minMagnitude, maxMagnitude, sortBy);
     }
 
 
@@ -618,8 +621,8 @@ public class QueryUtils {
         magnitudeTextView.setTextColor(magnitudeColor);
 
         String locationPrimary = earthquake.getLocationPrimary();
-        if (locationPrimary.isEmpty()){
-            locationPrimary= context.getString(R.string.activity_main_no_earthquake_location_text);
+        if (locationPrimary.isEmpty()) {
+            locationPrimary = context.getString(R.string.activity_main_no_earthquake_location_text);
         }
 
         locationOffsetTextView.setText(earthquake.getLocationOffset());
@@ -640,7 +643,7 @@ public class QueryUtils {
     }
 
 
-    public static void openWebPageInGoogleChrome(Context context, String earthquakeUrl){
+    public static void openWebPageInGoogleChrome(Context context, String earthquakeUrl) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(earthquakeUrl));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setPackage("com.android.chrome");
@@ -653,10 +656,10 @@ public class QueryUtils {
         }
     }
 
-    public static boolean getSoundSearchPreference(Context context){
+    public static boolean getSoundSearchPreference(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).
                 getBoolean(context.getString(R.string.search_preference_sound_key),
-                context.getResources().getBoolean(R.bool.search_preference_sound_default_value));
+                        context.getResources().getBoolean(R.bool.search_preference_sound_default_value));
 
     }
 

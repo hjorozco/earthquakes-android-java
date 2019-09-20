@@ -10,18 +10,13 @@ import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 // Class that handles the value of the DialogPreference that is saved on SharedPreferences
 
 public class SortByDialogPreference extends DialogPreference {
 
 
-    private long mDateInMilliseconds;
-    private long mMinimumDateInMilliseconds;
-    private long mMaximumDateInMilliseconds;
-    private boolean toDateChangedManuallyFlag = false;
-
+    private int mSortByEntryValue;
 
     public SortByDialogPreference(Context context) {
         this(context, null);
@@ -42,67 +37,56 @@ public class SortByDialogPreference extends DialogPreference {
     }
 
 
-    public long getDateInMilliseconds() {
-        return mDateInMilliseconds;
+    public int getSortByEntryValue() {
+        return mSortByEntryValue;
     }
 
 
-    // Save the DateInMilliseconds long value to Shared Preferences and updates the preference summary
-    public void setDateInMilliseconds(long dateInMilliseconds) {
+    // Save the "Sort by" int value to Shared Preferences and update the preference summary and icon
+    public void setSortByEntryValue(int sortByEntryValue) {
+        mSortByEntryValue = sortByEntryValue;
+        persistInt(sortByEntryValue);
+        String[] sortBySummaries =
+                getContext().getResources().getStringArray(R.array.search_prefernce_sort_by_summaries);
+        setSummary(sortBySummaries[sortByEntryValue]);
 
-        // If the "to" date was changed manually, then add 23 hours and 59 minutes to it to cover
-        // that whole day.
-        if(toDateChangedManuallyFlag) {
-            dateInMilliseconds += (TimeUnit.DAYS.toMillis(1)) - (1000*60);
-            toDateChangedManuallyFlag = false;
+        if (sortByEntryValue % 2 == 0){
+            setIcon(R.drawable.ic_sort_ascending_brown_24dp);
+        } else {
+            setIcon(R.drawable.ic_sort_descending_brown_24dp);
         }
 
-        mDateInMilliseconds = dateInMilliseconds;
-        persistLong(dateInMilliseconds);
-        setSummary(WordsUtils.displayedDateFormatter().format(new Date(mDateInMilliseconds)));
+
     }
 
 
     // Reads the preference default value from xml attribute. Fallback value is set to 0.
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return (long) a.getInt(index, 0);
+        return a.getInt(index, 0);
     }
 
 
     // Set the initial value of the preference when the preference screen is shown
     @Override
     protected void onSetInitialValue(Object defaultValue) {
-        toDateChangedManuallyFlag = false;
-        setDateInMilliseconds(getPersistedLong(mDateInMilliseconds));
+
+        // The first time the preference is created defaultValue is not null
+        int defaultValueInt;
+        if (defaultValue!=null){
+            defaultValueInt = (int) defaultValue;
+        } else {
+            defaultValueInt = mSortByEntryValue;
+        }
+
+        setSortByEntryValue(getPersistedInt(defaultValueInt));
     }
 
 
     // Set the layout resource for the DialogPreference
     @Override
     public int getDialogLayoutResource() {
-        return R.layout.preference_dialog_date;
-    }
-
-
-    long getMinimumDateInMilliseconds(){
-        return mMinimumDateInMilliseconds;
-    }
-
-    public void setMinimumDateInMilliseconds(long minimumDateInMilliseconds){
-        mMinimumDateInMilliseconds = minimumDateInMilliseconds;
-    }
-
-    long getMaximumDateInMilliseconds(){
-        return mMaximumDateInMilliseconds;
-    }
-
-    public void setMaximumDateInMilliseconds(long maximumDateInMilliseconds){
-        mMaximumDateInMilliseconds = maximumDateInMilliseconds;
-    }
-
-    public void setToDateChangedManuallyFlag(boolean value){
-        toDateChangedManuallyFlag = value;
+        return R.layout.dialog_preference_sort_by;
     }
 
 }
