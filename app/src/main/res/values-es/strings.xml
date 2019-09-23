@@ -108,7 +108,7 @@
     <string name="search_preference_start_date_title">@string/past_date_text</string>
 
 
-    <string name="search_preferences_other_preferences_category_title">Generales</string>
+    <string name="search_preferences_general_preferences_category_title">Generales</string>
 
     <string name="search_preference_max_number_of_earthquakes_title">Número máximo de sismos</string>
     <string name="search_preference_max_number_of_earthquakes_not_set_text">Sin definir. Mostrará un máximo de 20,000 sismos.</string>
@@ -134,6 +134,7 @@
     <string name="search_preference_location_title">Localidad</string>
     <string name="search_preference_location_not_set_value">Sin definir. Buscará sismos en todo el mundo.</string>
 
+    <string name="search_preferences_other_preferences_category_title">Otras</string>
     <string name="search_preference_sound_title">Reproducir sonido de sismo al buscar</string>
 
     <string name="most_recent_date_text">A</string>

@@ -20,7 +20,7 @@ public class WebViewUtils {
     private static boolean sReceivedError;
 
     public static WebViewClient setupWebViewClient(
-            String errorMessage, TextView textView, WebView webView, ProgressBar progressBar){
+            String errorMessage, TextView textView, WebView webView, ProgressBar progressBar, boolean usgsMap) {
 
         sReceivedError = false;
         sErrorMessage = errorMessage;
@@ -44,6 +44,16 @@ public class WebViewUtils {
                     sReceivedError = false;
                 }
 
+                // If the owner of this web client is the USGS map on the EarthquakeDetails activity
+                // hide the "close" button and the bottom banner text from it.
+                if (usgsMap) {
+                    // hide element by class name
+                    webView.loadUrl("javascript:(function() { " +
+                            "document.getElementsByClassName('close-button mat-raised-button')[0].style.display='none'; })()");
+                    webView.loadUrl("javascript:(function() { " +
+                            "document.getElementsByClassName('leaflet-control-attribution leaflet-control')[0].style.display='none'; })()");
+                }
+
             }
 
             @Override
@@ -65,7 +75,7 @@ public class WebViewUtils {
         };
     }
 
-    private static void showErrorMessage(TextView textView, WebView webView, ProgressBar progressBar){
+    private static void showErrorMessage(TextView textView, WebView webView, ProgressBar progressBar) {
         progressBar.setVisibility(GONE);
         webView.setVisibility(GONE);
         textView.setVisibility(View.VISIBLE);

@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         setupViewModel();
 
         setupTransitions();
+
+        Log.d("TESTING", "ON CREATE called");
     }
 
 
@@ -184,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 getSnackBarText(QueryUtils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_LONG).show();
                         if (mMenu != null) {
-                            showListInformationAndEarthquakesMapMenuItems(true);
+                            enableListInformationAndEarthquakesMapMenuItems(true);
                         }
                     }
 
@@ -194,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     QueryUtils.sListWillBeLoadedAfterEmpty = false;
 
                     if (mMenu != null && QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
-                        showListInformationAndEarthquakesMapMenuItems(true);
+                        enableListInformationAndEarthquakesMapMenuItems(true);
                     }
                 }
 
@@ -348,15 +352,17 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mMenu = menu;
 
         if (QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
-            showListInformationAndEarthquakesMapMenuItems(true);
+            enableListInformationAndEarthquakesMapMenuItems(true);
         } else {
-            showListInformationAndEarthquakesMapMenuItems(false);
+            enableListInformationAndEarthquakesMapMenuItems(false);
         }
 
         if (!QueryUtils.sSearchingForEarthquakes) {
             setupRefreshMenuItem(true);
+            Log.d("TESTING", "QueryUtils.sSearchingForEarthquakes is false");
         } else {
-            showListInformationAndEarthquakesMapMenuItems(false);
+            enableListInformationAndEarthquakesMapMenuItems(false);
+            Log.d("TESTING", "QueryUtils.sSearchingForEarthquakes is true");
         }
         return true;
     }
@@ -425,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         // Show stop menu item
         setupRefreshMenuItem(false);
         mProgressBar.setVisibility(View.VISIBLE);
-        showListInformationAndEarthquakesMapMenuItems(false);
+        enableListInformationAndEarthquakesMapMenuItems(false);
         QueryUtils.sSearchingForEarthquakes = true;
         setMessage(QueryUtils.SEARCHING);
         mMainActivityViewModel.loadEarthquakes();
@@ -463,9 +469,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-    private void showListInformationAndEarthquakesMapMenuItems(boolean show) {
-        mMenu.findItem(R.id.menu_activity_main_action_list_information).setVisible(show);
-        mMenu.findItem(R.id.menu_activity_main_action_earthquakes_map).setVisible(show);
+    private void enableListInformationAndEarthquakesMapMenuItems(boolean enable) {
+        mMenu.findItem(R.id.menu_activity_main_action_list_information).setEnabled(enable);
+        mMenu.findItem(R.id.menu_activity_main_action_earthquakes_map).setEnabled(enable);
     }
 
     /**
@@ -548,6 +554,19 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     protected void onPause() {
         super.onPause();
         mMediaPlayer.stop();
+        Log.d("TESTING", "MainActivity onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("TESTING", "MainActivity onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("TESTING", "MainActivity onDestroy");
     }
 
     @Override
@@ -557,4 +576,16 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             playEarthquakeSound();
         }
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            QueryUtils.sListWillBeLoadedAfterEmpty = true;
+            QueryUtils.sSearchingForEarthquakes = true;
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

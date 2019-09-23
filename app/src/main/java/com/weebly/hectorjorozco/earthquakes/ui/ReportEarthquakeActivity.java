@@ -59,7 +59,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
             mWebView.setVisibility(View.GONE);
             mWebView.setWebViewClient(WebViewUtils.setupWebViewClient(
                     getString(R.string.activity_earthquake_report_loading_error_message),
-                    mTextView, mWebView, progressBar));
+                    mTextView, mWebView, progressBar, false));
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setDomStorageEnabled(true);
             mWebView.loadUrl(mReportEarthquakeUrl);

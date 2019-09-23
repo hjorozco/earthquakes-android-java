@@ -534,11 +534,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             mUsgsMapNoInternetTextView.setVisibility(GONE);
             mUsgsMapWebView.setVisibility(GONE);
             if (!mUsgsMapLoaded) {
-                mUsgsMapWebView.setWebViewClient(WebViewUtils.setupWebViewClient(
-                        getString(R.string.activity_earthquake_details_usgs_map_loading_error_message),
-                        mUsgsMapNoInternetTextView, mUsgsMapWebView, progressBar));
                 mUsgsMapWebView.getSettings().setJavaScriptEnabled(true);
                 mUsgsMapWebView.getSettings().setDomStorageEnabled(true);
+                mUsgsMapWebView.setWebViewClient(WebViewUtils.setupWebViewClient(
+                        getString(R.string.activity_earthquake_details_usgs_map_loading_error_message),
+                        mUsgsMapNoInternetTextView, mUsgsMapWebView, progressBar, true));
                 mUsgsMapWebView.loadUrl(mEarthquake.getUrl() + "/map");
                 mUsgsMapLoaded = true;
             } else {

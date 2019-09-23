@@ -1,6 +1,8 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -83,7 +85,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         setupMaximumMagnitudeSeekBarPreference(mMaximumMagnitudeSeekBarPreference);
 
         mPlaySoundPreference = findPreference(getString(R.string.search_preference_sound_key));
-        setupPlaySoundPreferenceIcon();
+        setupPlaySoundPreferenceIcon(false);
 
     }
 
@@ -115,8 +117,8 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         } else if (key.equals(getString(R.string.search_preference_maximum_magnitude_key))) {
             mMaximumMagnitudeSeekBarPreference.setSummary(String.valueOf(mMaximumMagnitudeSeekBarPreference.getValue()));
 
-        } else if (key.equals(getString(R.string.search_preference_sound_key))){
-            setupPlaySoundPreferenceIcon();
+        } else if (key.equals(getString(R.string.search_preference_sound_key))) {
+            setupPlaySoundPreferenceIcon(true);
         }
     }
 
@@ -287,12 +289,19 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     }
 
 
-    private void setupPlaySoundPreferenceIcon(){
-        if (mPlaySoundPreference.isChecked()){
+    private void setupPlaySoundPreferenceIcon(boolean preferenceChanged) {
+        if (mPlaySoundPreference.isChecked()) {
             mPlaySoundPreference.setIcon(R.drawable.ic_speaker_on_brown_24dp);
+            if (preferenceChanged) {
+                MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), R.raw.earthquake_sound_sample);
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.start();
+            }
         } else {
             mPlaySoundPreference.setIcon(R.drawable.ic_speaker_off_brown_24dp);
         }
+
+
     }
 
 }
