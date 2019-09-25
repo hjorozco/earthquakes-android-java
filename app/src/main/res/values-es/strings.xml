@@ -116,10 +116,10 @@
     <string name="search_preference_max_number_of_earthquakes_limit_passed_text">20,000. Número límite para una búsqueda.</string>
 
     <string name="search_preference_sort_by_title">Ordenar por</string>
-    <string name="search_preference_sort_by_ascending_date_entry">Fecha (ascendente)</string>
-    <string name="search_preference_sort_by_descending_date_entry">Fecha (descendente)</string>
-    <string name="search_preference_sort_by_ascending_magnitude_entry">Magnitud (ascendente)</string>
-    <string name="search_preference_sort_by_descending_magnitude_entry">Magnitud (descendente)</string>
+    <string name="search_preference_sort_by_ascending_date_entry">fecha ascendente</string>
+    <string name="search_preference_sort_by_descending_date_entry">fecha descendente</string>
+    <string name="search_preference_sort_by_ascending_magnitude_entry">magnitud ascendente</string>
+    <string name="search_preference_sort_by_descending_magnitude_entry">magnitud descendente</string>
 
     <string name="search_preference_sort_by_date_text">Fecha</string>
     <string name="search_preference_sort_by_magnitude_text">Magnitud</string>
@@ -197,6 +197,7 @@
 
     <string name="menu_activity_earthquake_details_action_add_to_favorites_title">Agregar a favoritos</string>
     <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Remover de favoritos</string>
+    <string name="menu_activity_earthquake_details_action_share_title">Compartir</string>
     <string name="menu_activity_earthquake_details_action_information_title">Ayuda</string>
     <string name="menu_activity_earthquake_details_action_glossary_title">Glosario</string>
     <string name="menu_activity_earthquake_details_action_web_page_title">

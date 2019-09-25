@@ -152,13 +152,13 @@
     <string name="search_preference_sort_by_key" translatable="false">order_by</string>
     <string name="search_preference_sort_by_key_2" translatable="false">order_by_2</string>
     <string name="search_preference_sort_by_default_value" translatable="false">@string/search_preference_sort_by_descending_date_entry_value</string>
-    <string name="search_preference_sort_by_ascending_date_entry">Date (ascending)</string>
+    <string name="search_preference_sort_by_ascending_date_entry">ascending date</string>
     <string name="search_preference_sort_by_ascending_date_entry_value" translatable="false">time-asc</string>
-    <string name="search_preference_sort_by_descending_date_entry">Date (descending)</string>
+    <string name="search_preference_sort_by_descending_date_entry">descending date</string>
     <string name="search_preference_sort_by_descending_date_entry_value" translatable="false">time</string>
-    <string name="search_preference_sort_by_ascending_magnitude_entry">Magnitude (ascending)</string>
+    <string name="search_preference_sort_by_ascending_magnitude_entry">ascending magnitude</string>
     <string name="search_preference_sort_by_ascending_magnitude_entry_value" translatable="false">magnitude-asc</string>
-    <string name="search_preference_sort_by_descending_magnitude_entry">Magnitude (descending)</string>
+    <string name="search_preference_sort_by_descending_magnitude_entry">descending magnitude</string>
     <string name="search_preference_sort_by_descending_magnitude_entry_value" translatable="false">magnitude</string>
 
 
@@ -285,6 +285,7 @@
 
     <string name="menu_activity_earthquake_details_action_add_to_favorites_title">Add to favorites</string>
     <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Remove from favorites</string>
+    <string name="menu_activity_earthquake_details_action_share_title">Share</string>
     <string name="menu_activity_earthquake_details_action_information_title">Help</string>
     <string name="menu_activity_earthquake_details_action_glossary_title">Glossary</string>
     <string name="menu_activity_earthquake_details_action_web_page_title">

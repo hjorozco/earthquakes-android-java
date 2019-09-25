@@ -10,6 +10,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_activity_earthquake_details_action_share"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:title="@string/menu_activity_earthquake_details_action_add_to_favorites_title"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_activity_earthquake_details_action_web_page"
         android:title="@string/menu_activity_earthquake_details_action_web_page_title"
         app:showAsAction="never" />

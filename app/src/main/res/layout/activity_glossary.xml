@@ -23,24 +23,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_earthquake_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_earthquake_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_earthquake_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_earthquake_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -65,24 +63,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_epicenter_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_epicenter_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_epicenter_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_epicenter_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -107,24 +103,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_fault_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_fault_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_fault_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_fault_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -149,24 +143,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_intensity_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_intensity_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_intensity_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_intensity_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -191,24 +183,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_magnitude_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_magnitude_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_magnitude_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_magnitude_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -233,24 +223,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_mercalli_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_mercalli_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_mercalli_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_mercalli_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -274,24 +262,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_mercalli_values_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_mercalli_values_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_mercalli_values_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_mercalli_values_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -315,24 +301,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_richter_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_richter_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_richter_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_richter_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -356,24 +340,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_richter_values_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_richter_values_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_richter_values_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_richter_values_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -398,24 +380,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_seismograph_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_seismograph_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_seismograph_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_seismograph_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -440,24 +420,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_seismology_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_seismology_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_seismology_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_seismology_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -482,24 +460,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_tectonic_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_tectonic_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_tectonic_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_tectonic_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -524,24 +500,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_tsunami_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_tsunami_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_tsunami_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_tsunami_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 
@@ -566,24 +540,22 @@
             android:gravity="center_vertical"
             tools:ignore="UseCompoundDrawables">
 
+            <ImageView
+                android:id="@+id/activity_glossary_usgs_title_arrow_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
+
             <TextView
                 android:id="@+id/activity_glossary_usgs_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="@integer/activity_glosary_title_weight"
                 android:padding="@dimen/application_small_padding"
                 android:text="@string/activity_glossary_usgs_title"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/application_standard_text_size"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/activity_glossary_usgs_title_arrow_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/activity_glossary_arrow_image_view_content_description"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_brown_24dp" />
 
         </LinearLayout>
 

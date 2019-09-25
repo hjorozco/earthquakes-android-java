@@ -114,6 +114,7 @@ public class QueryUtils {
             Feature feature = featuresList.get(i);
             Properties properties = feature.getProperties();
             Geometry geometry = feature.getGeometry();
+            String id = feature.getId();
             List<Double> coordinates = geometry.getCoordinates();
 
             // Checks for null values on place
@@ -167,6 +168,7 @@ public class QueryUtils {
             if (location.equals("  ")) {
 
                 earthquakeList.add(new Earthquake(
+                        id,
                         properties.getMag(),
                         splitString[0],
                         splitString[1],
@@ -191,6 +193,7 @@ public class QueryUtils {
                     // Get the values for the magnitude, place, time and URL of the previous JSON object,
                     // creates a new Earthquake object with the these values and adds it to the List
                     earthquakeList.add(new Earthquake(
+                            id,
                             properties.getMag(),
                             splitString[0],
                             splitString[1],

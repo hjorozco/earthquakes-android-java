@@ -582,8 +582,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             QueryUtils.sListWillBeLoadedAfterEmpty = true;
             QueryUtils.sSearchingForEarthquakes = true;
-            moveTaskToBack(false);
-            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

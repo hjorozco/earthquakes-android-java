@@ -3,31 +3,61 @@ package com.weebly.hectorjorozco.earthquakes.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+import java.util.Objects;
+
 /**
  * {@link Earthquake} Represents the data from an Earthquake.
  * It contains the magnitude, the location, and the date of the Earthquake.
  * <p>
  */
 
+@Entity(
+        tableName = "favorite_earthquakes",
+        indices = {@Index(value = {"id"}, unique = true)}
+)
 public class Earthquake implements Parcelable {
 
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    private String mId;
+    @ColumnInfo(name = "magnitude")
     private double mMagnitude;
+    @ColumnInfo(name = "location_offset")
     private String mLocationOffset;
+    @ColumnInfo(name = "location_primary")
     private String mLocationPrimary;
+    @ColumnInfo(name = "time_in_milliseconds")
     private long mTimeInMilliseconds;
+    @ColumnInfo(name = "url")
     private String mUrl;
+    @ColumnInfo(name = "latitude")
     private double mLatitude;
+    @ColumnInfo(name = "longitude")
     private double mLongitude;
+    @ColumnInfo(name = "depth")
     private double mDepth;
+    @ColumnInfo(name = "felt")
     private int mFelt;
+    @ColumnInfo(name = "cdi")
     private double mCdi;
+    @ColumnInfo(name = "mmi")
     private double mMmi;
+    @ColumnInfo(name = "alert")
     private String mAlert;
+    @ColumnInfo(name = "tsunami")
     private int mTsunami;
 
-    public Earthquake(double magnitude, String locationOffset, String locationPrimary,
+    public Earthquake(@NonNull String id, double magnitude, String locationOffset, String locationPrimary,
                       long timeInMilliseconds, String url, double latitude, double longitude, double depth,
                       int felt, double cdi, double mmi, String alert, int tsunami) {
+        mId = id;
         mMagnitude = magnitude;
         mLocationOffset = locationOffset;
         mLocationPrimary = locationPrimary;
@@ -41,6 +71,10 @@ public class Earthquake implements Parcelable {
         mMmi = mmi;
         mAlert = alert;
         mTsunami = tsunami;
+    }
+
+    public String getId() {
+        return mId;
     }
 
     public double getMagnitude() {
@@ -102,6 +136,7 @@ public class Earthquake implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mId);
         dest.writeDouble(mMagnitude);
         dest.writeString(mLocationOffset);
         dest.writeString(mLocationPrimary);
@@ -118,6 +153,7 @@ public class Earthquake implements Parcelable {
     }
 
     protected Earthquake(Parcel in) {
+        mId = Objects.requireNonNull(in.readString());
         mMagnitude = in.readDouble();
         mLocationOffset = in.readString();
         mLocationPrimary = in.readString();

@@ -90,7 +90,6 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
                 sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
             }
-            sortedBy = WordsUtils.changeFirstLetterToLowercase(sortedBy);
 
             titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title,
                     mEarthquakes.size(), earthquakesWordSuffix, foundAndOrderedWordSuffix, mLocation,
