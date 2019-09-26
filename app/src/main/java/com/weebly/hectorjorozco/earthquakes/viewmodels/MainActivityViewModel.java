@@ -2,7 +2,6 @@ package com.weebly.hectorjorozco.earthquakes.viewmodels;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -48,8 +47,6 @@ public class MainActivityViewModel extends AndroidViewModel {
         // If there is an internet connection load earthquakes from USGS.
         if (QueryUtils.internetConnection(context)) {
 
-            Log.d("TESTING", "Fetching earthquakes...");
-
             RetrofitImplementation retrofitImplementation =
                     RetrofitImplementation.getRetrofitImplementationInstance();
 
@@ -64,32 +61,28 @@ public class MainActivityViewModel extends AndroidViewModel {
 
                             if (retrofitResult != null) {
 
-                                Log.d("TESTING", "List of Earthquakes fetched successfully");
                                 List<Earthquake> earthquakeList =
                                         QueryUtils.getEarthquakesListFromRetrofitResult(context, retrofitResult);
 
                                 setLoadEarthquakesResult(earthquakeList, QueryUtils.SEARCH_RESULT_NON_NULL);
 
                                 if (earthquakeList.size() > 0) {
-                                    QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = true;
+                                    QueryUtils.sOneOrMoreEarthquakesOnList = true;
                                 }
 
                             } else {
-                                Log.d("TESTING", "Retrofit result was NULL");
                                 setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.SEARCH_RESULT_NULL);
                             }
                         }
 
                         @Override
                         public void onCancel() {
-                            Log.d("TESTING", "Cancelled query");
                             setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.SEARCH_CANCELLED);
                         }
 
                     }, earthquakesQueryParameters);
 
         } else {
-            Log.d("TESTING", "No internet connection");
             setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.NO_INTERNET_CONNECTION);
         }
     }

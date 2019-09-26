@@ -381,6 +381,13 @@
         activity_earthquake_details_possible_tsunami_dialog_fragment_tag
     </string>
 
+    <string name="activity_earthquake_details_earthquake_added_to_favorites_snack_bar_text">
+        Earthquake added to favorites
+    </string>
+    <string name="activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text">
+        Earthquake removed from favorites
+    </string>
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 

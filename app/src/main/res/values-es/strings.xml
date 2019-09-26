@@ -196,7 +196,7 @@
     <string name="activity_earthquake_details_open_usgs_website_button_text">Ir a la página web del USGS (en inglés)</string>
 
     <string name="menu_activity_earthquake_details_action_add_to_favorites_title">Agregar a favoritos</string>
-    <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Remover de favoritos</string>
+    <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Eliminar de favoritos</string>
     <string name="menu_activity_earthquake_details_action_share_title">Compartir</string>
     <string name="menu_activity_earthquake_details_action_information_title">Ayuda</string>
     <string name="menu_activity_earthquake_details_action_glossary_title">Glosario</string>
@@ -293,6 +293,13 @@
     </string>
     <string name="activity_earthquake_details_possible_tsumami_dialog_fragment_title">
         @string/activity_earthquake_details_tsunami_text
+    </string>
+
+    <string name="activity_earthquake_details_earthquake_added_to_favorites_snack_bar_text">
+        Sismo agregado a favoritos
+    </string>
+    <string name="activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text">
+        Sismo eliminado de favoritos
     </string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->

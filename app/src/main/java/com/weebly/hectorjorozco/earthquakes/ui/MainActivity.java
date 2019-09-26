@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +33,8 @@ import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
+import com.weebly.hectorjorozco.earthquakes.database.AppDatabase;
+import com.weebly.hectorjorozco.earthquakes.executors.AppExecutors;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
@@ -46,6 +47,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 
 public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener {
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
     public static final int MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP = 1000;
+
+    private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
+    private AppDatabase mAppDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +83,15 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         // Workaround for orientation change issue
         if (savedInstanceState != null) {
-            mEarthquakeRecyclerViewPosition = savedInstanceState.getInt("key", 0);
+            mEarthquakeRecyclerViewPosition = savedInstanceState.getInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, 0);
         }
 
         setContentView(R.layout.activity_main);
 
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
+
+        mAppDatabase = AppDatabase.getInstance(this);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -100,8 +109,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         setupViewModel();
 
         setupTransitions();
-
-        Log.d("TESTING", "ON CREATE called");
     }
 
 
@@ -139,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     setMessageVisible(true);
                     setMessage(QueryUtils.sLoadEarthquakesResultCode);
                     enableRefresh();
-                    QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
+                    QueryUtils.sOneOrMoreEarthquakesOnList = false;
                 }
                 QueryUtils.sListWillBeLoadedAfterEmpty = true;
             } else {
@@ -156,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                         } else {
                             setMessage(QueryUtils.NO_EARTHQUAKES_FOUND);
                         }
-                        QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
+                        QueryUtils.sOneOrMoreEarthquakesOnList = false;
                     }
                     QueryUtils.sListWillBeLoadedAfterEmpty = true;
                 } else {
@@ -197,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
                     QueryUtils.sListWillBeLoadedAfterEmpty = false;
 
-                    if (mMenu != null && QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
+                    if (mMenu != null && QueryUtils.sOneOrMoreEarthquakesOnList) {
                         enableListInformationAndEarthquakesMapMenuItems(true);
                     }
                 }
@@ -351,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         MenuCompat.setGroupDividerEnabled(menu, true);
         mMenu = menu;
 
-        if (QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
+        if (QueryUtils.sOneOrMoreEarthquakesOnList) {
             enableListInformationAndEarthquakesMapMenuItems(true);
         } else {
             enableListInformationAndEarthquakesMapMenuItems(false);
@@ -359,10 +366,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         if (!QueryUtils.sSearchingForEarthquakes) {
             setupRefreshMenuItem(true);
-            Log.d("TESTING", "QueryUtils.sSearchingForEarthquakes is false");
         } else {
             enableListInformationAndEarthquakesMapMenuItems(false);
-            Log.d("TESTING", "QueryUtils.sSearchingForEarthquakes is true");
         }
         return true;
     }
@@ -377,6 +382,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 break;
             case R.id.menu_activity_main_action_search_preferences:
                 showSearchPreferences();
+                break;
+            case R.id.menu_activity_main_action_favorites:
+                showFavorites();
                 break;
             case R.id.menu_activity_main_action_earthquakes_map:
                 showEarthquakesMap();
@@ -407,6 +415,31 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private void showSearchPreferences() {
         Intent intent = new Intent(this, SearchPreferencesActivity.class);
         startActivity(intent);
+    }
+
+
+    private void showFavorites(){
+
+//        Future<List<Earthquake>> getEarthquakesFromDatabaseFuture = AppExecutors.getInstance().diskIO().submit(new Callable<List<Earthquake>>() {
+//            @Override
+//            public List<Earthquake> call() throws Exception {
+//                if (mAppDatabase != null) {
+//                    return mAppDatabase.studentDao().loadFavoriteEarthquakes();
+//                } else {
+//                    return null;
+//                }
+//            }
+//        });
+//
+//        List<Earthquake> earthquakes = null;
+//        try {
+//            earthquakes = getEarthquakesFromDatabaseFuture.get();
+//        } catch (ExecutionException | InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+
+
     }
 
 
@@ -547,27 +580,16 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("key", mEarthquakeRecyclerViewPosition);
+        outState.putInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, mEarthquakeRecyclerViewPosition);
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
         mMediaPlayer.stop();
-        Log.d("TESTING", "MainActivity onPause");
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("TESTING", "MainActivity onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("TESTING", "MainActivity onDestroy");
-    }
 
     @Override
     protected void onResume() {

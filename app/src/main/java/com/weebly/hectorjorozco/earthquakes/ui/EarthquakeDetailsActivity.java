@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.database.AppDatabase;
 import com.weebly.hectorjorozco.earthquakes.executors.AppExecutors;
@@ -48,7 +47,6 @@ import com.weebly.hectorjorozco.earthquakes.utils.WebViewUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.text.DecimalFormat;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -98,6 +96,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             mEarthquake = bundle.getParcelable(EXTRA_EARTHQUAKE);
         }
 
+        mAppDatabase = AppDatabase.getInstance(this);
+
         if (savedInstanceState != null) {
             mRotation = true;
             mIsFabMenuOpen = savedInstanceState.getBoolean(IS_FAB_MENU_OPEN_VALUE_KEY);
@@ -105,8 +105,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         } else {
             mIsFavorite = checkIfEarthquakeIsFavorite();
         }
-
-        mAppDatabase = AppDatabase.getInstance(this);
 
         // Gets the values saved on Shared Preferences to set them on the map
         mSharedPreferences = getSharedPreferences(
@@ -696,8 +694,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
     private boolean checkIfEarthquakeIsFavorite() {
 
-        mAppDatabase = AppDatabase.getInstance(this);
-
         Future<Boolean> isEarthquakeFavoriteFuture = AppExecutors.getInstance().diskIO().submit(() -> {
             if (mAppDatabase != null) {
                 return mAppDatabase.studentDao().findFavoriteEarthquakeWithId(mEarthquake.getId()) != null;
@@ -714,7 +710,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         }
 
         if (mFavoritesMenuItem!=null){
-            setupFavoritesMenuItem();
+            setupFavoritesMenuItem(mIsFavorite);
         }
 
         return isEarthquakeFavorite;
@@ -728,7 +724,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         mFavoritesMenuItem = menu.getItem(0);
 
-        setupFavoritesMenuItem();
+        setupFavoritesMenuItem(mIsFavorite);
 
         return true;
     }
@@ -741,7 +737,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 dismissEarthquakeDetailsActivity();
                 break;
             case R.id.menu_activity_earthquake_details_action_favorites:
-                addOrRemoveFromFavorites();
+                deleteOrInsertOnFavoritesTableDb();
                 break;
             case R.id.menu_activity_earthquake_details_action_share:
                 share();
@@ -761,39 +757,35 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void setupFavoritesMenuItem(){
-        if (mIsFavorite) {
+    private void setupFavoritesMenuItem(boolean isFavorite){
+        if (isFavorite) {
             mFavoritesMenuItem.setIcon(R.drawable.ic_star_yellow_24dp);
+            mFavoritesMenuItem.setTitle(R.string.menu_activity_earthquake_details_action_remove_from_favorites_title);
         } else {
             mFavoritesMenuItem.setIcon(R.drawable.ic_star_border_white_24dp);
+            mFavoritesMenuItem.setTitle(R.string.menu_activity_earthquake_details_action_add_to_favorites_title);
         }
     }
 
 
-    // TODO
-    private void addOrRemoveFromFavorites() {
+    private void deleteOrInsertOnFavoritesTableDb() {
+        setupFavoritesMenuItem(!mIsFavorite);
         if (mIsFavorite) {
             // Remove from "favorite_earthquakes" db table
-            mFavoritesMenuItem.setIcon(R.drawable.ic_star_border_white_24dp);
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    mAppDatabase.studentDao().deleteFavoriteEarthquake(mEarthquake);
-                }
-            });
+            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.studentDao().deleteFavoriteEarthquake(mEarthquake));
+            showSnackBar(getString(R.string.activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text));
         } else {
             // Insert to "favorite_earthquakes" db table
-            mFavoritesMenuItem.setIcon(R.drawable.ic_star_yellow_24dp);
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    mAppDatabase.studentDao().insertFavoriteEarthquake(mEarthquake);
-                }
-            });
+            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.studentDao().insertFavoriteEarthquake(mEarthquake));
+            showSnackBar(getString(R.string.activity_earthquake_details_earthquake_added_to_favorites_snack_bar_text));
         }
         mIsFavorite = !mIsFavorite;
     }
 
+
+    private void showSnackBar(String text){
+        Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG).show();
+    }
 
     private void share() {
 
