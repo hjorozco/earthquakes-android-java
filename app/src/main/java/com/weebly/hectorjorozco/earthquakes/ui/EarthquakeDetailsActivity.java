@@ -696,7 +696,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         Future<Boolean> isEarthquakeFavoriteFuture = AppExecutors.getInstance().diskIO().submit(() -> {
             if (mAppDatabase != null) {
-                return mAppDatabase.studentDao().findFavoriteEarthquakeWithId(mEarthquake.getId()) != null;
+                return mAppDatabase.earthquakeDao().findFavoriteEarthquakeWithId(mEarthquake.getId()) != null;
             } else {
                 return false;
             }
@@ -745,9 +745,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             case R.id.menu_activity_earthquake_details_action_help:
                 showEarthquakeDetailsHelpMessage();
                 break;
-            case R.id.menu_activity_earthquake_details_action_glossary:
-                startActivity(new Intent(this, GlossaryActivity.class));
-                break;
             case R.id.menu_activity_earthquake_details_action_web_page:
                 showEarthquakeWebSiteActivity();
                 break;
@@ -772,11 +769,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         setupFavoritesMenuItem(!mIsFavorite);
         if (mIsFavorite) {
             // Remove from "favorite_earthquakes" db table
-            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.studentDao().deleteFavoriteEarthquake(mEarthquake));
+            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.earthquakeDao().deleteFavoriteEarthquake(mEarthquake));
             showSnackBar(getString(R.string.activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text));
         } else {
             // Insert to "favorite_earthquakes" db table
-            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.studentDao().insertFavoriteEarthquake(mEarthquake));
+            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.earthquakeDao().insertFavoriteEarthquake(mEarthquake));
             showSnackBar(getString(R.string.activity_earthquake_details_earthquake_added_to_favorites_snack_bar_text));
         }
         mIsFavorite = !mIsFavorite;

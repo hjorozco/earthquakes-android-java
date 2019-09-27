@@ -30,6 +30,6 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     // Returns a Data Access Object used to access the "students" table.
-    public abstract EarthquakeDao studentDao();
+    public abstract EarthquakeDao earthquakeDao();
 
 }

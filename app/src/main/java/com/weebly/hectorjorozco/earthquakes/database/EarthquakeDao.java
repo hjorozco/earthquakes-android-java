@@ -1,5 +1,6 @@
 package com.weebly.hectorjorozco.earthquakes.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -17,7 +18,7 @@ import java.util.List;
 public interface EarthquakeDao {
 
     @Query("SELECT * FROM favorite_earthquakes" )
-    List<Earthquake> loadFavoriteEarthquakes();
+    LiveData<List<Earthquake>> loadFavoriteEarthquakes();
 
     @Query("SELECT * FROM favorite_earthquakes WHERE id = :id")
     Earthquake findFavoriteEarthquakeWithId(String id);

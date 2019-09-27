@@ -23,13 +23,8 @@
     <group android:id="@+id/menu_activity_earthquake_details_help_group">
 
         <item
-            android:id="@+id/menu_activity_earthquake_details_action_glossary"
-            android:title="@string/menu_activity_earthquake_details_action_glossary_title"
-            app:showAsAction="never" />
-
-        <item
             android:id="@+id/menu_activity_earthquake_details_action_help"
-            android:title="@string/menu_activity_earthquake_details_action_information_title"
+            android:title="@string/menu_activity_main_action_help_title"
             app:showAsAction="never" />
 
     </group>

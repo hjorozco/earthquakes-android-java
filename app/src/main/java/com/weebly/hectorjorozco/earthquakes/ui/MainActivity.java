@@ -33,8 +33,6 @@ import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
-import com.weebly.hectorjorozco.earthquakes.database.AppDatabase;
-import com.weebly.hectorjorozco.earthquakes.executors.AppExecutors;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
@@ -47,9 +45,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 
 public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener {
@@ -71,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
-    private AppDatabase mAppDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +85,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
 
-        mAppDatabase = AppDatabase.getInstance(this);
-
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        mEarthquakesListAdapter = new EarthquakesListAdapter(this, this);
+        mEarthquakesListAdapter = new EarthquakesListAdapter(this, this,
+                false);
         mMessageImageView = findViewById(R.id.activity_main_message_image_view);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
@@ -146,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     setMessageVisible(true);
                     setMessage(QueryUtils.sLoadEarthquakesResultCode);
                     enableRefresh();
-                    QueryUtils.sOneOrMoreEarthquakesOnList = false;
+                    QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
                 }
                 QueryUtils.sListWillBeLoadedAfterEmpty = true;
             } else {
@@ -163,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                         } else {
                             setMessage(QueryUtils.NO_EARTHQUAKES_FOUND);
                         }
-                        QueryUtils.sOneOrMoreEarthquakesOnList = false;
+                        QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
                     }
                     QueryUtils.sListWillBeLoadedAfterEmpty = true;
                 } else {
@@ -204,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
                     QueryUtils.sListWillBeLoadedAfterEmpty = false;
 
-                    if (mMenu != null && QueryUtils.sOneOrMoreEarthquakesOnList) {
+                    if (mMenu != null && QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
                         enableListInformationAndEarthquakesMapMenuItems(true);
                     }
                 }
@@ -358,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         MenuCompat.setGroupDividerEnabled(menu, true);
         mMenu = menu;
 
-        if (QueryUtils.sOneOrMoreEarthquakesOnList) {
+        if (QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
             enableListInformationAndEarthquakesMapMenuItems(true);
         } else {
             enableListInformationAndEarthquakesMapMenuItems(false);
@@ -381,13 +374,13 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 selectRefreshOrStopAction();
                 break;
             case R.id.menu_activity_main_action_search_preferences:
-                showSearchPreferences();
+                startActivity(new Intent(this, SearchPreferencesActivity.class));
                 break;
             case R.id.menu_activity_main_action_favorites:
-                showFavorites();
+                startActivity(new Intent(this, FavoritesActivity.class));
                 break;
             case R.id.menu_activity_main_action_earthquakes_map:
-                showEarthquakesMap();
+                startActivity(new Intent(this, EarthquakesMapActivity.class));
                 break;
             case R.id.menu_activity_main_action_list_information:
                 showEarthquakesListInformation();
@@ -410,42 +403,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         } else {
             mMainActivityViewModel.cancelRetrofitRequest();
         }
-    }
-
-    private void showSearchPreferences() {
-        Intent intent = new Intent(this, SearchPreferencesActivity.class);
-        startActivity(intent);
-    }
-
-
-    private void showFavorites(){
-
-//        Future<List<Earthquake>> getEarthquakesFromDatabaseFuture = AppExecutors.getInstance().diskIO().submit(new Callable<List<Earthquake>>() {
-//            @Override
-//            public List<Earthquake> call() throws Exception {
-//                if (mAppDatabase != null) {
-//                    return mAppDatabase.studentDao().loadFavoriteEarthquakes();
-//                } else {
-//                    return null;
-//                }
-//            }
-//        });
-//
-//        List<Earthquake> earthquakes = null;
-//        try {
-//            earthquakes = getEarthquakesFromDatabaseFuture.get();
-//        } catch (ExecutionException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-
-
-    }
-
-
-    private void showEarthquakesMap() {
-        Intent earthquakesMapIntent = new Intent(this, EarthquakesMapActivity.class);
-        startActivity(earthquakesMapIntent);
     }
 
 
@@ -518,7 +475,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     /**
      * Implementation of EarthquakesListAdapter.EarthquakesListClickListener
-     * When an earthquake on the list is clicked show a new activity whith details of it.
+     * When an earthquake on the list is clicked show a new activity with details of it.
      * Implement a transition if Android version is 21 or grater.
      */
     @Override

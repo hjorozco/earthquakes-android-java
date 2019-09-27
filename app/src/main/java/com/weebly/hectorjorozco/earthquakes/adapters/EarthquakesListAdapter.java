@@ -27,6 +27,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private List<Earthquake> mEarthquakes;
     private String mLocation;
     private EarthquakesListClickListener mEarthquakesListClickListener;
+    private boolean mIsFavoritesList;
 
 
     // Interface implemented in MainActivity.java to handle clicks
@@ -39,9 +40,11 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     // The adapter constructor
-    public EarthquakesListAdapter(Context context, EarthquakesListClickListener earthquakesListClickListener) {
+    public EarthquakesListAdapter(Context context, EarthquakesListClickListener earthquakesListClickListener,
+                                  boolean isFavoritesList) {
         mContext = context;
         mEarthquakesListClickListener = earthquakesListClickListener;
+        mIsFavoritesList = isFavoritesList;
     }
 
 
@@ -91,9 +94,14 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
             }
 
-            titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title,
-                    mEarthquakes.size(), earthquakesWordSuffix, foundAndOrderedWordSuffix, mLocation,
-                    foundAndOrderedWordSuffix, sortedBy));
+            if (mIsFavoritesList) {
+                titleViewHolder.titleTextView.setText("FAVORITES test title");
+            } else {
+
+                titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title,
+                        mEarthquakes.size(), earthquakesWordSuffix, foundAndOrderedWordSuffix, mLocation,
+                        foundAndOrderedWordSuffix, sortedBy));
+            }
 
         } else if (holder instanceof EarthquakeViewHolder) {
 

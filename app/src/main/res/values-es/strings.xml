@@ -4,6 +4,7 @@
     <!-- ********** APP ********** -->
 
     <string name="app_name">Sismos</string>
+    <string name="uppercase_yes">SI</string>
 
     <!-- ********** App ********** -->
 
@@ -303,6 +304,21 @@
     </string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
+
+
+    <!-- ********** ACTIVITY FAVORITES ********** -->
+
+    <string name="activity_favorites_label">Favoritos</string>
+
+    <string name="activity_favorites_no_favorites_message">No se encontraron favoritos</string>
+
+    <string name="activity_favorites_loading_favorites_message">Cargando favoritos</string>
+
+    <string name="menu_activity_favorites_action_sort_title">Ordenar favoritos</string>
+    <string name="menu_activity_favorites_action_delete_title">Borrar todos los favoritos</string>
+
+
+    <!-- ********** Activity favorites ********** -->
 
 
     <!-- ********** ACTIVITY GLOSSARY ********** -->

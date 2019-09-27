@@ -47,12 +47,11 @@ public class MessageDialogFragment extends DialogFragment {
             title = arguments.getString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY);
         }
 
-        int alertDialogStyle = R.style.ThemeDialogCustomPrimaryColor;
         int colorPrimaryDark = getResources().getColor(R.color.colorPrimaryDark);
         String colorPrimaryDarkString = Integer.toHexString(colorPrimaryDark & 0x00ffffff);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
-                alertDialogStyle);
+                R.style.ThemeDialogCustomPrimaryColor);
         builder.setMessage(message).setTitle(Html.fromHtml(getString(R.string.html_text_with_color,
                 colorPrimaryDarkString, title)));
 

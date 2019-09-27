@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.weebly.hectorjorozco.earthquakes.ui.FavoritesActivity">
+
+    <item
+        android:id="@+id/menu_activity_favorites_action_sort"
+        android:icon="@drawable/ic_sort_descending_white_24dp"
+        android:title="@string/menu_activity_favorites_action_sort_title"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_activity_favorites_action_delete"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:title="@string/menu_activity_favorites_action_delete_title"
+        app:showAsAction="ifRoom" />
+
+    <group android:id="@+id/menu_activity_favorites_help_group">
+
+        <item
+            android:id="@+id/menu_activity_favorites_action_help"
+            android:title="@string/menu_activity_main_action_help_title"
+            app:showAsAction="never" />
+
+    </group>
+
+</menu>

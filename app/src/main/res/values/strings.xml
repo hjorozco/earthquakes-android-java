@@ -7,6 +7,8 @@
     <string name="app_name">Earthquakes</string>
     <string name="html_text_with_color" translatable="false">&lt;font color=#%1$s>%2$s&lt;/font></string>
     <string name="empty_string" translatable="false" />
+    <string name="uppercase_yes">YES</string>
+    <string name="uppercase_no" translatable="false">NO</string>
 
     <!-- ********** App ********** -->
 
@@ -14,9 +16,12 @@
     <!-- ********** APP SHARED PREFERENCES ********** -->
 
     <string name="app_shared_preferences_name" translatable="false">app_shared_preferences</string>
-    <string name="activity_earthquake_details_map_type_shared_preference_key" translatable="false">activity_earthquake_details_map_type</string>
-    <string name="activity_earthquake_details_google_map_type_shared_preference_key" translatable="false">activity_earthquake_details_google_map_type</string>
-    <string name="activity_earthquakes_map_google_map_type_shared_preference_key" translatable="false">activity_earthquakes_map_google_map_type</string>
+    <string name="activity_earthquake_details_map_type_shared_preference_key" translatable="false">
+        activity_earthquake_details_map_type</string>
+    <string name="activity_earthquake_details_google_map_type_shared_preference_key" translatable="false">
+        activity_earthquake_details_google_map_type</string>
+    <string name="activity_earthquakes_map_google_map_type_shared_preference_key" translatable="false">
+        activity_earthquakes_map_google_map_type</string>
 
     <!-- ********** APP SHARED PREFERENCES ********** -->
 
@@ -389,6 +394,23 @@
     </string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
+
+
+
+    <!-- ********** ACTIVITY FAVORITES ********** -->
+
+    <string name="activity_favorites_label">Favorites</string>
+
+    <string name="activity_favorites_image_view_content_description" translatable="false">No favorites</string>
+    <string name="activity_favorites_no_favorites_message">No favorites found</string>
+
+    <string name="activity_favorites_loading_favorites_message">Loading favorites</string>
+
+    <string name="menu_activity_favorites_action_sort_title">Sort favorites</string>
+    <string name="menu_activity_favorites_action_delete_title">Delete all favorites</string>
+
+
+    <!-- ********** Activity favorites ********** -->
 
 
     <!-- ********** ACTIVITY GLOSSARY ********** -->
