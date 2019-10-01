@@ -41,7 +41,6 @@
     <string name="earthquakes_list_updated_text">Lista de sismos actualizada</string>
 
     <string name="earthquakes_list_title">%1$d sismo%2$s encontrado%3$s en %4$s. Ordenado%5$s por %6$s.</string>
-    <string name="earthquakes_list_title_earthquakes_word_suffix">s</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix">s</string>
     <string name="earthquakes_list_title_sorted_by_date_text">fecha</string>
     <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitud</string>
@@ -315,8 +314,14 @@
     <string name="activity_favorites_loading_favorites_message">Cargando favoritos</string>
 
     <string name="menu_activity_favorites_action_sort_title">Ordenar favoritos</string>
-    <string name="menu_activity_favorites_action_delete_title">Borrar todos los favoritos</string>
+    <string name="menu_activity_favorites_action_delete_title">Eliminar todos los favoritos</string>
 
+    <string name="activity_favorites_list_title">%1$d favorito%2$s. Ordenado%3$s por %4$s.</string>
+
+    <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
+        ¡Atención!</string>
+    <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
+        Vas a eliminar &lt;b>todos los favoritos.&lt;/b>&lt;br/&gt;¿Estás seguro(a)?</string>
 
     <!-- ********** Activity favorites ********** -->
 
@@ -564,14 +569,14 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
-        &lt;br/&gt;Mostrando &lt;b>%1$s %2$s en %3$s, ordenado%4$s por %5$s,&lt;/b> para las siguientes preferencias de
+        Mostrando &lt;b>%1$s %2$s en %3$s, ordenado%4$s por %5$s,&lt;/b> para las siguientes preferencias de
         búsqueda:&lt;br/&gt;&lt;br/&gt;
         &lt;i>Máximo número de sismos &lt;/i>%6$s&lt;br/&gt;
         &lt;i>Rango de fechas &lt;/i>%7$s&lt;br/&gt;
         %8$s a&lt;br/&gt;
         %9$s&lt;br/&gt;
         &lt;i>Rango de magnitudes &lt;/i>%10$s a %11$s
-        %12$s&lt;br/&gt;
+        %12$s
     </string>
 
     <string name="current_list_alert_dialog_message_2">

@@ -73,35 +73,38 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-            String earthquakesWordSuffix, foundAndOrderedWordSuffix, orderBy, sortedBy;
+            String pluralEnding, foundAndOrderedWordSuffix, orderBy, sortedBy, title;
             if (mEarthquakes.size() == 1) {
-                earthquakesWordSuffix = "";
+                pluralEnding = "";
                 foundAndOrderedWordSuffix = "";
             } else {
-                earthquakesWordSuffix = mContext.getString(R.string.earthquakes_list_title_earthquakes_word_suffix);
+                pluralEnding = mContext.getString(R.string.letter_s_lowercase);
                 foundAndOrderedWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
             }
 
-            orderBy = QueryUtils.sEarthquakesListInformationValues.getOrderBy();
-            sortedBy = "";
-            if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
-                sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_date_entry);
-            } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_date_entry_value))) {
-                sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_date_entry);
-            } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value))) {
-                sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry);
-            } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
-                sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
-            }
-
             if (mIsFavoritesList) {
-                titleViewHolder.titleTextView.setText("FAVORITES test title");
+                // TODO Get the favorites sorted by preference from Shared Preferences.
+                sortedBy = "will do";
+                title = mContext.getString(R.string.activity_favorites_list_title, mEarthquakes.size(),
+                        pluralEnding, foundAndOrderedWordSuffix, sortedBy);
             } else {
-
-                titleViewHolder.titleTextView.setText(mContext.getString(R.string.earthquakes_list_title,
-                        mEarthquakes.size(), earthquakesWordSuffix, foundAndOrderedWordSuffix, mLocation,
-                        foundAndOrderedWordSuffix, sortedBy));
+                orderBy = QueryUtils.sEarthquakesListInformationValues.getOrderBy();
+                sortedBy = "";
+                if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
+                    sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_date_entry);
+                } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_date_entry_value))) {
+                    sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_date_entry);
+                } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value))) {
+                    sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry);
+                } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
+                    sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
+                }
+                title = mContext.getString(R.string.earthquakes_list_title,
+                        mEarthquakes.size(), pluralEnding, foundAndOrderedWordSuffix, mLocation,
+                        foundAndOrderedWordSuffix, sortedBy);
             }
+
+            titleViewHolder.titleTextView.setText(title);
 
         } else if (holder instanceof EarthquakeViewHolder) {
 

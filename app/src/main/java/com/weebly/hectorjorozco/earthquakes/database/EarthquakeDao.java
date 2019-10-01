@@ -23,6 +23,9 @@ public interface EarthquakeDao {
     @Query("SELECT * FROM favorite_earthquakes WHERE id = :id")
     Earthquake findFavoriteEarthquakeWithId(String id);
 
+    @Query("DELETE FROM favorite_earthquakes")
+    void deleteAllFavorites();
+
     @Insert
     void insertFavoriteEarthquake(Earthquake earthquake);
 

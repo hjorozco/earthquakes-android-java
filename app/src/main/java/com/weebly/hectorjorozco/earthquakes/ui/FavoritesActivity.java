@@ -27,6 +27,8 @@ import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
+import com.weebly.hectorjorozco.earthquakes.database.AppDatabase;
+import com.weebly.hectorjorozco.earthquakes.executors.AppExecutors;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.ConfirmationDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
@@ -50,6 +52,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     private int mNumberOfEarthquakesOnList;
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,17 +113,25 @@ public class FavoritesActivity extends AppCompatActivity implements
         mFavoritesActivityViewModel.getFavoriteEarthquakes().observe(this, earthquakes -> {
 
             mNumberOfEarthquakesOnList = 0;
+            boolean deleteMenuItemStatus;
 
             // If the list of favorite earthquakes was empty before loading from the db
             if (earthquakes == null || earthquakes.size() == 0) {
                 setMessageVisible(true);
                 mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
+                deleteMenuItemStatus = false;
             } else {
                 // If one or more earthquakes were found
                 setMessageVisible(false);
                 mNumberOfEarthquakesOnList = earthquakes.size();
                 mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
+                deleteMenuItemStatus = true;
             }
+
+            if (mMenu != null) {
+                mMenu.findItem(R.id.menu_activity_favorites_action_delete).setEnabled(deleteMenuItemStatus);
+            }
+
         });
 
     }
@@ -148,6 +159,14 @@ public class FavoritesActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_favorites, menu);
         MenuCompat.setGroupDividerEnabled(menu, true);
+
+        mMenu = menu;
+
+        if (mNumberOfEarthquakesOnList==0){
+            mMenu.findItem(R.id.menu_activity_favorites_action_delete).setEnabled(false);
+        } else {
+            mMenu.findItem(R.id.menu_activity_favorites_action_delete).setEnabled(true);
+        }
 
         return true;
     }
@@ -180,13 +199,13 @@ public class FavoritesActivity extends AppCompatActivity implements
     private void showDeleteAllFavoritesConfirmationDialogFragment() {
         ConfirmationDialogFragment confirmationDialogFragment =
                 ConfirmationDialogFragment.newInstance(
-                        Html.fromHtml("Delete all?"),
-                        "DELETE ALL",
+                        Html.fromHtml(getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_text)),
+                        getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_title),
                         0,
                         ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES);
 
         confirmationDialogFragment.show(getSupportFragmentManager(),
-                "test");
+                getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_tag));
     }
 
 
@@ -196,7 +215,7 @@ public class FavoritesActivity extends AppCompatActivity implements
      */
     @Override
     public void onTitleClick() {
-
+        // Nothing to do on favorites activity.
     }
 
     /**
@@ -233,6 +252,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
     /**
      * Implementation of ConfirmationDialogFragment.ConfirmationDialogFragmentListener interface
+     *
      * @param answerYes
      * @param itemToDeletePosition
      * @param caller
@@ -240,6 +260,25 @@ public class FavoritesActivity extends AppCompatActivity implements
     @Override
     public void onConfirmation(boolean answerYes, int itemToDeletePosition, byte caller) {
 
+        AppDatabase appDatabase = AppDatabase.getInstance(this);
+
+        switch (caller) {
+            case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ONE_FAVORITE:
+                break;
+            case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_SOME_FAVORITES:
+                break;
+            case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES:
+                if (answerYes) {
+                    // Delete all tables from the database
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            appDatabase.earthquakeDao().deleteAllFavorites();
+                        }
+                    });
+                }
+                break;
+        }
     }
 
 

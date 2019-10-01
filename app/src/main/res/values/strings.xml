@@ -9,6 +9,7 @@
     <string name="empty_string" translatable="false" />
     <string name="uppercase_yes">YES</string>
     <string name="uppercase_no" translatable="false">NO</string>
+    <string name="letter_s_lowercase" translatable="false">s</string>
 
     <!-- ********** App ********** -->
 
@@ -58,7 +59,6 @@
     <string name="earthquakes_list_updated_text">Earthquakes list updated</string>
 
     <string name="earthquakes_list_title">%1$d earthquake%2$s found%3$s in %4$s. Sorted%5$s by %6$s.</string>
-    <string name="earthquakes_list_title_earthquakes_word_suffix">s</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix" />
     <string name="earthquakes_list_title_sorted_by_date_text">date</string>
     <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitude</string>
@@ -409,6 +409,14 @@
     <string name="menu_activity_favorites_action_sort_title">Sort favorites</string>
     <string name="menu_activity_favorites_action_delete_title">Delete all favorites</string>
 
+    <string name="activity_favorites_list_title">%1$d favorite%2$s. Sorted%3$s by %4$s.</string>
+
+    <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
+        Attention!</string>
+    <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
+        You are going to delete &lt;b>all the favorites.&lt;/b>&lt;br/&gt;Are your sure?</string>
+    <string name="activity_favorites_delete_all_confirmation_dialog_fragment_tag" translatable="false">
+        activity_favorites_delete_all_confirmation_dialog_fragment_tag</string>
 
     <!-- ********** Activity favorites ********** -->
 
@@ -650,14 +658,14 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
-        &lt;br/&gt;Showing &lt;b>%1$s %2$s in %3$s, sorted%4$s by %5$s,&lt;/b> for the next search preferences:
+        Showing &lt;b>%1$s %2$s in %3$s, sorted%4$s by %5$s,&lt;/b> for the next search preferences:
         &lt;br/&gt;&lt;br/&gt;
         &lt;i>Max number of earthquakes &lt;/i>%6$s&lt;br/&gt;
         &lt;i>Date range &lt;/i>%7$s&lt;br/&gt;
         %8$s to&lt;br/&gt;
         %9$s&lt;br/&gt;
         &lt;i>Magnitudes range &lt;/i>%10$s to %11$s
-        %12$s&lt;br/&gt;
+        %12$s
     </string>
 
     <string name="current_list_alert_dialog_message_2">
