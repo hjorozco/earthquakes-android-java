@@ -15,13 +15,4 @@
         android:title="@string/menu_activity_favorites_action_delete_title"
         app:showAsAction="ifRoom" />
 
-    <group android:id="@+id/menu_activity_favorites_help_group">
-
-        <item
-            android:id="@+id/menu_activity_favorites_action_help"
-            android:title="@string/menu_activity_main_action_help_title"
-            app:showAsAction="never" />
-
-    </group>
-
 </menu>

@@ -7,9 +7,11 @@
     <string name="app_name">Earthquakes</string>
     <string name="html_text_with_color" translatable="false">&lt;font color=#%1$s>%2$s&lt;/font></string>
     <string name="empty_string" translatable="false" />
-    <string name="uppercase_yes">YES</string>
-    <string name="uppercase_no" translatable="false">NO</string>
+    <string name="yes_text">YES</string>
+    <string name="no_text" translatable="false">NO</string>
     <string name="letter_s_lowercase" translatable="false">s</string>
+    <string name="ok_text" translatable="false">@android:string/ok</string>
+    <string name="cancel_text" translatable="false">@android:string/cancel</string>
 
     <!-- ********** App ********** -->
 
@@ -23,6 +25,8 @@
         activity_earthquake_details_google_map_type</string>
     <string name="activity_earthquakes_map_google_map_type_shared_preference_key" translatable="false">
         activity_earthquakes_map_google_map_type</string>
+    <string name="activity_favorites_sort_by_shared_preference_key" translatable="false">
+        activity_favorites_sort_by_shared_preference_key</string>
 
     <!-- ********** APP SHARED PREFERENCES ********** -->
 
@@ -254,7 +258,7 @@
         &lt;br/&gt;Press the &lt;b>magnitude&lt;/b> (in the colored circle), the &lt;b>intensities&lt;/b>, the
         &lt;b>alert&lt;/b> or the &lt;b>possible tsunami&lt;/b> message to see information for each of them.
         &lt;br/&gt;&lt;br/&gt;&lt;i>Not all earthquakes will have intensities, alert or possible tsunami
-        information&lt;/i>.&lt;br/&gt;</string>
+        information&lt;/i>.</string>
     <string name="activity_earthquake_details_information_dialog_fragment_title">
         @string/menu_activity_earthquake_details_action_information_title
     </string>
@@ -414,9 +418,26 @@
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
         Attention!</string>
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
-        You are going to delete &lt;b>all the favorites.&lt;/b>&lt;br/&gt;Are your sure?</string>
+        &lt;br/&gt;You are going to delete &lt;b>all the favorites.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_tag" translatable="false">
         activity_favorites_delete_all_confirmation_dialog_fragment_tag</string>
+
+    <string name="activity_favorites_sort_dialog_fragment_title">Sort favorites by</string>
+    <string name="activity_favorites_sort_dialog_fragment_tag" translatable="false">
+        activity_favorites_sort_dialog_fragment_tag</string>
+
+    <string name="activity_favorites_sorted_by_ascending_date_text">
+        Favorites sorted by ascending date
+    </string>
+    <string name="activity_favorites_sorted_by_descending_date_text">
+        Favorites sorted by descending date
+    </string>
+    <string name="activity_favorites_sorted_by_ascending_magnitude_text">
+        Favorites sorted by ascending magnitude
+    </string>
+    <string name="activity_favorites_sorted_by_descending_magnitude_text">
+        Favorites sorted by descending magnitude
+    </string>
 
     <!-- ********** Activity favorites ********** -->
 
@@ -658,7 +679,7 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
-        Showing &lt;b>%1$s %2$s in %3$s, sorted%4$s by %5$s,&lt;/b> for the next search preferences:
+        &lt;br/>Showing &lt;b>%1$s %2$s in %3$s, sorted%4$s by %5$s,&lt;/b> for the next search preferences:
         &lt;br/&gt;&lt;br/&gt;
         &lt;i>Max number of earthquakes &lt;/i>%6$s&lt;br/&gt;
         &lt;i>Date range &lt;/i>%7$s&lt;br/&gt;

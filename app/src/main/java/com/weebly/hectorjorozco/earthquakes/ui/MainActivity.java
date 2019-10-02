@@ -55,6 +55,11 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
+    public static final int SORT_BY_ASCENDING_DATE = 0;
+    public static final int SORT_BY_DESCENDING_DATE = 1;
+    public static final int SORT_BY_ASCENDING_MAGNITUDE = 2;
+    public static final int SORT_BY_DESCENDING_MAGNITUDE = 3;
+
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;
     private MainActivityViewModel mMainActivityViewModel;
@@ -382,9 +387,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             case R.id.menu_activity_main_action_earthquakes_map:
                 startActivity(new Intent(this, EarthquakesMapActivity.class));
                 break;
-            case R.id.menu_activity_main_action_list_information:
-                showEarthquakesListInformation();
-                break;
             case R.id.menu_activity_main_action_glossary:
                 startActivity(new Intent(this, GlossaryActivity.class));
                 break;
@@ -403,17 +405,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         } else {
             mMainActivityViewModel.cancelRetrofitRequest();
         }
-    }
-
-
-    private void showEarthquakesListInformation() {
-        MessageDialogFragment messageDialogFragment =
-                MessageDialogFragment.newInstance(
-                        QueryUtils.createCurrentListAlertDialogMessage(this, QueryUtils.sEarthquakesListInformationValues),
-                        getString(R.string.menu_activity_main_action_list_information_title));
-
-        messageDialogFragment.show(getSupportFragmentManager(),
-                getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
     }
 
 
@@ -460,7 +451,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
 
     private void enableListInformationAndEarthquakesMapMenuItems(boolean enable) {
-        mMenu.findItem(R.id.menu_activity_main_action_list_information).setEnabled(enable);
         mMenu.findItem(R.id.menu_activity_main_action_earthquakes_map).setEnabled(enable);
     }
 
@@ -470,7 +460,13 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
      */
     @Override
     public void onTitleClick() {
-        showEarthquakesListInformation();
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        QueryUtils.createCurrentListAlertDialogMessage(this, QueryUtils.sEarthquakesListInformationValues),
+                        getString(R.string.menu_activity_main_action_list_information_title));
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
     }
 
     /**

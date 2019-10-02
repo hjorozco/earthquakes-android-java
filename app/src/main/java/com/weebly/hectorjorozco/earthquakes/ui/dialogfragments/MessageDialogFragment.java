@@ -37,6 +37,10 @@ public class MessageDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        int colorPrimaryDark = getResources().getColor(R.color.colorPrimaryDark);
+        int colorAccent = getResources().getColor(R.color.colorAccent);
+        String colorPrimaryDarkString = Integer.toHexString(colorPrimaryDark & 0x00ffffff);
+
         Bundle arguments = getArguments();
 
         CharSequence message = null;
@@ -46,9 +50,6 @@ public class MessageDialogFragment extends DialogFragment {
             message = arguments.getCharSequence(DIALOG_FRAGMENT_MESSAGE_ARGUMENT_KEY, "Hello");
             title = arguments.getString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY);
         }
-
-        int colorPrimaryDark = getResources().getColor(R.color.colorPrimaryDark);
-        String colorPrimaryDarkString = Integer.toHexString(colorPrimaryDark & 0x00ffffff);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
                 R.style.ThemeDialogCustomPrimaryColor);
@@ -63,7 +64,7 @@ public class MessageDialogFragment extends DialogFragment {
         alertDialog.show();
 
         Button button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        button.setTextColor(colorPrimaryDark);
+        button.setTextColor(colorAccent);
         button.setBackgroundColor(Color.TRANSPARENT);
 
         return alertDialog;

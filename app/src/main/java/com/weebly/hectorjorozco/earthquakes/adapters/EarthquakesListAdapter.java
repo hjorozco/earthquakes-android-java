@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
@@ -84,7 +85,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             if (mIsFavoritesList) {
                 // TODO Get the favorites sorted by preference from Shared Preferences.
-                sortedBy = "will do";
+                sortedBy = String.valueOf(SortFavoritesUtils.getSortByValueFromSharedPreferences(mContext));
                 title = mContext.getString(R.string.activity_favorites_list_title, mEarthquakes.size(),
                         pluralEnding, foundAndOrderedWordSuffix, sortedBy);
             } else {
@@ -145,6 +146,12 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void setEarthquakesListData(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
         notifyDataSetChanged();
+    }
+
+
+    // Returns the list of Student Entries.
+    public List<Earthquake> getEarthquakesListData() {
+        return mEarthquakes;
     }
 
 

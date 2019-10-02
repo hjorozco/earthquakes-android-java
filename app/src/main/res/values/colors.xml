@@ -12,7 +12,7 @@
     <color name="colorScrim">#40000000</color>
     <color name="colorScrimDark">#80000000</color>
 
-    <color name="colorDisableMenuItem">#BDBDBD</color>
+    <color name="colorDisabledMenuItem">#BDBDBD</color>
 
     <color name="colorAppBackground">#FFFAFAFA</color>
 

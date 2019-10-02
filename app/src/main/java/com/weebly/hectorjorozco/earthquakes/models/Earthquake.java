@@ -9,6 +9,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -128,6 +129,24 @@ public class Earthquake implements Parcelable {
     public int getTsunami() {
         return mTsunami;
     }
+
+
+    // Comparators used to sort favorite earthquakes
+
+    public static final Comparator<Earthquake> ascendingMagnitudeComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
+            return Double.compare(earthquake1.getMagnitude(), earthquake2.getMagnitude());
+        }
+    };
+
+    public static final Comparator<Earthquake> descendingMagnitudeComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
+            return -Double.compare(earthquake1.getMagnitude(), earthquake2.getMagnitude());
+        }
+    };
+
 
     @Override
     public int describeContents() {

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -57,6 +58,10 @@ public class ConfirmationDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        int colorPrimaryDark = getResources().getColor(R.color.colorPrimaryDark);
+        int colorAccent = getResources().getColor(R.color.colorAccent);
+        String colorPrimaryDarkString = Integer.toHexString(colorPrimaryDark & 0x00ffffff);
+
         Bundle arguments = getArguments();
 
         CharSequence message = null;
@@ -74,22 +79,20 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
         // Ask if the user is sure about deleting the student
 
-        int colorPrimaryDark = getResources().getColor(R.color.colorPrimaryDark);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
                 R.style.ThemeDialogCustomPrimaryColor);
-
-        builder.setMessage(message).setTitle(title);
+        builder.setMessage(message).setTitle(Html.fromHtml(getString(R.string.html_text_with_color,
+                colorPrimaryDarkString, title)));
 
         final ConfirmationDialogFragmentListener listenerFinal = (ConfirmationDialogFragmentListener) getActivity();
         final byte finalCaller = caller;
         final int finalItemToDeletePosition = itemToDeletePosition;
 
-        builder.setPositiveButton(R.string.uppercase_yes, (dialog, id) ->
+        builder.setPositiveButton(R.string.yes_text, (dialog, id) ->
                 Objects.requireNonNull(listenerFinal).onConfirmation
                 (true, finalItemToDeletePosition, finalCaller));
 
-        builder.setNegativeButton(R.string.uppercase_no, (dialog, id) ->
+        builder.setNegativeButton(R.string.no_text, (dialog, id) ->
                 Objects.requireNonNull(listenerFinal).onConfirmation
                 (false, finalItemToDeletePosition, finalCaller));
 
@@ -99,10 +102,10 @@ public class ConfirmationDialogFragment extends DialogFragment {
         alertDialog.show();
 
         Button button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        button.setTextColor(colorPrimaryDark);
+        button.setTextColor(colorAccent);
         button.setBackgroundColor(Color.TRANSPARENT);
         button = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-        button.setTextColor(colorPrimaryDark);
+        button.setTextColor(colorAccent);
         button.setBackgroundColor(Color.TRANSPARENT);
 
         return alertDialog;

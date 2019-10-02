@@ -4,7 +4,7 @@
     <!-- ********** APP ********** -->
 
     <string name="app_name">Sismos</string>
-    <string name="uppercase_yes">SI</string>
+    <string name="yes_text">SI</string>
 
     <!-- ********** App ********** -->
 
@@ -321,7 +321,22 @@
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
         ¡Atención!</string>
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
-        Vas a eliminar &lt;b>todos los favoritos.&lt;/b>&lt;br/&gt;¿Estás seguro(a)?</string>
+        &lt;br/&gt;Vas a eliminar &lt;b>todos los favoritos.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>
+
+    <string name="activity_favorites_sort_dialog_fragment_title">Ordenar favoritos por</string>
+
+    <string name="activity_favorites_sorted_by_ascending_date_text">
+        Favoritos ordenados por fecha ascendente
+    </string>
+    <string name="activity_favorites_sorted_by_descending_date_text">
+        Favoritos ordenados por fecha descendente
+    </string>
+    <string name="activity_favorites_sorted_by_ascending_magnitude_text">
+        Favoritos ordenados por magnitud ascendente
+    </string>
+    <string name="activity_favorites_sorted_by_descending_magnitude_text">
+        Favoritos ordenados por magnitud descendente
+    </string>
 
     <!-- ********** Activity favorites ********** -->
 
@@ -569,14 +584,14 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
-        Mostrando &lt;b>%1$s %2$s en %3$s, ordenado%4$s por %5$s,&lt;/b> para las siguientes preferencias de
+        &lt;br/>Mostrando &lt;b>%1$s %2$s en %3$s, ordenado%4$s por %5$s,&lt;/b> para las siguientes preferencias de
         búsqueda:&lt;br/&gt;&lt;br/&gt;
         &lt;i>Máximo número de sismos &lt;/i>%6$s&lt;br/&gt;
         &lt;i>Rango de fechas &lt;/i>%7$s&lt;br/&gt;
         %8$s a&lt;br/&gt;
         %9$s&lt;br/&gt;
         &lt;i>Rango de magnitudes &lt;/i>%10$s a %11$s
-        %12$s
+        %12$s&lt;br/>
     </string>
 
     <string name="current_list_alert_dialog_message_2">

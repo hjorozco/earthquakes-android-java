@@ -7,9 +7,6 @@ import android.util.AttributeSet;
 import androidx.preference.DialogPreference;
 
 import com.weebly.hectorjorozco.earthquakes.R;
-import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
-
-import java.util.Date;
 
 // Class that handles the value of the DialogPreference that is saved on SharedPreferences
 
@@ -86,7 +83,7 @@ public class SortByDialogPreference extends DialogPreference {
     // Set the layout resource for the DialogPreference
     @Override
     public int getDialogLayoutResource() {
-        return R.layout.dialog_preference_sort_by;
+        return R.layout.dialog_sort_by;
     }
 
 }

@@ -10,6 +10,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -25,13 +26,16 @@ import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
+import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.database.AppDatabase;
 import com.weebly.hectorjorozco.earthquakes.executors.AppExecutors;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.ConfirmationDialogFragment;
+import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.SortFavoritesDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
+import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.FavoritesActivityViewModel;
 
 import java.util.List;
@@ -39,13 +43,15 @@ import java.util.Map;
 
 
 public class FavoritesActivity extends AppCompatActivity implements
-        EarthquakesListAdapter.EarthquakesListClickListener, ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
+        EarthquakesListAdapter.EarthquakesListClickListener,
+        ConfirmationDialogFragment.ConfirmationDialogFragmentListener,
+        SortFavoritesDialogFragment.SortFavoritesDialogFragmentListener {
 
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
 
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
-    private EarthquakesListAdapter mEarthquakesListAdapter;
+    private EarthquakesListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private TextView mMessageTextView;
     private ProgressBar mProgressBar;
@@ -73,7 +79,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
 
-        mEarthquakesListAdapter = new EarthquakesListAdapter(this, this,
+        mAdapter = new EarthquakesListAdapter(this, this,
                 true);
         mMessageTextView = findViewById(R.id.activity_favorites_message_text_view);
         mProgressBar = findViewById(R.id.activity_favorites_progress_bar);
@@ -93,7 +99,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         mRecyclerView = findViewById(R.id.activity_favorites_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mEarthquakesListAdapter);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
@@ -113,23 +119,20 @@ public class FavoritesActivity extends AppCompatActivity implements
         mFavoritesActivityViewModel.getFavoriteEarthquakes().observe(this, earthquakes -> {
 
             mNumberOfEarthquakesOnList = 0;
-            boolean deleteMenuItemStatus;
 
             // If the list of favorite earthquakes was empty before loading from the db
             if (earthquakes == null || earthquakes.size() == 0) {
                 setMessageVisible(true);
                 mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
-                deleteMenuItemStatus = false;
             } else {
                 // If one or more earthquakes were found
                 setMessageVisible(false);
                 mNumberOfEarthquakesOnList = earthquakes.size();
-                mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
-                deleteMenuItemStatus = true;
+                mAdapter.setEarthquakesListData(SortFavoritesUtils.SortFavorites(this, earthquakes));
             }
 
             if (mMenu != null) {
-                mMenu.findItem(R.id.menu_activity_favorites_action_delete).setEnabled(deleteMenuItemStatus);
+                setupDeleteMenuItem();
             }
 
         });
@@ -162,11 +165,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         mMenu = menu;
 
-        if (mNumberOfEarthquakesOnList==0){
-            mMenu.findItem(R.id.menu_activity_favorites_action_delete).setEnabled(false);
-        } else {
-            mMenu.findItem(R.id.menu_activity_favorites_action_delete).setEnabled(true);
-        }
+        setupDeleteMenuItem();
 
         return true;
     }
@@ -180,17 +179,38 @@ public class FavoritesActivity extends AppCompatActivity implements
                 onBackPressed();
                 break;
             case R.id.menu_activity_favorites_action_sort:
-                // selectRefreshOrStopAction();
+                showSortFavoritesDialogFragment();
                 break;
             case R.id.menu_activity_favorites_action_delete:
                 showDeleteAllFavoritesConfirmationDialogFragment();
                 break;
-            case R.id.menu_activity_favorites_action_help:
-                // showFavorites();
-                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setupDeleteMenuItem() {
+        MenuItem deleteMenuItem = mMenu.findItem(R.id.menu_activity_favorites_action_delete);
+        if (mNumberOfEarthquakesOnList == 0) {
+            deleteMenuItem.setEnabled(false);
+            deleteMenuItem.setIcon(R.drawable.ic_delete_grey_24dp);
+        } else {
+            deleteMenuItem.setEnabled(true);
+            deleteMenuItem.setIcon(R.drawable.ic_delete_white_24dp);
+        }
+    }
+
+
+    // Helper method that show a DialogFragment that lets the user select how to sort favorites
+    private void showSortFavoritesDialogFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SortFavoritesDialogFragment sortFavoritesDialogFragment =
+                SortFavoritesDialogFragment.newInstance(
+                        getString(R.string.activity_favorites_sort_dialog_fragment_title));
+
+        sortFavoritesDialogFragment.show(fragmentManager,
+                getString(R.string.activity_favorites_sort_dialog_fragment_tag));
     }
 
 
@@ -253,9 +273,9 @@ public class FavoritesActivity extends AppCompatActivity implements
     /**
      * Implementation of ConfirmationDialogFragment.ConfirmationDialogFragmentListener interface
      *
-     * @param answerYes
-     * @param itemToDeletePosition
-     * @param caller
+     * @param answerYes            True if the user clicked the POSITIVE button on the AlertDialog, false otherwise
+     * @param itemToDeletePosition The position of the item to delete if only one is being deleted.
+     * @param caller               Indicates what activity / method called the ConfirmationDialogFragment
      */
     @Override
     public void onConfirmation(boolean answerYes, int itemToDeletePosition, byte caller) {
@@ -270,15 +290,50 @@ public class FavoritesActivity extends AppCompatActivity implements
             case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES:
                 if (answerYes) {
                     // Delete all tables from the database
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            appDatabase.earthquakeDao().deleteAllFavorites();
-                        }
-                    });
+                    AppExecutors.getInstance().diskIO().execute(() ->
+                            appDatabase.earthquakeDao().deleteAllFavorites());
                 }
                 break;
         }
+    }
+
+
+    /**
+     * Implementation of SortFavoritesDialogFragment.SortFavoritesDialogFragmentListener interface
+     *
+     * @param sortCriteriaSelected 0=Ascending Date, 1=Descending Date, 2=Ascending Magnitude,
+     *                             3=Descending Magnitude
+     */
+    @Override
+    public void onSortCriteriaSelected(int sortCriteriaSelected) {
+
+        int confirmationMessageId = 0;
+
+        switch (sortCriteriaSelected) {
+            case MainActivity.SORT_BY_ASCENDING_DATE:
+                confirmationMessageId = R.string.activity_favorites_sorted_by_ascending_date_text;
+                break;
+            case MainActivity.SORT_BY_DESCENDING_DATE:
+                confirmationMessageId = R.string.activity_favorites_sorted_by_descending_date_text;
+                break;
+            case MainActivity.SORT_BY_ASCENDING_MAGNITUDE:
+                confirmationMessageId = R.string.activity_favorites_sorted_by_ascending_magnitude_text;
+                break;
+            case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
+                confirmationMessageId = R.string.activity_favorites_sorted_by_descending_magnitude_text;
+                break;
+        }
+
+        // If the sorting criteria is different from the previous one
+        if (SortFavoritesUtils.setFavoritesSortCriteriaOnSharedPreferences(this, sortCriteriaSelected)) {
+            List<Earthquake> favorites = mAdapter.getEarthquakesListData();
+            if (favorites != null) {
+                mAdapter.setEarthquakesListData(SortFavoritesUtils.SortFavorites(this, favorites));
+
+            }
+        }
+
+        Snackbar.make(findViewById(android.R.id.content), confirmationMessageId, Snackbar.LENGTH_LONG).show();
     }
 
 
@@ -316,5 +371,4 @@ public class FavoritesActivity extends AppCompatActivity implements
         super.onSaveInstanceState(outState);
         outState.putInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, mEarthquakeRecyclerViewPosition);
     }
-
 }

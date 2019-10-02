@@ -8,6 +8,7 @@ import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 import com.weebly.hectorjorozco.earthquakes.R;
+import com.weebly.hectorjorozco.earthquakes.ui.MainActivity;
 
 
 // Class that handles the DialogPreference dialog fragment shown to the user
@@ -41,9 +42,9 @@ public class SortByPreferenceDialogFragmentCompat extends PreferenceDialogFragme
         super.onBindDialogView(view);
 
         mDateMagnitudeRadioGroup =
-                view.findViewById(R.id.dialog_preference_sort_by_date_magnitude_radio_group);
+                view.findViewById(R.id.dialog_sort_by_date_magnitude_radio_group);
         mAscendingDescendingRadioGroup =
-                view.findViewById(R.id.dialog_preference_sort_by_ascending_descending_radio_group);
+                view.findViewById(R.id.dialog_sort_by_ascending_descending_radio_group);
 
         // Get the "Sort by" entry value from the preference that opened the dialog
         int sortByEntryValue = -1;
@@ -56,21 +57,21 @@ public class SortByPreferenceDialogFragmentCompat extends PreferenceDialogFragme
         // Set radio groups to the checked states corresponding to the sort by entry value
         if (sortByEntryValue != -1) {
             switch (sortByEntryValue) {
-                case 0:
-                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_date_radio_button);
-                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_ascending_radio_button);
+                case MainActivity.SORT_BY_ASCENDING_DATE:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                     break;
-                case 1:
-                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_date_radio_button);
-                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_descending_radio_button);
+                case MainActivity.SORT_BY_DESCENDING_DATE:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
                     break;
-                case 2:
-                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_magnitude_radio_button);
-                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_ascending_radio_button);
+                case MainActivity.SORT_BY_ASCENDING_MAGNITUDE:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_sort_by_magnitude_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                     break;
-                case 3:
-                    mDateMagnitudeRadioGroup.check(R.id.dialog_preference_sort_by_magnitude_radio_button);
-                    mAscendingDescendingRadioGroup.check(R.id.dialog_preference_sort_by_descending_radio_button);
+                case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
+                    mDateMagnitudeRadioGroup.check(R.id.dialog_sort_by_magnitude_radio_button);
+                    mAscendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
                     break;
             }
         }
@@ -85,14 +86,14 @@ public class SortByPreferenceDialogFragmentCompat extends PreferenceDialogFragme
             int dateMagnitudeValue, ascendingDescendingValue, sortByEntryValue;
 
             if (mDateMagnitudeRadioGroup.getCheckedRadioButtonId() ==
-                    R.id.dialog_preference_sort_by_date_radio_button) {
+                    R.id.dialog_sort_by_date_radio_button) {
                 dateMagnitudeValue = 0;
             } else {
                 dateMagnitudeValue = 2;
             }
 
             if (mAscendingDescendingRadioGroup.getCheckedRadioButtonId() ==
-                    R.id.dialog_preference_sort_by_ascending_radio_button) {
+                    R.id.dialog_sort_by_ascending_radio_button) {
                 ascendingDescendingValue = 0;
             } else {
                 ascendingDescendingValue = 1;
