@@ -84,8 +84,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
             if (mIsFavoritesList) {
-                // TODO Get the favorites sorted by preference from Shared Preferences.
-                sortedBy = String.valueOf(SortFavoritesUtils.getSortByValueFromSharedPreferences(mContext));
+                sortedBy = SortFavoritesUtils.getSortByValueString(mContext);
                 title = mContext.getString(R.string.activity_favorites_list_title, mEarthquakes.size(),
                         pluralEnding, foundAndOrderedWordSuffix, sortedBy);
             } else {

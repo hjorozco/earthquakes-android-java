@@ -133,6 +133,20 @@ public class Earthquake implements Parcelable {
 
     // Comparators used to sort favorite earthquakes
 
+    public static final Comparator<Earthquake> ascendingDateComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
+            return Long.compare(earthquake1.getTimeInMilliseconds(), earthquake2.getTimeInMilliseconds());
+        }
+    };
+
+    public static final Comparator<Earthquake> descendingDateComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
+            return -Long.compare(earthquake1.getTimeInMilliseconds(), earthquake2.getTimeInMilliseconds());
+        }
+    };
+
     public static final Comparator<Earthquake> ascendingMagnitudeComparator = new Comparator<Earthquake>() {
         @Override
         public int compare(Earthquake earthquake1, Earthquake earthquake2) {

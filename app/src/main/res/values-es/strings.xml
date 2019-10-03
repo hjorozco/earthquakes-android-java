@@ -319,23 +319,25 @@
     <string name="activity_favorites_list_title">%1$d favorito%2$s. Ordenado%3$s por %4$s.</string>
 
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
-        ¡Atención!</string>
+        Eliminar todos</string>
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
         &lt;br/&gt;Vas a eliminar &lt;b>todos los favoritos.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>
 
     <string name="activity_favorites_sort_dialog_fragment_title">Ordenar favoritos por</string>
 
+    <string name="activity_favorites_sorted_by_snack_text">Favoritos ordenados por %1$s</string>
+
     <string name="activity_favorites_sorted_by_ascending_date_text">
-        Favoritos ordenados por fecha ascendente
+        fecha ascendente
     </string>
     <string name="activity_favorites_sorted_by_descending_date_text">
-        Favoritos ordenados por fecha descendente
+        fecha descendente
     </string>
     <string name="activity_favorites_sorted_by_ascending_magnitude_text">
-        Favoritos ordenados por magnitud ascendente
+        magnitud ascendente
     </string>
     <string name="activity_favorites_sorted_by_descending_magnitude_text">
-        Favoritos ordenados por magnitud descendente
+        magnitud descendente
     </string>
 
     <!-- ********** Activity favorites ********** -->

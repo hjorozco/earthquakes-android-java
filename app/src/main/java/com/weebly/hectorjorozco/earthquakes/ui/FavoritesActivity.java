@@ -132,7 +132,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             }
 
             if (mMenu != null) {
-                setupDeleteMenuItem();
+                setupMenuItems();
             }
 
         });
@@ -165,7 +165,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         mMenu = menu;
 
-        setupDeleteMenuItem();
+        setupMenuItems();
 
         return true;
     }
@@ -190,8 +190,11 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
-    private void setupDeleteMenuItem() {
+    private void setupMenuItems() {
         MenuItem deleteMenuItem = mMenu.findItem(R.id.menu_activity_favorites_action_delete);
+        MenuItem sortMenuItem = mMenu.findItem(R.id.menu_activity_favorites_action_sort);
+        int sortByCriteria = SortFavoritesUtils.getSortByValueFromSharedPreferences(this);
+
         if (mNumberOfEarthquakesOnList == 0) {
             deleteMenuItem.setEnabled(false);
             deleteMenuItem.setIcon(R.drawable.ic_delete_grey_24dp);
@@ -199,6 +202,13 @@ public class FavoritesActivity extends AppCompatActivity implements
             deleteMenuItem.setEnabled(true);
             deleteMenuItem.setIcon(R.drawable.ic_delete_white_24dp);
         }
+
+        if (sortByCriteria==0 ||sortByCriteria==2){
+            sortMenuItem.setIcon(R.drawable.ic_sort_ascending_white_24dp);
+        } else {
+            sortMenuItem.setIcon(R.drawable.ic_sort_descending_white_24dp);
+        }
+
     }
 
 
@@ -307,20 +317,25 @@ public class FavoritesActivity extends AppCompatActivity implements
     @Override
     public void onSortCriteriaSelected(int sortCriteriaSelected) {
 
-        int confirmationMessageId = 0;
+        String confirmationMessage = "";
+        int sortByMenuItemIcon = 0;
 
         switch (sortCriteriaSelected) {
             case MainActivity.SORT_BY_ASCENDING_DATE:
-                confirmationMessageId = R.string.activity_favorites_sorted_by_ascending_date_text;
+                confirmationMessage = getString(R.string.activity_favorites_sorted_by_ascending_date_text);
+                sortByMenuItemIcon = R.drawable.ic_sort_ascending_white_24dp;
                 break;
             case MainActivity.SORT_BY_DESCENDING_DATE:
-                confirmationMessageId = R.string.activity_favorites_sorted_by_descending_date_text;
+                confirmationMessage = getString(R.string.activity_favorites_sorted_by_descending_date_text);
+                sortByMenuItemIcon = R.drawable.ic_sort_descending_white_24dp;
                 break;
             case MainActivity.SORT_BY_ASCENDING_MAGNITUDE:
-                confirmationMessageId = R.string.activity_favorites_sorted_by_ascending_magnitude_text;
+                confirmationMessage = getString(R.string.activity_favorites_sorted_by_ascending_magnitude_text);
+                sortByMenuItemIcon = R.drawable.ic_sort_ascending_white_24dp;
                 break;
             case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
-                confirmationMessageId = R.string.activity_favorites_sorted_by_descending_magnitude_text;
+                confirmationMessage = getString(R.string.activity_favorites_sorted_by_descending_magnitude_text);
+                sortByMenuItemIcon = R.drawable.ic_sort_descending_white_24dp;
                 break;
         }
 
@@ -331,9 +346,12 @@ public class FavoritesActivity extends AppCompatActivity implements
                 mAdapter.setEarthquakesListData(SortFavoritesUtils.SortFavorites(this, favorites));
 
             }
+            mMenu.findItem(R.id.menu_activity_favorites_action_sort).setIcon(sortByMenuItemIcon);
         }
 
-        Snackbar.make(findViewById(android.R.id.content), confirmationMessageId, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(android.R.id.content),
+                getString(R.string.activity_favorites_sorted_by_snack_text, confirmationMessage),
+                Snackbar.LENGTH_LONG).show();
     }
 
 

@@ -31,8 +31,8 @@ public class SortFavoritesUtils {
     /**
      * Sets the student order value on Shared Preferences
      *
-     * @param context The context used to get resources
-     * @param sortCriteria   The favorites sort by value that will be saved
+     * @param context      The context used to get resources
+     * @param sortCriteria The favorites sort by value that will be saved
      */
     public static boolean setFavoritesSortCriteriaOnSharedPreferences(Context context, int sortCriteria) {
         // If the spinner selected value is different from the previous one save the value
@@ -54,7 +54,7 @@ public class SortFavoritesUtils {
     /**
      * Orders a list of favorite earthquakes based on the sort criteria value saved on SharedPreferences.
      *
-     * @param context        Used to access SharedPreferences
+     * @param context   Used to access SharedPreferences
      * @param favorites The list of students to be ordered
      * @return an ordered list of students
      */
@@ -62,13 +62,17 @@ public class SortFavoritesUtils {
 
         switch (getSortByValueFromSharedPreferences(context)) {
             case MainActivity.SORT_BY_ASCENDING_DATE:
+                Collections.sort(favorites, Earthquake.ascendingDateComparator);
                 break;
             case MainActivity.SORT_BY_DESCENDING_DATE:
+                Collections.sort(favorites, Earthquake.descendingDateComparator);
                 break;
             case MainActivity.SORT_BY_ASCENDING_MAGNITUDE:
+                Collections.sort(favorites, Earthquake.ascendingDateComparator);
                 Collections.sort(favorites, Earthquake.ascendingMagnitudeComparator);
                 break;
             case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
+                Collections.sort(favorites, Earthquake.descendingDateComparator);
                 Collections.sort(favorites, Earthquake.descendingMagnitudeComparator);
                 break;
             default:
@@ -79,28 +83,24 @@ public class SortFavoritesUtils {
     }
 
 
-//    public static String getStudentsOrderString(Context context) {
-//        int value = getStudentsOrderValueFromSharedPreferences(context);
-//        String studentOrder;
-//        switch (value) {
-//            case ORDER_BY_FIRST_NAME:
-//                studentOrder = context.getString(R.string.activity_main_sorted_by_first_name_message);
-//                break;
-//            case ORDER_BY_LAST_NAME:
-//                studentOrder = context.getString(R.string.activity_main_sorted_by_last_name_message);
-//                break;
-//            case ORDER_BY_TEST_RESULT:
-//                studentOrder = context.getString(R.string.activity_main_sorted_by_test_result_message);
-//                break;
-//            case ORDER_BY_TEST_TYPE:
-//                studentOrder = context.getString(R.string.activity_main_sorted_by_test_type_message);
-//                break;
-//            default:
-//                studentOrder = EMPTY_STRING;
-//        }
-//
-//        return studentOrder;
-//    }
+    public static String getSortByValueString(Context context) {
+        String sortByValueString = "";
+        switch (getSortByValueFromSharedPreferences(context)) {
+            case MainActivity.SORT_BY_ASCENDING_DATE:
+                sortByValueString = context.getString(R.string.activity_favorites_sorted_by_ascending_date_text);
+                break;
+            case MainActivity.SORT_BY_DESCENDING_DATE:
+                sortByValueString = context.getString(R.string.activity_favorites_sorted_by_descending_date_text);
+                break;
+            case MainActivity.SORT_BY_ASCENDING_MAGNITUDE:
+                sortByValueString = context.getString(R.string.activity_favorites_sorted_by_ascending_magnitude_text);
+                break;
+            case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
+                sortByValueString = context.getString(R.string.activity_favorites_sorted_by_descending_magnitude_text);
+                break;
+        }
+        return sortByValueString;
+    }
 
 }
 
