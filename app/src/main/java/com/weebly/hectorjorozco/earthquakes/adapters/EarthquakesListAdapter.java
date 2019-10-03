@@ -74,19 +74,29 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-            String pluralEnding, foundAndOrderedWordSuffix, orderBy, sortedBy, title;
+            String pluralEnding, foundWordSuffix, orderBy, sortedBy;
+            String title = "";
+
             if (mEarthquakes.size() == 1) {
                 pluralEnding = "";
-                foundAndOrderedWordSuffix = "";
+                foundWordSuffix = "";
             } else {
                 pluralEnding = mContext.getString(R.string.letter_s_lowercase);
-                foundAndOrderedWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
+                foundWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
             }
 
             if (mIsFavoritesList) {
-                sortedBy = SortFavoritesUtils.getSortByValueString(mContext);
-                title = mContext.getString(R.string.activity_favorites_list_title, mEarthquakes.size(),
-                        pluralEnding, foundAndOrderedWordSuffix, sortedBy);
+                if (mEarthquakes.size() == 1) {
+                    titleViewHolder.titleTextView.setVisibility(View.GONE);
+                    titleViewHolder.titleTextView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+                } else {
+                    titleViewHolder.titleTextView.setVisibility(View.VISIBLE);
+                    titleViewHolder.titleTextView.setLayoutParams(new RecyclerView.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    sortedBy = SortFavoritesUtils.getSortByValueString(mContext);
+                    title = mContext.getString(R.string.activity_favorites_list_title, mEarthquakes.size(),
+                            pluralEnding, sortedBy);
+                }
             } else {
                 orderBy = QueryUtils.sEarthquakesListInformationValues.getOrderBy();
                 sortedBy = "";
@@ -99,9 +109,14 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
                     sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
                 }
-                title = mContext.getString(R.string.earthquakes_list_title,
-                        mEarthquakes.size(), pluralEnding, foundAndOrderedWordSuffix, mLocation,
-                        foundAndOrderedWordSuffix, sortedBy);
+
+                if (mEarthquakes.size() == 1) {
+                    title = mContext.getString(R.string.earthquakes_list_title_for_one_earthquake,
+                            mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation);
+                } else {
+                    title = mContext.getString(R.string.earthquakes_list_title_for_multiple_earthquakes,
+                            mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, sortedBy);
+                }
             }
 
             titleViewHolder.titleTextView.setText(title);

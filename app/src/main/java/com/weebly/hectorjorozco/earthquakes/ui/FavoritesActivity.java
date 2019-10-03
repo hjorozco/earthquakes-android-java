@@ -203,7 +203,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             deleteMenuItem.setIcon(R.drawable.ic_delete_white_24dp);
         }
 
-        if (sortByCriteria==0 ||sortByCriteria==2){
+        if (sortByCriteria == 0 || sortByCriteria == 2) {
             sortMenuItem.setIcon(R.drawable.ic_sort_ascending_white_24dp);
         } else {
             sortMenuItem.setIcon(R.drawable.ic_sort_descending_white_24dp);
@@ -347,11 +347,14 @@ public class FavoritesActivity extends AppCompatActivity implements
 
             }
             mMenu.findItem(R.id.menu_activity_favorites_action_sort).setIcon(sortByMenuItemIcon);
+            mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
+            // If some earthquakes were sorted show a snackbar message
+            if (mNumberOfEarthquakesOnList > 1) {
+                Snackbar.make(findViewById(android.R.id.content),
+                        getString(R.string.activity_favorites_sorted_by_snack_text, confirmationMessage),
+                        Snackbar.LENGTH_LONG).show();
+            }
         }
-
-        Snackbar.make(findViewById(android.R.id.content),
-                getString(R.string.activity_favorites_sorted_by_snack_text, confirmationMessage),
-                Snackbar.LENGTH_LONG).show();
     }
 
 

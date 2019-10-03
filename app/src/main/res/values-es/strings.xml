@@ -40,7 +40,8 @@
     <string name="no_server_response_text">No hay respuesta del servidor de USGS</string>
     <string name="earthquakes_list_updated_text">Lista de sismos actualizada</string>
 
-    <string name="earthquakes_list_title">%1$d sismo%2$s encontrado%3$s en %4$s. Ordenado%5$s por %6$s.</string>
+    <string name="earthquakes_list_title_for_one_earthquake">%1$d sismo%2$s encontrado%3$s en %4$s.</string>
+    <string name="earthquakes_list_title_for_multiple_earthquakes">%1$d sismo%2$s encontrado%3$s en %4$s. Ordenados por %5$s.</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix">s</string>
     <string name="earthquakes_list_title_sorted_by_date_text">fecha</string>
     <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitud</string>
@@ -309,14 +310,14 @@
 
     <string name="activity_favorites_label">Favoritos</string>
 
-    <string name="activity_favorites_no_favorites_message">No se encontraron favoritos</string>
+    <string name="activity_favorites_no_favorites_message">No se encontraron favoritos.</string>
 
     <string name="activity_favorites_loading_favorites_message">Cargando favoritos</string>
 
     <string name="menu_activity_favorites_action_sort_title">Ordenar favoritos</string>
     <string name="menu_activity_favorites_action_delete_title">Eliminar todos los favoritos</string>
 
-    <string name="activity_favorites_list_title">%1$d favorito%2$s. Ordenado%3$s por %4$s.</string>
+    <string name="activity_favorites_list_title">%1$d favorito%2$s. Ordenados por %3$s.</string>
 
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
         Eliminar todos</string>

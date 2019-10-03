@@ -62,7 +62,8 @@
     <string name="no_server_response_text">No response from the USGS server</string>
     <string name="earthquakes_list_updated_text">Earthquakes list updated</string>
 
-    <string name="earthquakes_list_title">%1$d earthquake%2$s found%3$s in %4$s. Sorted%5$s by %6$s.</string>
+    <string name="earthquakes_list_title_for_one_earthquake">%1$d earthquake%2$s found%3$s in %4$s.</string>
+    <string name="earthquakes_list_title_for_multiple_earthquakes">%1$d earthquake%2$s found%3$s in %4$s. Sorted by %5$s.</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix" />
     <string name="earthquakes_list_title_sorted_by_date_text">date</string>
     <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitude</string>
@@ -406,14 +407,14 @@
     <string name="activity_favorites_label">Favorites</string>
 
     <string name="activity_favorites_image_view_content_description" translatable="false">No favorites</string>
-    <string name="activity_favorites_no_favorites_message">No favorites found</string>
+    <string name="activity_favorites_no_favorites_message">No favorites found.</string>
 
     <string name="activity_favorites_loading_favorites_message">Loading favorites</string>
 
     <string name="menu_activity_favorites_action_sort_title">Sort favorites</string>
     <string name="menu_activity_favorites_action_delete_title">Delete all favorites</string>
 
-    <string name="activity_favorites_list_title">%1$d favorite%2$s. Sorted%3$s by %4$s.</string>
+    <string name="activity_favorites_list_title">%1$d favorite%2$s. Sorted by %3$s.</string>
 
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
         Delete all</string>
