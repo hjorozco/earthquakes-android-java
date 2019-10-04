@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        mEarthquakesListAdapter = new EarthquakesListAdapter(this, this,
-                false);
+        mEarthquakesListAdapter = new EarthquakesListAdapter(this, this);
         mMessageImageView = findViewById(R.id.activity_main_message_image_view);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);

@@ -341,6 +341,9 @@
         magnitud descendente
     </string>
 
+    <string name="favorite_list_item_swipe_to_delete_text">Eliminar</string>
+    <string name="favorite_list_item_delete_icon_content_description">Ícono eliminar</string>
+
     <!-- ********** Activity favorites ********** -->
 
 

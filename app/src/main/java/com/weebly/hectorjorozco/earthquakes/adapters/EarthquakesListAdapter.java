@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
-import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
@@ -28,7 +27,6 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private List<Earthquake> mEarthquakes;
     private String mLocation;
     private EarthquakesListClickListener mEarthquakesListClickListener;
-    private boolean mIsFavoritesList;
 
 
     // Interface implemented in MainActivity.java to handle clicks
@@ -41,11 +39,9 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     // The adapter constructor
-    public EarthquakesListAdapter(Context context, EarthquakesListClickListener earthquakesListClickListener,
-                                  boolean isFavoritesList) {
+    public EarthquakesListAdapter(Context context, EarthquakesListClickListener earthquakesListClickListener) {
         mContext = context;
         mEarthquakesListClickListener = earthquakesListClickListener;
-        mIsFavoritesList = isFavoritesList;
     }
 
 
@@ -75,7 +71,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
             String pluralEnding, foundWordSuffix, orderBy, sortedBy;
-            String title = "";
+            String title;
 
             if (mEarthquakes.size() == 1) {
                 pluralEnding = "";
@@ -85,38 +81,24 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 foundWordSuffix = mContext.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
             }
 
-            if (mIsFavoritesList) {
-                if (mEarthquakes.size() == 1) {
-                    titleViewHolder.titleTextView.setVisibility(View.GONE);
-                    titleViewHolder.titleTextView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
-                } else {
-                    titleViewHolder.titleTextView.setVisibility(View.VISIBLE);
-                    titleViewHolder.titleTextView.setLayoutParams(new RecyclerView.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    sortedBy = SortFavoritesUtils.getSortByValueString(mContext);
-                    title = mContext.getString(R.string.activity_favorites_list_title, mEarthquakes.size(),
-                            pluralEnding, sortedBy);
-                }
-            } else {
-                orderBy = QueryUtils.sEarthquakesListInformationValues.getOrderBy();
-                sortedBy = "";
-                if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
-                    sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_date_entry);
-                } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_date_entry_value))) {
-                    sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_date_entry);
-                } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value))) {
-                    sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry);
-                } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
-                    sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
-                }
+            orderBy = QueryUtils.sEarthquakesListInformationValues.getOrderBy();
+            sortedBy = "";
+            if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
+                sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_date_entry);
+            } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_date_entry_value))) {
+                sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_date_entry);
+            } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value))) {
+                sortedBy = mContext.getString(R.string.search_preference_sort_by_ascending_magnitude_entry);
+            } else if (orderBy.equals(mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
+                sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
+            }
 
-                if (mEarthquakes.size() == 1) {
-                    title = mContext.getString(R.string.earthquakes_list_title_for_one_earthquake,
-                            mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation);
-                } else {
-                    title = mContext.getString(R.string.earthquakes_list_title_for_multiple_earthquakes,
-                            mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, sortedBy);
-                }
+            if (mEarthquakes.size() == 1) {
+                title = mContext.getString(R.string.earthquakes_list_title_for_one_earthquake,
+                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation);
+            } else {
+                title = mContext.getString(R.string.earthquakes_list_title_for_multiple_earthquakes,
+                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, sortedBy);
             }
 
             titleViewHolder.titleTextView.setText(title);
@@ -160,12 +142,6 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void setEarthquakesListData(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
         notifyDataSetChanged();
-    }
-
-
-    // Returns the list of Student Entries.
-    public List<Earthquake> getEarthquakesListData() {
-        return mEarthquakes;
     }
 
 

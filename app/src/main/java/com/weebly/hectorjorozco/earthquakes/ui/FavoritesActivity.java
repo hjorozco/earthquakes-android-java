@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +30,7 @@ import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
-import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
+import com.weebly.hectorjorozco.earthquakes.adapters.FavoritesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.database.AppDatabase;
 import com.weebly.hectorjorozco.earthquakes.executors.AppExecutors;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
@@ -43,7 +45,7 @@ import java.util.Map;
 
 
 public class FavoritesActivity extends AppCompatActivity implements
-        EarthquakesListAdapter.EarthquakesListClickListener,
+        FavoritesListAdapter.FavoritesListClickListener,
         ConfirmationDialogFragment.ConfirmationDialogFragmentListener,
         SortFavoritesDialogFragment.SortFavoritesDialogFragmentListener {
 
@@ -51,14 +53,28 @@ public class FavoritesActivity extends AppCompatActivity implements
 
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
-    private EarthquakesListAdapter mAdapter;
+    // Used to restore multiple favorites selected on action mode after rotation
+    public static final String SAVED_INSTANCE_STATE_SELECTED_ITEMS_KEY = "saved_instance_state_selected_items_key";
+
+    // Used for swipe to delete restore after rotation
+    public static final String SAVED_INSTANCE_STATE_FAVORITE_WITH_DELETE_BACKGROUND_POSITION_KEY =
+            "saved_instance_state_favorite_with_delete_background_position_key";
+    public static final String SAVED_INSTANCE_STATE_RIGHT_SWIPED_KEY =
+            "saved_instance_state_right_swiped_key";
+
+    private FavoritesListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private TextView mMessageTextView;
     private ProgressBar mProgressBar;
-    private int mNumberOfEarthquakesOnList;
+    private int mNumberOfFavoritesOnList;
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private Menu mMenu;
+
+    // Used to save the swiped to delete student on rotation
+    private boolean mIsAskingToDeleteFavorite;
+    private int mFavoriteWithDeleteBackgroundPosition;
+    private boolean mRightSwipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,24 +87,37 @@ public class FavoritesActivity extends AppCompatActivity implements
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // To restore animation on orientation change
-        if (savedInstanceState != null) {
-            mEarthquakeRecyclerViewPosition = savedInstanceState.getInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, 0);
-        }
-
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
 
-        mAdapter = new EarthquakesListAdapter(this, this,
-                true);
+        mAdapter = new FavoritesListAdapter(this, this);
         mMessageTextView = findViewById(R.id.activity_favorites_message_text_view);
         mProgressBar = findViewById(R.id.activity_favorites_progress_bar);
+
+        mIsAskingToDeleteFavorite = false;
+        mRightSwipe = false;
 
         setupRecyclerView();
 
         setupViewModel();
 
         setupTransitions();
+
+        if (savedInstanceState != null) {
+            // To restore animation on orientation change
+            mEarthquakeRecyclerViewPosition = savedInstanceState.getInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, 0);
+
+            // To restore swipe to delete background on rotation
+            if (savedInstanceState.containsKey(SAVED_INSTANCE_STATE_RIGHT_SWIPED_KEY) &&
+                    savedInstanceState.containsKey(SAVED_INSTANCE_STATE_FAVORITE_WITH_DELETE_BACKGROUND_POSITION_KEY)) {
+                mFavoriteWithDeleteBackgroundPosition =
+                        savedInstanceState.getInt(SAVED_INSTANCE_STATE_FAVORITE_WITH_DELETE_BACKGROUND_POSITION_KEY);
+                mRightSwipe = savedInstanceState.getBoolean(SAVED_INSTANCE_STATE_RIGHT_SWIPED_KEY);
+                mAdapter.setFavoriteWithDeleteBackgroundData(mFavoriteWithDeleteBackgroundPosition, mRightSwipe);
+                mAdapter.notifyItemChanged(mFavoriteWithDeleteBackgroundPosition);
+                mIsAskingToDeleteFavorite = true;
+            }
+        }
     }
 
 
@@ -110,25 +139,91 @@ public class FavoritesActivity extends AppCompatActivity implements
         mRecyclerViewFastScroller.setRecyclerView(mRecyclerView);
         mRecyclerViewFastScroller.setViewProvider(viewProvider);
 
+        // Add a touch helper to the RecyclerView to recognize when a user swipes to delete a student.
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull
+                    RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // When the row is being swiped set the default UI to be the foreground view.
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                if (viewHolder != null) {
+                    getDefaultUIUtil().onSelected(((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewForeground);
+                }
+            }
+
+            // Sets the foreground view to be moving when swiped
+            @Override
+            public void onChildDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView recyclerView,
+                                        RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                                        int actionState, boolean isCurrentlyActive) {
+                getDefaultUIUtil().onDrawOver(canvas, recyclerView, ((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewForeground,
+                        dX, dY, actionState, isCurrentlyActive);
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
+                                    @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                                    int actionState, boolean isCurrentlyActive) {
+                getDefaultUIUtil().onDraw(c, recyclerView, ((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewForeground,
+                        dX, dY, actionState, isCurrentlyActive);
+
+                // Right swipe
+                if (dX > 0) {
+                    mRightSwipe = true;
+                    ((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewRightSwipeBackground.setVisibility(View.VISIBLE);
+                    ((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewLeftSwipeBackground.setVisibility(View.INVISIBLE);
+                } else {
+                    // Left swipe
+                    mRightSwipe = false;
+                    ((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewRightSwipeBackground.setVisibility(View.INVISIBLE);
+                    ((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewLeftSwipeBackground.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            // If the student is not deleted sets the view again to foreground
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                getDefaultUIUtil().clearView(((FavoritesListAdapter.FavoriteViewHolder) viewHolder).viewForeground);
+            }
+
+            // Disables swipe when Action Mode is enabled
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+                return true; // (// actionMode == null);
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                showDeleteFavoriteConfirmationDialogFragment(viewHolder.getAdapterPosition());
+            }
+
+        }).attachToRecyclerView(mRecyclerView);
+
     }
 
 
     private void setupViewModel() {
 
         FavoritesActivityViewModel mFavoritesActivityViewModel = new ViewModelProvider(this).get(FavoritesActivityViewModel.class);
-        mFavoritesActivityViewModel.getFavoriteEarthquakes().observe(this, earthquakes -> {
+        mFavoritesActivityViewModel.getFavoriteEarthquakes().observe(this, favorites -> {
 
-            mNumberOfEarthquakesOnList = 0;
+            mNumberOfFavoritesOnList = 0;
 
             // If the list of favorite earthquakes was empty before loading from the db
-            if (earthquakes == null || earthquakes.size() == 0) {
+            if (favorites == null || favorites.size() == 0) {
                 setMessageVisible(true);
                 mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
             } else {
                 // If one or more earthquakes were found
                 setMessageVisible(false);
-                mNumberOfEarthquakesOnList = earthquakes.size();
-                mAdapter.setEarthquakesListData(SortFavoritesUtils.SortFavorites(this, earthquakes));
+                mNumberOfFavoritesOnList = favorites.size();
+                mAdapter.setFavoritesListData(SortFavoritesUtils.SortFavorites(this, favorites));
             }
 
             if (mMenu != null) {
@@ -148,7 +243,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             mMessageTextView.setVisibility(View.GONE);
-            if (mNumberOfEarthquakesOnList > UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING) {
+            if (mNumberOfFavoritesOnList > UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING) {
                 mRecyclerViewFastScroller.setVisibility(View.VISIBLE);
             } else {
                 mRecyclerViewFastScroller.setVisibility(View.INVISIBLE);
@@ -195,7 +290,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         MenuItem sortMenuItem = mMenu.findItem(R.id.menu_activity_favorites_action_sort);
         int sortByCriteria = SortFavoritesUtils.getSortByValueFromSharedPreferences(this);
 
-        if (mNumberOfEarthquakesOnList == 0) {
+        if (mNumberOfFavoritesOnList == 0) {
             deleteMenuItem.setEnabled(false);
             deleteMenuItem.setIcon(R.drawable.ic_delete_grey_24dp);
         } else {
@@ -239,8 +334,25 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
+    private void showDeleteFavoriteConfirmationDialogFragment(int position) {
+
+        mIsAskingToDeleteFavorite = true;
+        mFavoriteWithDeleteBackgroundPosition = position;
+
+        ConfirmationDialogFragment confirmationDialogFragment =
+                ConfirmationDialogFragment.newInstance(
+                        "Are you sure?",
+                        "Delete favorite",
+                        position,
+                        ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ONE_FAVORITE);
+
+        confirmationDialogFragment.show(getSupportFragmentManager(), "Test tag");
+
+    }
+
+
     /**
-     * Implementation of EarthquakesListAdapter.EarthquakesListClickListener
+     * Implementation of FavoritesListAdapt|er.FavoritesListClickListener
      * When the title of the list is clicked.
      */
     @Override
@@ -249,21 +361,21 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
     /**
-     * Implementation of EarthquakesListAdapter.EarthquakesListClickListener
-     * When an earthquake on the list is clicked show a new activity with details of it.
+     * Implementation of FavoritesListAdapter.FavoritesListClickListener
+     * When a favorite on the list is clicked show a new activity with details of it.
      * Implement a transition if Android version is 21 or grater.
      */
     @Override
-    public void onEarthquakeClick(Earthquake earthquake, int earthquakeRecyclerViewPosition,
-                                  TextView magnitudeTextView, TextView locationOffsetTextView,
-                                  TextView locationPrimaryTextView, TextView dateTextView) {
+    public void onFavoriteClick(Earthquake favorite, int favoriteRecyclerViewPosition,
+                                TextView magnitudeTextView, TextView locationOffsetTextView,
+                                TextView locationPrimaryTextView, TextView dateTextView) {
 
-        mEarthquakeRecyclerViewPosition = earthquakeRecyclerViewPosition;
+        mEarthquakeRecyclerViewPosition = favoriteRecyclerViewPosition;
 
 
         Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, earthquake);
+        bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, favorite);
         intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -294,6 +406,21 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         switch (caller) {
             case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ONE_FAVORITE:
+                mIsAskingToDeleteFavorite = false;
+                mAdapter.setFavoriteWithDeleteBackgroundData(-1, false);
+                if (answerYes) {
+
+                    // Delete favorite from the favorites table
+                    Earthquake favoriteToDelete = mAdapter.getFavorite(itemToDeletePosition-1);
+                    AppExecutors.getInstance().diskIO().execute(() ->
+                            appDatabase.earthquakeDao().deleteFavoriteEarthquake(favoriteToDelete));
+
+                    // Delete the student from the adapter
+                    mAdapter.removeFavorite(itemToDeletePosition-1);
+
+                } else {
+                    mAdapter.notifyItemChanged(itemToDeletePosition);
+                }
                 break;
             case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_SOME_FAVORITES:
                 break;
@@ -341,15 +468,15 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         // If the sorting criteria is different from the previous one
         if (SortFavoritesUtils.setFavoritesSortCriteriaOnSharedPreferences(this, sortCriteriaSelected)) {
-            List<Earthquake> favorites = mAdapter.getEarthquakesListData();
+            List<Earthquake> favorites = mAdapter.getFavoritesListData();
             if (favorites != null) {
-                mAdapter.setEarthquakesListData(SortFavoritesUtils.SortFavorites(this, favorites));
+                mAdapter.setFavoritesListData(SortFavoritesUtils.SortFavorites(this, favorites));
 
             }
             mMenu.findItem(R.id.menu_activity_favorites_action_sort).setIcon(sortByMenuItemIcon);
             mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
             // If some earthquakes were sorted show a snackbar message
-            if (mNumberOfEarthquakesOnList > 1) {
+            if (mNumberOfFavoritesOnList > 1) {
                 Snackbar.make(findViewById(android.R.id.content),
                         getString(R.string.activity_favorites_sorted_by_snack_text, confirmationMessage),
                         Snackbar.LENGTH_LONG).show();
@@ -391,5 +518,12 @@ public class FavoritesActivity extends AppCompatActivity implements
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, mEarthquakeRecyclerViewPosition);
+
+        // If the a dialog fragment asking for confirmation to delete a favorite is displayed
+        if (mIsAskingToDeleteFavorite) {
+            outState.putBoolean(SAVED_INSTANCE_STATE_RIGHT_SWIPED_KEY, mRightSwipe);
+            outState.putInt(SAVED_INSTANCE_STATE_FAVORITE_WITH_DELETE_BACKGROUND_POSITION_KEY, mFavoriteWithDeleteBackgroundPosition);
+        }
+
     }
 }
