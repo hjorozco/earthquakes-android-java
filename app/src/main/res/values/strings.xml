@@ -406,6 +406,8 @@
 
     <string name="activity_favorites_label">Favorites</string>
 
+    <string name="activity_favorites_delete_text">Delete</string>
+
     <string name="activity_favorites_image_view_content_description" translatable="false">No favorites</string>
     <string name="activity_favorites_no_favorites_message">No favorites found.</string>
 
@@ -416,10 +418,13 @@
 
     <string name="activity_favorites_list_title">%1$d favorite%2$s. Sorted by %3$s.</string>
 
-    <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
-        Delete all</string>
+    <string name="activity_favorites_delete_one_confirmation_dialog_fragment_text">
+        &lt;br/&gt;You are going to delete &lt;b>one favorite.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
+    <string name="activity_favorites_delete_one_confirmation_dialog_fragment_tag" translatable="false">
+        activity_favorites_delete_one_confirmation_dialog_fragment_tag</string>
+
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
-        &lt;br/&gt;You are going to delete &lt;b>all the favorites.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
+        &lt;br/&gt;You are going to delete &lt;b>ALL THE FAVORITES.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_tag" translatable="false">
         activity_favorites_delete_all_confirmation_dialog_fragment_tag</string>
 
@@ -442,8 +447,11 @@
         descending magnitude
     </string>
 
-    <string name="favorite_list_item_swipe_to_delete_text">Delete</string>
     <string name="favorite_list_item_delete_icon_content_description">Delete icon</string>
+
+    <string name="activity_favorites_one_favorite_deleted_message">Favorite deleted</string>
+    <string name="activity_favorites_all_favorites_deleted_message">All favorites deleted</string>
+    <string name="activity_favorites_some_favorites_deleted_message">%1$d favorite%2$s deleted</string>
 
     <!-- ********** Activity favorites ********** -->
 

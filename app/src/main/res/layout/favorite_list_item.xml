@@ -28,7 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/application_standard_margin"
             android:layout_toStartOf="@id/favorite_list_item_left_swipe_delete_icon"
-            android:text="@string/favorite_list_item_swipe_to_delete_text"
+            android:text="@string/activity_favorites_delete_text"
             android:textColor="@android:color/white"
             android:textSize="@dimen/application_small_text_size" />
 
@@ -57,7 +57,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/application_standard_margin"
             android:layout_toEndOf="@id/favorite_list_item_right_swipe_delete_icon"
-            android:text="@string/favorite_list_item_swipe_to_delete_text"
+            android:text="@string/activity_favorites_delete_text"
             android:textColor="@android:color/white"
             android:textSize="@dimen/application_small_text_size" />
 

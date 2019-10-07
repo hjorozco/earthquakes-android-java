@@ -165,6 +165,7 @@ public class FavoritesActivity extends AppCompatActivity implements
                         dX, dY, actionState, isCurrentlyActive);
             }
 
+            // Draws the corresponding delete background based on the swipe direction
             @Override
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
                                     @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY,
@@ -198,9 +199,10 @@ public class FavoritesActivity extends AppCompatActivity implements
                 return true; // (// actionMode == null);
             }
 
+            // When the swipe gesture finishes ask for a delete confirmation
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                showDeleteFavoriteConfirmationDialogFragment(viewHolder.getAdapterPosition());
+                showDeleteOneFavoriteConfirmationDialogFragment(viewHolder.getAdapterPosition());
             }
 
         }).attachToRecyclerView(mRecyclerView);
@@ -325,7 +327,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         ConfirmationDialogFragment confirmationDialogFragment =
                 ConfirmationDialogFragment.newInstance(
                         Html.fromHtml(getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_text)),
-                        getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_title),
+                        getString(R.string.activity_favorites_delete_text),
                         0,
                         ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES);
 
@@ -334,19 +336,20 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
-    private void showDeleteFavoriteConfirmationDialogFragment(int position) {
+    private void showDeleteOneFavoriteConfirmationDialogFragment(int position) {
 
         mIsAskingToDeleteFavorite = true;
         mFavoriteWithDeleteBackgroundPosition = position;
 
         ConfirmationDialogFragment confirmationDialogFragment =
                 ConfirmationDialogFragment.newInstance(
-                        "Are you sure?",
-                        "Delete favorite",
+                        Html.fromHtml(getString(R.string.activity_favorites_delete_one_confirmation_dialog_fragment_text)),
+                        getString(R.string.activity_favorites_delete_text),
                         position,
                         ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ONE_FAVORITE);
 
-        confirmationDialogFragment.show(getSupportFragmentManager(), "Test tag");
+        confirmationDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_favorites_delete_one_confirmation_dialog_fragment_tag));
 
     }
 
@@ -418,6 +421,8 @@ public class FavoritesActivity extends AppCompatActivity implements
                     // Delete the student from the adapter
                     mAdapter.removeFavorite(itemToDeletePosition-1);
 
+                    showSnackBarMessage(getString(R.string.activity_favorites_one_favorite_deleted_message));
+
                 } else {
                     mAdapter.notifyItemChanged(itemToDeletePosition);
                 }
@@ -429,6 +434,8 @@ public class FavoritesActivity extends AppCompatActivity implements
                     // Delete all tables from the database
                     AppExecutors.getInstance().diskIO().execute(() ->
                             appDatabase.earthquakeDao().deleteAllFavorites());
+
+                    showSnackBarMessage(getString(R.string.activity_favorites_all_favorites_deleted_message));
                 }
                 break;
         }
@@ -444,24 +451,24 @@ public class FavoritesActivity extends AppCompatActivity implements
     @Override
     public void onSortCriteriaSelected(int sortCriteriaSelected) {
 
-        String confirmationMessage = "";
+        String sortedByMessage = "";
         int sortByMenuItemIcon = 0;
 
         switch (sortCriteriaSelected) {
             case MainActivity.SORT_BY_ASCENDING_DATE:
-                confirmationMessage = getString(R.string.activity_favorites_sorted_by_ascending_date_text);
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_ascending_date_text);
                 sortByMenuItemIcon = R.drawable.ic_sort_ascending_white_24dp;
                 break;
             case MainActivity.SORT_BY_DESCENDING_DATE:
-                confirmationMessage = getString(R.string.activity_favorites_sorted_by_descending_date_text);
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_descending_date_text);
                 sortByMenuItemIcon = R.drawable.ic_sort_descending_white_24dp;
                 break;
             case MainActivity.SORT_BY_ASCENDING_MAGNITUDE:
-                confirmationMessage = getString(R.string.activity_favorites_sorted_by_ascending_magnitude_text);
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_ascending_magnitude_text);
                 sortByMenuItemIcon = R.drawable.ic_sort_ascending_white_24dp;
                 break;
             case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
-                confirmationMessage = getString(R.string.activity_favorites_sorted_by_descending_magnitude_text);
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_descending_magnitude_text);
                 sortByMenuItemIcon = R.drawable.ic_sort_descending_white_24dp;
                 break;
         }
@@ -477,13 +484,16 @@ public class FavoritesActivity extends AppCompatActivity implements
             mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
             // If some earthquakes were sorted show a snackbar message
             if (mNumberOfFavoritesOnList > 1) {
-                Snackbar.make(findViewById(android.R.id.content),
-                        getString(R.string.activity_favorites_sorted_by_snack_text, confirmationMessage),
-                        Snackbar.LENGTH_LONG).show();
+                showSnackBarMessage(
+                        getString(R.string.activity_favorites_sorted_by_snack_text, sortedByMessage));
             }
         }
     }
 
+
+    private void showSnackBarMessage(String message){
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+    }
 
     /**
      * Map the shared element names to the RecyclerView ViewHolder Views. (works only for visible RecyclerView elements).

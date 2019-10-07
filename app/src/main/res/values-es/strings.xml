@@ -310,6 +310,8 @@
 
     <string name="activity_favorites_label">Favoritos</string>
 
+    <string name="activity_favorites_delete_text">Eliminar</string>
+
     <string name="activity_favorites_no_favorites_message">No se encontraron favoritos.</string>
 
     <string name="activity_favorites_loading_favorites_message">Cargando favoritos</string>
@@ -319,8 +321,9 @@
 
     <string name="activity_favorites_list_title">%1$d favorito%2$s. Ordenados por %3$s.</string>
 
-    <string name="activity_favorites_delete_all_confirmation_dialog_fragment_title">
-        Eliminar todos</string>
+    <string name="activity_favorites_delete_one_confirmation_dialog_fragment_text">
+        &lt;br/&gt;Vas a eliminar &lt;b>un favorito.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>
+
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
         &lt;br/&gt;Vas a eliminar &lt;b>todos los favoritos.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>
 
@@ -341,8 +344,11 @@
         magnitud descendente
     </string>
 
-    <string name="favorite_list_item_swipe_to_delete_text">Eliminar</string>
     <string name="favorite_list_item_delete_icon_content_description">Ícono eliminar</string>
+
+    <string name="activity_favorites_one_favorite_deleted_message">Favorito eliminado</string>
+    <string name="activity_favorites_all_favorites_deleted_message">Todos los favoritos eliminados</string>
+    <string name="activity_favorites_some_favorites_deleted_message">%1$d favorito%2$s eliminados</string>
 
     <!-- ********** Activity favorites ********** -->
 
