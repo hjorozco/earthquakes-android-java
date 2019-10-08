@@ -27,7 +27,7 @@
 
     <color name="colorSwipeToDelete">@color/colorBackGroundActionMode</color>
     <color name="colorBackGroundActionMode">#D32F2F</color>             <!-- Red 700 -->
-    <color name="colorRowActivatedForDeletion">#E0E0E0</color>          <!-- Grey 300 -->
+    <color name="colorRowActivatedForDeletion">#EEEEEE</color>          <!-- Grey 300 -->
 
     <!-- *************** MAGNITUDE COLORS AND BACKGROUNDS COLORS ********************** -->
     <!-- MAGNITUDE COLORS, used on the borders of the magnitude circle, and the earthquake

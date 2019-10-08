@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -126,9 +127,10 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
             // If the student has been selected by a long click
             if (mSelectedFavorites.get(position, false)) {
                 favoriteViewHolder.viewForeground.setBackgroundColor(mContext.getResources().getColor(R.color.colorRowActivatedForDeletion));
+                favoriteViewHolder.selectedImageView.setVisibility(View.VISIBLE);
             } else {
                 favoriteViewHolder.viewForeground.setBackgroundColor(mContext.getResources().getColor(R.color.colorAppBackground));
-
+                favoriteViewHolder.selectedImageView.setVisibility(View.GONE);
             }
 
             // If the favorite was swiped to delete, the app is asking for confirmation and the device's config changed then:
@@ -245,6 +247,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
         TextView locationPrimaryTextView;
         TextView dateTextView;
         TextView timeTextView;
+        ImageView selectedImageView;
 
         public final RelativeLayout viewLeftSwipeBackground;
         public final RelativeLayout viewRightSwipeBackground;
@@ -258,6 +261,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
             locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
             dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
             timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
+            selectedImageView = itemView.findViewById(R.id.favorite_list_item_selected_image_view);
             viewLeftSwipeBackground = itemView.findViewById(R.id.favorite_list_item_left_swipe_background);
             viewRightSwipeBackground = itemView.findViewById(R.id.favorite_list_item_right_swipe_background);
             viewForeground = itemView.findViewById(R.id.favorite_list_item_view_foreground);

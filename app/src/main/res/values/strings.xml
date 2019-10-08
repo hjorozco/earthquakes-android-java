@@ -420,7 +420,7 @@
     <string name="activity_favorites_list_title">%1$d favorite%2$s. Sorted by %3$s.</string>
 
     <string name="activity_favorites_delete_one_confirmation_dialog_fragment_text">
-        &lt;br/&gt;You are going to delete &lt;b>one favorite.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
+        &lt;br/&gt;You are going to delete &lt;b>a favorite.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
     <string name="activity_favorites_delete_one_confirmation_dialog_fragment_tag" translatable="false">
         activity_favorites_delete_one_confirmation_dialog_fragment_tag</string>
 
