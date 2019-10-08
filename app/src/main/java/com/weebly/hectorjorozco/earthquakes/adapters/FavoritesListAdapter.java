@@ -2,6 +2,7 @@ package com.weebly.hectorjorozco.earthquakes.adapters;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,38 +16,50 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.models.SparseBooleanArrayParcelable;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.VIBRATOR_SERVICE;
 
 public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TITTLE_TYPE = 0;
     private static final int FAVORITE_TYPE = 1;
 
+    private static final int LONG_PRESS_VIBRATION_TIME_IN_MILLISECONDS = 10;
+
     private Context mContext;
     private List<Earthquake> mFavorites;
-    private FavoritesListClickListener mFavoritesListClickListener;
+    private FavoritesListAdapterListener mFavoritesListAdapterListener;
+
+    // Array that saves the selected state of students (true if selected, false otherwise)
+    private SparseBooleanArrayParcelable mSelectedFavorites;
 
     // Used to restore favorite swipe to delete background on rotation
     private int mFavoriteWithDeleteBackgroundPosition = -1;
     private boolean mFavoriteWithDeleteBackgroundRightSwiped = false;
 
 
-    // Interface implemented in FavoritesActivity.java to handle clicks
-    public interface FavoritesListClickListener {
+    // Interface implemented in FavoritesActivity.java to handle clicks and long clicks
+    public interface FavoritesListAdapterListener {
         void onTitleClick();
 
         void onFavoriteClick(Earthquake favorite, int favoriteRecyclerViewPosition,
                              TextView magnitudeTextView, TextView locationOffsetTextView,
                              TextView locationPrimaryTextView, TextView dateTextView);
+
+        void onFavoriteLongClick(int favoriteRecyclerViewPosition);
     }
 
     // The adapter constructor
-    public FavoritesListAdapter(Context context, FavoritesListClickListener favoritesListClickListener) {
+    public FavoritesListAdapter(Context context, FavoritesListAdapterListener favoritesListAdapterListener) {
         mContext = context;
-        mFavoritesListClickListener = favoritesListClickListener;
+        mFavoritesListAdapterListener = favoritesListAdapterListener;
+        mSelectedFavorites = new SparseBooleanArrayParcelable();
     }
 
 
@@ -110,6 +123,14 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     favoriteViewHolder.dateTextView,
                     favoriteViewHolder.timeTextView);
 
+            // If the student has been selected by a long click
+            if (mSelectedFavorites.get(position, false)) {
+                favoriteViewHolder.viewForeground.setBackgroundColor(mContext.getResources().getColor(R.color.colorRowActivatedForDeletion));
+            } else {
+                favoriteViewHolder.viewForeground.setBackgroundColor(mContext.getResources().getColor(R.color.colorAppBackground));
+
+            }
+
             // If the favorite was swiped to delete, the app is asking for confirmation and the device's config changed then:
             if (mFavoriteWithDeleteBackgroundPosition == position) {
                 favoriteViewHolder.viewForeground.setVisibility(View.INVISIBLE);
@@ -171,10 +192,49 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
+    // Used for swipe to delete one favorite
     public void setFavoriteWithDeleteBackgroundData(int position, boolean rightSwiped) {
         mFavoriteWithDeleteBackgroundPosition = position;
         mFavoriteWithDeleteBackgroundRightSwiped = rightSwiped;
     }
+
+
+    // The following are xix methods used for long click favorite selection for deletion in Action Mode
+    public void toggleFavoriteSelectionState(int position) {
+        if (mSelectedFavorites.get(position, false)) {
+            mSelectedFavorites.delete(position);
+        } else {
+            mSelectedFavorites.put(position, true);
+        }
+        notifyItemChanged(position);
+    }
+
+    public void clearSelectedFavorites() {
+        mSelectedFavorites.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedFavoritesCount() {
+        return mSelectedFavorites.size();
+    }
+
+    public List<Integer> getSelectedFavoritesPositions() {
+        List<Integer> selectedFavorites = new ArrayList<>(mSelectedFavorites.size());
+        for (int i = 0; i < mSelectedFavorites.size(); i++) {
+            selectedFavorites.add(mSelectedFavorites.keyAt(i));
+        }
+        return selectedFavorites;
+    }
+
+    public void setSelectedFavorites(SparseBooleanArrayParcelable selectedFavorites) {
+        mSelectedFavorites = selectedFavorites;
+    }
+
+    public SparseBooleanArrayParcelable getSelectedFavorites() {
+        return mSelectedFavorites;
+    }
+
+    // End of six methods used for long click favorite selection for deletion in Action Mode.
 
 
     public class FavoriteViewHolder extends RecyclerView.ViewHolder {
@@ -216,11 +276,18 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
             earthquakeLinearLayout.setOnClickListener((View v) ->
             {
                 int favoriteRecyclerViewPosition = getAdapterPosition();
+
                 if (favoriteRecyclerViewPosition > 0) {
-                    mFavoritesListClickListener.onFavoriteClick(mFavorites.get(favoriteRecyclerViewPosition - 1),
+                    mFavoritesListAdapterListener.onFavoriteClick(mFavorites.get(favoriteRecyclerViewPosition - 1),
                             favoriteRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
                             locationPrimaryTextView, dateTextView);
                 }
+            });
+
+            earthquakeLinearLayout.setOnLongClickListener(v -> {
+                mFavoritesListAdapterListener.onFavoriteLongClick(getAdapterPosition());
+                vibrate();
+                return true;
             });
         }
     }
@@ -233,7 +300,16 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
         TitleViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.title_list_item_text_view);
-            titleTextView.setOnClickListener(v -> mFavoritesListClickListener.onTitleClick());
+            titleTextView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAppBackground));
+            titleTextView.setOnClickListener(v -> mFavoritesListAdapterListener.onTitleClick());
+        }
+    }
+
+
+    private void vibrate(){
+        Vibrator vibrator =(Vibrator) mContext.getSystemService(VIBRATOR_SERVICE);
+        if (vibrator != null) {
+            vibrator.vibrate(LONG_PRESS_VIBRATION_TIME_IN_MILLISECONDS);
         }
     }
 

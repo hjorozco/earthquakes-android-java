@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Menu to display when ActionMode is enabled -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_action_mode_action_delete"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:title="@string/activity_favorites_delete_text"
+        app:showAsAction="always" />
+</menu>

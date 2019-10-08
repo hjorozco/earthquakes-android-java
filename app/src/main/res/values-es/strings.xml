@@ -5,6 +5,7 @@
 
     <string name="app_name">Sismos</string>
     <string name="yes_text">SI</string>
+    <string name="spanish_only_plural_ending_letter_s">@string/letter_s_lowercase</string>
 
     <!-- ********** App ********** -->
 
@@ -324,6 +325,9 @@
     <string name="activity_favorites_delete_one_confirmation_dialog_fragment_text">
         &lt;br/&gt;Vas a eliminar &lt;b>un favorito.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>
 
+    <string name="activity_favorites_delete_some_confirmation_dialog_fragment_text">
+        &lt;br/&gt;Vas a eliminar &lt;b>%1$d favorito%2$s.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>
+
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
         &lt;br/&gt;Vas a eliminar &lt;b>todos los favoritos.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>
 
@@ -348,7 +352,9 @@
 
     <string name="activity_favorites_one_favorite_deleted_message">Favorito eliminado</string>
     <string name="activity_favorites_all_favorites_deleted_message">Todos los favoritos eliminados</string>
-    <string name="activity_favorites_some_favorites_deleted_message">%1$d favorito%2$s eliminados</string>
+    <string name="activity_favorites_some_favorites_deleted_message">%1$d favorito%2$s eliminado%3$s</string>
+
+    <string name="activity_favorites_action_mode_toolbar_title">%1$d seleccionado%2$s</string>
 
     <!-- ********** Activity favorites ********** -->
 

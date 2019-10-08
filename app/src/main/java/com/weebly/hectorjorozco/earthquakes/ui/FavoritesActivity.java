@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
@@ -34,6 +35,7 @@ import com.weebly.hectorjorozco.earthquakes.adapters.FavoritesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.database.AppDatabase;
 import com.weebly.hectorjorozco.earthquakes.executors.AppExecutors;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.models.SparseBooleanArrayParcelable;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.ConfirmationDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.SortFavoritesDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
@@ -45,7 +47,7 @@ import java.util.Map;
 
 
 public class FavoritesActivity extends AppCompatActivity implements
-        FavoritesListAdapter.FavoritesListClickListener,
+        FavoritesListAdapter.FavoritesListAdapterListener,
         ConfirmationDialogFragment.ConfirmationDialogFragmentListener,
         SortFavoritesDialogFragment.SortFavoritesDialogFragmentListener {
 
@@ -70,6 +72,11 @@ public class FavoritesActivity extends AppCompatActivity implements
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private Menu mMenu;
+    private DividerItemDecoration mDividerItemDecoration;
+
+    // Used for action mode
+    private ActionModeCallback actionModeCallback;
+    private ActionMode mActionMode;
 
     // Used to save the swiped to delete student on rotation
     private boolean mIsAskingToDeleteFavorite;
@@ -94,6 +101,8 @@ public class FavoritesActivity extends AppCompatActivity implements
         mMessageTextView = findViewById(R.id.activity_favorites_message_text_view);
         mProgressBar = findViewById(R.id.activity_favorites_progress_bar);
 
+        actionModeCallback = new ActionModeCallback();
+
         mIsAskingToDeleteFavorite = false;
         mRightSwipe = false;
 
@@ -117,19 +126,41 @@ public class FavoritesActivity extends AppCompatActivity implements
                 mAdapter.notifyItemChanged(mFavoriteWithDeleteBackgroundPosition);
                 mIsAskingToDeleteFavorite = true;
             }
+
+            // To restore action mode on rotation
+            if (savedInstanceState.containsKey(SAVED_INSTANCE_STATE_SELECTED_ITEMS_KEY)) {
+                SparseBooleanArrayParcelable selectedFavorites =
+                        savedInstanceState.getParcelable(SAVED_INSTANCE_STATE_SELECTED_ITEMS_KEY);
+                if (selectedFavorites != null && selectedFavorites.size() > 0) {
+                    mActionMode = startSupportActionMode(actionModeCallback);
+                    if (mActionMode != null) {
+                        String selectedWordEnding;
+                        int selectedFavoritesCount = selectedFavorites.size();
+                        if (selectedFavoritesCount == 1) {
+                            selectedWordEnding = "";
+                        } else {
+                            selectedWordEnding = getString(R.string.spanish_only_plural_ending_letter_s);
+                        }
+                        mActionMode.setTitle(getString(R.string.activity_favorites_action_mode_toolbar_title,
+                                selectedFavoritesCount, selectedWordEnding));
+                    }
+                    mAdapter.setSelectedFavorites(selectedFavorites);
+                    mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_dark));
+                }
+            }
         }
     }
 
 
     private void setupRecyclerView() {
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider));
+        mDividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
 
         mRecyclerView = findViewById(R.id.activity_favorites_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+        mRecyclerView.addItemDecoration(mDividerItemDecoration);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
 
@@ -196,7 +227,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             // Disables swipe when Action Mode is enabled
             @Override
             public boolean isItemViewSwipeEnabled() {
-                return true; // (// actionMode == null);
+                return true; // (// mActionMode == null);
             }
 
             // When the swipe gesture finishes ask for a delete confirmation
@@ -321,21 +352,6 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
-    // Helper method that show a DialogFragment that lets the user confirm if he wants to delete
-    // all favorites
-    private void showDeleteAllFavoritesConfirmationDialogFragment() {
-        ConfirmationDialogFragment confirmationDialogFragment =
-                ConfirmationDialogFragment.newInstance(
-                        Html.fromHtml(getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_text)),
-                        getString(R.string.activity_favorites_delete_text),
-                        0,
-                        ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES);
-
-        confirmationDialogFragment.show(getSupportFragmentManager(),
-                getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_tag));
-    }
-
-
     private void showDeleteOneFavoriteConfirmationDialogFragment(int position) {
 
         mIsAskingToDeleteFavorite = true;
@@ -354,8 +370,55 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
+    private void showDeleteSomeFavoritesConfirmationDialogFragment() {
+
+        ConfirmationDialogFragment confirmationDialogFragment =
+                ConfirmationDialogFragment.newInstance(
+                        Html.fromHtml(getString(
+                                R.string.activity_favorites_delete_some_confirmation_dialog_fragment_text,
+                                mAdapter.getSelectedFavoritesPositions().size(),
+                                getPluralEnding(mAdapter.getSelectedFavoritesCount(), false))),
+                        getString(R.string.activity_favorites_delete_text),
+                        0, ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_SOME_FAVORITES);
+
+        confirmationDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_favorites_delete_some_confirmation_dialog_fragment_tag));
+    }
+
+
+    // Helper method that show a DialogFragment that lets the user confirm if he wants to delete
+    // all favorites
+    private void showDeleteAllFavoritesConfirmationDialogFragment() {
+        ConfirmationDialogFragment confirmationDialogFragment =
+                ConfirmationDialogFragment.newInstance(
+                        Html.fromHtml(getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_text)),
+                        getString(R.string.activity_favorites_delete_text),
+                        0,
+                        ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES);
+
+        confirmationDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_tag));
+    }
+
+
+    private String getPluralEnding(int numberOfItems, boolean spanishOnlye) {
+        String pluralEnding;
+        if (numberOfItems == 1) {
+            pluralEnding = "";
+        } else {
+            if (spanishOnlye) {
+                pluralEnding = getString(R.string.spanish_only_plural_ending_letter_s);
+            } else {
+                pluralEnding = getString(R.string.letter_s_lowercase);
+            }
+
+        }
+        return pluralEnding;
+    }
+
+
     /**
-     * Implementation of FavoritesListAdapt|er.FavoritesListClickListener
+     * Implementation of FavoritesListAdapt|er.FavoritesListAdapterListener
      * When the title of the list is clicked.
      */
     @Override
@@ -364,7 +427,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
     /**
-     * Implementation of FavoritesListAdapter.FavoritesListClickListener
+     * Implementation of FavoritesListAdapter.FavoritesListAdapterListener
      * When a favorite on the list is clicked show a new activity with details of it.
      * Implement a transition if Android version is 21 or grater.
      */
@@ -373,25 +436,35 @@ public class FavoritesActivity extends AppCompatActivity implements
                                 TextView magnitudeTextView, TextView locationOffsetTextView,
                                 TextView locationPrimaryTextView, TextView dateTextView) {
 
-        mEarthquakeRecyclerViewPosition = favoriteRecyclerViewPosition;
-
-
-        Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, favorite);
-        intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
-            Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
-            Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
-            Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
-            ActivityOptionsCompat activityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4);
-            startActivity(intent, activityOptionsCompat.toBundle());
+        // If there are favorites selected (action mode is enabled) set up action mode
+        if (mAdapter.getSelectedFavoritesCount() > 0) {
+            setupItemForActionMode(favoriteRecyclerViewPosition);
         } else {
-            startActivity(intent);
+            // If not, show EarthquakeDetails activity.
+            mEarthquakeRecyclerViewPosition = favoriteRecyclerViewPosition;
+            Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, favorite);
+            intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
+                Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
+                Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
+                Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
+                ActivityOptionsCompat activityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4);
+                startActivity(intent, activityOptionsCompat.toBundle());
+            } else {
+                startActivity(intent);
+            }
         }
+    }
+
+    // Implementation of FavoritesListAdapter.FavoritesListAdapterListener
+    @Override
+    public void onFavoriteLongClick(int favoriteRecyclerViewPosition) {
+        setupItemForActionMode(favoriteRecyclerViewPosition);
     }
 
 
@@ -414,12 +487,12 @@ public class FavoritesActivity extends AppCompatActivity implements
                 if (answerYes) {
 
                     // Delete favorite from the favorites table
-                    Earthquake favoriteToDelete = mAdapter.getFavorite(itemToDeletePosition-1);
+                    Earthquake favoriteToDelete = mAdapter.getFavorite(itemToDeletePosition - 1);
                     AppExecutors.getInstance().diskIO().execute(() ->
                             appDatabase.earthquakeDao().deleteFavoriteEarthquake(favoriteToDelete));
 
                     // Delete the student from the adapter
-                    mAdapter.removeFavorite(itemToDeletePosition-1);
+                    mAdapter.removeFavorite(itemToDeletePosition - 1);
 
                     showSnackBarMessage(getString(R.string.activity_favorites_one_favorite_deleted_message));
 
@@ -428,6 +501,25 @@ public class FavoritesActivity extends AppCompatActivity implements
                 }
                 break;
             case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_SOME_FAVORITES:
+                if (answerYes) {
+                    List<Integer> selectedItemPositions = mAdapter.getSelectedFavoritesPositions();
+                    int numberOfDeletedFavorites = mAdapter.getSelectedFavoritesCount();
+                    for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+                        final Earthquake favoriteToDelete = mAdapter.getFavorite(selectedItemPositions.get(i) - 1);
+
+                        // Delete the student from the adapter
+                        mAdapter.removeFavorite(selectedItemPositions.get(i) - 1);
+
+                        // Delete student from the students table
+                        AppExecutors.getInstance().diskIO().execute(() ->
+                                appDatabase.earthquakeDao().deleteFavoriteEarthquake(favoriteToDelete));
+                    }
+                    mActionMode.finish();
+                    showSnackBarMessage(getString(R.string.activity_favorites_some_favorites_deleted_message,
+                            selectedItemPositions.size(),
+                            getPluralEnding(numberOfDeletedFavorites, false),
+                            getPluralEnding(numberOfDeletedFavorites, true)));
+                }
                 break;
             case ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES:
                 if (answerYes) {
@@ -491,7 +583,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
-    private void showSnackBarMessage(String message){
+    private void showSnackBarMessage(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
@@ -524,6 +616,72 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
+    /**
+     * Enables ActionMode if not enabled, toggles the selected value of the student selected and
+     * sets the title of the action mode menu to be the number of favorites selected
+     *
+     * @param position Position of the favorite clicked or long clicked.
+     */
+    private void setupItemForActionMode(int position) {
+
+        if (mActionMode == null) {
+            mActionMode = startSupportActionMode(actionModeCallback);
+            if (mAdapter.getSelectedFavoritesCount() == 0) {
+                mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_dark));
+            }
+        }
+
+        mAdapter.toggleFavoriteSelectionState(position);
+
+        int selectedFavoritesCount = mAdapter.getSelectedFavoritesCount();
+
+        // If the last selected favorite was deselected finish action mode
+        if (selectedFavoritesCount == 0) {
+            mActionMode.finish();
+            mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
+        } else {
+            // If not, update action mode title with the number of favorites selected
+            mActionMode.setTitle(getString(R.string.activity_favorites_action_mode_toolbar_title,
+                    selectedFavoritesCount, getPluralEnding(selectedFavoritesCount, true)));
+            mActionMode.invalidate();
+        }
+    }
+
+
+    /**
+     * Class that implement ActionMode callbacks to change the menu when favorites are selected by a
+     * long click and handle the deletion of those selected favorites.
+     */
+    private class ActionModeCallback implements ActionMode.Callback {
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            actionMode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            if (menuItem.getItemId() == R.id.menu_action_mode_action_delete) {
+                showDeleteSomeFavoritesConfirmationDialogFragment();
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            mAdapter.clearSelectedFavorites();
+            mActionMode = null;
+            mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
+        }
+    }
+
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -533,6 +691,11 @@ public class FavoritesActivity extends AppCompatActivity implements
         if (mIsAskingToDeleteFavorite) {
             outState.putBoolean(SAVED_INSTANCE_STATE_RIGHT_SWIPED_KEY, mRightSwipe);
             outState.putInt(SAVED_INSTANCE_STATE_FAVORITE_WITH_DELETE_BACKGROUND_POSITION_KEY, mFavoriteWithDeleteBackgroundPosition);
+        }
+
+        // If there are students selected
+        if (mAdapter.getSelectedFavoritesCount() > 0) {
+            outState.putParcelable(SAVED_INSTANCE_STATE_SELECTED_ITEMS_KEY, mAdapter.getSelectedFavorites());
         }
 
     }

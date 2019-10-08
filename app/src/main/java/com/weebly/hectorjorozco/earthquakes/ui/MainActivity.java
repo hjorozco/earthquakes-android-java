@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private void setupRecyclerView() {
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider));
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
 
         mRecyclerView = findViewById(R.id.activity_main_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

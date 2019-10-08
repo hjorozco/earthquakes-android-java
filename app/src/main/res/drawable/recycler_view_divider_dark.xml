@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="@dimen/recycler_view_divider_inset_left"
+    android:insetRight="@dimen/recycler_view_divider_inset_right">
+    <shape
+        android:shape="rectangle">
+        <size
+            android:width="@dimen/recycler_view_divider_size"
+            android:height="@dimen/recycler_view_divider_size" />
+        <solid android:color="@color/medium_light_brown" />
+    </shape>
+
+</inset>
