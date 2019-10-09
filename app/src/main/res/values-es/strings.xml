@@ -349,6 +349,8 @@
     </string>
 
     <string name="favorite_list_item_delete_icon_content_description">Ícono eliminar</string>
+    <string name="favorite_list_item_selected_image_content_description">
+        Pequeño círculo rojo con una marca de verificación blanca dentro</string>
 
     <string name="activity_favorites_one_favorite_deleted_message">Favorito eliminado</string>
     <string name="activity_favorites_all_favorites_deleted_message">Todos los favoritos eliminados</string>

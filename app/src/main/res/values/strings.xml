@@ -454,12 +454,14 @@
     </string>
 
     <string name="favorite_list_item_delete_icon_content_description">Delete icon</string>
+    <string name="favorite_list_item_selected_image_content_description">Small red circle with white check mark inside</string>
 
     <string name="activity_favorites_one_favorite_deleted_message">Favorite deleted</string>
     <string name="activity_favorites_all_favorites_deleted_message">All favorites deleted</string>
     <string name="activity_favorites_some_favorites_deleted_message">%1$d favorite%2$s deleted%3$s</string>
 
     <string name="activity_favorites_action_mode_toolbar_title">%1$d selected%2$s</string>
+
 
 
     <!-- ********** Activity favorites ********** -->

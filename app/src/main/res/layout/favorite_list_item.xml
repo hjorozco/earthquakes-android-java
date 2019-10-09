@@ -75,13 +75,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
+            android:baselineAligned="false"
             android:paddingStart="@dimen/application_standard_padding"
             android:paddingLeft="@dimen/application_standard_padding"
             android:paddingTop="@dimen/application_small_padding"
             android:paddingEnd="@dimen/application_standard_padding"
             android:paddingRight="@dimen/application_standard_padding"
-            android:paddingBottom="@dimen/application_small_padding"
-            android:baselineAligned="false">
+            android:paddingBottom="@dimen/application_small_padding">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -104,10 +104,11 @@
                     android:id="@+id/favorite_list_item_selected_image_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selected_circle"
-                    android:layout_alignBottom="@id/earthquake_list_item_magnitude_text_view"
                     android:layout_alignEnd="@id/earthquake_list_item_magnitude_text_view"
-                    app:srcCompat="@drawable/ic_check_white_24dp"/>
+                    android:layout_alignBottom="@id/earthquake_list_item_magnitude_text_view"
+                    android:background="@drawable/selected_circle"
+                    android:contentDescription="@string/favorite_list_item_selected_image_content_description"
+                    app:srcCompat="@drawable/ic_check_white_18dp" />
 
             </RelativeLayout>
 

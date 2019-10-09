@@ -109,6 +109,13 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
+    }
+
+
     private void showHelpSnackBar() {
         Snackbar.make(findViewById(android.R.id.content),
                 getString(R.string.activity_earthquake_report_snack_bar_text), Snackbar.LENGTH_LONG).show();

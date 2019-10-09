@@ -800,6 +800,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             Intent intent = new Intent(this, EarthquakeWebPageActivity.class);
             intent.putExtra(EarthquakeWebPageActivity.EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl());
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
         }
     }
 
@@ -808,6 +809,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         Intent intent = new Intent(this, ReportEarthquakeActivity.class);
         intent.putExtra(ReportEarthquakeActivity.REPORT_EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl() + "/tellus");
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
     }
 
 
@@ -830,6 +832,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     public void onBackPressed() {
         if (mIsFavoritesActivityCalling && !mIsFavorite) {
             finish();
+            overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
         } else {
             super.onBackPressed();
         }

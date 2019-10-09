@@ -1,9 +1,6 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -106,5 +103,11 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
+    }
 }
 

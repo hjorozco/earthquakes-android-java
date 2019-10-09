@@ -39,4 +39,6 @@
     <dimen name="standard_96">96dp</dimen>
     <dimen name="standard_140">140dp</dimen>
 
+    <dimen name="small_circle_dimension">18dp</dimen>
+
 </resources>

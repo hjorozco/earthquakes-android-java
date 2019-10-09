@@ -379,15 +379,19 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 break;
             case R.id.menu_activity_main_action_search_preferences:
                 startActivity(new Intent(this, SearchPreferencesActivity.class));
+                overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
                 break;
             case R.id.menu_activity_main_action_favorites:
                 startActivity(new Intent(this, FavoritesActivity.class));
+                overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
                 break;
             case R.id.menu_activity_main_action_earthquakes_map:
                 startActivity(new Intent(this, EarthquakesMapActivity.class));
+                overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
                 break;
             case R.id.menu_activity_main_action_glossary:
                 startActivity(new Intent(this, GlossaryActivity.class));
+                overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
                 break;
             case R.id.menu_activity_main_action_help:
                 break;
