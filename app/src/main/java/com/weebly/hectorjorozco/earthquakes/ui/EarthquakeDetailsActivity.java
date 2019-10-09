@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +57,7 @@ import static android.view.View.GONE;
 public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final String EXTRA_EARTHQUAKE = "EXTRA_EARTHQUAKE_KEY";
+    public static final String EXTRA_IS_FAVORITES_ACTIVITY_CALLING = "EXTRA_IS_FAVORITES_ACTIVITY_CALLING";
     public static final String EXTRA_BUNDLE_KEY = "EXTRA_BUNDLE_KEY";
     private static final String IS_FAB_MENU_OPEN_VALUE_KEY = "IS_FAB_MENU_OPEN_VALUE_KEY";
     private static final String IS_FAVORITE_VALUE_KEY = "IS_FAVORITE_VALUE_KEY";
@@ -80,6 +82,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private boolean mRotation = false;
     private boolean mIsFabMenuOpen = false;
     private boolean mIsFavorite = false;
+    private boolean mIsFavoritesActivityCalling;
 
 
     @Override
@@ -92,8 +95,13 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         }
 
         Bundle bundle = getIntent().getBundleExtra(EXTRA_BUNDLE_KEY);
-        if (bundle != null && bundle.containsKey(EXTRA_EARTHQUAKE)) {
-            mEarthquake = bundle.getParcelable(EXTRA_EARTHQUAKE);
+        if (bundle != null) {
+            if (bundle.containsKey(EXTRA_EARTHQUAKE)) {
+                mEarthquake = bundle.getParcelable(EXTRA_EARTHQUAKE);
+            }
+            if (bundle.containsKey(EXTRA_IS_FAVORITES_ACTIVITY_CALLING)) {
+                mIsFavoritesActivityCalling = bundle.getBoolean(EXTRA_IS_FAVORITES_ACTIVITY_CALLING);
+            }
         }
 
         mAppDatabase = AppDatabase.getInstance(this);
@@ -116,14 +124,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
         // Sets up the views that will be animated on entry and exit for Android versions 21 or up
-        TextView magnitudeTextView =
-                findViewById(R.id.activity_earthquake_details_magnitude_text_view);
-        TextView locationOffsetTextView =
-                findViewById(R.id.activity_earthquake_details_location_offset_text_view);
-        TextView locationPrimaryTextView =
-                findViewById(R.id.activity_earthquake_details_location_primary_text_view);
-        TextView dateAndTimeTextView =
-                findViewById(R.id.activity_earthquake_details_date_and_time_text_view);
+        TextView magnitudeTextView = findViewById(R.id.activity_earthquake_details_magnitude_text_view);
+        TextView locationOffsetTextView = findViewById(R.id.activity_earthquake_details_location_offset_text_view);
+        TextView locationPrimaryTextView = findViewById(R.id.activity_earthquake_details_location_primary_text_view);
+        TextView dateAndTimeTextView = findViewById(R.id.activity_earthquake_details_date_and_time_text_view);
         LinearLayout magnitudeTextViewLinearLayout =
                 findViewById(R.id.activity_earthquake_details_magnitude_text_view_linear_layout);
 
@@ -709,7 +713,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             e.printStackTrace();
         }
 
-        if (mFavoritesMenuItem!=null){
+        if (mFavoritesMenuItem != null) {
             setupFavoritesMenuItem(mIsFavorite);
         }
 
@@ -754,7 +758,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void setupFavoritesMenuItem(boolean isFavorite){
+    private void setupFavoritesMenuItem(boolean isFavorite) {
         if (isFavorite) {
             mFavoritesMenuItem.setIcon(R.drawable.ic_star_yellow_24dp);
             mFavoritesMenuItem.setTitle(R.string.menu_activity_earthquake_details_action_remove_from_favorites_title);
@@ -780,7 +784,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void showSnackBar(String text){
+    private void showSnackBar(String text) {
         Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG).show();
     }
 
@@ -818,6 +822,16 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 mUsgsMapWebView.animate().alpha(0.0f);
             }
             onBackPressed();
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (mIsFavoritesActivityCalling && !mIsFavorite) {
+            finish();
+        } else {
+            super.onBackPressed();
         }
     }
 

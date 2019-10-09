@@ -110,7 +110,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         setupViewModel();
 
-        setupTransitions();
+        setupSharedElementsTransitions();
 
         if (savedInstanceState != null) {
             // To restore animation on orientation change
@@ -445,6 +445,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, favorite);
+            bundle.putBoolean(EarthquakeDetailsActivity.EXTRA_IS_FAVORITES_ACTIVITY_CALLING, true);
             intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -591,7 +592,7 @@ public class FavoritesActivity extends AppCompatActivity implements
      * Map the shared element names to the RecyclerView ViewHolder Views. (works only for visible RecyclerView elements).
      * Used to restore exit transitions on rotation.
      */
-    private void setupTransitions() {
+    private void setupSharedElementsTransitions() {
         setExitSharedElementCallback(
                 new SharedElementCallback() {
                     @Override
@@ -610,7 +611,6 @@ public class FavoritesActivity extends AppCompatActivity implements
                                 findViewById(R.id.earthquake_list_item_location_primary_text_view));
                         sharedElements
                                 .put(names.get(3), selectedViewHolder.itemView.findViewById(R.id.earthquake_list_item_date_text_view));
-
                     }
                 });
     }

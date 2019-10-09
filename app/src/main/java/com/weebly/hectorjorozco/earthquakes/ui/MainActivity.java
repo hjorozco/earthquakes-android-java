@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         setupViewModel();
 
-        setupTransitions();
+        setupSharedElementsTransitions();
     }
 
 
@@ -484,6 +484,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, earthquake);
+        bundle.putBoolean(EarthquakeDetailsActivity.EXTRA_IS_FAVORITES_ACTIVITY_CALLING, false);
         intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -504,7 +505,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
      * Map the shared element names to the RecyclerView ViewHolder Views. (works only for visible RecyclerView elements).
      * Used to restore exit transitions on rotation.
      */
-    private void setupTransitions() {
+    private void setupSharedElementsTransitions() {
         setExitSharedElementCallback(
                 new SharedElementCallback() {
                     @Override
