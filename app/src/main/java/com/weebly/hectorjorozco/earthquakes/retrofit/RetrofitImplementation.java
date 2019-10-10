@@ -26,7 +26,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public final class RetrofitImplementation implements Serializable {
 
     private static final String USGS_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/";
-    private static final String LOG_TAG = RetrofitImplementation.class.getSimpleName();
 
     private static volatile RetrofitImplementation retrofitImplementation = new RetrofitImplementation();
     private RetrofitService retrofitService;
@@ -99,10 +98,8 @@ public final class RetrofitImplementation implements Serializable {
             @Override
             public void onFailure(@NonNull Call<Earthquakes> call, @NonNull Throwable t) {
                 if (call.isCanceled()) {
-                    Log.d("TESTING", "Retrofit service call was cancelled.");
                     retrofitCallback.onCancel();
                 } else {
-                    Log.d("TESTING", t.getMessage());
                     retrofitCallback.onResponse(null);
                 }
             }
