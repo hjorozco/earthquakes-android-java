@@ -5,14 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 
 import com.weebly.hectorjorozco.earthquakes.R;
@@ -72,6 +77,9 @@ public class QueryUtils {
     public static boolean sListWillBeLoadedAfterEmpty = true;
     public static boolean sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
     public static boolean sIsPlayingSound = false;
+
+    public static Handler sHandler;
+    public static Runnable sRunnable;
 
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context,
@@ -664,6 +672,14 @@ public class QueryUtils {
                 getBoolean(context.getString(R.string.search_preference_sound_key),
                         context.getResources().getBoolean(R.bool.search_preference_sound_default_value));
 
+    }
+
+
+    public static void setupProgressBarForPreLollipop(ProgressBar progressBar, Context context) {
+        // Fixes pre-Lollipop progressBar indeterminateDrawable tinting
+        Drawable wrapDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
+        DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(R.color.colorAccent));
+        progressBar.setIndeterminateDrawable(DrawableCompat.unwrap(wrapDrawable));
     }
 
 }

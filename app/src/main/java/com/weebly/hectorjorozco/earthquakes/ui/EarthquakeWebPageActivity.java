@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -50,7 +51,9 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     private void showEarthquakeWebsite() {
         ProgressBar progressBar = findViewById(R.id.activity_earthquake_web_page_progress_bar);
-
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            QueryUtils.setupProgressBarForPreLollipop(progressBar, this);
+        }
         if (QueryUtils.internetConnection(this)) {
             progressBar.setVisibility(View.VISIBLE);
             mTextView.setVisibility(GONE);

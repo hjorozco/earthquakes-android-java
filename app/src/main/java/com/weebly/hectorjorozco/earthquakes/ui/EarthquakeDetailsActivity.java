@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.view.MenuCompat;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -316,7 +317,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         feltReportsValueTextView.setText(String.valueOf(mEarthquake.getFelt()));
 
         int colorPrimary = getResources().getColor(R.color.colorPrimary);
-        int colorPrimaryLight = getResources().getColor(R.color.colorPrimaryLight);
+        int colorLight = getResources().getColor(R.color.medium_light_brown);
 
         int[][] states = new int[][]{
                 new int[]{android.R.attr.state_enabled}, // enabled
@@ -324,26 +325,30 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 new int[]{-android.R.attr.state_checked}, // unchecked
                 new int[]{android.R.attr.state_pressed}  // pressed
         };
-        int[] magnitudeBackGroundColors = new int[]{
-                colorPrimaryLight,
-                colorPrimaryLight,
-                colorPrimaryLight,
-                colorPrimaryLight,
+        int[] buttonBackGroundColors = new int[]{
+                colorLight,
+                colorLight,
+                colorLight,
+                colorLight,
         };
-        int[] magnitudeColors = new int[]{
+        int[] buttonColors = new int[]{
                 colorPrimary,
                 colorPrimary,
                 colorPrimary,
                 colorPrimary,
         };
-        ColorStateList magnitudeBackGroundColorStateList = new ColorStateList(states, magnitudeBackGroundColors);
-        ColorStateList magnitudeColorStateList = new ColorStateList(states, magnitudeColors);
+        ColorStateList buttonBackGroundColorStateList = new ColorStateList(states, buttonBackGroundColors);
+        ColorStateList buttonColorStateList = new ColorStateList(states, buttonColors);
 
-        MaterialButton feltReportsButton = findViewById(R.id.activity_earthquake_details_felt_reports_button);
-        feltReportsButton.setTextColor(colorPrimary);
-        feltReportsButton.setRippleColor(magnitudeBackGroundColorStateList);
-        feltReportsButton.setStrokeColor(magnitudeColorStateList);
-        feltReportsButton.setOnClickListener(v -> showReportEarthquakeActivity());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            MaterialButton feltReportsButton = findViewById(R.id.activity_earthquake_details_felt_reports_button);
+            feltReportsButton.setRippleColor(buttonBackGroundColorStateList);
+            feltReportsButton.setStrokeColor(buttonColorStateList);
+            feltReportsButton.setOnClickListener(v -> showReportEarthquakeActivity());
+        } else {
+            AppCompatButton feltReportsButton = findViewById(R.id.activity_earthquake_details_felt_reports_button);
+            feltReportsButton.setOnClickListener(v -> showReportEarthquakeActivity());
+        }
 
         // Epicenter location views
         TextView coordinatesValueTextView =
@@ -547,6 +552,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         mGoogleMapFrameLayout.setVisibility(GONE);
 
         ProgressBar progressBar = findViewById(R.id.activity_earthquake_details_usgs_map_progress_bar);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            QueryUtils.setupProgressBarForPreLollipop(progressBar, this);
+        }
 
         if (QueryUtils.internetConnection(this)) {
             progressBar.setVisibility(View.VISIBLE);
@@ -800,7 +808,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             Intent intent = new Intent(this, EarthquakeWebPageActivity.class);
             intent.putExtra(EarthquakeWebPageActivity.EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl());
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
+            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
         }
     }
 
@@ -809,7 +817,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         Intent intent = new Intent(this, ReportEarthquakeActivity.class);
         intent.putExtra(ReportEarthquakeActivity.REPORT_EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl() + "/tellus");
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
+        overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
     }
 
 

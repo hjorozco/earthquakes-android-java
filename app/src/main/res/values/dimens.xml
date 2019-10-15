@@ -41,4 +41,9 @@
 
     <dimen name="small_circle_dimension">18dp</dimen>
 
+    <dimen name="button_background_corner_radius">3dp</dimen>
+    <dimen name="button_background_stroke_width">1dp</dimen>
+
+
+
 </resources>

@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,8 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +30,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
@@ -40,7 +39,6 @@ import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
-import com.weebly.hectorjorozco.earthquakes.utils.SnackbarWrapper;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
     public static final int MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP = 1000;
-    private static final int SECONDS_TO_SHOW_LONG_SEARCH_MESSAGE = 10;
+    private static final int SECONDS_TO_SHOW_LONG_SEARCH_MESSAGE = 30;
 
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
@@ -78,23 +76,21 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
 
+    // Used to show a snack bar after a long search time.
     private Handler mHandler;
     private Runnable mRunnable;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // Sets style back to normal after splash image
-        setTheme(R.style.AppTheme);
-
         super.onCreate(savedInstanceState);
 
-        // Workaround for orientation change issue
+        // After a rotation
         if (savedInstanceState != null) {
             mEarthquakeRecyclerViewPosition = savedInstanceState.getInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, 0);
+            mHandler = QueryUtils.sHandler;
+            mRunnable = QueryUtils.sRunnable;
         } else {
-            Log.d("TESTING", "Handler set up");
             setupLongSearchMessageHandler();
         }
 
@@ -114,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         setMessage(QueryUtils.SEARCHING);
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            QueryUtils.setupProgressBarForPreLollipop(mProgressBar, this);
+        }
+
         setupRecyclerView();
 
         setupViewModel();
@@ -122,34 +122,17 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-    private void setupLongSearchMessageHandler(){
+
+
+
+    private void setupLongSearchMessageHandler() {
         mHandler = new Handler();
-        mRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (QueryUtils.sSearchingForEarthquakes) {
-                    //your delayed action here, on UI Thread if needed
-//                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-//                            "To reduce the search time modify the search preferences",
-//                            Snackbar.LENGTH_INDEFINITE);
-//                    snackbar.setAction("OK", v -> snackbar.dismiss()).show();
-                    Log.d("TESTING", "Snack bar displayed");
-                    final SnackbarWrapper snackbarWrapper = SnackbarWrapper.make(getApplicationContext(),
-                            "Test snackbarWrapper. This is a long test to see if it works. Lets see if it can handle more than 2 lines", Snackbar.LENGTH_INDEFINITE);
-
-                    snackbarWrapper.setAction("OK",
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                }
-                            });
-
-                    snackbarWrapper.show();
-                }
-            }
-        };
+        mRunnable = () -> Snackbar.make(MainActivity.this.findViewById(android.R.id.content),
+                MainActivity.this.getString(R.string.activity_main_long_search_message), Snackbar.LENGTH_LONG).show();
 
         mHandler.postDelayed(mRunnable, SECONDS_TO_SHOW_LONG_SEARCH_MESSAGE * 1000);
+        QueryUtils.sHandler = mHandler;
+        QueryUtils.sRunnable = mRunnable;
     }
 
 
@@ -188,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     setMessage(QueryUtils.sLoadEarthquakesResultCode);
                     enableRefresh();
                     QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
+                    removeRunnableFromHandler();
                 }
                 QueryUtils.sListWillBeLoadedAfterEmpty = true;
             } else {
@@ -205,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                             setMessage(QueryUtils.NO_EARTHQUAKES_FOUND);
                         }
                         QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
+                        removeRunnableFromHandler();
                     }
                     QueryUtils.sListWillBeLoadedAfterEmpty = true;
                 } else {
@@ -217,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     if (!QueryUtils.sSearchingForEarthquakes) {
                         mMediaPlayer.stop();
                         QueryUtils.sIsPlayingSound = false;
+                        removeRunnableFromHandler();
                     }
 
                     // If there were new earthquakes displayed
@@ -452,6 +438,15 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             doRefreshActions();
         } else {
             mMainActivityViewModel.cancelRetrofitRequest();
+            removeRunnableFromHandler();
+        }
+    }
+
+
+    private void removeRunnableFromHandler() {
+        // Removes the runnable that shows a snack bar when a long time searching has passed.
+        if (mHandler != null && mRunnable != null) {
+            mHandler.removeCallbacks(mRunnable);
         }
     }
 

@@ -72,6 +72,8 @@
 
     <string name="activity_main_no_earthquake_location_text">Sin nombre</string>
 
+    <string name="activity_main_long_search_message">Para reducir el tiempo de búsqueda, cambie las preferencias</string>
+
 
     <!-- ********** Activity Main ********** -->
 

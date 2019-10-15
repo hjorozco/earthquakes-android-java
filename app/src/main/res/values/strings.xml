@@ -97,6 +97,8 @@
 
     <string name="activity_main_no_earthquake_location_text">No name</string>
 
+    <string name="activity_main_long_search_message">To reduce the search time change the preferences</string>
+
     <!-- ********** Activity main ********** -->
 
     <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
