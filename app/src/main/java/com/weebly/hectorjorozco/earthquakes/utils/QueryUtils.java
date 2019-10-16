@@ -654,8 +654,8 @@ public class QueryUtils {
     }
 
 
-    public static void openWebPageInGoogleChrome(Context context, String earthquakeUrl) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(earthquakeUrl));
+    public static void openWebPageInGoogleChrome(Context context, String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setPackage("com.android.chrome");
         try {

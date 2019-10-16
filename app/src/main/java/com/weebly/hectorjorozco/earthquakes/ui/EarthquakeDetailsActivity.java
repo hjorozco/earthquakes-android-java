@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -178,6 +177,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 }
             });
         } else {
+            // If Android 19
+            magnitudeTextViewLinearLayout.setBackground(getResources().
+                    getDrawable(R.drawable.touch_selector));
             setupEarthquakeDetails();
         }
 
@@ -245,6 +247,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 estimatedValueTextView.setTextColor(getIntensityColor(estimatedIntensity));
                 estimatedIntensityFlexboxLayout.
                         setOnClickListener(v -> showIntensityMessage(estimatedIntensity, estimatedType, romanNumeral));
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    estimatedIntensityFlexboxLayout.setBackground(getResources().
+                            getDrawable(R.drawable.touch_selector));
+                }
             }
             if (reportedIntensity < 1) {
                 reportedIntensityFlexboxLayout.setVisibility(GONE);
@@ -255,6 +261,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 reportedValueTextView.setTextColor(getIntensityColor(reportedIntensity));
                 reportedIntensityFlexboxLayout.
                         setOnClickListener(v -> showIntensityMessage(reportedIntensity, reportedType, romanNumeral));
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    reportedIntensityFlexboxLayout.setBackground(getResources().
+                            getDrawable(R.drawable.touch_selector));
+                }
             }
         }
 
@@ -297,7 +307,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
             int finalAlertType = alertType;
             String finalAlertValueText = alertValueText.toLowerCase();
-            alertFlexboxLayout.setOnClickListener(v -> showAlerMessage(finalAlertType, finalAlertValueText));
+            alertFlexboxLayout.setOnClickListener(v -> showAlertMessage(finalAlertType, finalAlertValueText));
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                alertFlexboxLayout.setBackground(getResources().
+                        getDrawable(R.drawable.touch_selector));
+            }
         }
 
         // Tsunami views
@@ -308,6 +322,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             tsunamiTextView.setVisibility(GONE);
         } else {
             tsunamiTextView.setOnClickListener(v -> showPossibleTsunamiMessage());
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                tsunamiTextView.setBackground(getResources().
+                        getDrawable(R.drawable.touch_selector));
+            }
         }
 
         // Felt views
@@ -651,18 +669,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void showEarthquakeDetailsHelpMessage() {
-        MessageDialogFragment messageDialogFragment =
-                MessageDialogFragment.newInstance(
-                        Html.fromHtml(getString(
-                                R.string.activity_earthquake_details_help_message)),
-                        getString(R.string.activity_earthquake_details_information_dialog_fragment_title));
-
-        messageDialogFragment.show(getSupportFragmentManager(),
-                getString(R.string.activity_earthquake_details_information_dialog_fragment_tag));
-    }
-
-
     private void showIntensityMessage(int intensity, String intensityType, String romanNumeral) {
         String[] intensityMessages = getResources().
                 getStringArray(R.array.activity_earthquake_details_intensity_information_array);
@@ -678,7 +684,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void showAlerMessage(int alertType, String alertTypeText) {
+    private void showAlertMessage(int alertType, String alertTypeText) {
         String[] alertMessages = getResources().
                 getStringArray(R.array.activity_earthquake_details_alert_information_array);
 
@@ -701,6 +707,18 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_possible_tsunami_dialog_fragment_tag));
+    }
+
+
+    private void showEarthquakeDetailsHelpMessage() {
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        Html.fromHtml(getString(
+                                R.string.activity_earthquake_details_help_message)),
+                        getString(R.string.activity_earthquake_details_information_dialog_fragment_title));
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_earthquake_details_information_dialog_fragment_tag));
     }
 
 
@@ -814,10 +832,16 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     private void showReportEarthquakeActivity() {
-        Intent intent = new Intent(this, ReportEarthquakeActivity.class);
-        intent.putExtra(ReportEarthquakeActivity.REPORT_EARTHQUAKE_URL_EXTRA_KEY, mEarthquake.getUrl() + "/tellus");
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+        String reportUrl = mEarthquake.getUrl() + "/tellus";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent intent = new Intent(this, ReportEarthquakeActivity.class);
+            intent.putExtra(ReportEarthquakeActivity.REPORT_EARTHQUAKE_URL_EXTRA_KEY, reportUrl);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+        } else {
+            // On Android 19 report web site does not work correctly on ReportEarthquakeActivity WebView
+            QueryUtils.openWebPageInGoogleChrome(this, reportUrl);
+        }
     }
 
 

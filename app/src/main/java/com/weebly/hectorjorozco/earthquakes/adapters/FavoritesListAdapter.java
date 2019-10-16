@@ -126,7 +126,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             // If the student has been selected by a long click
             if (mSelectedFavorites.get(position, false)) {
-                favoriteViewHolder.viewForeground.setBackgroundColor(mContext.getResources().getColor(R.color.colorRowActivatedForDeletion));
+                favoriteViewHolder.viewForeground.setBackgroundColor(mContext.getResources().getColor(R.color.colorRowActivated));
                 favoriteViewHolder.selectedImageView.setVisibility(View.VISIBLE);
             } else {
                 favoriteViewHolder.viewForeground.setBackgroundColor(mContext.getResources().getColor(R.color.colorAppBackground));
@@ -266,6 +266,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
             viewRightSwipeBackground = itemView.findViewById(R.id.favorite_list_item_right_swipe_background);
             viewForeground = itemView.findViewById(R.id.favorite_list_item_view_foreground);
 
+            // For Android version 21 and up set transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 magnitudeTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
@@ -275,6 +276,11 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
                         mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
                 dateTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
+            } else {
+                // For Android 19 set list item background as a touch selector since
+                // ?android:attr/selectableItemBackground does not work on 19.
+                earthquakeLinearLayout.setBackground(mContext.getResources().
+                        getDrawable(R.drawable.touch_selector));
             }
 
             earthquakeLinearLayout.setOnClickListener((View v) ->
@@ -310,8 +316,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
-    private void vibrate(){
-        Vibrator vibrator =(Vibrator) mContext.getSystemService(VIBRATOR_SERVICE);
+    private void vibrate() {
+        Vibrator vibrator = (Vibrator) mContext.getSystemService(VIBRATOR_SERVICE);
         if (vibrator != null) {
             vibrator.vibrate(LONG_PRESS_VIBRATION_TIME_IN_MILLISECONDS);
         }
