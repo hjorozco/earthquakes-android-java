@@ -631,6 +631,7 @@ public class QueryUtils {
                 magnitudeColor);
         magnitudeTextView.setTextColor(magnitudeColor);
 
+        // Location primary can be empty
         String locationPrimary = earthquake.getLocationPrimary();
         if (locationPrimary.isEmpty()) {
             locationPrimary = context.getString(R.string.activity_main_no_earthquake_location_text);

@@ -306,6 +306,14 @@
         Sismo eliminado de favoritos
     </string>
 
+    <string name="activity_earthquake_details_share_option_magnitude_text">Magnitud:</string>
+    <string name="activity_earthquake_details_share_option_location_text">Localidad:</string>
+    <string name="activity_earthquake_details_share_option_date_time_text">Fecha y hora:</string>
+    <string name="activity_earthquake_details_share_option_reported_intensity_text">Intensidad reportada:</string>
+    <string name="activity_earthquake_details_share_option_estimated_intensity_text">Intensidad estimada:</string>
+    <string name="activity_earthquake_details_share_option_go_to_website_to_report_text">
+        Para reportar el sismo ve a esta página web (una vez ahí presiona \"Select Language\" para cambiar el idioma a español):</string>
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 

@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ShareCompat;
 import androidx.core.view.MenuCompat;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -48,6 +49,7 @@ import com.weebly.hectorjorozco.earthquakes.utils.WebViewUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -83,6 +85,16 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private boolean mIsFabMenuOpen = false;
     private boolean mIsFavorite = false;
     private boolean mIsFavoritesActivityCalling;
+    private boolean mIsReportedIntensityShown;
+    private boolean mIsEstimatedIntensityShown;
+    private boolean mIsAlertTextShown;
+    private boolean mIsCoordinatesTextShown;
+    private boolean mIsDepthTextShown;
+    private String mReportedIntensityRomanNumeral;
+    private String mEstimatedIntensityRomanNumeral;
+    private String mAlertText;
+    private String mCoordinatesText;
+    private String mDepthText;
 
 
     @Override
@@ -229,42 +241,49 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView estimatedValueTextView =
                 findViewById(R.id.activity_earthquake_details_estimated_value_text_view);
 
-        int estimatedIntensity = (int) Math.round(mEarthquake.getMmi());
-        int reportedIntensity = (int) Math.round(mEarthquake.getCdi());
+        int estimatedIntensity, reportedIntensity;
+        String[] romanNumerals;
+
+        estimatedIntensity = (int) Math.round(mEarthquake.getMmi());
+        reportedIntensity = (int) Math.round(mEarthquake.getCdi());
 
         if (estimatedIntensity < 1 && reportedIntensity < 1) {
             intensityLabelTextView.setVisibility(GONE);
             intensityValuesLinearLayout.setVisibility(GONE);
         } else {
-            String[] romanNumerals =
+            romanNumerals =
                     getResources().getStringArray(R.array.activity_earthquake_details_roman_numerals);
             if (estimatedIntensity < 1) {
                 estimatedIntensityFlexboxLayout.setVisibility(GONE);
+                mIsEstimatedIntensityShown = false;
             } else {
-                String romanNumeral = romanNumerals[estimatedIntensity - 1];
+                mEstimatedIntensityRomanNumeral = romanNumerals[estimatedIntensity - 1];
                 String estimatedType = getString(R.string.activity_earthquake_details_estimated_intensity_type);
-                estimatedValueTextView.setText(romanNumeral);
+                estimatedValueTextView.setText(mEstimatedIntensityRomanNumeral);
                 estimatedValueTextView.setTextColor(getIntensityColor(estimatedIntensity));
                 estimatedIntensityFlexboxLayout.
-                        setOnClickListener(v -> showIntensityMessage(estimatedIntensity, estimatedType, romanNumeral));
+                        setOnClickListener(v -> showIntensityMessage(estimatedIntensity, estimatedType, mEstimatedIntensityRomanNumeral));
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     estimatedIntensityFlexboxLayout.setBackground(getResources().
                             getDrawable(R.drawable.touch_selector));
                 }
+                mIsEstimatedIntensityShown = true;
             }
             if (reportedIntensity < 1) {
                 reportedIntensityFlexboxLayout.setVisibility(GONE);
+                mIsReportedIntensityShown = false;
             } else {
-                String romanNumeral = romanNumerals[reportedIntensity - 1];
+                mReportedIntensityRomanNumeral = romanNumerals[reportedIntensity - 1];
                 String reportedType = getString(R.string.activity_earthquake_details_reported_intensity_type);
-                reportedValueTextView.setText(romanNumeral);
+                reportedValueTextView.setText(mReportedIntensityRomanNumeral);
                 reportedValueTextView.setTextColor(getIntensityColor(reportedIntensity));
                 reportedIntensityFlexboxLayout.
-                        setOnClickListener(v -> showIntensityMessage(reportedIntensity, reportedType, romanNumeral));
+                        setOnClickListener(v -> showIntensityMessage(reportedIntensity, reportedType, mReportedIntensityRomanNumeral));
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     reportedIntensityFlexboxLayout.setBackground(getResources().
                             getDrawable(R.drawable.touch_selector));
                 }
+                mIsReportedIntensityShown = true;
             }
         }
 
@@ -273,45 +292,51 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView alertValueTextView =
                 findViewById(R.id.activity_earthquake_details_alert_value_text_view);
 
-        String alertText = mEarthquake.getAlert();
+        String alertText;
+
+        alertText = mEarthquake.getAlert();
         if (alertText == null) {
             alertFlexboxLayout.setVisibility(GONE);
+            mIsAlertTextShown = false;
         } else {
             int alertValueTextColor = 0;
-            String alertValueText = "";
+            mAlertText = "";
             int alertType = 0;
             switch (alertText) {
                 case "green":
-                    alertValueText = getString(R.string.activity_earthquake_details_green_text);
+                    mAlertText = getString(R.string.activity_earthquake_details_green_text);
                     alertValueTextColor = getResources().getColor(R.color.colorAlertGreen);
                     alertType = 0;
                     break;
                 case "yellow":
-                    alertValueText = getString(R.string.activity_earthquake_details_yellow_text);
+                    mAlertText = getString(R.string.activity_earthquake_details_yellow_text);
                     alertValueTextColor = getResources().getColor(R.color.colorAlertYellow);
                     alertType = 1;
                     break;
                 case "orange":
-                    alertValueText = getString(R.string.activity_earthquake_details_orange_text);
+                    mAlertText = getString(R.string.activity_earthquake_details_orange_text);
                     alertValueTextColor = getResources().getColor(R.color.colorAlertOrange);
                     alertType = 2;
                     break;
                 case "red":
-                    alertValueText = getString(R.string.activity_earthquake_details_red_text);
+                    mAlertText = getString(R.string.activity_earthquake_details_red_text);
                     alertValueTextColor = getResources().getColor(R.color.colorAlertRed);
                     alertType = 3;
                     break;
             }
-            alertValueTextView.setText(alertValueText);
+            alertValueTextView.setText(mAlertText);
             alertValueTextView.setTextColor(alertValueTextColor);
 
             int finalAlertType = alertType;
-            String finalAlertValueText = alertValueText.toLowerCase();
+            String finalAlertValueText = mAlertText.toLowerCase();
             alertFlexboxLayout.setOnClickListener(v -> showAlertMessage(finalAlertType, finalAlertValueText));
+
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 alertFlexboxLayout.setBackground(getResources().
                         getDrawable(R.drawable.touch_selector));
             }
+
+            mIsAlertTextShown = true;
         }
 
         // Tsunami views
@@ -321,6 +346,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         if (mEarthquake.getTsunami() == 0) {
             tsunamiTextView.setVisibility(GONE);
         } else {
+            tsunamiTextView.setVisibility(View.VISIBLE);
             tsunamiTextView.setOnClickListener(v -> showPossibleTsunamiMessage());
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 tsunamiTextView.setBackground(getResources().
@@ -375,8 +401,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView depthValueTextView =
                 findViewById(R.id.activity_earthquake_details_depth_value_text_view);
 
-        double latitude, longitude, depth;
         String latitudeLetter, longitudeLetter;
+
+        double latitude, longitude, depth;
 
         latitude = mEarthquake.getLatitude();
         longitude = mEarthquake.getLongitude();
@@ -384,6 +411,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         if (latitude == QueryUtils.LAT_LONG_NULL_VALUE && longitude == QueryUtils.LAT_LONG_NULL_VALUE) {
             coordinatesValueTextView.setVisibility(GONE);
+            mIsCoordinatesTextShown = false;
         } else {
             coordinatesValueTextView.setVisibility(View.VISIBLE);
             if (latitude < 0) {
@@ -398,16 +426,21 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             } else {
                 longitudeLetter = getString(R.string.activity_earthquake_details_east_longitude_letter);
             }
-            coordinatesValueTextView.setText(getString(
+            mCoordinatesText = getString(
                     R.string.activity_earthquake_details_coordinates_text, latitude, latitudeLetter,
-                    longitude, longitudeLetter));
+                    longitude, longitudeLetter);
+            coordinatesValueTextView.setText(mCoordinatesText);
+            mIsCoordinatesTextShown = true;
         }
 
         if (depth == QueryUtils.DEPTH_NULL_VALUE) {
             depthValueTextView.setVisibility(GONE);
+            mIsDepthTextShown = false;
         } else {
             depthValueTextView.setVisibility(View.VISIBLE);
-            depthValueTextView.setText(getString(R.string.activity_earthquake_details_depth_text, depth));
+            mDepthText = getString(R.string.activity_earthquake_details_depth_text, depth);
+            depthValueTextView.setText(mDepthText);
+            mIsDepthTextShown = true;
         }
     }
 
@@ -770,7 +803,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 deleteOrInsertOnFavoritesTableDb();
                 break;
             case R.id.menu_activity_earthquake_details_action_share:
-                share();
+                shareEarthquakeDetails();
                 break;
             case R.id.menu_activity_earthquake_details_action_help:
                 showEarthquakeDetailsHelpMessage();
@@ -814,8 +847,105 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG).show();
     }
 
-    private void share() {
 
+    private void shareEarthquakeDetails() {
+
+        // Location offset can be empty
+        String locationOffset = mEarthquake.getLocationOffset();
+        String spaceForLocation = " ";
+        if (locationOffset.equals(getString(R.string.near_the))) {
+            locationOffset = "";
+            spaceForLocation = "";
+        }
+
+        // Location primary can be empty
+        String locationPrimary = mEarthquake.getLocationPrimary();
+        if (locationPrimary.isEmpty()) {
+            locationPrimary = getString(R.string.activity_main_no_earthquake_location_text);
+        }
+
+        String text = getString(R.string.activity_earthquake_details_share_option_magnitude_text) + ' '
+                + QueryUtils.getMagnitudeText(mEarthquake.getMagnitude()) + '\n'
+                + getString(R.string.activity_earthquake_details_share_option_location_text) + ' '
+                + locationOffset + spaceForLocation + locationPrimary + '\n'
+                + getString(R.string.activity_earthquake_details_share_option_date_time_text) + ' '
+                + WordsUtils.displayedDateFormatter().format(new Date(mEarthquake.getTimeInMilliseconds())) + "\n\n";
+
+        boolean isNextSectionPopulated = false;
+
+        if (mIsReportedIntensityShown) {
+            text = text + getString(R.string.activity_earthquake_details_share_option_reported_intensity_text)
+                    + " " + mReportedIntensityRomanNumeral;
+            isNextSectionPopulated = true;
+        }
+
+        String nextLine;
+
+        if (mIsEstimatedIntensityShown) {
+            if (mIsReportedIntensityShown) {
+                nextLine = "\n";
+            } else {
+                nextLine = "";
+            }
+            text = text + nextLine + getString(R.string.activity_earthquake_details_share_option_estimated_intensity_text)
+                    + " " + mEstimatedIntensityRomanNumeral;
+            isNextSectionPopulated = true;
+        }
+
+        if (mIsAlertTextShown) {
+            if (mIsReportedIntensityShown || mIsEstimatedIntensityShown) {
+                nextLine = "\n";
+            } else {
+                nextLine = "";
+            }
+            text = text + nextLine + getString(R.string.activity_earthquake_details_alert_text) + ": " + mAlertText;
+            isNextSectionPopulated = true;
+        }
+
+        if (mEarthquake.getTsunami() != 0) {
+            if (mIsReportedIntensityShown || mIsEstimatedIntensityShown || mIsAlertTextShown) {
+                nextLine = "\n";
+            } else {
+                nextLine = "";
+            }
+            text = text + nextLine + getString(R.string.activity_earthquake_details_tsunami_text);
+            isNextSectionPopulated = true;
+        }
+
+        if (isNextSectionPopulated) {
+            text = text + "\n\n";
+        }
+
+        text = text + getString(R.string.activity_earthquake_details_felt_reports_text) + ": "
+                + mEarthquake.getFelt() + '\n'
+                + getString(R.string.activity_earthquake_details_share_option_go_to_website_to_report_text) + '\n'
+                + mEarthquake.getUrl() + "/tellus" + "\n\n";
+
+
+        String coordinatesText;
+        if (mIsCoordinatesTextShown) {
+            coordinatesText = mCoordinatesText + "  ";
+        } else {
+            coordinatesText = "";
+        }
+
+        String depthText;
+        if (mIsDepthTextShown) {
+            depthText = mDepthText;
+        } else {
+            depthText = "";
+        }
+
+        text = text + getString(R.string.activity_earthquake_details_epicenter_text) + ": "
+                + coordinatesText + depthText;
+
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(text)
+                .setSubject(getString(R.string.activity_earthquake_details_label) + ".")
+                .getIntent();
+
+        startActivity(shareIntent);
     }
 
 

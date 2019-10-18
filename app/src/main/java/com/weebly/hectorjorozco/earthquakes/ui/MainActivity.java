@@ -1,7 +1,6 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -85,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         super.onCreate(savedInstanceState);
 
+        Log.d("TESTING", "MainActivity onCreate");
+
         // After a rotation
         if (savedInstanceState != null) {
             mEarthquakeRecyclerViewPosition = savedInstanceState.getInt(EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY, 0);
@@ -122,13 +123,14 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-
-
-
     private void setupLongSearchMessageHandler() {
         mHandler = new Handler();
-        mRunnable = () -> Snackbar.make(MainActivity.this.findViewById(android.R.id.content),
-                MainActivity.this.getString(R.string.activity_main_long_search_message), Snackbar.LENGTH_LONG).show();
+        mRunnable = () -> {
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                    MainActivity.this.getString(R.string.activity_main_long_search_message), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(getString(R.string.ok_text), v -> snackbar.dismiss());
+            snackbar.show();
+        };
 
         mHandler.postDelayed(mRunnable, SECONDS_TO_SHOW_LONG_SEARCH_MESSAGE * 1000);
         QueryUtils.sHandler = mHandler;

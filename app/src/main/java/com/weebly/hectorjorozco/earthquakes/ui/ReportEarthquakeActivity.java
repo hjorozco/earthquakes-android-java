@@ -85,7 +85,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_activity_report_earthquake_action_help:
                 showHelpSnackBar();
                 break;
@@ -93,7 +93,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
                 QueryUtils.openWebPageInGoogleChrome(this, mReportEarthquakeUrl);
                 break;
             case android.R.id.home:
-                if (mWebView!=null && mWebView.canGoBack()) {
+                if (mWebView != null && mWebView.canGoBack()) {
                     mWebView.goBack();
                 } else {
                     onBackPressed();
@@ -105,7 +105,7 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView!=null && mWebView.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView != null && mWebView.canGoBack()) {
             mWebView.goBack();
             return true;
         }
@@ -121,9 +121,10 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
 
 
     private void showHelpSnackBar() {
-        Snackbar.make(findViewById(android.R.id.content),
-                getString(R.string.activity_earthquake_report_snack_bar_text), Snackbar.LENGTH_LONG).show();
-
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                getString(R.string.activity_earthquake_report_snack_bar_text), Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(getString(R.string.ok_text), v -> snackbar.dismiss());
+        snackbar.show();
     }
 
 }

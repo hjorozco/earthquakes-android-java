@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.animation.Animator;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -198,6 +199,10 @@ public class GlossaryActivity extends AppCompatActivity {
                 mAreConceptsShown[conceptIndex] = !mAreConceptsShown[conceptIndex];
             }
         });
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            linearLayout.setBackground(getResources().getDrawable(R.drawable.touch_selector));
+        }
     }
 
 

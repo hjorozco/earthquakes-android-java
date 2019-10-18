@@ -401,6 +401,14 @@
         Earthquake removed from favorites
     </string>
 
+    <string name="activity_earthquake_details_share_option_magnitude_text">Magnitude:</string>
+    <string name="activity_earthquake_details_share_option_location_text">Location:</string>
+    <string name="activity_earthquake_details_share_option_date_time_text">Date and time:</string>
+    <string name="activity_earthquake_details_share_option_reported_intensity_text">Reported intensity:</string>
+    <string name="activity_earthquake_details_share_option_estimated_intensity_text">Estimated intensity:</string>
+    <string name="activity_earthquake_details_share_option_go_to_website_to_report_text">
+        To report the earthquake go to this web page:</string>
+
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
@@ -680,6 +688,7 @@
     <string name="menu_activity_report_earthquake_action_help_title">Help</string>
 
     <!-- Activity earthquake report -->
+
 
 
     <!-- Strings used to send an email to hjorozco@hotmail.com -->
