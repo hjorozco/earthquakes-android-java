@@ -74,6 +74,7 @@
 
     <string name="activity_main_long_search_message">Para reducir el tiempo de búsqueda, cambie las preferencias</string>
 
+    <string name="activity_main_under_construction_text">Opción no disponible aún</string>
 
     <!-- ********** Activity Main ********** -->
 
@@ -181,8 +182,9 @@
     <string name="activity_earthquake_details_help_message">
         &lt;br/&gt;Presiona la &lt;b>magnitud&lt;/b> (en el círculo de color), las &lt;b>intensidades&lt;/b>,
         la &lt;b>alerta&lt;/b> o el mensaje de &lt;b>posible tsunami&lt;/b> para ver información de cada uno de
-        ellos.&lt;br/&gt;&lt;br/&gt;&lt;i>No todos los sismos tendrán información de intensidades, alerta o posible
-        tsunami&lt;/i>.&lt;br/&gt;</string>
+        ellos.&lt;i> (No todos los sismos tendrán información de intensidades, alerta o posible
+        tsunami)&lt;/i>.&lt;br/&gt;&lt;br/&gt;La &lt;b>fecha&lt;/b> y &lt;b>hora&lt;/b> mostradas son la fecha y hora &lt;b>local&lt;/b>
+        del usuario de la aplicación cuando ocurrió el sismo.</string>
     <string name="activity_earthquake_details_information_dialog_fragment_title">
         @string/menu_activity_earthquake_details_action_information_title
     </string>
@@ -313,6 +315,13 @@
     <string name="activity_earthquake_details_share_option_estimated_intensity_text">Intensidad estimada:</string>
     <string name="activity_earthquake_details_share_option_go_to_website_to_report_text">
         Para reportar el sismo ve a esta página web (una vez ahí presiona \"Select Language\" para cambiar el idioma a español):</string>
+    <string name="activity_earthquake_details_share_option_google_map_text">
+        Localización del epicentro en Google Maps:</string>
+    <string name="activity_earthquake_details_share_option_usgs_map_text">
+        Localización del epicentro en el sitio web de USGS:</string>
+    <string name="activity_earthquake_details_share_option_about_app_link_text">
+        Información generada por el USGS (Servicio Geológico de los Estados Unidos por sus siglas
+        en inglés) y compartida usando la aplicación Earthquakes:</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 

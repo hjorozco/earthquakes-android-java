@@ -10,7 +10,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
@@ -111,7 +110,7 @@ public class QueryUtils {
         // Get the list of "feature" objects from the retrofit result. Each feature is an earthquake.
         List<Feature> featuresList = retrofitResult.getFeatures();
 
-        Log.d("TESTING", retrofitResult.getMetadata().getUrl());
+        Log.d("TESTING", "From QueryUtils " + retrofitResult.getMetadata().getUrl());
 
         //Iterate the list of features until the end of the list or until the number of
         // added earthquakes is the same as the limit set by the user.
@@ -342,12 +341,10 @@ public class QueryUtils {
         // Creates the startDate string that will be passed as a parameter to the USGS JSON query.
         startDateJSONQuery = dateForQueryFormatter().format(startDateInMilliseconds)
                 + "T" + startDateTime + startDateTimeOffset + ":00";
-        Log.d("TESTING", startDateJSONQuery);
         String endDateForListInfo = WordsUtils.displayedDateFormatter().format(endDateInMilliseconds);
         // Creates the endDate string that will be passed as a parameter to the USGS JSON query.
         endDateJSONQuery = dateForQueryFormatter().format(endDateInMilliseconds)
                 + "T" + endDateTime + endDateTimeOffset + ":00";
-        Log.d("TESTING", endDateJSONQuery);
         mLocation = sharedPreferences.getString(
                 context.getString(R.string.search_preference_location_key),
                 context.getString(R.string.search_preference_location_default_value)).trim().

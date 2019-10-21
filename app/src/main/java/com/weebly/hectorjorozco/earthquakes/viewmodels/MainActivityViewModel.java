@@ -2,7 +2,6 @@ package com.weebly.hectorjorozco.earthquakes.viewmodels;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        Log.d("TESTING", "MainActivity onCreate");
 
         // After a rotation
         if (savedInstanceState != null) {
@@ -426,8 +423,14 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
                 break;
             case R.id.menu_activity_main_action_help:
+                Snackbar.make(findViewById(android.R.id.content),
+                        getString(R.string.activity_main_under_construction_text),
+                        Snackbar.LENGTH_LONG).show();
                 break;
             case R.id.menu_activity_main_action_about:
+                Snackbar.make(findViewById(android.R.id.content),
+                        getString(R.string.activity_main_under_construction_text),
+                        Snackbar.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);

@@ -937,7 +937,15 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         }
 
         text = text + getString(R.string.activity_earthquake_details_epicenter_text) + ": "
-                + coordinatesText + depthText;
+                + coordinatesText + depthText + '\n' +
+                getString(R.string.activity_earthquake_details_share_option_google_map_text) + '\n' +
+                getString(R.string.activity_earthquake_details_share_option_google_map_link_text_1) +
+                mEarthquake.getLatitude() + ',' + mEarthquake.getLongitude() +
+                getString(R.string.activity_earthquake_details_share_option_google_map_link_text_2) + '\n' +
+                getString(R.string.activity_earthquake_details_share_option_usgs_map_text) + '\n'
+                + mEarthquake.getUrl() + "/map" + "\n\n" +
+                getString(R.string.activity_earthquake_details_share_option_about_app_link_text) + '\n'
+                + getString(R.string.activity_earthquake_details_share_option_app_link_text) + "\n\n";
 
         Intent shareIntent = ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")

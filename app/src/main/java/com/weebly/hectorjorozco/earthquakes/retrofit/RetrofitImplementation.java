@@ -1,7 +1,5 @@
 package com.weebly.hectorjorozco.earthquakes.retrofit;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
@@ -84,8 +82,6 @@ public final class RetrofitImplementation implements Serializable {
                 earthquakesQueryParameters.getMinMagnitude(),
                 earthquakesQueryParameters.getMaxMagnitude(),
                 earthquakesQueryParameters.getOrderBy());
-
-        Log.d("TESTING", retrofitServiceCall.toString());
 
         retrofitServiceCall.enqueue(new Callback<Earthquakes>() {
 
