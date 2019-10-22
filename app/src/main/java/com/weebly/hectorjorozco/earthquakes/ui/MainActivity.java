@@ -546,6 +546,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             startActivity(intent, activityOptionsCompat.toBundle());
         } else {
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
         }
     }
 

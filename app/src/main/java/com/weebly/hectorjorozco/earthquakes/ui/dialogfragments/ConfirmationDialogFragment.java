@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.weebly.hectorjorozco.earthquakes.R;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 
 import java.util.Objects;
 
@@ -103,10 +104,10 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
         Button button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         button.setTextColor(colorAccent);
-        button.setBackgroundColor(Color.TRANSPARENT);
+        UiUtils.setupAlertDialogButtonBackground(getContext(), button);
         button = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         button.setTextColor(colorAccent);
-        button.setBackgroundColor(Color.TRANSPARENT);
+        UiUtils.setupAlertDialogButtonBackground(getContext(), button);
 
         return alertDialog;
     }

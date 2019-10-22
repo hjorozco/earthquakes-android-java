@@ -2,7 +2,6 @@ package com.weebly.hectorjorozco.earthquakes.ui.dialogfragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.Button;
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.weebly.hectorjorozco.earthquakes.R;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 
 import java.util.Objects;
 
@@ -65,7 +65,7 @@ public class MessageDialogFragment extends DialogFragment {
 
         Button button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         button.setTextColor(colorAccent);
-        button.setBackgroundColor(Color.TRANSPARENT);
+        UiUtils.setupAlertDialogButtonBackground(getContext(), button);
 
         return alertDialog;
     }

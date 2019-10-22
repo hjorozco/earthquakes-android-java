@@ -458,6 +458,7 @@ public class FavoritesActivity extends AppCompatActivity implements
                 startActivity(intent, activityOptionsCompat.toBundle());
             } else {
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
             }
         }
     }

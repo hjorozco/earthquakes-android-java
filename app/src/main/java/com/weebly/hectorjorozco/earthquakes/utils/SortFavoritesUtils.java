@@ -12,8 +12,6 @@ import java.util.List;
 
 public class SortFavoritesUtils {
 
-    private static final int ZERO = 0;
-
     /**
      * Gets the Students order value from Shared Preferences
      *

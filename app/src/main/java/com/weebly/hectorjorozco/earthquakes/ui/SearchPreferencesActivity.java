@@ -24,17 +24,15 @@ public class SearchPreferencesActivity extends AppCompatActivity {
     }
 
 
-
-    // TODO Change help message
     private void showSearchPreferencesHelpMessage() {
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(
-                                R.string.activity_earthquake_details_help_message)),
-                        getString(R.string.activity_earthquake_details_information_dialog_fragment_title));
+                                R.string.activity_search_preferences_help_dialog_fragment_message)),
+                        getString(R.string.activity_search_preferences_help_dialog_fragment_title));
 
         messageDialogFragment.show(getSupportFragmentManager(),
-                getString(R.string.activity_earthquake_details_information_dialog_fragment_tag));
+                getString(R.string.activity_search_preferences_help_dialog_fragment_tag));
     }
 
 

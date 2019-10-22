@@ -747,11 +747,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(
-                                R.string.activity_earthquake_details_help_message)),
-                        getString(R.string.activity_earthquake_details_information_dialog_fragment_title));
+                                R.string.activity_earthquake_details_help_dialog_fragment_message)),
+                        getString(R.string.activity_earthquake_details_help_dialog_fragment_title));
 
         messageDialogFragment.show(getSupportFragmentManager(),
-                getString(R.string.activity_earthquake_details_information_dialog_fragment_tag));
+                getString(R.string.activity_earthquake_details_help_dialog_fragment_tag));
     }
 
 
@@ -1005,6 +1005,9 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
         } else {
             super.onBackPressed();
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
+            }
         }
     }
 

@@ -72,7 +72,7 @@
 
     <string name="activity_main_no_earthquake_location_text">Sin nombre</string>
 
-    <string name="activity_main_long_search_message">Para reducir el tiempo de búsqueda, cambie las preferencias</string>
+    <string name="activity_main_long_search_message">Para reducir el tiempo de búsqueda, trata cambiando las preferencias</string>
 
     <string name="activity_main_under_construction_text">Opción no disponible aún</string>
 
@@ -150,6 +150,14 @@
     <string name="thirty_days_ago_text">Hace 30 días</string>
     <string name="three_hundred_sixty_five_days_ago_text">Hace 365 días</string>
 
+    <string name="activity_search_preferences_help_dialog_fragment_message">
+        &lt;br/&gt;Para reducir el tiempo que lleva buscar sismos, reduce el rango de fechas e incrementa
+        la magnitud mínima.</string>
+    <string name="activity_search_preferences_help_dialog_fragment_title">Help</string>
+    <string name="activity_search_preferences_help_dialog_fragment_tag" translatable="false">
+        activity_search_preferences_help_dialog_fragment_tag
+    </string>
+
     <!-- ********** Activity Search Preferences ********** -->
 
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
@@ -179,13 +187,13 @@
     <string name="activity_earthquake_details_google_map_terrain_type_text">Relieve</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensidad</string>
-    <string name="activity_earthquake_details_help_message">
+    <string name="activity_earthquake_details_help_dialog_fragment_message">
         &lt;br/&gt;Presiona la &lt;b>magnitud&lt;/b> (en el círculo de color), las &lt;b>intensidades&lt;/b>,
         la &lt;b>alerta&lt;/b> o el mensaje de &lt;b>posible tsunami&lt;/b> para ver información de cada uno de
         ellos.&lt;i> (No todos los sismos tendrán información de intensidades, alerta o posible
         tsunami)&lt;/i>.&lt;br/&gt;&lt;br/&gt;La &lt;b>fecha&lt;/b> y &lt;b>hora&lt;/b> mostradas son la fecha y hora &lt;b>local&lt;/b>
         del usuario de la aplicación cuando ocurrió el sismo.</string>
-    <string name="activity_earthquake_details_information_dialog_fragment_title">
+    <string name="activity_earthquake_details_help_dialog_fragment_title">
         @string/menu_activity_earthquake_details_action_information_title
     </string>
     <string name="activity_earthquake_details_estimated_text">Estimada</string>

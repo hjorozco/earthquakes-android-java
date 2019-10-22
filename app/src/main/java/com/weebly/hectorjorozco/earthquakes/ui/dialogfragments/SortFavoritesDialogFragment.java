@@ -21,6 +21,7 @@ import androidx.fragment.app.DialogFragment;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.MainActivity;
 import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 
 import java.util.Objects;
 
@@ -135,10 +136,10 @@ public class SortFavoritesDialogFragment extends DialogFragment {
         int colorAccent = getResources().getColor(R.color.colorAccent);
         Button button = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         button.setTextColor(colorAccent);
-        button.setBackgroundColor(Color.TRANSPARENT);
+        UiUtils.setupAlertDialogButtonBackground(getContext(), button);
         button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         button.setTextColor(colorAccent);
-        button.setBackgroundColor(Color.TRANSPARENT);
+        UiUtils.setupAlertDialogButtonBackground(getContext(), button);
 
         return alertDialog;
     }

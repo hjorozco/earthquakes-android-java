@@ -97,7 +97,7 @@
 
     <string name="activity_main_no_earthquake_location_text">No name</string>
 
-    <string name="activity_main_long_search_message">To reduce the search time change the preferences</string>
+    <string name="activity_main_long_search_message">To reduce the search time try changing the preferences</string>
 
     <string name="activity_main_under_construction_text">Option not available yet</string>
 
@@ -214,6 +214,14 @@
     <string name="thirty_days_ago_text">30 days ago</string>
     <string name="three_hundred_sixty_five_days_ago_text">365 days ago</string>
 
+    <string name="activity_search_preferences_help_dialog_fragment_message">
+        &lt;br/&gt;To reduce the time it takes to search for earthquakes, reduce the date range and
+        increase the minimum magnitude.</string>
+    <string name="activity_search_preferences_help_dialog_fragment_title">Help</string>
+    <string name="activity_search_preferences_help_dialog_fragment_tag" translatable="false">
+        activity_search_preferences_help_dialog_fragment_tag
+    </string>
+
     <!-- ********** Activity Search Preferences ********** -->
 
 
@@ -261,16 +269,16 @@
     <string name="activity_earthquake_details_google_map_terrain_type_text">Terrain</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensity</string>
-    <string name="activity_earthquake_details_help_message">
+    <string name="activity_earthquake_details_help_dialog_fragment_message">
         &lt;br/&gt;Press the &lt;b>magnitude&lt;/b> (in the colored circle), the &lt;b>intensities&lt;/b>, the
         &lt;b>alert&lt;/b> or the &lt;b>possible tsunami&lt;/b> message to see information for each of them.
         &lt;i> (Not all earthquakes will have intensities, alert or possible tsunami
         information)&lt;/i>.&lt;br/&gt;&lt;br/&gt;The displayed &lt;b>date&lt;/b> and &lt;b>time&lt;/b> are the &lt;b>local&lt;/b> date
         and time of the app user when the earthquake happened.</string>
-    <string name="activity_earthquake_details_information_dialog_fragment_title">
+    <string name="activity_earthquake_details_help_dialog_fragment_title">
         @string/menu_activity_earthquake_details_action_information_title
     </string>
-    <string name="activity_earthquake_details_information_dialog_fragment_tag" translatable="false">
+    <string name="activity_earthquake_details_help_dialog_fragment_tag" translatable="false">
         activity_earthquake_details_information_dialog_fragment_tag
     </string>
     <string name="activity_earthquake_details_estimated_text">Estimated</string>
