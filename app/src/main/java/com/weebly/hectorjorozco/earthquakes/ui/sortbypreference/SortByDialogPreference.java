@@ -10,6 +10,7 @@ import com.weebly.hectorjorozco.earthquakes.R;
 
 // Class that handles the value of the DialogPreference that is saved on SharedPreferences
 
+@SuppressWarnings("WeakerAccess")
 public class SortByDialogPreference extends DialogPreference {
 
 

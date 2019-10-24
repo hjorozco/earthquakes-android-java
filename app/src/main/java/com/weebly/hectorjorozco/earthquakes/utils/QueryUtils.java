@@ -588,7 +588,7 @@ public class QueryUtils {
     /**
      * Class that models the colors used to display an earthquake information in the RecyclerView
      */
-    public static class EarthquakeColors {
+    static class EarthquakeColors {
         // The color used in the magnitude circle border, its text and the information texts
         int mMagnitudeColor;
         // The background color of the magnitude circle

@@ -3,11 +3,9 @@ package com.weebly.hectorjorozco.earthquakes.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
-import android.util.Log;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -23,9 +21,6 @@ public class WordsUtils {
     private static String[] sUsaSpanishAbbreviations = {"ee.uu.", "ee.uu", "eeuu", "eua", "e.u.a.", "e.u.a", "eu", "e.u.", "e.u"};
     private static String[] sUsaEnglishNames = {"united states of america", "united states"};
     private static String[] sUsaSpanishNames = {"estados unidos de america", "estados unidos"};
-    private static String sUsaEnglishSearchName = "u.s.";
-    private static String sUsaSpanishSearchName = "ee.uu.";
-
 
 
     public static String getLocaleLanguage() {
@@ -39,71 +34,13 @@ public class WordsUtils {
     }
 
 
-    // Gets the two letter code of the language of the date.
-    public static String getDateLocality(String date) {
-
-        String locality = "";
-
-        if (date.contains("enero") || date.contains("febrero") ||
-                date.contains("marzo") || date.contains("abril") ||
-                date.contains("mayo") || date.contains("junio") ||
-                date.contains("julio") || date.contains("agosto") ||
-                date.contains("septiembre") || date.contains("octubre") ||
-                date.contains("noviembre") || date.contains("diciembre")) {
-            locality = "es";
-        }
-
-        if (date.contains("January") || date.contains("February") ||
-                date.contains("March") || date.contains("April") ||
-                date.contains("May") || date.contains("June") ||
-                date.contains("July") || date.contains("August") ||
-                date.contains("September") || date.contains("October") ||
-                date.contains("November") || date.contains("December")) {
-            locality = "en";
-        }
-
-        return locality;
-    }
-
-    public static String changeDateToEnglish(String date) {
-        date = date.replace("enero", "January");
-        date = date.replace("febrero", "February");
-        date = date.replace("marzo", "March");
-        date = date.replace("abril", "April");
-        date = date.replace("mayo", "May");
-        date = date.replace("junio", "June");
-        date = date.replace("julio", "July");
-        date = date.replace("agosto", "August");
-        date = date.replace("septiembre", "September");
-        date = date.replace("octubre", "October");
-        date = date.replace("noviembre", "November");
-        date = date.replace("diciembre", "December");
-        return date;
-    }
-
-    public static String changeDateToSpanish(String date) {
-        date = date.replace("January", "enero");
-        date = date.replace("February", "febrero");
-        date = date.replace("March", "marzo");
-        date = date.replace("April", "abril");
-        date = date.replace("May", "mayo");
-        date = date.replace("June", "junio");
-        date = date.replace("July", "julio");
-        date = date.replace("August", "agosto");
-        date = date.replace("September", "septiembre");
-        date = date.replace("October", "octubre");
-        date = date.replace("November", "noviembre");
-        date = date.replace("December", "diciembre");
-        return date;
-    }
-
     /**
      * Removes Spanish accents from a string.
      *
      * @param string The String with Spanish accents.
      * @return The String without Spanish accents.
      */
-    public static String removeSpanishAccents(String string) {
+    static String removeSpanishAccents(String string) {
         string = string.replace('á', 'a');
         string = string.replace('é', 'e');
         string = string.replace('í', 'i');
@@ -123,14 +60,13 @@ public class WordsUtils {
      * @param string The English language primary location
      * @return The Spanish language primary location
      */
-    public static String translateToSpanish(String string) {
+    private static String translateToSpanish(String string) {
 
         // Adds a space at the beginning of the string to make sure that the parts of the string
         // to be replaced are standalone words or phrases, and not a word or phrase inside others.
         string = " " + string;
 
         // A
-        string = string.replace("", "");
         string = string.replace(" Afghanistan", " Afganistán");
         string = string.replace(" Alamagan region", " región de Alamagan");
         string = string.replace(" Gulf of Alaska", " Golfo de Alaska");
@@ -149,7 +85,6 @@ public class WordsUtils {
         string = string.replace(" Azores Islands", " Islas Azores");
 
         // B
-        string = string.replace("", "");
         string = string.replace(" Balleny Islands region", " Región de las Islas Balleny");
         string = string.replace(" Balleny Islands", " Islas Balleny");
         string = string.replace(" Banda Sea", " Mar de Banda");
@@ -168,7 +103,6 @@ public class WordsUtils {
         string = string.replace(" Burma", " Myanmar");
 
         // C
-        string = string.replace("", "");
         string = string.replace(" Camalu", " Camalú");
         string = string.replace(" Canada", " Canadá");
         string = string.replace(" Carlsberg Ridge", " Dorsal de Carlsberg");
@@ -188,17 +122,14 @@ public class WordsUtils {
         string = string.replace(" Cyprus", " Chipre");
 
         // D
-        string = string.replace("", "");
         string = string.replace(" Dominican Republic", " República Dominicana");
 
         // E
-        string = string.replace("", "");
         string = string.replace(" Easter Island region", " región de la Isla de Pascua");
         string = string.replace(" Easter Island", " Isla de Pascua");
         string = string.replace(" Estacion", " Estación");
 
         // F
-        string = string.replace("", "");
         string = string.replace(" the Fiji Islands", " las Islas Fiji");
         string = string.replace(" Fiji Islands", " Islas Fiji");
         string = string.replace(" Fiji region", " región de Fiji");
@@ -207,7 +138,6 @@ public class WordsUtils {
 
 
         // G
-        string = string.replace("", "");
         string = string.replace(" the Galapagos Islands", " las Islas Galápagos");
         string = string.replace(" South Georgia and the South Sandwich Islands region", " región de la Isla Georgia y las Islas Sandwich del Sur");
         string = string.replace(" South Georgia and the South Sandwich Islands", " Isla Georgia y las Islas Sandwich del Sur");
@@ -221,13 +151,11 @@ public class WordsUtils {
         string = string.replace(" Gulf of California", " Golfo de California");
 
         // H
-        string = string.replace("", "");
         string = string.replace(" Hawaii", " Hawai");
         string = string.replace(" Hidalgotitlan", " Hidalgotitlán");
         string = string.replace(" Huazolotitlan", " Huazolotitlán");
 
         // I
-        string = string.replace("", "");
         string = string.replace(" Italy", " Italia");
         string = string.replace(" Izu Islands", " Islas Izu");
         string = string.replace(" South Indian Ocean", " Océano Índico Sur");
@@ -239,7 +167,6 @@ public class WordsUtils {
         string = string.replace(" southeast Indian Ridge", " Dorsal Sureste de la India");
 
         // J
-        string = string.replace("", "");
         string = string.replace(" Sea of Japan", " Mar de Japón");
         string = string.replace(" Japan region", " región de Japón");
         string = string.replace(" Japan", " Japón");
@@ -250,7 +177,6 @@ public class WordsUtils {
 
 
         // K
-        string = string.replace("", "");
         string = string.replace(" the Kamchatka Peninsula", " la península de Kamchatka");
         string = string.replace(" Kepulauan Mentawai region", " región Kepulauan Mentawai");
         string = string.replace(" Kenai Peninsula", " Península Kenai");
@@ -263,7 +189,6 @@ public class WordsUtils {
         string = string.replace(" Kyrgyzstan", " Kirguistán");
 
         // L
-        string = string.replace("", "");
         string = string.replace(" Labrador Sea", " Mar de Labrador");
         string = string.replace(" Laptev Sea", " Mar de Láptev");
         string = string.replace(" Ligurian Sea", " Mar de Liguria");
@@ -274,7 +199,6 @@ public class WordsUtils {
 
 
         // M
-        string = string.replace("", "");
         string = string.replace(" Macquarie Island region", " región de la Isla Macquarie");
         string = string.replace(" Macquarie Island", " Isla Macquarie");
         string = string.replace(" Maria", " María");
@@ -294,8 +218,8 @@ public class WordsUtils {
         string = string.replace(" Southern Mid-Atlantic Ridge", " Sur de la Dorsal Mesoatlántica");
         string = string.replace(" southern Mid-Atlantic Ridge", " Dorsal media del Atlántico del Sur");
         string = string.replace(" Morocco", " Marruecos");
+
         // N
-        string = string.replace("", "");
         string = string.replace(" Ndoi Island region", " región de la Isla Ndoi");
         string = string.replace(" Ndoi Island", " Isla Ndoi");
         string = string.replace(" eastern New Guinea region", " región este de Nueva Guinea");
@@ -309,9 +233,7 @@ public class WordsUtils {
         string = string.replace(" Northern Territory", " Territorio Norte");
         string = string.replace(" Norwegian Sea", " Mar Noruego");
 
-
         // O
-        string = string.replace("", "");
         string = string.replace(" Sea of Okhotsk", " Mar de Okhotsk");
         string = string.replace(" Old Faithful Geyser", " Géiser Old Faithful");
         string = string.replace(" Olympic Peninsula", " Península Olímpica");
@@ -320,7 +242,6 @@ public class WordsUtils {
         string = string.replace(" Owen Fracture Zone", " Zona de Fractura de Owen");
 
         // P
-        string = string.replace("", "");
         string = string.replace(" Pacific-Antarctic Ridge", " Dorsal del Pacífico-Antártico ");
         string = string.replace(" Central East Pacific Rise", " Elevación Central del Pacífico del Este");
         string = string.replace(" Northern East Pacific Rise", " Norte del Dorsal del Pacífico Este");
@@ -345,7 +266,6 @@ public class WordsUtils {
         string = string.replace(" Puerto Rico region", " región de Puerto Rico");
 
         // R
-        string = string.replace("", "");
         string = string.replace(" Raoul Island region", " región de la Isla Raoul");
         string = string.replace(" Raoul Island", " Isla Raoul");
         string = string.replace(" Rat Islands", " Islas Rat");
@@ -356,7 +276,6 @@ public class WordsUtils {
         string = string.replace(" Russia", " Rusia");
 
         // S
-        string = string.replace("", "");
         string = string.replace(" Saint Helena", " Santa Helena");
         string = string.replace(" City of Saint Paul", " Ciudad de San Pablo");
         string = string.replace(" Saipan region", " región Saipan");
@@ -379,7 +298,6 @@ public class WordsUtils {
         string = string.replace(" Switzerland", " Suiza");
 
         // T
-        string = string.replace("", "");
         string = string.replace(" Taiwan region", " región de Taiwan");
         string = string.replace(" Tajikistan", " Tayikistán");
         string = string.replace(" Tanaga Volcano", " Volcán Tanaga");
@@ -393,7 +311,6 @@ public class WordsUtils {
         string = string.replace(" Turkmenistan", " Turkmenistán");
 
         // U
-        string = string.replace("", "");
         string = string.replace(" Unimak Island region", " región de la Isla Unimak");
         string = string.replace(" Unimak Island", " Isla Unimak");
         string = string.replace(" U.S. Virgin Islands region", " región de las Islas Vírgenes de EE.UU.");
@@ -401,35 +318,29 @@ public class WordsUtils {
         string = string.replace(" U.S.", " EE.UU.");
 
         // V
-        string = string.replace("", "");
         string = string.replace(" Villa Comaltitlan", " Villa Comaltitlán");
         string = string.replace(" Visokoi Island region", " región de la Isla Visokoi");
         string = string.replace(" Visokoi Island", " Isla Visokoi");
         string = string.replace(" Volcano Islands", " Islas Volcano");
 
         // W
-        string = string.replace("", "");
         string = string.replace(" West Chile Rise", " Dorsal del Oeste de Chile");
         string = string.replace(" Western Indian-Antarctic Ridge", " Dorsal India-Antártica Occidental");
         string = string.replace(" Windward Islands", " Islas Windward");
 
         // Y
-        string = string.replace("", "");
         string = string.replace(" State of Yap", " Estado de Yap");
         string = string.replace(" Yosemite Valley", " Valle de Yosemite");
 
         // X
-        string = string.replace("", "");
         string = string.replace(" Xalpatlahuac", " Xalpatláhuac");
         string = string.replace(" Xochihuehuetlan", " Xochihuehuetlán");
 
         // Z
-        string = string.replace("", "");
         string = string.replace(" Zimbabwe", " Zimbabue");
 
 
         // PREFIXES
-        string = string.replace("", "");
         string = string.replace(" Eastern Sea of", " Mar del Este de");
         string = string.replace(" eastern Sea of", " Mar del Este de");
 
@@ -506,7 +417,7 @@ public class WordsUtils {
      * @param string String with abbreviation
      * @return the string with the complete name.
      */
-    public static String abbreviationsToCompleteNames(String string) {
+    private static String abbreviationsToCompleteNames(String string) {
 
         string = " " + string;
 
@@ -526,7 +437,7 @@ public class WordsUtils {
      * @return the string with the USA word added at the end if the location was one of the states
      * in the United States of America.
      */
-    public static String addUSAStringLocation(String string) {
+    private static String addUSAStringLocation(String string) {
         String[] usaStatesNames = {", Alabama", ", Alaska", ", Arizona", ", Arkansas", ", California",
                 ", Colorado", ", Connecticut", ", Delaware", ", Florida", ", Georgia", ", Guam", ", Hawaii",
                 ", Idaho", ", Illinois", ", Indiana", ", Iowa", ", Kansas", ", Kentucky", ", Louisiana",
@@ -539,14 +450,16 @@ public class WordsUtils {
 
         int i = 0;
         boolean noExit = true;
+        StringBuilder stringBuilder = new StringBuilder(string);
         do {
-            if (string.contains(usaStatesNames[i])) {
-                string = string + ", U.S.";
+            if (stringBuilder.toString().contains(usaStatesNames[i])) {
+                stringBuilder.append(", U.S.");
                 noExit = false;
             }
             i++;
         }
         while (noExit && i < 50);
+        string = stringBuilder.toString();
 
         return string;
     }
@@ -647,13 +560,15 @@ public class WordsUtils {
      * @param string The USA name
      * @return "u.s." for an english name and "ee.uu." for a spanish name
      */
-    public static String setUsaSearchName(String string) {
+    static String setUsaSearchName(String string) {
+        String sUsaEnglishSearchName = "u.s.";
         for (String abbreviation : sUsaEnglishAbbreviations) {
             if (abbreviation.equals(string)) return sUsaEnglishSearchName;
         }
         for (String name : sUsaEnglishNames) {
             if (name.equals(string)) return sUsaEnglishSearchName;
         }
+        String sUsaSpanishSearchName = "ee.uu.";
         for (String abbreviation : sUsaSpanishAbbreviations) {
             if (abbreviation.equals(string)) return sUsaSpanishSearchName;
         }
@@ -671,8 +586,8 @@ public class WordsUtils {
      * @param locationFilter  The location filter specified by the user.
      * @return true if it is a special case, false otherwise.
      */
-    public static boolean locationSearchSpecialCase(String locationPrimary, String locationFilter) {
-        Boolean isSpecialCase = false;
+    static boolean locationSearchSpecialCase(String locationPrimary, String locationFilter) {
+        boolean isSpecialCase = false;
         locationFilter = locationFilter.trim();
 
         switch (locationFilter) {
@@ -693,12 +608,12 @@ public class WordsUtils {
 
 
     // Inserts a space between the number and the km
-    public static String insertSpaceBeforeKm(String string) {
+    private static String insertSpaceBeforeKm(String string) {
         String string1;
         String string2;
         int division = string.indexOf("km");
         string1 = string.substring(0, division);
-        string2 = string.substring(division, string.length());
+        string2 = string.substring(division);
 
         return string1 + " " + string2;
     }
@@ -710,7 +625,7 @@ public class WordsUtils {
      * @param location String to be split.
      * @return an array of two strings, the location offset and the primary location
      */
-    public static String[] splitLocation(Context context, String location, String locality) {
+    static String[] splitLocation(Context context, String location, String locality) {
 
         String string1;
         String string2;
@@ -749,62 +664,24 @@ public class WordsUtils {
     }
 
     // Changes the First letter of a String to a lowercase.
-    public static String changeFirstLetterToLowercase(String string) {
+    static String changeFirstLetterToLowercase(String string) {
         return string.substring(0, 1).toLowerCase() + string.substring(1);
     }
 
-    /**
-     * Formats a string with the format necessary for a query to the USGS website.
-     *
-     * @param inputDate String Date with the format "MMMM dd, yyyy"
-     * @return a String Date with the format "yyyy-MM-dd"
-     */
-    public static String queryFormatDate(String inputDate) {
-
-        // Gets a String with the value of the "from Date" setting.
-
-        long startDateOnMilliseconds = 0;
-        try {
-
-            // Two letter code of the language of the device, for example: English (en) Spanish (es)
-            String locality = Resources.getSystem().getConfiguration().locale.toString().substring(0, 2);
-
-            // Two letter code of the language of the date.
-            String dateLocality = WordsUtils.getDateLocality(inputDate);
-            // Checks if the date is in the same language as the actual language of the device,
-            // if not, then changes the date to the correct language.
-            if (!locality.equals(dateLocality)) {
-                if (dateLocality.equals("es")) {
-                    inputDate = WordsUtils.changeDateToEnglish(inputDate);
-                }
-                if (dateLocality.equals("en")) {
-                    inputDate = WordsUtils.changeDateToSpanish(inputDate);
-                }
-            }
-
-            Date date = new SimpleDateFormat("MMMM dd, yyyy").parse(inputDate);
-            startDateOnMilliseconds = date.getTime();
-        } catch (ParseException e) {
-            Log.e("log", e.getMessage(), e);
-        }
-
-        // Return the date in the format necessary for a query to the USGS
-        return new SimpleDateFormat("yyyy-MM-dd").format(startDateOnMilliseconds);
-    }
 
     /**
      * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.
      */
-    public static String formatDate(Date dateObject) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+    static String formatDate(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy", Locale.getDefault());
         return dateFormat.format(dateObject);
     }
 
     /**
      * Return the formatted time string (i.e. "4:30 PM") from a Date object.
      */
-    public static String formatTime(Date dateObject) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+    static String formatTime(Date dateObject) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.getDefault());
         return timeFormat.format(dateObject);
     }
 

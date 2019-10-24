@@ -10,24 +10,6 @@
     <!-- ********** App ********** -->
 
 
-    <!-- String to be displayed at the top TextView of help_activity.xml layout -->
-    <string name="help_text_1">
-        Para obtener una lista de temblores del \"Servicio Geológico de los Estados Unidos\" (USGS)
-        ve a la opción de \"Ajustes\" (rueda de engranaje), luego selecciona las opciones que prefieras.\n\n
-        Después, haz clic en la flecha hacia atrás para generar la lista de temblores.\n\n
-        Una vez que la lista se despliegue, haz click en un temblor para obtener más información.\n\n
-        Esta aplicación muestra la hora local para el usuario de la misma; en la que el temblor ocurrió.\n\n
-        El máximo número de temblores que puede ser desplegado es 20,000
-    </string>
-
-    <!-- String to be displayed at the bottom TextView of help_activity.xml layout -->
-    <string name="help_text_2">¿Tienes preguntas o comentarios?</string>
-
-    <!-- String to be displayed at the button of help_activity.xml layout -->
-    <string name="help_text_3">Héctor J. Orozco\n
-    hjorozco@hotmail.com</string>
-
-
     <!-- ********** ACTIVITY MAIN ********** -->
 
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
@@ -44,8 +26,6 @@
     <string name="earthquakes_list_title_for_one_earthquake">%1$d sismo%2$s encontrado%3$s en %4$s.</string>
     <string name="earthquakes_list_title_for_multiple_earthquakes">%1$d sismo%2$s encontrado%3$s en %4$s. Ordenados por %5$s.</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix">s</string>
-    <string name="earthquakes_list_title_sorted_by_date_text">fecha</string>
-    <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitud</string>
     <string name="earthquakes_list_title_us_name">los Estados Unidos</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
@@ -61,14 +41,8 @@
     <string name="menu_activity_main_action_favorites_title">Favoritos</string>
     <string name="menu_activity_main_action_list_information_title">Información de la lista</string>
     <string name="menu_activity_main_action_earthquakes_map_title">Mapa de sismos</string>
-    <string name="menu_activity_main_action_earthquake_terms_title">
-        @string/activity_glossary_label</string>
     <string name="menu_activity_main_action_help_title">Ayuda</string>
     <string name="menu_activity_main_action_about_title">Acerca de</string>
-
-
-    <string name="activity_main_up_fab_tooltip_text">Ir al principio de la lista</string>
-    <string name="activity_main_down_fab_tooltip_text">Ir al final de la lista</string>
 
     <string name="activity_main_no_earthquake_location_text">Sin nombre</string>
 
@@ -78,12 +52,6 @@
 
     <!-- ********** Activity Main ********** -->
 
-
-    <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
-    <string name="settings_help_menu_item">Preferencias de búsqueda</string>
-
-    <!-- Help Activity Title [CHAR LIMIT=NONE] -->
-    <string name="help_title">Ayuda</string>
 
 
     <!-- ********** ACTIVITY SEARCH PREFERENCES ********** -->
@@ -144,19 +112,11 @@
 
     <string name="most_recent_date_text">A</string>
     <string name="past_date_text">De</string>
-    <string name="today_text">Hoy</string>
-    <string name="yesterday_text">Ayer</string>
-    <string name="seven_days_ago_text">Hace 7 días</string>
-    <string name="thirty_days_ago_text">Hace 30 días</string>
-    <string name="three_hundred_sixty_five_days_ago_text">Hace 365 días</string>
 
     <string name="activity_search_preferences_help_dialog_fragment_message">
         &lt;br/&gt;Para reducir el tiempo que lleva buscar sismos, reduce el rango de fechas e incrementa
         la magnitud mínima.</string>
     <string name="activity_search_preferences_help_dialog_fragment_title">Help</string>
-    <string name="activity_search_preferences_help_dialog_fragment_tag" translatable="false">
-        activity_search_preferences_help_dialog_fragment_tag
-    </string>
 
     <!-- ********** Activity Search Preferences ********** -->
 
@@ -207,7 +167,6 @@
     <string name="activity_earthquake_details_felt_reports_text">Reportes</string>
     <string name="activity_earthquake_details_report_text">Reportar</string>
     <string name="activity_earthquake_details_epicenter_text">Epicentro</string>
-    <string name="activity_earthquake_details_open_usgs_website_button_text">Ir a la página web del USGS (en inglés)</string>
 
     <string name="menu_activity_earthquake_details_action_add_to_favorites_title">Agregar a favoritos</string>
     <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Eliminar de favoritos</string>
@@ -575,11 +534,6 @@
         biología, geografía, geología e hidrología.
     </string>
 
-    <string name="menu_activity_earthquake_terms_action_help_title">Ayuda</string>
-    <string name="activity_earthquake_terms_help_dialog_fragment_message">\nPresiona una palabra
-        para mostrar su información.\n\nPresiona de nuevo para ocultarla.\n
-    </string>
-
     <!-- ********** Activity glossary ********** -->
 
 
@@ -608,26 +562,6 @@
     <!-- Activity earthquake report -->
 
 
-    <!-- Strings used to send an email to hjorozco@hotmail.com -->
-    <string name="email_subject">Aplicación de Reporte de sismos.</string>
-    <string name="email_chooser">Selecciona una aplicación para mandar un correo electrónico a
-        Hector J. Orozco &#8230;</string>
-
-    <!-- String displayed at the bottom of the Configuration Screen -->
-    <string name="settings_help_message_text">
-        El tiempo que tomará la búsqueda de sismos será mayor mientras:\n
-        - menor sea la magnitud mínima,\n
-        - mayor sea la diferencia entre las magnitudes mínima y máxima,\n
-        - mayor sea el periodo de tiempo.\n\n
-        El periodo de tiempo va hacia atrás, de la fecha más reciente a la fecha más antigua.\n\n
-        El número máximo de sismos que pueden ser desplegados en la lista es de 20,000.\n\n
-        Una vez ingresadas las preferencias de búsqueda, da clic en la flecha hacia atrás
-        en la esquina superior izquierda de la pantalla para buscar temblores.
-    </string>
-
-    <!-- String used to display a title of the "Information" option AlertDialog -->
-    <string name="information_alert_dialog_title_text">Información de la lista.</string>
-
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
@@ -650,18 +584,11 @@
     </string>
 
     <!-- Other strings used by the "Information" Alert Dialog message.  -->
-    <string name="the_text_singular">el</string>
-    <string name="the_text_plural">los</string>
     <string name="earthquakes_text_singular">sismo</string>
     <string name="earthquakes_text_plural">sismos</string>
-    <string name="powerful_text_singular">poderoso</string>
-    <string name="powerful_text_plural">poderosos</string>
-    <string name="recent_text_singular">reciente</string>
-    <string name="recent_text_plural">recientes</string>
     <string name="the_whole_world_text">todo el mundo</string>
     <string name="magnitude_text">Magnitud</string>
     <string name="date_text">Fecha</string>
-    <string name="negative_button_text">Más información</string>
     <string name="positive_button_text">Aceptar</string>
     <string name="twenty_four_hours_text">últimas 24 horas</string>
     <string name="seven_days_text">últimos 7 días</string>

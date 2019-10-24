@@ -2,7 +2,6 @@ package com.weebly.hectorjorozco.earthquakes.ui.dialogfragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.Button;

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="search_preference_sort_by_entries">
-        <item>@string/search_preference_sort_by_ascending_date_entry</item>
-        <item>@string/search_preference_sort_by_descending_date_entry</item>
-        <item>@string/search_preference_sort_by_ascending_magnitude_entry</item>
-        <item>@string/search_preference_sort_by_descending_magnitude_entry</item>
-    </string-array>
 
     <string-array name="search_preference_sort_by_entry_values">
         <item>@string/search_preference_sort_by_ascending_date_entry_value</item>

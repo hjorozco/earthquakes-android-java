@@ -96,35 +96,6 @@ public class Properties {
     public Properties() {
     }
 
-    /**
-     * 
-     * @param detail
-     * @param type
-     * @param net
-     * @param tsunami
-     * @param sources
-     * @param title
-     * @param time
-     * @param updated
-     * @param mag
-     * @param place
-     * @param types
-     * @param status
-     * @param alert
-     * @param ids
-     * @param rms
-     * @param code
-     * @param url
-     * @param magType
-     * @param mmi
-     * @param cdi
-     * @param tz
-     * @param felt
-     * @param nst
-     * @param dmin
-     * @param sig
-     * @param gap
-     */
     public Properties(long mag, String place, long time, long updated, int tz, String url,
                       String detail, int felt, double cdi, double mmi, String alert, String status,
                       int tsunami, int sig, String net, String code, String ids, String sources,

@@ -24,7 +24,6 @@ import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
@@ -133,19 +132,15 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             DialogFragment dialogFragment = DatePreferenceDialogFragmentCompat
                     .newInstance(preference.getKey());
             dialogFragment.setTargetFragment(this, 0);
-            if (getFragmentManager() != null) {
-                dialogFragment.show(getFragmentManager(),
-                        getString(R.string.date_preference_dialog_fragment_compat_tag));
-            }
+            dialogFragment.show(getParentFragmentManager(),
+                    getString(R.string.date_preference_dialog_fragment_compat_tag));
         } else if (preference instanceof SortByDialogPreference) {
             // Display a SortByPreferenceDialogFragmentCompat
             DialogFragment dialogFragment = SortByPreferenceDialogFragmentCompat
                     .newInstance(preference.getKey());
             dialogFragment.setTargetFragment(this, 1);
-            if (getFragmentManager() != null) {
-                dialogFragment.show(getFragmentManager(),
-                        getString(R.string.sort_by_preference_dialog_fragment_compat_tag));
-            }
+            dialogFragment.show(getParentFragmentManager(),
+                    getString(R.string.sort_by_preference_dialog_fragment_compat_tag));
         } else {
             // Call the super class method that handles the predefined DialogPreferences
             super.onDisplayPreferenceDialog(preference);

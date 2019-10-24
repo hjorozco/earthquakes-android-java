@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 // Class that handles the value of the DialogPreference that is saved on SharedPreferences
 
+@SuppressWarnings("WeakerAccess")
 public class DateDialogPreference extends DialogPreference {
 
 

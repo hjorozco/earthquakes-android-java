@@ -30,13 +30,6 @@ public class Feature {
     public Feature() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param properties
-     * @param type
-     * @param geometry
-     */
     public Feature(String type, Properties properties, Geometry geometry, String id) {
         super();
         this.type = type;

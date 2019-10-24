@@ -28,19 +28,12 @@ public class CustomScrollView extends ScrollView {
         final int action = ev.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                super.onTouchEvent(ev);
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                return false;
-
             case MotionEvent.ACTION_CANCEL:
                 super.onTouchEvent(ev);
                 break;
-
+            case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
                 return false;
-
             default:
                 break;
         }

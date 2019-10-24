@@ -3,7 +3,6 @@ package com.weebly.hectorjorozco.earthquakes.viewmodels;
 // ViewModel that will observe MainActivity for changes on the favorites earthquakes database
 
 import android.app.Application;
-import android.os.Handler;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;

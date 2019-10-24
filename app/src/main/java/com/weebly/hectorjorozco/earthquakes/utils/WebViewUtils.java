@@ -3,7 +3,6 @@ package com.weebly.hectorjorozco.earthquakes.utils;
 import android.net.http.SslError;
 import android.view.View;
 import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;

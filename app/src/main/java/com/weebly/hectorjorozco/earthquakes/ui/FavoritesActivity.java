@@ -45,23 +45,23 @@ import com.weebly.hectorjorozco.earthquakes.viewmodels.FavoritesActivityViewMode
 import java.util.List;
 import java.util.Map;
 
+import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING;
+
 
 public class FavoritesActivity extends AppCompatActivity implements
         FavoritesListAdapter.FavoritesListAdapterListener,
         ConfirmationDialogFragment.ConfirmationDialogFragmentListener,
         SortFavoritesDialogFragment.SortFavoritesDialogFragmentListener {
 
-    public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
-
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
     // Used to restore multiple favorites selected on action mode after rotation
-    public static final String SAVED_INSTANCE_STATE_SELECTED_ITEMS_KEY = "saved_instance_state_selected_items_key";
+    private static final String SAVED_INSTANCE_STATE_SELECTED_ITEMS_KEY = "saved_instance_state_selected_items_key";
 
     // Used for swipe to delete restore after rotation
-    public static final String SAVED_INSTANCE_STATE_FAVORITE_WITH_DELETE_BACKGROUND_POSITION_KEY =
+    private static final String SAVED_INSTANCE_STATE_FAVORITE_WITH_DELETE_BACKGROUND_POSITION_KEY =
             "saved_instance_state_favorite_with_delete_background_position_key";
-    public static final String SAVED_INSTANCE_STATE_RIGHT_SWIPED_KEY =
+    private static final String SAVED_INSTANCE_STATE_RIGHT_SWIPED_KEY =
             "saved_instance_state_right_swiped_key";
 
     private FavoritesListAdapter mAdapter;
@@ -453,7 +453,7 @@ public class FavoritesActivity extends AppCompatActivity implements
                 Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
                 Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
                 Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
-                ActivityOptionsCompat activityOptionsCompat =
+                @SuppressWarnings("unchecked") ActivityOptionsCompat activityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4);
                 startActivity(intent, activityOptionsCompat.toBundle());
             } else {

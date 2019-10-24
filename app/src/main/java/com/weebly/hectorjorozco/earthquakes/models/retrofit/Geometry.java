@@ -25,11 +25,6 @@ public class Geometry {
     public Geometry() {
     }
 
-    /**
-     * 
-     * @param type
-     * @param coordinates
-     */
     public Geometry(String type, List<Double> coordinates) {
         super();
         this.type = type;

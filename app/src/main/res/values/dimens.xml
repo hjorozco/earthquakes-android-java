@@ -1,5 +1,4 @@
 <resources>
-    <dimen name="app_bar_height">180dp</dimen>
 
     <dimen name="magnitude_circle_stroke_width">3dp</dimen>
 
@@ -7,11 +6,9 @@
     <dimen name="recycler_view_divider_inset_right">16dp</dimen>
     <dimen name="recycler_view_divider_size">1dp</dimen>
 
-    <dimen name="application_tiny_margin">4dp</dimen>
     <dimen name="application_small_margin">8dp</dimen>
     <dimen name="application_standard_margin">16dp</dimen>
     <dimen name="application_big_margin">32dp</dimen>
-    <dimen name="application_huge_margin">48dp</dimen>
 
     <dimen name="application_tiny_padding">4dp</dimen>
     <dimen name="application_small_padding">8dp</dimen>
@@ -27,13 +24,10 @@
 
     <dimen name="message_icons_size">96dp</dimen>
 
-    <dimen name="fab_size">32dp</dimen>
-
     <dimen name="recycler_view_fast_scroll_custom_handle_width">6dp</dimen>
     <dimen name="recycler_view_fast_scroll_custom_handle_height">24dp</dimen>
 
     <dimen name="activity_earthquake_details_map_height">300dp</dimen>
-    <dimen name="activity_earthquake_details_report_button_stroke_width">1dp</dimen>
 
     <dimen name="standard_52">52dp</dimen>
     <dimen name="standard_96">96dp</dimen>

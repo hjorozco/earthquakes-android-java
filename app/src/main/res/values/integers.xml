@@ -14,7 +14,5 @@
 
     <integer name="message_icons_view_port_size">512</integer>
 
-    <integer name="activity_glossary_title_weight">1000</integer>
-
     <integer name="activity_transition_time">500</integer>
 </resources>

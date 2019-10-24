@@ -42,17 +42,6 @@ public class Metadata {
     public Metadata() {
     }
 
-    /**
-     * 
-     * @param limit
-     * @param title
-     * @param count
-     * @param status
-     * @param generated
-     * @param api
-     * @param offset
-     * @param url
-     */
     public Metadata(long generated, String url, String title, int status, String api, int limit, int offset, int count) {
         super();
         this.generated = generated;

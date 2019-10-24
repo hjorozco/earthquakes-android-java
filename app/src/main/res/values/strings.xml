@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 Hector J. Orozco -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="PluralsCandidate">
 
 
     <!-- ********** APP ********** -->
 
     <string name="app_name">Earthquakes</string>
     <string name="html_text_with_color" translatable="false">&lt;font color=#%1$s>%2$s&lt;/font></string>
-    <string name="empty_string" translatable="false" />
     <string name="yes_text">YES</string>
     <string name="no_text" translatable="false">NO</string>
     <string name="letter_s_lowercase" translatable="false">s</string>
@@ -32,23 +31,6 @@
     <!-- ********** APP SHARED PREFERENCES ********** -->
 
 
-    <!-- String to be displayed at the top TextView of help_activity.xml layout -->
-    <string name="help_text_1">
-        To get a list of Earthquakes from the \"United States Geological Survey\" go to \"Settings\"
-        (gear wheel) then select the settings you prefer.\n\n
-        After that click the back arrow to populate the list of earthquakes.\n\n
-        Once the list is displayed, click on an earthquake to get more information.\n\n
-        This app shows the user\'s local time when the earthquake actually happened.\n\n
-        The max number of earthquakes that can be displayed is 20,000
-    </string>
-
-    <!-- String to be displayed at the bottom TextView of help_activity.xml layout -->
-    <string name="help_text_2">Questions or comments?</string>
-
-    <!-- String to be displayed at the button of help_activity.xml layout -->
-    <string name="help_text_3">Hector J. Orozco\n
-    hjorozco@hotmail.com</string>
-
 
     <!-- ********** ACTIVITY MAIN ********** -->
 
@@ -66,8 +48,6 @@
     <string name="earthquakes_list_title_for_one_earthquake">%1$d earthquake%2$s found%3$s in %4$s.</string>
     <string name="earthquakes_list_title_for_multiple_earthquakes">%1$d earthquake%2$s found%3$s in %4$s. Sorted by %5$s.</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix" />
-    <string name="earthquakes_list_title_sorted_by_date_text">date</string>
-    <string name="earthquakes_list_title_sorted_by_magnitude_text">magnitude</string>
     <string name="earthquakes_list_title_us_name">the United States</string>
 
     <!-- String to be displayed when there is not data to show on the ListView of
@@ -81,15 +61,10 @@
     <string name="menu_activity_main_action_list_information_title">List information</string>
     <string name="menu_activity_main_action_earthquakes_map_title">Earthquakes map</string>
     <string name="menu_activity_main_action_help_title">Help</string>
-    <string name="menu_activity_main_action_earthquake_terms_title">
-        @string/activity_glossary_label</string>
     <string name="menu_activity_main_action_about_title">About</string>
 
     <string name="activity_main_image_view_content_description" translatable="false">
         House damaged by an earthquake</string>
-
-    <string name="activity_main_up_fab_tooltip_text">Go to the top of the list</string>
-    <string name="activity_main_down_fab_tooltip_text">Go to the bottom of the list</string>
 
     <string name="activity_main_earthquakes_list_information_dialog_fragment_tag" translatable="false">
         earthquakes_list_information_dialog_fragment
@@ -103,12 +78,6 @@
 
     <!-- ********** Activity main ********** -->
 
-
-    <!-- Settings Help Menu Item [CHAR LIMIT=NONE] -->
-    <string name="settings_help_menu_item">Search preferences help</string>
-
-    <!-- Help Activity Title [CHAR LIMIT=NONE] -->
-    <string name="help_title">Help</string>
 
 
     <!-- ********** ACTIVITY SEARCH PREFERENCES ********** -->
@@ -166,8 +135,6 @@
 
     <string name="search_preference_sort_by_title">Sort by</string>
     <string name="search_preference_sort_by_key" translatable="false">order_by</string>
-    <string name="search_preference_sort_by_key_2" translatable="false">order_by_2</string>
-    <string name="search_preference_sort_by_default_value" translatable="false">@string/search_preference_sort_by_descending_date_entry_value</string>
     <string name="search_preference_sort_by_ascending_date_entry">ascending date</string>
     <string name="search_preference_sort_by_ascending_date_entry_value" translatable="false">time-asc</string>
     <string name="search_preference_sort_by_descending_date_entry">descending date</string>
@@ -208,11 +175,6 @@
 
     <string name="most_recent_date_text">To</string>
     <string name="past_date_text">From</string>
-    <string name="today_text">Today</string>
-    <string name="yesterday_text">Yesterday</string>
-    <string name="seven_days_ago_text">7 days ago</string>
-    <string name="thirty_days_ago_text">30 days ago</string>
-    <string name="three_hundred_sixty_five_days_ago_text">365 days ago</string>
 
     <string name="activity_search_preferences_help_dialog_fragment_message">
         &lt;br/&gt;To reduce the time it takes to search for earthquakes, reduce the date range and
@@ -306,7 +268,6 @@
     <string name="activity_earthquake_details_felt_reports_text">Felt reports</string>
     <string name="activity_earthquake_details_report_text">Report</string>
     <string name="activity_earthquake_details_epicenter_text">Epicenter</string>
-    <string name="activity_earthquake_details_open_usgs_website_button_text">Open USGS web page</string>
 
     <string name="menu_activity_earthquake_details_action_add_to_favorites_title">Add to favorites</string>
     <string name="menu_activity_earthquake_details_action_remove_from_favorites_title">Remove from favorites</string>
@@ -444,7 +405,6 @@
 
     <string name="activity_favorites_delete_text">Delete</string>
 
-    <string name="activity_favorites_image_view_content_description" translatable="false">No favorites</string>
     <string name="activity_favorites_no_favorites_message">No favorites found.</string>
 
     <string name="activity_favorites_loading_favorites_message">Loading favorites</string>
@@ -682,13 +642,6 @@
         major science disciplines, concerning biology, geography, geology, and hydrology.
     </string>
 
-    <string name="menu_activity_earthquake_terms_action_help_title">Help</string>
-    <string name="activity_earthquake_terms_help_dialog_fragment_message">\nPress on a word to show
-        its information.\n\nPress again to hide it.\n</string>
-    <string name="activity_earthquake_terms_help_dialog_fragment_tag" translatable="false">
-        activity_earthquake_terms_help_dialog_fragment_tag
-    </string>
-
     <!-- ********** Activity glossary ********** -->
 
 
@@ -715,28 +668,6 @@
     <!-- Activity earthquake report -->
 
 
-
-    <!-- Strings used to send an email to hjorozco@hotmail.com -->
-    <string name="email_address" translatable="false">hjorozco@hotmail.com</string>
-    <string name="email_subject">Earthquakes Report Application.</string>
-    <string name="email_setting" translatable="false">mailto:</string>
-    <string name="email_chooser">Choose an application to send an email to Hector J. Orozco &#8230;</string>
-
-    <!-- String displayed at the bottom of the Configuration Screen -->
-    <string name="settings_help_message_text">
-        The earthquakes search time will be longer:\n
-        - the longer the minimum magnitude,\n
-        - the greater the difference between the minimum and maximum magnitudes,\n
-        - the greater the period of time.\n\n
-        The time period goes back in time, from the most recent date to the former date.\n\n
-        The maximum number of earthquakes that can be displayed on the list is 20,000.\n\n
-        Once the search preferences are entered, click the back arrow on the top left corner
-        of the screen to search for earthquakes.
-    </string>
-
-    <!-- String used to display a title of the "Information" option AlertDialog -->
-    <string name="information_alert_dialog_title_text">List information.</string>
-
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_1">
@@ -759,18 +690,11 @@
     </string>
 
     <!-- Other strings used by the "Information" Alert Dialog message.  -->
-    <string name="the_text_singular">the</string>
-    <string name="the_text_plural">the</string>
     <string name="earthquakes_text_singular">earthquake</string>
     <string name="earthquakes_text_plural">earthquakes</string>
-    <string name="powerful_text_singular">powerful</string>
-    <string name="powerful_text_plural">powerful</string>
-    <string name="recent_text_singular">recent</string>
-    <string name="recent_text_plural">recent</string>
     <string name="the_whole_world_text">the whole world</string>
     <string name="magnitude_text">Magnitude</string>
     <string name="date_text">Date</string>
-    <string name="negative_button_text">More info</string>
     <string name="positive_button_text">OK</string>
     <string name="twenty_four_hours_text">last 24 hours</string>
     <string name="seven_days_text">last 7 days</string>

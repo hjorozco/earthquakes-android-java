@@ -18,7 +18,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WebViewUtils;
-import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import static android.view.View.GONE;
 

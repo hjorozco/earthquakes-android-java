@@ -6,7 +6,6 @@
     android:id="@+id/activity_earthquakes_map_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:padding="1dp"
     tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakesMapActivity">
 
@@ -14,7 +13,8 @@
         android:id="@+id/activity_earthquakes_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:ignore="FragmentTagUsage" />
 
     <View
         android:id="@+id/activity_earthquakes_map_fab_background"

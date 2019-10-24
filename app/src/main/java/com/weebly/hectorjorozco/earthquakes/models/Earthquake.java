@@ -27,33 +27,33 @@ public class Earthquake implements Parcelable {
     @NonNull
     @PrimaryKey
     @ColumnInfo(name = "id")
-    private String mId;
+    private final String mId;
     @ColumnInfo(name = "magnitude")
-    private double mMagnitude;
+    private final double mMagnitude;
     @ColumnInfo(name = "location_offset")
-    private String mLocationOffset;
+    private final String mLocationOffset;
     @ColumnInfo(name = "location_primary")
-    private String mLocationPrimary;
+    private final String mLocationPrimary;
     @ColumnInfo(name = "time_in_milliseconds")
-    private long mTimeInMilliseconds;
+    private final long mTimeInMilliseconds;
     @ColumnInfo(name = "url")
-    private String mUrl;
+    private final String mUrl;
     @ColumnInfo(name = "latitude")
-    private double mLatitude;
+    private final double mLatitude;
     @ColumnInfo(name = "longitude")
-    private double mLongitude;
+    private final double mLongitude;
     @ColumnInfo(name = "depth")
-    private double mDepth;
+    private final double mDepth;
     @ColumnInfo(name = "felt")
-    private int mFelt;
+    private final int mFelt;
     @ColumnInfo(name = "cdi")
-    private double mCdi;
+    private final double mCdi;
     @ColumnInfo(name = "mmi")
-    private double mMmi;
+    private final double mMmi;
     @ColumnInfo(name = "alert")
-    private String mAlert;
+    private final String mAlert;
     @ColumnInfo(name = "tsunami")
-    private int mTsunami;
+    private final int mTsunami;
 
     public Earthquake(@NonNull String id, double magnitude, String locationOffset, String locationPrimary,
                       long timeInMilliseconds, String url, double latitude, double longitude, double depth,
@@ -133,33 +133,17 @@ public class Earthquake implements Parcelable {
 
     // Comparators used to sort favorite earthquakes
 
-    public static final Comparator<Earthquake> ascendingDateComparator = new Comparator<Earthquake>() {
-        @Override
-        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
-            return Long.compare(earthquake1.getTimeInMilliseconds(), earthquake2.getTimeInMilliseconds());
-        }
-    };
+    public static final Comparator<Earthquake> ascendingDateComparator = (earthquake1, earthquake2)
+            -> Long.compare(earthquake1.getTimeInMilliseconds(), earthquake2.getTimeInMilliseconds());
 
-    public static final Comparator<Earthquake> descendingDateComparator = new Comparator<Earthquake>() {
-        @Override
-        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
-            return -Long.compare(earthquake1.getTimeInMilliseconds(), earthquake2.getTimeInMilliseconds());
-        }
-    };
+    public static final Comparator<Earthquake> descendingDateComparator = (earthquake1, earthquake2)
+            -> -Long.compare(earthquake1.getTimeInMilliseconds(), earthquake2.getTimeInMilliseconds());
 
-    public static final Comparator<Earthquake> ascendingMagnitudeComparator = new Comparator<Earthquake>() {
-        @Override
-        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
-            return Double.compare(earthquake1.getMagnitude(), earthquake2.getMagnitude());
-        }
-    };
+    public static final Comparator<Earthquake> ascendingMagnitudeComparator = (earthquake1, earthquake2)
+            -> Double.compare(earthquake1.getMagnitude(), earthquake2.getMagnitude());
 
-    public static final Comparator<Earthquake> descendingMagnitudeComparator = new Comparator<Earthquake>() {
-        @Override
-        public int compare(Earthquake earthquake1, Earthquake earthquake2) {
-            return -Double.compare(earthquake1.getMagnitude(), earthquake2.getMagnitude());
-        }
-    };
+    public static final Comparator<Earthquake> descendingMagnitudeComparator = (earthquake1, earthquake2)
+            -> -Double.compare(earthquake1.getMagnitude(), earthquake2.getMagnitude());
 
 
     @Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -28,7 +29,7 @@
             android:textSize="@dimen/application_small_text_size"
             android:visibility="gone" />
 
-        <WebView
+        <com.weebly.hectorjorozco.earthquakes.models.LollipopFixedWebView
             android:id="@+id/activity_earthquake_details_usgs_map_web_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -59,7 +60,8 @@
             android:id="@+id/activity_earthquake_details_google_map_fragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:ignore="FragmentTagUsage" />
 
         <View
             android:id="@+id/activity_earthquake_details_google_map_fabs_background"

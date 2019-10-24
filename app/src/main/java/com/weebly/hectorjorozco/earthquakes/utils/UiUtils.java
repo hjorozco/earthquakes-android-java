@@ -7,11 +7,10 @@ import android.widget.Button;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
-import java.util.Objects;
 
 public class UiUtils {
 
-    public static void setupAlertDialogButtonBackground(Context context, Button button){ ;
+    public static void setupAlertDialogButtonBackground(Context context, Button button){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             TypedValue outValue = new TypedValue();
             context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);

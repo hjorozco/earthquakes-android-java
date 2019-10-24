@@ -423,14 +423,11 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
                 break;
             case R.id.menu_activity_main_action_help:
-                Snackbar.make(findViewById(android.R.id.content),
-                        getString(R.string.activity_main_under_construction_text),
-                        Snackbar.LENGTH_LONG).show();
-                break;
             case R.id.menu_activity_main_action_about:
                 Snackbar.make(findViewById(android.R.id.content),
                         getString(R.string.activity_main_under_construction_text),
                         Snackbar.LENGTH_LONG).show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -541,7 +538,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
             Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
             Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
-            ActivityOptionsCompat activityOptionsCompat =
+            @SuppressWarnings("unchecked") ActivityOptionsCompat activityOptionsCompat =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4);
             startActivity(intent, activityOptionsCompat.toBundle());
         } else {

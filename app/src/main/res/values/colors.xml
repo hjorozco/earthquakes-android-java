@@ -8,10 +8,6 @@
 
     <color name="colorSearchPreferenceIcons">#8D6E63</color>  <!-- Brown 400 -->
 
-    <!-- Scrim colors -->
-    <color name="colorScrim">#40000000</color>
-    <color name="colorScrimDark">#80000000</color>
-
     <color name="colorDisabledMenuItem">#BDBDBD</color>
 
     <color name="colorAppBackground">#FFFAFAFA</color>
@@ -21,9 +17,6 @@
     <color name="light_brown">#D7CCC8</color>           <!-- Brown 100 -->
 
     <color name="ultra_light_brown">#EFEBE9</color>     <!-- Brown 50 -->
-
-    <color name="custom_handle_color">#90a4ae</color>
-    <color name="custom_bubble_color">#607d8b</color>
 
     <color name="colorSwipeToDelete">@color/colorBackGroundActionMode</color>
     <color name="colorBackGroundActionMode">#D32F2F</color>             <!-- Red 700 -->

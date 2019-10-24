@@ -11,21 +11,6 @@
         <item name="actionModeBackground">@color/colorBackGroundActionMode</item>  <!-- Api 19 and up -->
     </style>
 
-    <!-- The launcher theme. It sets the main window background to the launch_screen.xml drawable -->
-    <style name="AppTheme.Launcher">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
-        <!-- Optional, on Android 5+ you can modify the colorPrimaryDark color to match the windowBackground color for further branding-->
-        <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- AlertDialog Style  -->
     <style name="ThemeDialogCustomPrimaryColor" parent="Theme.AppCompat.Light.Dialog">
