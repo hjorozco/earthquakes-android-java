@@ -282,8 +282,8 @@ public class QueryUtils {
 
         long millisecondsInOneDay = TimeUnit.DAYS.toMillis(1);
 
-        // Depending on the "date range" value stored on preferences, sets the value of the "starttime"
-        // and "endtime" options of the JSON query sent to the USGS. Calculates the start date time offset to UTC.
+        // Depending on the "date range" value stored on preferences, sets the value of the "start time"
+        // and "end ime" options of the JSON query sent to the USGS. Calculates the start date time offset to UTC.
         String datePeriod = sharedPreferences.getString(
                 context.getString(R.string.search_preference_date_range_key),
                 context.getString(R.string.search_preference_date_range_default_value));
@@ -590,9 +590,9 @@ public class QueryUtils {
      */
     static class EarthquakeColors {
         // The color used in the magnitude circle border, its text and the information texts
-        int mMagnitudeColor;
+        final int mMagnitudeColor;
         // The background color of the magnitude circle
-        int mMagnitudeBackgroundColor;
+        final int mMagnitudeBackgroundColor;
 
         private EarthquakeColors(int magnitudeColor, int magnitudeBackgroundColor) {
             mMagnitudeColor = magnitudeColor;

@@ -2,14 +2,14 @@ package com.weebly.hectorjorozco.earthquakes.models;
 
 public class EarthquakesListInformationValues {
 
-    private String mOrderBy;
-    private String mLocation;
-    private String mDatePeriod;
-    private String mStartDate;
-    private String mEndDate;
-    private String mMinMagnitude;
-    private String mMaxMagnitude;
-    private String mLimit;
+    private final String mOrderBy;
+    private final String mLocation;
+    private final String mDatePeriod;
+    private final String mStartDate;
+    private final String mEndDate;
+    private final String mMinMagnitude;
+    private final String mMaxMagnitude;
+    private final String mLimit;
 
     private String mFirstEarthquakeMag;
     private String mLastEarthquakeMag;

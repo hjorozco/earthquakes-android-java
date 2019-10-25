@@ -78,9 +78,9 @@ public class MapsUtils {
      * Class the contains attributes of a marker to be displayed on the earthquakes map.
      */
     public static class MarkerAttributes {
-        private int mMarkerImageResourceId;
-        private float mZIndex;
-        private float mAlphaValue;
+        private final int mMarkerImageResourceId;
+        private final float mZIndex;
+        private final float mAlphaValue;
 
         private MarkerAttributes(int markerImageResourceId, float zIndex, float alphaValue) {
             mMarkerImageResourceId = markerImageResourceId;

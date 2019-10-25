@@ -401,12 +401,12 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
-    private String getPluralEnding(int numberOfItems, boolean spanishOnlye) {
+    private String getPluralEnding(int numberOfItems, boolean spanishOnly) {
         String pluralEnding;
         if (numberOfItems == 1) {
             pluralEnding = "";
         } else {
-            if (spanishOnlye) {
+            if (spanishOnly) {
                 pluralEnding = getString(R.string.spanish_only_plural_ending_letter_s);
             } else {
                 pluralEnding = getString(R.string.letter_s_lowercase);
@@ -416,15 +416,6 @@ public class FavoritesActivity extends AppCompatActivity implements
         return pluralEnding;
     }
 
-
-    /**
-     * Implementation of FavoritesListAdapt|er.FavoritesListAdapterListener
-     * When the title of the list is clicked.
-     */
-    @Override
-    public void onTitleClick() {
-        // Nothing to do on favorites activity.
-    }
 
     /**
      * Implementation of FavoritesListAdapter.FavoritesListAdapterListener

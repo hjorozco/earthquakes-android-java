@@ -23,10 +23,10 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static final int TITTLE_TYPE = 0;
     private static final int EARTHQUAKE_TYPE = 1;
 
-    private Context mContext;
+    private final Context mContext;
     private List<Earthquake> mEarthquakes;
     private String mLocation;
-    private EarthquakesListClickListener mEarthquakesListClickListener;
+    private final EarthquakesListClickListener mEarthquakesListClickListener;
 
 
     // Interface implemented in MainActivity.java to handle clicks
@@ -161,12 +161,12 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     class EarthquakeViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout earthquakeLinearLayout;
-        TextView magnitudeTextView;
-        TextView locationOffsetTextView;
-        TextView locationPrimaryTextView;
-        TextView dateTextView;
-        TextView timeTextView;
+        final LinearLayout earthquakeLinearLayout;
+        final TextView magnitudeTextView;
+        final TextView locationOffsetTextView;
+        final TextView locationPrimaryTextView;
+        final TextView dateTextView;
+        final TextView timeTextView;
 
         EarthquakeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -209,7 +209,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     class TitleViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titleTextView;
+        final TextView titleTextView;
 
         TitleViewHolder(@NonNull View itemView) {
             super(itemView);

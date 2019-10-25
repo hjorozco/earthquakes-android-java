@@ -425,7 +425,7 @@
         activity_favorites_delete_some_confirmation_dialog_fragment_tag</string>
 
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_text">
-        &lt;br/&gt;You are going to delete &lt;b>ALL THE FAVORITES.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
+        &lt;br/&gt;You are going to delete &lt;b>all favorites.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>
     <string name="activity_favorites_delete_all_confirmation_dialog_fragment_tag" translatable="false">
         activity_favorites_delete_all_confirmation_dialog_fragment_tag</string>
 

@@ -33,9 +33,9 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private static final int LONG_PRESS_VIBRATION_TIME_IN_MILLISECONDS = 10;
 
-    private Context mContext;
+    private final Context mContext;
     private List<Earthquake> mFavorites;
-    private FavoritesListAdapterListener mFavoritesListAdapterListener;
+    private final FavoritesListAdapterListener mFavoritesListAdapterListener;
 
     // Array that saves the selected state of students (true if selected, false otherwise)
     private SparseBooleanArrayParcelable mSelectedFavorites;
@@ -47,7 +47,6 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     // Interface implemented in FavoritesActivity.java to handle clicks and long clicks
     public interface FavoritesListAdapterListener {
-        void onTitleClick();
 
         void onFavoriteClick(Earthquake favorite, int favoriteRecyclerViewPosition,
                              TextView magnitudeTextView, TextView locationOffsetTextView,
@@ -241,13 +240,13 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class FavoriteViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout earthquakeLinearLayout;
-        TextView magnitudeTextView;
-        TextView locationOffsetTextView;
-        TextView locationPrimaryTextView;
-        TextView dateTextView;
-        TextView timeTextView;
-        ImageView selectedImageView;
+        final LinearLayout earthquakeLinearLayout;
+        final TextView magnitudeTextView;
+        final TextView locationOffsetTextView;
+        final TextView locationPrimaryTextView;
+        final TextView dateTextView;
+        final TextView timeTextView;
+        final ImageView selectedImageView;
 
         public final RelativeLayout viewLeftSwipeBackground;
         public final RelativeLayout viewRightSwipeBackground;
@@ -305,13 +304,12 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class TitleViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titleTextView;
+        final TextView titleTextView;
 
         TitleViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.title_list_item_text_view);
             titleTextView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAppBackground));
-            titleTextView.setOnClickListener(v -> mFavoritesListAdapterListener.onTitleClick());
         }
     }
 

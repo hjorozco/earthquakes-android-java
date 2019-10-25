@@ -2,12 +2,12 @@ package com.weebly.hectorjorozco.earthquakes.models;
 
 public class EarthquakesQueryParameters {
 
-    private String mStartTime;
-    private String mEndTime;
-    private String mLimit;
-    private String mMinMagnitude;
-    private String mMaxMagnitude;
-    private String mOrderBy;
+    private final String mStartTime;
+    private final String mEndTime;
+    private final String mLimit;
+    private final String mMinMagnitude;
+    private final String mMaxMagnitude;
+    private final String mOrderBy;
 
     public EarthquakesQueryParameters(String startTime, String endTime, String limit,
                                       String minMagnitude, String maxMagnitude, String orderBy) {

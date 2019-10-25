@@ -14,13 +14,13 @@ import java.util.Locale;
 public class WordsUtils {
 
 
-    private static Locale sLocale = Resources.getSystem().getConfiguration().locale;
+    private static final Locale sLocale = Resources.getSystem().getConfiguration().locale;
 
-    private static String[] sArticles = {"of", "de", "the", "las", "los"};
-    private static String[] sUsaEnglishAbbreviations = {"usa", "u.s.a.", "u.s.a", "us", "u.s.", "u.s"};
-    private static String[] sUsaSpanishAbbreviations = {"ee.uu.", "ee.uu", "eeuu", "eua", "e.u.a.", "e.u.a", "eu", "e.u.", "e.u"};
-    private static String[] sUsaEnglishNames = {"united states of america", "united states"};
-    private static String[] sUsaSpanishNames = {"estados unidos de america", "estados unidos"};
+    private static final String[] sArticles = {"of", "de", "the", "las", "los"};
+    private static final String[] sUsaEnglishAbbreviations = {"usa", "u.s.a.", "u.s.a", "us", "u.s.", "u.s"};
+    private static final String[] sUsaSpanishAbbreviations = {"ee.uu.", "ee.uu", "eeuu", "eua", "e.u.a.", "e.u.a", "eu", "e.u.", "e.u"};
+    private static final String[] sUsaEnglishNames = {"united states of america", "united states"};
+    private static final String[] sUsaSpanishNames = {"estados unidos de america", "estados unidos"};
 
 
     public static String getLocaleLanguage() {

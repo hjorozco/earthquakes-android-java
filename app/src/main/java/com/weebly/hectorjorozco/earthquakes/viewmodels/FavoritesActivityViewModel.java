@@ -15,7 +15,7 @@ import java.util.List;
 public class FavoritesActivityViewModel extends AndroidViewModel {
 
     // Cash the list of Earthquake objects wrapped in a LiveData object
-    private LiveData<List<Earthquake>> favoriteEarthquakes;
+    private final LiveData<List<Earthquake>> favoriteEarthquakes;
 
     public FavoritesActivityViewModel(Application application) {
         super(application);

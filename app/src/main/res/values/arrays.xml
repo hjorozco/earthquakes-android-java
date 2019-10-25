@@ -8,7 +8,7 @@
         <item>@string/search_preference_sort_by_descending_magnitude_entry_value</item>
     </string-array>
 
-    <string-array name="search_prefernce_sort_by_summaries">
+    <string-array name="search_preference_sort_by_summaries">
         <item>@string/search_preference_sort_by_ascending_date_summary</item>
         <item>@string/search_preference_sort_by_descending_date_summary</item>
         <item>@string/search_preference_sort_by_ascending_magnitude_summary</item>

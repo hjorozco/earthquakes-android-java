@@ -45,7 +45,7 @@ public class SortByDialogPreference extends DialogPreference {
         mSortByEntryValue = sortByEntryValue;
         persistInt(sortByEntryValue);
         String[] sortBySummaries =
-                getContext().getResources().getStringArray(R.array.search_prefernce_sort_by_summaries);
+                getContext().getResources().getStringArray(R.array.search_preference_sort_by_summaries);
         setSummary(sortBySummaries[sortByEntryValue]);
 
         if (sortByEntryValue % 2 == 0){
