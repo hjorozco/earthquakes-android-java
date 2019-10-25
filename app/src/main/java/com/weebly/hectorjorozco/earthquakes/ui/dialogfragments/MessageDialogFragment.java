@@ -19,16 +19,25 @@ public class MessageDialogFragment extends DialogFragment {
 
     private static final String DIALOG_FRAGMENT_MESSAGE_ARGUMENT_KEY = "message";
     private static final String DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY = "title";
+    private static final String DIALOG_FRAGMENT_IS_CALLER_REPORT_BUTTON_ARGUMENT_KEY = "caller";
+
+
+    public interface MessageDialogFragmentListener {
+        void onAccept();
+    }
+
 
     public MessageDialogFragment() {
         // Empty constructor is required for DialogFragment
     }
 
-    public static MessageDialogFragment newInstance(CharSequence message, String title) {
+
+    public static MessageDialogFragment newInstance(CharSequence message, String title, boolean isCallerReportButton) {
         MessageDialogFragment messageDialogFragment = new MessageDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putCharSequence(DIALOG_FRAGMENT_MESSAGE_ARGUMENT_KEY, message);
         bundle.putString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY, title);
+        bundle.putBoolean(DIALOG_FRAGMENT_IS_CALLER_REPORT_BUTTON_ARGUMENT_KEY, isCallerReportButton);
         messageDialogFragment.setArguments(bundle);
         return messageDialogFragment;
     }
@@ -45,10 +54,12 @@ public class MessageDialogFragment extends DialogFragment {
 
         CharSequence message = null;
         String title = "";
+        boolean isCallerReportButton = false;
 
         if (arguments != null) {
             message = arguments.getCharSequence(DIALOG_FRAGMENT_MESSAGE_ARGUMENT_KEY, "Hello");
             title = arguments.getString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY);
+            isCallerReportButton = arguments.getBoolean(DIALOG_FRAGMENT_IS_CALLER_REPORT_BUTTON_ARGUMENT_KEY);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
@@ -56,7 +67,12 @@ public class MessageDialogFragment extends DialogFragment {
         builder.setMessage(message).setTitle(Html.fromHtml(getString(R.string.html_text_with_color,
                 colorPrimaryDarkString, title)));
 
+        boolean finalIsCallerReportButton = isCallerReportButton;
         builder.setPositiveButton(R.string.positive_button_text, (dialog, id) -> {
+            if (finalIsCallerReportButton){
+                MessageDialogFragmentListener listener = (MessageDialogFragmentListener) getActivity();
+                listener.onAccept();
+            }
         });
 
         AlertDialog alertDialog = builder.create();

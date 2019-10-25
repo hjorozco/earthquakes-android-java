@@ -56,7 +56,8 @@ import java.util.concurrent.Future;
 import static android.view.View.GONE;
 
 
-public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMapReadyCallback,
+        MessageDialogFragment.MessageDialogFragmentListener {
 
     public static final String EXTRA_EARTHQUAKE = "EXTRA_EARTHQUAKE_KEY";
     public static final String EXTRA_IS_FAVORITES_ACTIVITY_CALLING = "EXTRA_IS_FAVORITES_ACTIVITY_CALLING";
@@ -695,7 +696,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(magnitudeMessages[magnitude]),
-                        getString(R.string.activity_earthquake_details_magnitude_information_dialog_fragment_title, magnitudeText));
+                        getString(R.string.activity_earthquake_details_magnitude_information_dialog_fragment_title, magnitudeText), false);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_magnitude_information_dialog_fragment_tag));
@@ -710,7 +711,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(intensityMessages[intensity - 1]),
                         getString(R.string.activity_earthquake_details_intensity_information_dialog_fragment_title,
-                                intensityType, romanNumeral));
+                                intensityType, romanNumeral),
+                        false);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_intensity_information_dialog_fragment_tag));
@@ -725,7 +727,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(alertMessages[alertType]),
                         getString(R.string.activity_earthquake_details_alert_information_dialog_fragment_title,
-                                alertTypeText));
+                                alertTypeText), false);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_alert_information_dialog_fragment_tag));
@@ -736,7 +738,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(R.string.activity_earthquake_details_possible_tsunami_dialog_fragment_message)),
-                        getString(R.string.activity_earthquake_details_possible_tsumami_dialog_fragment_title));
+                        getString(R.string.activity_earthquake_details_possible_tsumami_dialog_fragment_title), false);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_possible_tsunami_dialog_fragment_tag));
@@ -748,10 +750,24 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(
                                 R.string.activity_earthquake_details_help_dialog_fragment_message)),
-                        getString(R.string.activity_earthquake_details_help_dialog_fragment_title));
+                        getString(R.string.activity_earthquake_details_help_dialog_fragment_title),
+                        false);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_help_dialog_fragment_tag));
+    }
+
+
+    private void showReportEarthquakeInSpanishHelpMessage() {
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        Html.fromHtml(getString(
+                                R.string.activity_earthquake_details_report_spanish_help_dialog_fragment_message)),
+                        getString(R.string.activity_earthquake_details_report_spanish_help_dialog_fragment_title),
+                        true);
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_earthquake_details_report_spanish_help_dialog_fragment_tag));
     }
 
 
@@ -977,11 +993,24 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             startActivity(intent);
             overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
         } else {
-            // On Android 19 report web site does not work correctly on ReportEarthquakeActivity WebView
-            QueryUtils.openWebPageInGoogleChrome(this, reportUrl);
+            // For Android 19 in Spanish show a message indicating how to change language to Spanish.
+            if (WordsUtils.getLocaleLanguage().equals("es")){
+                showReportEarthquakeInSpanishHelpMessage();
+            } else {
+                // On Android 19 report web site does not work correctly on ReportEarthquakeActivity WebView
+                // so open the report web site in Google Chrome.
+                QueryUtils.openWebPageInGoogleChrome(this, reportUrl);
+            }
         }
     }
 
+    // Implementation of the MessageDialogFragment.MessageDialogFragmentListener interface
+    @Override
+    public void onAccept() {
+        // On Android 19 report web site does not work correctly on ReportEarthquakeActivity WebView
+        // so open the report web site in Google Chrome.
+        QueryUtils.openWebPageInGoogleChrome(this, mEarthquake.getUrl() + "/tellus");
+    }
 
     private void dismissEarthquakeDetailsActivity() {
         if (mUsgsMapWebView != null && mUsgsMapWebView.canGoBack()) {
@@ -1028,5 +1057,6 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         outState.putBoolean(IS_FAB_MENU_OPEN_VALUE_KEY, mIsFabMenuOpen);
         outState.putBoolean(IS_FAVORITE_VALUE_KEY, mIsFavorite);
     }
+
 }
 

@@ -29,7 +29,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(
                                 R.string.activity_search_preferences_help_dialog_fragment_message)),
-                        getString(R.string.activity_search_preferences_help_dialog_fragment_title));
+                        getString(R.string.activity_search_preferences_help_dialog_fragment_title), false);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_search_preferences_help_dialog_fragment_tag));

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <integer name="search_preferences_maximum_distance_default_value">0</integer>
+    <integer name="search_preferences_maximum_distance_minimum_value">0</integer>
+    <integer name="search_preferences_maximum_distance_maximum_value">20000</integer>
+
     <integer name="search_preferences_magnitudes_minimum_value">0</integer>
     <integer name="search_preferences_magnitudes_maximum_value">10</integer>
 
