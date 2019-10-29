@@ -1,12 +1,15 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.EditTextPreference;
@@ -15,17 +18,21 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDialogFragmentCompat;
 import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByPreferenceDialogFragmentCompat;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.LONG_TIME_SNACKBAR;
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
 
 
@@ -35,9 +42,13 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     private static final int MAX_NUMBER_OF_EARTHQUAKES_EDIT_TEXT_LENGTH_FILTER = 5;
     private static final int LOCATION_EDIT_TEXT_LENGTH_FILTER = 50;
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
+
+    private EditTextPreference mLocationEditTextPreference;
     private ListPreference mDateRangeListPreference;
     private DateDialogPreference mFromDateDialogPreference;
     private DateDialogPreference mToDateDialogPreference;
+    private SeekBarPreference mMaximumDistanceSeekBarPreference;
     private SeekBarPreference mMinimumMagnitudeSeekBarPreference;
     private SeekBarPreference mMaximumMagnitudeSeekBarPreference;
     private CheckBoxPreference mPlaySoundPreference;
@@ -67,20 +78,26 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         setupMaxNumberOfEarthquakesEditTextPreference(findPreference(getString(R.string.search_preference_max_number_of_earthquakes_key)));
 
-        setupLocationEditTextPreference(findPreference(getString(R.string.search_preference_location_key)));
+        mLocationEditTextPreference = findPreference(getString(R.string.search_preference_location_key));
+        setupLocationEditTextPreference(mLocationEditTextPreference);
+
+        mMaximumDistanceSeekBarPreference = findPreference(getString(R.string.search_preference_maximum_distance_key));
+        if (mMaximumDistanceSeekBarPreference != null) {
+            setupMaximumDistanceSeekBarPreference(mMaximumDistanceSeekBarPreference);
+        }
+
+        setLocationAndMaximumDistanceSummaries();
 
         mDateRangeListPreference = findPreference(getString(R.string.search_preference_date_range_key));
         mFromDateDialogPreference = findPreference(getString(R.string.search_preference_start_date_key));
         mToDateDialogPreference = findPreference(getString(R.string.search_preference_end_date_key));
-
         if (mToDateDialogPreference != null) {
             mToDateDialogPreference.setToDateChangedManuallyFlag(false);
         }
+        setupDatePreferences();
 
         mMinimumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_minimum_magnitude_key));
         mMaximumMagnitudeSeekBarPreference = findPreference(getString(R.string.search_preference_maximum_magnitude_key));
-
-        setupDatePreferences();
         setupMinimumMagnitudeSeekBarPreference(mMinimumMagnitudeSeekBarPreference);
         setupMaximumMagnitudeSeekBarPreference(mMaximumMagnitudeSeekBarPreference);
 
@@ -94,7 +111,13 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if (key.equals(getString(R.string.search_preference_date_range_key))) {
+        if (key.equals(getString(R.string.search_preference_maximum_distance_key))) {
+            setLocationAndMaximumDistanceSummaries();
+
+        } else if (key.equals(getString(R.string.search_preference_location_key))) {
+            setLocationAndMaximumDistanceSummaries();
+
+        } else if (key.equals(getString(R.string.search_preference_date_range_key))) {
             mDateRangeChanged = true;
             updatePredefinedDateRanges();
 
@@ -204,16 +227,6 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                         editText.setText(WordsUtils.formatLocationText(editText.getText().toString()));
                         editText.selectAll();
                     });
-
-            editTextPreference.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
-
-                String editTextPreferenceText = WordsUtils.formatLocationText(preference.getText());
-                if (android.text.TextUtils.isEmpty(editTextPreferenceText)) {
-                    return getString(R.string.search_preference_location_not_set_value);
-                }
-                return editTextPreferenceText;
-            });
-
         }
     }
 
@@ -256,6 +269,87 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             } else if (dateRangeListPreferenceValue.equals(getString(R.string.search_preference_date_range_last_365_days_entry_value))) {
                 mFromDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds - millisecondsOnOneDay * 365);
                 mToDateDialogPreference.setDateInMilliseconds(todayDateOnMilliseconds);
+            }
+        }
+    }
+
+
+    private void setupMaximumDistanceSeekBarPreference(SeekBarPreference seekBarPreference) {
+
+        seekBarPreference.setUpdatesContinuously(true);
+
+        // Saves the maximum distance value only if the location permission is granted
+        seekBarPreference.setOnPreferenceChangeListener((preference, newValue) ->
+                checkIfLocationPermissionIsGrantedIfNotAskUser());
+
+    }
+
+
+    private void setLocationAndMaximumDistanceSummaries() {
+
+        String locationSummary = WordsUtils.formatLocationText(mLocationEditTextPreference.getText());
+
+        if (mMaximumDistanceSeekBarPreference.getValue() == 0) {
+            if (locationSummary.isEmpty()) {
+                mLocationEditTextPreference.setSummary(getString(
+                        R.string.search_preference_location_not_set_and_maximum_distance_not_set_summary));
+                mMaximumDistanceSeekBarPreference.setSummary(getString(
+                        R.string.search_preference_maximum_distance_not_set_and_location_not_set_summary));
+            } else {
+                mLocationEditTextPreference.setSummary(locationSummary);
+                mMaximumDistanceSeekBarPreference.setSummary(getString(
+                        R.string.search_preference_maximum_distance_not_set_and_location_set_summary));
+            }
+        } else {
+            if (QueryUtils.isLocationPermissionGranted(getContext())) {
+                if (locationSummary.isEmpty()) {
+                    mLocationEditTextPreference.setSummary(getString(
+                            R.string.search_preference_location_not_set_and_maximum_distance_set_summary));
+                } else {
+                    mLocationEditTextPreference.setSummary(locationSummary);
+                }
+                mMaximumDistanceSeekBarPreference.setSummary(
+                        mMaximumDistanceSeekBarPreference.getValue() + " " +
+                                getString(R.string.search_preference_maximum_distance_km_text));
+            } else {
+                if (locationSummary.isEmpty()) {
+                    mLocationEditTextPreference.setSummary(getString(
+                            R.string.search_preference_location_not_set_and_maximum_distance_not_set_summary));
+                    mMaximumDistanceSeekBarPreference.setSummary(getString(
+                            R.string.search_preference_maximum_distance_not_set_and_location_not_set_summary));
+                } else {
+                    mLocationEditTextPreference.setSummary(locationSummary);
+                    mMaximumDistanceSeekBarPreference.setSummary(getString(
+                            R.string.search_preference_maximum_distance_not_set_and_location_set_summary));
+                }
+                mMaximumDistanceSeekBarPreference.setValue(0);
+            }
+        }
+    }
+
+
+    private boolean checkIfLocationPermissionIsGrantedIfNotAskUser() {
+
+        if (QueryUtils.isLocationPermissionGranted(getContext())) {
+            return true;
+        } else {
+            // Permission is not granted.
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+            return false;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (!(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Permission denied. Show a message to the user.
+                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                        getString(R.string.search_preference_maximum_distance_location_permission_denied_message),
+                        LONG_TIME_SNACKBAR * 1000).show();
             }
         }
     }

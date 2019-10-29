@@ -46,7 +46,7 @@
 
     <string name="activity_main_no_earthquake_location_text">Sin nombre</string>
 
-    <string name="activity_main_long_search_message">Para reducir el tiempo de búsqueda, trata cambiando las preferencias</string>
+    <string name="activity_main_long_search_message">Cambia las preferencias para reducir el tiempo de búsqueda.</string>
 
     <string name="activity_main_under_construction_text">Opción no disponible aún</string>
 
@@ -85,9 +85,19 @@
     <string name="search_preference_sort_by_descending_magnitude_summary">Magnitud descendente</string>
 
     <string name="search_preference_location_title">Localidad</string>
-    <string name="search_preference_location_not_set_value">Sin definir. Buscará sismos en todo el mundo.</string>
+    <string name="search_preference_location_not_set_and_maximum_distance_not_set_summary">
+        Sin definir. Buscará sismos en todo el mundo.</string>
+    <string name="search_preference_location_not_set_and_maximum_distance_set_summary">
+        Sin definir. Buscará sismos en todo el mundo dentro de la distancia máxima establecida.</string>
 
     <string name="search_preference_maximum_distance_title">Distancia máxima de ti</string>
+    <string name="search_preference_maximum_distance_not_set_and_location_set_summary">
+        Sin definir. Buscará sismos a cualquier distancia de ti en la localidad definida.</string>
+    <string name="search_preference_maximum_distance_not_set_and_location_not_set_summary">
+        Sin definir. Buscará sismos a cualquier distancia de ti.</string>
+    <string name="search_preference_maximum_distance_location_permission_denied_message">
+        Esta preferencia de busqueda necesita permiso para acceder a la ubicación de este dispositivo.
+    </string>
     <!-- General -->
 
 

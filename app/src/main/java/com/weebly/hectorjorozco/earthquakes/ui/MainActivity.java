@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
     public static final int MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP = 1000;
-    private static final int SECONDS_TO_SHOW_LONG_SEARCH_MESSAGE = 30;
+    private static final int SECONDS_UNTIL_SHOWING_LONG_SEARCH_MESSAGE = 30;
+    public static final int LONG_TIME_SNACKBAR = 4;
 
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
@@ -122,14 +123,11 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private void setupLongSearchMessageHandler() {
         mHandler = new Handler();
-        mRunnable = () -> {
-            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                    MainActivity.this.getString(R.string.activity_main_long_search_message), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(getString(R.string.ok_text), v -> snackbar.dismiss());
-            snackbar.show();
-        };
+        mRunnable = () -> Snackbar.make(findViewById(android.R.id.content),
+                MainActivity.this.getString(R.string.activity_main_long_search_message),
+                LONG_TIME_SNACKBAR * 1000).show();
 
-        mHandler.postDelayed(mRunnable, SECONDS_TO_SHOW_LONG_SEARCH_MESSAGE * 1000);
+        mHandler.postDelayed(mRunnable, SECONDS_UNTIL_SHOWING_LONG_SEARCH_MESSAGE * 1000);
         QueryUtils.sHandler = mHandler;
         QueryUtils.sRunnable = mRunnable;
     }

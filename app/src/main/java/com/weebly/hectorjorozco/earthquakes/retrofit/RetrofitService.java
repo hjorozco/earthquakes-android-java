@@ -11,7 +11,15 @@ import retrofit2.http.Query;
  */
 interface RetrofitService {
     @GET("query")
-    Call<Earthquakes> getEarthquakesFromUSGS(@Query("format") String format,
+    Call<Earthquakes> getEarthquakes(@Query("format") String format,
+                                     @Query("starttime") String startTime,
+                                     @Query("endtime") String endTime,
+                                     @Query("limit") String limit,
+                                     @Query("minmagnitude") String minMagnitude,
+                                     @Query("maxmagnitude") String maxMagnitude,
+                                     @Query("orderby") String orderBy);
+
+    Call<Earthquakes> getEarthquakesWithinMaximumDistance(@Query("format") String format,
                                              @Query("starttime") String startTime,
                                              @Query("endtime") String endTime,
                                              @Query("limit") String limit,

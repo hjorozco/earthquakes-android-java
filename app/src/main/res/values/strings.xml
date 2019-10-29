@@ -72,7 +72,7 @@
 
     <string name="activity_main_no_earthquake_location_text">No name</string>
 
-    <string name="activity_main_long_search_message">To reduce the search time try changing the preferences</string>
+    <string name="activity_main_long_search_message">Change preferences to reduce search time</string>
 
     <string name="activity_main_under_construction_text">Option not available yet</string>
 
@@ -125,12 +125,24 @@
 
 
     <string name="search_preference_location_title">Location</string>
-    <string name="search_preference_location_key" translatable="false">filter_by</string>
+    <string name="search_preference_location_key" translatable="false">location</string>
     <string name="search_preference_location_default_value" translatable="false" />
-    <string name="search_preference_location_not_set_value">Not set. Will search for earthquakes in the whole world.</string>
+    <string name="search_preference_location_not_set_and_maximum_distance_not_set_summary">
+        Not set. Will search for earthquakes in the whole world.</string>
+    <string name="search_preference_location_not_set_and_maximum_distance_set_summary">
+        Not set. Will search for earthquakes in the whole world within the maximum distance set.</string>
+
 
     <string name="search_preference_maximum_distance_title">Maximum distance from you</string>
     <string name="search_preference_maximum_distance_key" translatable="false">maximum_distance</string>
+    <string name="search_preference_maximum_distance_not_set_and_location_set_summary">
+        Not set. Will search for earthquakes at any distance from you on the set location.</string>
+    <string name="search_preference_maximum_distance_not_set_and_location_not_set_summary">
+        Not set. Will search for earthquakes at any distance from you.</string>
+    <string name="search_preference_maximum_distance_km_text" translatable="false">km</string>
+    <string name="search_preference_maximum_distance_location_permission_denied_message">
+        This search preference needs permission to access this device\'s location
+    </string>
     <!-- General -->
 
 

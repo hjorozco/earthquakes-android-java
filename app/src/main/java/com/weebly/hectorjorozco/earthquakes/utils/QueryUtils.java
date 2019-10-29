@@ -1,9 +1,11 @@
 package com.weebly.hectorjorozco.earthquakes.utils;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 
@@ -679,5 +682,14 @@ public class QueryUtils {
         DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(R.color.colorAccent));
         progressBar.setIndeterminateDrawable(DrawableCompat.unwrap(wrapDrawable));
     }
+
+
+    public static boolean isLocationPermissionGranted(Context context){
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    // TODO Create a method that returns a location object that contains the last known location of the device.
 
 }

@@ -74,7 +74,7 @@ public final class RetrofitImplementation implements Serializable {
     public Call<Earthquakes> getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback,
                                                   EarthquakesQueryParameters earthquakesQueryParameters) {
 
-        Call<Earthquakes> retrofitServiceCall = retrofitService.getEarthquakesFromUSGS(
+        Call<Earthquakes> retrofitServiceCall = retrofitService.getEarthquakes(
                 "geojson",
                 earthquakesQueryParameters.getStartTime(),
                 earthquakesQueryParameters.getEndTime(),
