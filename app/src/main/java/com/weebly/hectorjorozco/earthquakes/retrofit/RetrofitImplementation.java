@@ -74,6 +74,9 @@ public final class RetrofitImplementation implements Serializable {
     public Call<Earthquakes> getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback,
                                                   EarthquakesQueryParameters earthquakesQueryParameters) {
 
+        // TODO Check if the maxDistance is set up and the location permission is granted and call the
+        // corresponding Retrofit Service interface method.
+
         Call<Earthquakes> retrofitServiceCall = retrofitService.getEarthquakes(
                 "geojson",
                 earthquakesQueryParameters.getStartTime(),

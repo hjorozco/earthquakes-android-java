@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,8 @@ import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
@@ -83,6 +87,13 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (QueryUtils.isLocationPermissionGranted(this)
+                && QueryUtils.getMaxDistanceSearchPreference(this)!=0) {
+            QueryUtils.updateLastKnowLocation(mFusedLocationClient);
+        }
 
         // After a rotation
         if (savedInstanceState != null) {
@@ -592,8 +603,14 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     @Override
     protected void onResume() {
         super.onResume();
+
         if (QueryUtils.getSoundSearchPreference(this) && QueryUtils.sIsPlayingSound) {
             playEarthquakeSound();
+        }
+
+        if (QueryUtils.isLocationPermissionGranted(this)
+                && QueryUtils.getMaxDistanceSearchPreference(this)!=0) {
+            QueryUtils.updateLastKnowLocation(mFusedLocationClient);
         }
     }
 

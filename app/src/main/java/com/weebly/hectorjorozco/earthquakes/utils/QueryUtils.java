@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,10 +19,14 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesListInformationValues;
@@ -82,6 +87,8 @@ public class QueryUtils {
 
     public static Handler sHandler;
     public static Runnable sRunnable;
+
+    public static Location sLastKnownLocation = null;
 
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context,
@@ -348,6 +355,14 @@ public class QueryUtils {
         // Creates the endDate string that will be passed as a parameter to the USGS JSON query.
         endDateJSONQuery = dateForQueryFormatter().format(endDateInMilliseconds)
                 + "T" + endDateTime + endDateTimeOffset + ":00";
+
+
+        String maxDistance = "";
+        int maxDistanceValue = getMaxDistanceSearchPreference(context);
+        if (isLocationPermissionGranted(context) && maxDistanceValue!=0) {
+            maxDistance = String.valueOf(maxDistanceValue);
+        }
+
         mLocation = sharedPreferences.getString(
                 context.getString(R.string.search_preference_location_key),
                 context.getString(R.string.search_preference_location_default_value)).trim().
@@ -388,10 +403,19 @@ public class QueryUtils {
         // Stores the values needed to display the Earthquakes list information message
         sEarthquakesListInformationValuesWhenSearchStarted = new EarthquakesListInformationValues(
                 sortBy, mLocation, datePeriod, startDateForListInfo, endDateForListInfo,
-                minMagnitude, maxMagnitude, mLimit);
+                minMagnitude, maxMagnitude, mLimit, maxDistance);
 
         return new EarthquakesQueryParameters(startDateJSONQuery, endDateJSONQuery, queryLimit,
-                minMagnitude, maxMagnitude, sortBy);
+                minMagnitude, maxMagnitude, sortBy, maxDistance);
+    }
+
+
+    public static int getMaxDistanceSearchPreference(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getInt(
+                context.getString(R.string.search_preference_maximum_distance_key),
+                context.getResources().getInteger(R.integer.search_preferences_maximum_distance_default_value));
+
     }
 
 
@@ -684,12 +708,29 @@ public class QueryUtils {
     }
 
 
-    public static boolean isLocationPermissionGranted(Context context){
+    public static boolean isLocationPermissionGranted(Context context) {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED;
     }
 
 
-    // TODO Create a method that returns a location object that contains the last known location of the device.
+    public static void updateLastKnowLocation(FusedLocationProviderClient fusedLocationProviderClient) {
+        fusedLocationProviderClient.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            sLastKnownLocation = location;
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        sLastKnownLocation = null;
+                    }
+                });
+    }
 
 }

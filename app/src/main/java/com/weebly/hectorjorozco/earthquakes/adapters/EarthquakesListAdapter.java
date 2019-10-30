@@ -68,6 +68,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         if (holder instanceof TitleViewHolder) {
 
+            // TODO Check if the maxDistance search preference was used by checking QueryUtils.sEarthquakesListInformationValues
+
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
             String pluralEnding, foundWordSuffix, orderBy, sortedBy;
@@ -114,6 +116,23 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     earthquakeViewHolder.locationPrimaryTextView,
                     earthquakeViewHolder.dateTextView,
                     earthquakeViewHolder.timeTextView);
+
+            // For Android version 21 and up set transition names
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                earthquakeViewHolder.magnitudeTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
+                earthquakeViewHolder.locationOffsetTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
+                earthquakeViewHolder.locationPrimaryTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
+                earthquakeViewHolder.dateTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
+            } else {
+                // For Android 19 set list item background as a touch selector since
+                // ?android:attr/selectableItemBackground does not work on 19.
+                earthquakeViewHolder.earthquakeLinearLayout.setBackground(mContext.getResources().
+                        getDrawable(R.drawable.touch_selector));
+            }
 
         }
 
@@ -176,23 +195,6 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
             dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
             timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
-
-            // For Android version 21 and up set transition names
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                magnitudeTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
-                locationOffsetTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
-                locationPrimaryTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
-                dateTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
-            } else {
-                // For Android 19 set list item background as a touch selector since
-                // ?android:attr/selectableItemBackground does not work on 19.
-                earthquakeLinearLayout.setBackground(mContext.getResources().
-                        getDrawable(R.drawable.touch_selector));
-            }
 
             earthquakeLinearLayout.setOnClickListener((View v) ->
             {

@@ -83,8 +83,13 @@
     <string name="search_preference_sort_by_descending_date_summary">Fecha descendente</string>
     <string name="search_preference_sort_by_ascending_magnitude_summary">Magnitud ascendente</string>
     <string name="search_preference_sort_by_descending_magnitude_summary">Magnitud descendente</string>
+    <!-- General -->
 
-    <string name="search_preference_location_title">Localidad</string>
+
+    <!-- LOCATION -->
+    <string name="search_preferences_location_preferences_category_title">Localidad</string>
+
+    <string name="search_preference_location_title">Nombre de la localidad</string>
     <string name="search_preference_location_not_set_and_maximum_distance_not_set_summary">
         Sin definir. Buscará sismos en todo el mundo.</string>
     <string name="search_preference_location_not_set_and_maximum_distance_set_summary">
@@ -98,7 +103,8 @@
     <string name="search_preference_maximum_distance_location_permission_denied_message">
         Esta preferencia de busqueda necesita permiso para acceder a la ubicación de este dispositivo.
     </string>
-    <!-- General -->
+
+    <!-- Location -->
 
 
     <!-- DATE -->

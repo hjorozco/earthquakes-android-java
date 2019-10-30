@@ -122,10 +122,15 @@
     <string name="sort_by_preference_dialog_fragment_compat_tag" translatable="false">
         search_preference_sort_by_preference_dialog_fragment_compat_tag
     </string>
+    <!-- General -->
 
 
-    <string name="search_preference_location_title">Location</string>
-    <string name="search_preference_location_key" translatable="false">location</string>
+    <!-- LOCATION -->
+    <string name="search_preferences_location_preferences_category_title">Location</string>
+    <string name="search_preferences_location_preferences_category_key" translatable="false">location_preferences</string>
+
+    <string name="search_preference_location_title">Location name</string>
+    <string name="search_preference_location_key" translatable="false">location_name</string>
     <string name="search_preference_location_default_value" translatable="false" />
     <string name="search_preference_location_not_set_and_maximum_distance_not_set_summary">
         Not set. Will search for earthquakes in the whole world.</string>
@@ -143,7 +148,7 @@
     <string name="search_preference_maximum_distance_location_permission_denied_message">
         This search preference needs permission to access this device\'s location
     </string>
-    <!-- General -->
+    <!-- Location -->
 
 
     <!-- DATE -->

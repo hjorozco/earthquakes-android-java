@@ -10,6 +10,7 @@ public class EarthquakesListInformationValues {
     private final String mMinMagnitude;
     private final String mMaxMagnitude;
     private final String mLimit;
+    private final String mMaxDistance;
 
     private String mFirstEarthquakeMag;
     private String mLastEarthquakeMag;
@@ -20,7 +21,7 @@ public class EarthquakesListInformationValues {
 
     public EarthquakesListInformationValues(String orderBy, String location, String datePeriod,
                                             String startDate, String endDate, String minMagnitude, String maxMagnitude,
-                                            String limit) {
+                                            String limit, String maxDistance) {
         mOrderBy = orderBy;
         mLocation = location;
         mDatePeriod = datePeriod;
@@ -29,6 +30,7 @@ public class EarthquakesListInformationValues {
         mMinMagnitude = minMagnitude;
         mMaxMagnitude = maxMagnitude;
         mLimit = limit;
+        mMaxDistance = maxDistance;
     }
 
     public String getOrderBy() {
@@ -62,6 +64,8 @@ public class EarthquakesListInformationValues {
     public String getLimit() {
         return mLimit;
     }
+
+    public String getmMaxDistance() {return mMaxDistance;}
 
     public String getFirstEarthquakeMag() {
         return mFirstEarthquakeMag;

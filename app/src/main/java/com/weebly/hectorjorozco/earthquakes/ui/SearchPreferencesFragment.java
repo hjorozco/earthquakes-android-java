@@ -57,6 +57,10 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     // the user changing the date individually
     private boolean mDateRangeChanged;
 
+    // Flag used to prevent the "Location Permission Denied explanation message" to appear multiple
+    // times when the user is changing the value of the "MaximumDistance" preference.
+    private boolean mIsAskingForLocationPermission = false;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -334,8 +338,11 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
             return true;
         } else {
             // Permission is not granted.
-            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
+            if (!mIsAskingForLocationPermission) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        LOCATION_PERMISSION_REQUEST_CODE);
+                mIsAskingForLocationPermission = true;
+            }
             return false;
         }
     }
@@ -344,6 +351,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            mIsAskingForLocationPermission = false;
             if (!(grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 // Permission denied. Show a message to the user.

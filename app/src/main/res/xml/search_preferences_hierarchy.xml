@@ -21,6 +21,12 @@
             app:icon="@drawable/ic_sort_descending_brown_24dp"
             app:singleLineTitle="false" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="@string/search_preferences_location_preferences_category_key"
+        app:title="@string/search_preferences_location_preferences_category_title">
+
         <EditTextPreference
             android:defaultValue="@string/search_preference_location_default_value"
             android:key="@string/search_preference_location_key"
