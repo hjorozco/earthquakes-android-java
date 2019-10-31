@@ -232,7 +232,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         // Intensity views
         TextView intensityLabelTextView =
                 findViewById(R.id.activity_earthquake_details_intensity_label_text_view);
-        LinearLayout intensityValuesLinearLayout = findViewById(R.id.activity_earthquake_details_intensity_values_linear_layout);
+        LinearLayout intensityValuesLinearLayout =
+                findViewById(R.id.activity_earthquake_details_intensity_values_linear_layout);
         FlexboxLayout reportedIntensityFlexboxLayout =
                 findViewById(R.id.activity_earthquake_details_reported_intensity_flex_box_layout);
         TextView reportedValueTextView =
@@ -263,7 +264,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 estimatedValueTextView.setText(mEstimatedIntensityRomanNumeral);
                 estimatedValueTextView.setTextColor(getIntensityColor(estimatedIntensity));
                 estimatedIntensityFlexboxLayout.
-                        setOnClickListener(v -> showIntensityMessage(estimatedIntensity, estimatedType, mEstimatedIntensityRomanNumeral));
+                        setOnClickListener(v -> showIntensityMessage(estimatedIntensity, estimatedType,
+                                mEstimatedIntensityRomanNumeral));
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     estimatedIntensityFlexboxLayout.setBackground(getResources().
                             getDrawable(R.drawable.touch_selector));
@@ -279,7 +281,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 reportedValueTextView.setText(mReportedIntensityRomanNumeral);
                 reportedValueTextView.setTextColor(getIntensityColor(reportedIntensity));
                 reportedIntensityFlexboxLayout.
-                        setOnClickListener(v -> showIntensityMessage(reportedIntensity, reportedType, mReportedIntensityRomanNumeral));
+                        setOnClickListener(v -> showIntensityMessage(reportedIntensity, reportedType,
+                                mReportedIntensityRomanNumeral));
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     reportedIntensityFlexboxLayout.setBackground(getResources().
                             getDrawable(R.drawable.touch_selector));
@@ -692,11 +695,13 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         String magnitudeText = QueryUtils.getMagnitudeText(mEarthquake.getMagnitude());
         int magnitude = (int) Double.parseDouble(magnitudeText);
 
-        String[] magnitudeMessages = getResources().getStringArray(R.array.activity_earthquake_details_magnitude_information_array);
+        String[] magnitudeMessages = getResources().getStringArray(
+                R.array.activity_earthquake_details_magnitude_information_array);
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(magnitudeMessages[magnitude]),
-                        getString(R.string.activity_earthquake_details_magnitude_information_dialog_fragment_title, magnitudeText), false);
+                        getString(R.string.activity_earthquake_details_magnitude_information_dialog_fragment_title, magnitudeText),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_magnitude_information_dialog_fragment_tag));
@@ -712,7 +717,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                         Html.fromHtml(intensityMessages[intensity - 1]),
                         getString(R.string.activity_earthquake_details_intensity_information_dialog_fragment_title,
                                 intensityType, romanNumeral),
-                        false);
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_intensity_information_dialog_fragment_tag));
@@ -727,7 +732,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(alertMessages[alertType]),
                         getString(R.string.activity_earthquake_details_alert_information_dialog_fragment_title,
-                                alertTypeText), false);
+                                alertTypeText), MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_alert_information_dialog_fragment_tag));
@@ -738,7 +743,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(R.string.activity_earthquake_details_possible_tsunami_dialog_fragment_message)),
-                        getString(R.string.activity_earthquake_details_possible_tsumami_dialog_fragment_title), false);
+                        getString(R.string.activity_earthquake_details_possible_tsumami_dialog_fragment_title),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_possible_tsunami_dialog_fragment_tag));
@@ -751,7 +757,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                         Html.fromHtml(getString(
                                 R.string.activity_earthquake_details_help_dialog_fragment_message)),
                         getString(R.string.activity_earthquake_details_help_dialog_fragment_title),
-                        false);
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_help_dialog_fragment_tag));
@@ -764,7 +770,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                         Html.fromHtml(getString(
                                 R.string.activity_earthquake_details_report_spanish_help_dialog_fragment_message)),
                         getString(R.string.activity_earthquake_details_report_spanish_help_dialog_fragment_title),
-                        true);
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_REPORT_BUTTON);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_earthquake_details_report_spanish_help_dialog_fragment_tag));
@@ -848,11 +854,13 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         setupFavoritesMenuItem(!mIsFavorite);
         if (mIsFavorite) {
             // Remove from "favorite_earthquakes" db table
-            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.earthquakeDao().deleteFavoriteEarthquake(mEarthquake));
+            AppExecutors.getInstance().diskIO().execute(() ->
+                    mAppDatabase.earthquakeDao().deleteFavoriteEarthquake(mEarthquake));
             showSnackBar(getString(R.string.activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text));
         } else {
             // Insert to "favorite_earthquakes" db table
-            AppExecutors.getInstance().diskIO().execute(() -> mAppDatabase.earthquakeDao().insertFavoriteEarthquake(mEarthquake));
+            AppExecutors.getInstance().diskIO().execute(() ->
+                    mAppDatabase.earthquakeDao().insertFavoriteEarthquake(mEarthquake));
             showSnackBar(getString(R.string.activity_earthquake_details_earthquake_added_to_favorites_snack_bar_text));
         }
         mIsFavorite = !mIsFavorite;

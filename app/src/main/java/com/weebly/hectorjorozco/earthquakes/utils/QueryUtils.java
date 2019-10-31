@@ -19,14 +19,12 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.location.LocationServices;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesListInformationValues;
@@ -89,7 +87,6 @@ public class QueryUtils {
     public static Runnable sRunnable;
 
     public static Location sLastKnownLocation = null;
-
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context,
                                                                         Earthquakes retrofitResult) {
@@ -356,11 +353,15 @@ public class QueryUtils {
         endDateJSONQuery = dateForQueryFormatter().format(endDateInMilliseconds)
                 + "T" + endDateTime + endDateTimeOffset + ":00";
 
-
+        String latitude = "";
+        String longitude = "";
         String maxDistance = "";
         int maxDistanceValue = getMaxDistanceSearchPreference(context);
         if (isLocationPermissionGranted(context) && maxDistanceValue!=0) {
+            updateLastKnowLocation(context);
             maxDistance = String.valueOf(maxDistanceValue);
+            latitude = String.valueOf(sLastKnownLocation.getLatitude());
+            longitude = String.valueOf(sLastKnownLocation.getLongitude());
         }
 
         mLocation = sharedPreferences.getString(
@@ -406,7 +407,7 @@ public class QueryUtils {
                 minMagnitude, maxMagnitude, mLimit, maxDistance);
 
         return new EarthquakesQueryParameters(startDateJSONQuery, endDateJSONQuery, queryLimit,
-                minMagnitude, maxMagnitude, sortBy, maxDistance);
+                minMagnitude, maxMagnitude, sortBy, latitude, longitude, maxDistance);
     }
 
 
@@ -714,23 +715,18 @@ public class QueryUtils {
     }
 
 
-    public static void updateLastKnowLocation(FusedLocationProviderClient fusedLocationProviderClient) {
+    public static void updateLastKnowLocation(Context context) {
+        FusedLocationProviderClient fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(context);
         fusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            sLastKnownLocation = location;
-                        }
+                .addOnSuccessListener(location -> {
+                    // Got last known location. In some rare situations this can be null.
+                    // TODO Save location values on SharedPreferences and delete static variable sLastKnownLocation;
+                    if (location != null) {
+                        sLastKnownLocation = location;
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        sLastKnownLocation = null;
-                    }
-                });
+                .addOnFailureListener(e -> sLastKnownLocation = null);
     }
 
 }

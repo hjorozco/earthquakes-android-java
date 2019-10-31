@@ -1,9 +1,13 @@
 package com.weebly.hectorjorozco.earthquakes.retrofit;
 
+import android.app.DownloadManager;
+
 import androidx.annotation.NonNull;
 
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
+import com.weebly.hectorjorozco.earthquakes.ui.MainActivity;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
@@ -74,17 +78,29 @@ public final class RetrofitImplementation implements Serializable {
     public Call<Earthquakes> getListOfEarthquakes(final RetrofitCallback<Earthquakes> retrofitCallback,
                                                   EarthquakesQueryParameters earthquakesQueryParameters) {
 
-        // TODO Check if the maxDistance is set up and the location permission is granted and call the
-        // corresponding Retrofit Service interface method.
-
-        Call<Earthquakes> retrofitServiceCall = retrofitService.getEarthquakes(
-                "geojson",
-                earthquakesQueryParameters.getStartTime(),
-                earthquakesQueryParameters.getEndTime(),
-                earthquakesQueryParameters.getLimit(),
-                earthquakesQueryParameters.getMinMagnitude(),
-                earthquakesQueryParameters.getMaxMagnitude(),
-                earthquakesQueryParameters.getOrderBy());
+        Call<Earthquakes> retrofitServiceCall;
+        if (earthquakesQueryParameters.getMaxDistance().isEmpty()) {
+            retrofitServiceCall = retrofitService.getEarthquakes(
+                    "geojson",
+                    earthquakesQueryParameters.getStartTime(),
+                    earthquakesQueryParameters.getEndTime(),
+                    earthquakesQueryParameters.getLimit(),
+                    earthquakesQueryParameters.getMinMagnitude(),
+                    earthquakesQueryParameters.getMaxMagnitude(),
+                    earthquakesQueryParameters.getOrderBy());
+        } else {
+            retrofitServiceCall = retrofitService.getEarthquakesWithinMaximumDistance(
+                    "geojson",
+                    earthquakesQueryParameters.getStartTime(),
+                    earthquakesQueryParameters.getEndTime(),
+                    earthquakesQueryParameters.getLimit(),
+                    earthquakesQueryParameters.getMinMagnitude(),
+                    earthquakesQueryParameters.getMaxMagnitude(),
+                    earthquakesQueryParameters.getOrderBy(),
+                    earthquakesQueryParameters.getLatitude(),
+                    earthquakesQueryParameters.getLongitude(),
+                    earthquakesQueryParameters.getMaxDistance());
+        }
 
         retrofitServiceCall.enqueue(new Callback<Earthquakes>() {
 

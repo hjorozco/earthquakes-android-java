@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +31,6 @@ import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
@@ -77,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
-    private FusedLocationProviderClient mFusedLocationClient;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
@@ -88,11 +84,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         super.onCreate(savedInstanceState);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
         if (QueryUtils.isLocationPermissionGranted(this)
-                && QueryUtils.getMaxDistanceSearchPreference(this)!=0) {
-            QueryUtils.updateLastKnowLocation(mFusedLocationClient);
+                && QueryUtils.getMaxDistanceSearchPreference(this) != 0) {
+            QueryUtils.updateLastKnowLocation(this);
         }
 
         // After a rotation
@@ -517,7 +511,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
                         QueryUtils.createCurrentListAlertDialogMessage(this, QueryUtils.sEarthquakesListInformationValues),
-                        getString(R.string.menu_activity_main_action_list_information_title), false);
+                        getString(R.string.menu_activity_main_action_list_information_title),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
@@ -609,8 +604,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         }
 
         if (QueryUtils.isLocationPermissionGranted(this)
-                && QueryUtils.getMaxDistanceSearchPreference(this)!=0) {
-            QueryUtils.updateLastKnowLocation(mFusedLocationClient);
+                && QueryUtils.getMaxDistanceSearchPreference(this) != 0) {
+            QueryUtils.updateLastKnowLocation(this);
         }
     }
 

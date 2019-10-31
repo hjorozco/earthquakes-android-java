@@ -100,9 +100,6 @@
         Sin definir. Buscará sismos a cualquier distancia de ti en la localidad definida.</string>
     <string name="search_preference_maximum_distance_not_set_and_location_not_set_summary">
         Sin definir. Buscará sismos a cualquier distancia de ti.</string>
-    <string name="search_preference_maximum_distance_location_permission_denied_message">
-        Esta preferencia de busqueda necesita permiso para acceder a la ubicación de este dispositivo.
-    </string>
 
     <!-- Location -->
 
@@ -144,7 +141,16 @@
         la magnitud mínima.</string>
     <string name="activity_search_preferences_help_dialog_fragment_title">Help</string>
 
+    <string name="activity_search_preferences_location_permission_justification_dialog_fragment_message">
+        &lt;br/&gt;Para establecer esta preferencia de búsqueda, debes permitir a la aplicación acceder a
+        la &lt;b>ubicación de este dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;La ubicación del dispositivo solo
+        se utilizará para filtrar los resultados de la búsqueda de sismos a una distancia máxima de ti.
+    </string>
+    <string name="activity_search_preferences_location_permission_justification_dialog_fragment_title">
+        Permiso requerido</string>
+
     <!-- ********** Activity Search Preferences ********** -->
+
 
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
 

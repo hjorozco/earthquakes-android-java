@@ -68,11 +68,9 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         if (holder instanceof TitleViewHolder) {
 
-            // TODO Check if the maxDistance search preference was used by checking QueryUtils.sEarthquakesListInformationValues
-
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-            String pluralEnding, foundWordSuffix, orderBy, sortedBy;
+            String pluralEnding, foundWordSuffix, orderBy, sortedBy, distance;
             String title;
 
             if (mEarthquakes.size() == 1) {
@@ -103,7 +101,14 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, sortedBy);
             }
 
-            titleViewHolder.titleTextView.setText(title);
+            // TODO Update Title with the distance value
+            if (QueryUtils.sEarthquakesListInformationValues.getMaxDistance().isEmpty()){
+                distance = "";
+            } else {
+                distance = "Filtered by distance";
+            }
+
+            titleViewHolder.titleTextView.setText(title + distance);
 
         } else if (holder instanceof EarthquakeViewHolder) {
 

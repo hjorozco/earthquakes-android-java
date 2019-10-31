@@ -19,13 +19,15 @@ interface RetrofitService {
                                      @Query("maxmagnitude") String maxMagnitude,
                                      @Query("orderby") String orderBy);
 
-    // TODO Update this method to accept MaxDistance as a Query parameter.
-
+    @GET("query")
     Call<Earthquakes> getEarthquakesWithinMaximumDistance(@Query("format") String format,
-                                             @Query("starttime") String startTime,
-                                             @Query("endtime") String endTime,
-                                             @Query("limit") String limit,
-                                             @Query("minmagnitude") String minMagnitude,
-                                             @Query("maxmagnitude") String maxMagnitude,
-                                             @Query("orderby") String orderBy);
+                                                          @Query("starttime") String startTime,
+                                                          @Query("endtime") String endTime,
+                                                          @Query("limit") String limit,
+                                                          @Query("minmagnitude") String minMagnitude,
+                                                          @Query("maxmagnitude") String maxMagnitude,
+                                                          @Query("orderby") String orderBy,
+                                                          @Query("latitude") String latitude,
+                                                          @Query("longitude") String longitude,
+                                                          @Query("maxradiuskm") String maxRadiusKm);
 }

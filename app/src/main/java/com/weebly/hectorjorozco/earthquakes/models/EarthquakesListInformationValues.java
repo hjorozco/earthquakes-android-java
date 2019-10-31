@@ -65,7 +65,7 @@ public class EarthquakesListInformationValues {
         return mLimit;
     }
 
-    public String getmMaxDistance() {return mMaxDistance;}
+    public String getMaxDistance() {return mMaxDistance;}
 
     public String getFirstEarthquakeMag() {
         return mFirstEarthquakeMag;

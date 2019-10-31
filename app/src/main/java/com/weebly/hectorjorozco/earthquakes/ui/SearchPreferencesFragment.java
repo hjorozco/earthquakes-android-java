@@ -2,10 +2,10 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.Manifest;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 
@@ -18,10 +18,10 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DateDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.datepreference.DatePreferenceDialogFragmentCompat;
+import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByPreferenceDialogFragmentCompat;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
@@ -29,14 +29,13 @@ import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.LONG_TIME_SNACKBAR;
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
 
 
-public class SearchPreferencesFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SearchPreferencesFragment extends PreferenceFragmentCompat implements
+        SharedPreferences.OnSharedPreferenceChangeListener, MessageDialogFragment.MessageDialogFragmentListener {
 
 
     private static final int MAX_NUMBER_OF_EARTHQUAKES_EDIT_TEXT_LENGTH_FILTER = 5;
@@ -60,6 +59,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     // Flag used to prevent the "Location Permission Denied explanation message" to appear multiple
     // times when the user is changing the value of the "MaximumDistance" preference.
     private boolean mIsAskingForLocationPermission = false;
+
 
     @Override
     public void onResume() {
@@ -337,14 +337,44 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         if (QueryUtils.isLocationPermissionGranted(getContext())) {
             return true;
         } else {
-            // Permission is not granted.
             if (!mIsAskingForLocationPermission) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        LOCATION_PERMISSION_REQUEST_CODE);
-                mIsAskingForLocationPermission = true;
+                // Permission is not granted.
+                if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    // Show an explanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+                    mIsAskingForLocationPermission = true;
+                    showLocationPermissionRequestRequirementMessage();
+                } else {
+                    mIsAskingForLocationPermission = true;
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                            LOCATION_PERMISSION_REQUEST_CODE);
+                }
             }
             return false;
         }
+    }
+
+
+    private void showLocationPermissionRequestRequirementMessage() {
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        Html.fromHtml(getString(
+                                R.string.activity_search_preferences_location_permission_justification_dialog_fragment_message)),
+                        getString(R.string.activity_search_preferences_location_permission_justification_dialog_fragment_title),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_LOCATION_PERMISSION_REQUEST);
+
+        messageDialogFragment.setTargetFragment( this, 0);
+
+        messageDialogFragment.show(getParentFragmentManager(),
+                getString(R.string.activity_search_preferences_location_permission_justification_dialog_fragment_tag));
+    }
+
+
+    @Override
+    public void onAccept() {
+        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                LOCATION_PERMISSION_REQUEST_CODE);
     }
 
 
@@ -352,13 +382,6 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             mIsAskingForLocationPermission = false;
-            if (!(grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Permission denied. Show a message to the user.
-                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
-                        getString(R.string.search_preference_maximum_distance_location_permission_denied_message),
-                        LONG_TIME_SNACKBAR * 1000).show();
-            }
         }
     }
 
@@ -401,5 +424,4 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
 
     }
-
 }

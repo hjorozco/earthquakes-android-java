@@ -19,7 +19,12 @@ public class MessageDialogFragment extends DialogFragment {
 
     private static final String DIALOG_FRAGMENT_MESSAGE_ARGUMENT_KEY = "message";
     private static final String DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY = "title";
-    private static final String DIALOG_FRAGMENT_IS_CALLER_REPORT_BUTTON_ARGUMENT_KEY = "caller";
+    private static final String DIALOG_FRAGMENT_CALLER_ARGUMENT_KEY = "caller";
+
+    private static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_NOT_DEFINED = -1;
+    public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_REPORT_BUTTON = 0;
+    public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_LOCATION_PERMISSION_REQUEST = 1;
+    public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER = 2;
 
 
     public interface MessageDialogFragmentListener {
@@ -32,13 +37,17 @@ public class MessageDialogFragment extends DialogFragment {
     }
 
 
-    public static MessageDialogFragment newInstance(CharSequence message, String title, boolean isCallerReportButton) {
+    public static MessageDialogFragment newInstance(CharSequence message, String title, byte caller) {
         MessageDialogFragment messageDialogFragment = new MessageDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putCharSequence(DIALOG_FRAGMENT_MESSAGE_ARGUMENT_KEY, message);
         bundle.putString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY, title);
-        bundle.putBoolean(DIALOG_FRAGMENT_IS_CALLER_REPORT_BUTTON_ARGUMENT_KEY, isCallerReportButton);
+        bundle.putByte(DIALOG_FRAGMENT_CALLER_ARGUMENT_KEY, caller);
         messageDialogFragment.setArguments(bundle);
+        if (caller == MESSAGE_DIALOG_FRAGMENT_CALLER_LOCATION_PERMISSION_REQUEST ||
+                caller==MESSAGE_DIALOG_FRAGMENT_CALLER_REPORT_BUTTON) {
+            messageDialogFragment.setCancelable(false);
+        }
         return messageDialogFragment;
     }
 
@@ -54,12 +63,12 @@ public class MessageDialogFragment extends DialogFragment {
 
         CharSequence message = null;
         String title = "";
-        boolean isCallerReportButton = false;
+        byte caller = MESSAGE_DIALOG_FRAGMENT_CALLER_NOT_DEFINED;
 
         if (arguments != null) {
             message = arguments.getCharSequence(DIALOG_FRAGMENT_MESSAGE_ARGUMENT_KEY, "Hello");
             title = arguments.getString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY);
-            isCallerReportButton = arguments.getBoolean(DIALOG_FRAGMENT_IS_CALLER_REPORT_BUTTON_ARGUMENT_KEY);
+            caller = arguments.getByte(DIALOG_FRAGMENT_CALLER_ARGUMENT_KEY);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
@@ -67,16 +76,21 @@ public class MessageDialogFragment extends DialogFragment {
         builder.setMessage(message).setTitle(Html.fromHtml(getString(R.string.html_text_with_color,
                 colorPrimaryDarkString, title)));
 
-        boolean finalIsCallerReportButton = isCallerReportButton;
+        byte finalCaller = caller;
         builder.setPositiveButton(R.string.positive_button_text, (dialog, id) -> {
-            if (finalIsCallerReportButton){
-                MessageDialogFragmentListener listener = (MessageDialogFragmentListener) getActivity();
+            MessageDialogFragmentListener listener;
+            if (finalCaller == MESSAGE_DIALOG_FRAGMENT_CALLER_REPORT_BUTTON) {
+                listener = (MessageDialogFragmentListener) getActivity();
                 listener.onAccept();
+            } else if (finalCaller == MESSAGE_DIALOG_FRAGMENT_CALLER_LOCATION_PERMISSION_REQUEST) {
+                listener = (MessageDialogFragmentListener) getTargetFragment();
+                if (listener != null) {
+                    listener.onAccept();
+                }
             }
         });
 
         AlertDialog alertDialog = builder.create();
-        alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
 
         Button button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);

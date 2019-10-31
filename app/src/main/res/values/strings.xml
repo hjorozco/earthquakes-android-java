@@ -145,9 +145,6 @@
     <string name="search_preference_maximum_distance_not_set_and_location_not_set_summary">
         Not set. Will search for earthquakes at any distance from you.</string>
     <string name="search_preference_maximum_distance_km_text" translatable="false">km</string>
-    <string name="search_preference_maximum_distance_location_permission_denied_message">
-        This search preference needs permission to access this device\'s location
-    </string>
     <!-- Location -->
 
 
@@ -209,6 +206,16 @@
     <string name="activity_search_preferences_help_dialog_fragment_title">Help</string>
     <string name="activity_search_preferences_help_dialog_fragment_tag" translatable="false">
         activity_search_preferences_help_dialog_fragment_tag
+    </string>
+
+    <string name="activity_search_preferences_location_permission_justification_dialog_fragment_message">
+        &lt;br/&gt;To set this search preference you need to allow the app to access this
+        &lt;b>device\'s location&lt;/b>.&lt;br/&gt;&lt;br/&gt;The device\'s location will only be used to filter the earthquake
+        search results by a maximum distance from you.
+    </string>
+    <string name="activity_search_preferences_location_permission_justification_dialog_fragment_title">Permission needed</string>
+    <string name="activity_search_preferences_location_permission_justification_dialog_fragment_tag" translatable="false">
+        activity_search_preferences_location_permission_justification_dialog_fragment_tag
     </string>
 
     <!-- ********** Activity Search Preferences ********** -->

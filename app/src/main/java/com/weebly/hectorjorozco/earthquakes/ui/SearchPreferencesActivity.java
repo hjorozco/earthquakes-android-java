@@ -29,7 +29,8 @@ public class SearchPreferencesActivity extends AppCompatActivity {
                 MessageDialogFragment.newInstance(
                         Html.fromHtml(getString(
                                 R.string.activity_search_preferences_help_dialog_fragment_message)),
-                        getString(R.string.activity_search_preferences_help_dialog_fragment_title), false);
+                        getString(R.string.activity_search_preferences_help_dialog_fragment_title),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
                 getString(R.string.activity_search_preferences_help_dialog_fragment_tag));
