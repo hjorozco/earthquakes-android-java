@@ -75,6 +75,16 @@
             android:textStyle="bold"
             tools:text="San Francisco, California" />
 
+        <TextView
+            android:id="@+id/earthquake_list_item_distance_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/application_standard_text_size"
+            tools:text="10 km from you" />
+
+
     </LinearLayout>
 
     <LinearLayout

@@ -27,6 +27,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private List<Earthquake> mEarthquakes;
     private String mLocation;
     private final EarthquakesListClickListener mEarthquakesListClickListener;
+    private String mMaxDistance;
 
 
     // Interface implemented in MainActivity.java to handle clicks
@@ -35,7 +36,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         void onEarthquakeClick(Earthquake earthquake, int earthquakeRecyclerViewPosition,
                                TextView magnitudeTextView, TextView locationOffsetTextView,
-                               TextView locationPrimaryTextView, TextView dateTextView);
+                               TextView locationPrimaryTextView, TextView dateTextView,
+                               TextView distanceTextView);
     }
 
     // The adapter constructor
@@ -93,26 +95,35 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 sortedBy = mContext.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
             }
 
+            distance = "";
+            if (!mMaxDistance.isEmpty()) {
+                distance = " " + mContext.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
+                        mMaxDistance);
+            }
+
             if (mEarthquakes.size() == 1) {
                 title = mContext.getString(R.string.earthquakes_list_title_for_one_earthquake,
-                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation);
+                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, distance);
             } else {
                 title = mContext.getString(R.string.earthquakes_list_title_for_multiple_earthquakes,
-                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, sortedBy);
+                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, distance, sortedBy);
             }
 
-            // TODO Update Title with the distance value
-            if (QueryUtils.sEarthquakesListInformationValues.getMaxDistance().isEmpty()){
-                distance = "";
-            } else {
-                distance = "Filtered by distance";
-            }
-
-            titleViewHolder.titleTextView.setText(title + distance);
+            titleViewHolder.titleTextView.setText(title);
 
         } else if (holder instanceof EarthquakeViewHolder) {
 
             EarthquakeViewHolder earthquakeViewHolder = (EarthquakeViewHolder) holder;
+            TextView distanceTextView;
+
+            if (mMaxDistance.isEmpty()){
+                earthquakeViewHolder.distanceTextView.setVisibility(View.GONE);
+                distanceTextView=null;
+            } else {
+                earthquakeViewHolder.distanceTextView.setVisibility(View.VISIBLE);
+                distanceTextView = earthquakeViewHolder.distanceTextView;
+            }
+
             Earthquake currentEarthquake = mEarthquakes.get(position - 1);
 
             QueryUtils.setupEarthquakeInformationOnViews(mContext, currentEarthquake,
@@ -120,7 +131,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     earthquakeViewHolder.locationOffsetTextView,
                     earthquakeViewHolder.locationPrimaryTextView,
                     earthquakeViewHolder.dateTextView,
-                    earthquakeViewHolder.timeTextView);
+                    earthquakeViewHolder.timeTextView,
+                    distanceTextView);
 
             // For Android version 21 and up set transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -132,6 +144,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
                 earthquakeViewHolder.dateTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
+                earthquakeViewHolder.distanceTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_distance_text_view_transition));
             } else {
                 // For Android 19 set list item background as a touch selector since
                 // ?android:attr/selectableItemBackground does not work on 19.
@@ -183,12 +197,18 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
+    public void setMaxDistance(String maxDistance) {
+        mMaxDistance = maxDistance;
+    }
+
+
     class EarthquakeViewHolder extends RecyclerView.ViewHolder {
 
         final LinearLayout earthquakeLinearLayout;
         final TextView magnitudeTextView;
         final TextView locationOffsetTextView;
         final TextView locationPrimaryTextView;
+        final TextView distanceTextView;
         final TextView dateTextView;
         final TextView timeTextView;
 
@@ -198,6 +218,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             magnitudeTextView = itemView.findViewById(R.id.earthquake_list_item_magnitude_text_view);
             locationOffsetTextView = itemView.findViewById(R.id.earthquake_list_item_location_offset_text_view);
             locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
+            distanceTextView = itemView.findViewById(R.id.earthquake_list_item_distance_text_view);
             dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
             timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
 
@@ -207,7 +228,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (earthquakeRecyclerViewPosition > 0) {
                     mEarthquakesListClickListener.onEarthquakeClick(mEarthquakes.get(earthquakeRecyclerViewPosition - 1),
                             earthquakeRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
-                            locationPrimaryTextView, dateTextView);
+                            locationPrimaryTextView, dateTextView, distanceTextView);
                 }
             });
         }

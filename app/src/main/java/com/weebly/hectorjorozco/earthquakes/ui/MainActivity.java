@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
     public static final int MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP = 1000;
     private static final int SECONDS_UNTIL_SHOWING_LONG_SEARCH_MESSAGE = 30;
-    public static final int LONG_TIME_SNACKBAR = 4;
+    public static final int LONG_TIME_SNACKBAR = 5;
 
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
     private Runnable mRunnable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,8 +215,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 earthquakes.get(earthquakes.size() - 1));
                     }
 
-                    mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
                     mEarthquakesListAdapter.setLocation(QueryUtils.sEarthquakesListInformationValues.getLocation());
+                    mEarthquakesListAdapter.setMaxDistance(QueryUtils.sEarthquakesListInformationValues.getMaxDistance());
+                    mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
 
                     // If the search has finished and no previous snack has been shown
                     if (!QueryUtils.sSearchingForEarthquakes && QueryUtils.sLoadEarthquakesResultCode != QueryUtils.NO_ACTION
@@ -526,7 +528,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     @Override
     public void onEarthquakeClick(Earthquake earthquake, int earthquakeRecyclerViewPosition,
                                   TextView magnitudeTextView, TextView locationOffsetTextView,
-                                  TextView locationPrimaryTextView, TextView dateTextView) {
+                                  TextView locationPrimaryTextView, TextView dateTextView,
+                                  TextView distanceTextView) {
 
         mEarthquakeRecyclerViewPosition = earthquakeRecyclerViewPosition;
 

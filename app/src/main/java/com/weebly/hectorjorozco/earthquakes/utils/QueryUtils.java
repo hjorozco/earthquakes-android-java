@@ -86,7 +86,8 @@ public class QueryUtils {
     public static Handler sHandler;
     public static Runnable sRunnable;
 
-    public static Location sLastKnownLocation = null;
+    private static double sLastKnownLocationLatitude;
+    private static double sLastKnownLocationLongitude;
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context,
                                                                         Earthquakes retrofitResult) {
@@ -360,8 +361,12 @@ public class QueryUtils {
         if (isLocationPermissionGranted(context) && maxDistanceValue!=0) {
             updateLastKnowLocation(context);
             maxDistance = String.valueOf(maxDistanceValue);
-            latitude = String.valueOf(sLastKnownLocation.getLatitude());
-            longitude = String.valueOf(sLastKnownLocation.getLongitude());
+            SharedPreferences mSharedPreferences = context.getSharedPreferences(
+                    context.getString(R.string.app_shared_preferences_name), 0);
+            latitude = mSharedPreferences.getString(context.getString(
+                    R.string.last_known_device_location_latitude_shared_preference_key), "");
+            longitude = mSharedPreferences.getString(context.getString(
+                    R.string.last_known_device_location_longitude_shared_preference_key), "");
         }
 
         mLocation = sharedPreferences.getString(
@@ -640,7 +645,7 @@ public class QueryUtils {
 
     public static void setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
                                                          TextView locationOffsetTextView, TextView locationPrimaryTextView,
-                                                         TextView dateTextView, TextView timeTextView) {
+                                                         TextView dateTextView, TextView timeTextView, TextView distanceTextView) {
         // Set magnitude text
         String magnitudeToDisplay = QueryUtils.getMagnitudeText(earthquake.getMagnitude());
         magnitudeTextView.setText(magnitudeToDisplay);
@@ -677,6 +682,18 @@ public class QueryUtils {
             dateTextView.setText(WordsUtils.displayedDateFormatter().format(dateObject));
         }
         dateTextView.setTextColor(magnitudeColor);
+
+        if (distanceTextView!=null){
+            float[] result = new float[1];
+            Location.distanceBetween(sLastKnownLocationLatitude, sLastKnownLocationLongitude,
+                    earthquake.getLatitude(), earthquake.getLongitude(), result);
+
+            String distanceText = new DecimalFormat("0").format(result[0]/1000);
+            distanceText = distanceText.replace(',', '.');
+
+            distanceTextView.setText(context.getString(R.string.activity_main_distance_from_you_text,distanceText));
+            distanceTextView.setTextColor(magnitudeColor);
+        }
     }
 
 
@@ -721,12 +738,20 @@ public class QueryUtils {
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(location -> {
                     // Got last known location. In some rare situations this can be null.
-                    // TODO Save location values on SharedPreferences and delete static variable sLastKnownLocation;
                     if (location != null) {
-                        sLastKnownLocation = location;
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                                context.getString(R.string.app_shared_preferences_name), 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(context.getString(R.string.last_known_device_location_latitude_shared_preference_key),
+                                String.valueOf(location.getLatitude()));
+                        editor.putString(context.getString(R.string.last_known_device_location_longitude_shared_preference_key),
+                                String.valueOf(location.getLongitude()));
+                        editor.apply();
+
+                        sLastKnownLocationLatitude = location.getLatitude();
+                        sLastKnownLocationLongitude = location.getLongitude();
                     }
-                })
-                .addOnFailureListener(e -> sLastKnownLocation = null);
+                });
     }
 
 }

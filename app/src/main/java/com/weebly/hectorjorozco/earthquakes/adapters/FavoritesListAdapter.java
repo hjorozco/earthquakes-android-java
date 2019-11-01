@@ -121,7 +121,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     favoriteViewHolder.locationOffsetTextView,
                     favoriteViewHolder.locationPrimaryTextView,
                     favoriteViewHolder.dateTextView,
-                    favoriteViewHolder.timeTextView);
+                    favoriteViewHolder.timeTextView,
+                    null);
 
             // If the student has been selected by a long click
             if (mSelectedFavorites.get(position, false)) {

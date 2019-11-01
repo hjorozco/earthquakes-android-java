@@ -148,7 +148,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         QueryUtils.setupEarthquakeInformationOnViews(
                 this, mEarthquake, magnitudeTextView, locationOffsetTextView,
-                locationPrimaryTextView, dateAndTimeTextView, null);
+                locationPrimaryTextView, dateAndTimeTextView, null, null);
 
         // If Android version is 21 or up set a transition for the elements in the top of the activity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

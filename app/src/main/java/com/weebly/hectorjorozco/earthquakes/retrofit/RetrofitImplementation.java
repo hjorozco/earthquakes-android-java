@@ -1,13 +1,9 @@
 package com.weebly.hectorjorozco.earthquakes.retrofit;
 
-import android.app.DownloadManager;
-
 import androidx.annotation.NonNull;
 
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
-import com.weebly.hectorjorozco.earthquakes.ui.MainActivity;
-import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
