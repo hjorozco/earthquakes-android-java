@@ -36,8 +36,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         void onEarthquakeClick(Earthquake earthquake, int earthquakeRecyclerViewPosition,
                                TextView magnitudeTextView, TextView locationOffsetTextView,
-                               TextView locationPrimaryTextView, TextView dateTextView,
-                               TextView distanceTextView);
+                               TextView locationPrimaryTextView, TextView distanceTextView,
+                               TextView dateTextView, TextView timeTextView);
     }
 
     // The adapter constructor
@@ -130,9 +130,9 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     earthquakeViewHolder.magnitudeTextView,
                     earthquakeViewHolder.locationOffsetTextView,
                     earthquakeViewHolder.locationPrimaryTextView,
+                    distanceTextView,
                     earthquakeViewHolder.dateTextView,
-                    earthquakeViewHolder.timeTextView,
-                    distanceTextView);
+                    earthquakeViewHolder.timeTextView);
 
             // For Android version 21 and up set transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -144,6 +144,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
                 earthquakeViewHolder.dateTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
+                earthquakeViewHolder.timeTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_time_text_view_transition));
                 earthquakeViewHolder.distanceTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_distance_text_view_transition));
             } else {
@@ -228,7 +230,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (earthquakeRecyclerViewPosition > 0) {
                     mEarthquakesListClickListener.onEarthquakeClick(mEarthquakes.get(earthquakeRecyclerViewPosition - 1),
                             earthquakeRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
-                            locationPrimaryTextView, dateTextView, distanceTextView);
+                            locationPrimaryTextView, distanceTextView, dateTextView, timeTextView);
                 }
             });
         }

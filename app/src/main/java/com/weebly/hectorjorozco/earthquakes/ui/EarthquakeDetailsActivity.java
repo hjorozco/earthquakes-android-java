@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -140,15 +141,27 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView magnitudeTextView = findViewById(R.id.activity_earthquake_details_magnitude_text_view);
         TextView locationOffsetTextView = findViewById(R.id.activity_earthquake_details_location_offset_text_view);
         TextView locationPrimaryTextView = findViewById(R.id.activity_earthquake_details_location_primary_text_view);
-        TextView dateAndTimeTextView = findViewById(R.id.activity_earthquake_details_date_and_time_text_view);
+        TextView distanceTextView = findViewById(R.id.activity_earthquake_details_distance_text_view);
+        TextView dateTextView = findViewById(R.id.activity_earthquake_details_date_text_view);
+        TextView timeTextView = findViewById(R.id.activity_earthquake_details_time_text_view);
+
+        TextView distanceTextViewToSetup;
+        Log.d("TESTING", "Distance en Earthquake Details " + mEarthquake.getDistance());
+        if (mEarthquake.getDistance()==QueryUtils.DISTANCE_NULL_VALUE){
+            distanceTextView.setVisibility(GONE);
+            distanceTextViewToSetup = null;
+        } else {
+            distanceTextView.setVisibility(View.VISIBLE);
+            distanceTextViewToSetup = distanceTextView;
+        }
+
         LinearLayout magnitudeTextViewLinearLayout =
                 findViewById(R.id.activity_earthquake_details_magnitude_text_view_linear_layout);
-
         magnitudeTextViewLinearLayout.setOnClickListener(v -> showMagnitudeMessage());
 
         QueryUtils.setupEarthquakeInformationOnViews(
                 this, mEarthquake, magnitudeTextView, locationOffsetTextView,
-                locationPrimaryTextView, dateAndTimeTextView, null, null);
+                locationPrimaryTextView, distanceTextViewToSetup, dateTextView, timeTextView);
 
         // If Android version is 21 or up set a transition for the elements in the top of the activity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -158,8 +171,12 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                     getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
             locationPrimaryTextView.setTransitionName(
                     getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
-            dateAndTimeTextView.setTransitionName(
+            dateTextView.setTransitionName(
                     getString(R.string.activity_earthquake_details_date_text_view_transition));
+            timeTextView.setTransitionName(
+                    getString(R.string.activity_earthquake_details_time_text_view_transition));
+            distanceTextView.setTransitionName(
+                    getString(R.string.activity_earthquake_details_distance_text_view_transition));
 
             getWindow().setSharedElementEnterTransition(
                     TransitionInflater.from(this).inflateTransition(R.transition.move));

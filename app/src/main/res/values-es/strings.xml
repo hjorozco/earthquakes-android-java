@@ -48,14 +48,14 @@
     <string name="activity_main_no_earthquake_location_text">Sin nombre</string>
 
     <string name="activity_main_long_search_message">
-        Tiempo de búsqueda largo. Modifica las preferencias y checa la conexión a internet.</string>
+        En la ayuda de preferencias encontrarás consejos sobre como reducir el tiempo de búsqueda.
+    </string>
 
     <string name="activity_main_under_construction_text">Opción no disponible aún</string>
 
     <string name="activity_main_distance_from_you_text">a %1$s km de ti</string>
 
     <!-- ********** Activity Main ********** -->
-
 
 
     <!-- ********** ACTIVITY SEARCH PREFERENCES ********** -->
@@ -142,7 +142,10 @@
 
     <string name="activity_search_preferences_help_dialog_fragment_message">
         &lt;br/&gt;Para reducir el tiempo que lleva buscar sismos&lt;br/&gt;&lt;br/&gt;\u2022 define una distancia
-        máxima de ti&lt;br/&gt;\u2022 reduce el rango de fechas&lt;br/&gt;\u2022 incrementa la magnitud mínima.</string>
+        máxima de ti&lt;br/&gt;\u2022 reduce el rango de fechas&lt;br/&gt;\u2022 incrementa la magn|itud mínima.
+        &lt;br/&gt;&lt;br/&gt;Si hay problemas en el servidor USGS o en tu conexión a Internet, la búsqueda puede
+        demorar hasta dos minutos y no obtener resultados.
+    </string>
     <string name="activity_search_preferences_help_dialog_fragment_title">Help</string>
 
     <string name="activity_search_preferences_location_permission_justification_dialog_fragment_message">

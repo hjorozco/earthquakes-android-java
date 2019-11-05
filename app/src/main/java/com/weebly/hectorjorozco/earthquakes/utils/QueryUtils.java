@@ -66,6 +66,7 @@ public class QueryUtils {
 
     public static final double LAT_LONG_NULL_VALUE = 1000;
     public static final double DEPTH_NULL_VALUE = -1;
+    public static final float DISTANCE_NULL_VALUE = -1;
 
     // Used by the map activity
     public static List<Earthquake> sEarthquakesList;
@@ -196,7 +197,8 @@ public class QueryUtils {
                         properties.getCdi(),
                         properties.getMmi(),
                         properties.getAlert(),
-                        properties.getTsunami()));
+                        properties.getTsunami(),
+                        DISTANCE_NULL_VALUE));
 
                 earthquakesAddedToListCounter++;
 
@@ -221,7 +223,8 @@ public class QueryUtils {
                             properties.getCdi(),
                             properties.getMmi(),
                             properties.getAlert(),
-                            properties.getTsunami()));
+                            properties.getTsunami(),
+                            DISTANCE_NULL_VALUE));
                     // Increments the counter of the number of earthquakes added to the List of
                     // Earthquakes
                     earthquakesAddedToListCounter++;
@@ -358,7 +361,7 @@ public class QueryUtils {
         String longitude = "";
         String maxDistance = "";
         int maxDistanceValue = getMaxDistanceSearchPreference(context);
-        if (isLocationPermissionGranted(context) && maxDistanceValue!=0) {
+        if (isLocationPermissionGranted(context) && maxDistanceValue != 0) {
             updateLastKnowLocation(context);
             maxDistance = String.valueOf(maxDistanceValue);
             SharedPreferences mSharedPreferences = context.getSharedPreferences(
@@ -416,7 +419,7 @@ public class QueryUtils {
     }
 
 
-    public static int getMaxDistanceSearchPreference(Context context){
+    public static int getMaxDistanceSearchPreference(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getInt(
                 context.getString(R.string.search_preference_maximum_distance_key),
@@ -645,7 +648,7 @@ public class QueryUtils {
 
     public static void setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
                                                          TextView locationOffsetTextView, TextView locationPrimaryTextView,
-                                                         TextView dateTextView, TextView timeTextView, TextView distanceTextView) {
+                                                         TextView distanceTextView, TextView dateTextView, TextView timeTextView) {
         // Set magnitude text
         String magnitudeToDisplay = QueryUtils.getMagnitudeText(earthquake.getMagnitude());
         magnitudeTextView.setText(magnitudeToDisplay);
@@ -672,28 +675,41 @@ public class QueryUtils {
         locationOffsetTextView.setTextColor(magnitudeColor);
         locationPrimaryTextView.setTextColor(magnitudeColor);
 
-        Date dateObject = new Date(earthquake.getTimeInMilliseconds());
+        // If the distance needs to be displayed
+        if (distanceTextView != null) {
 
-        if (timeTextView != null) {
-            dateTextView.setText(WordsUtils.formatDate(dateObject));
-            timeTextView.setText(WordsUtils.formatTime(dateObject));
-            timeTextView.setTextColor(magnitudeColor);
-        } else {
-            dateTextView.setText(WordsUtils.displayedDateFormatter().format(dateObject));
-        }
-        dateTextView.setTextColor(magnitudeColor);
+            float distance = earthquake.getDistance();
 
-        if (distanceTextView!=null){
-            float[] result = new float[1];
-            Location.distanceBetween(sLastKnownLocationLatitude, sLastKnownLocationLongitude,
-                    earthquake.getLatitude(), earthquake.getLongitude(), result);
+            Log.d("TESTING", "Distance "+ earthquake.getDistance());
 
-            String distanceText = new DecimalFormat("0").format(result[0]/1000);
-            distanceText = distanceText.replace(',', '.');
+            // If the earthquake does not have a distance saved calculate it and save on the earthquake
+            if (distance == DISTANCE_NULL_VALUE) {
+                float[] result = new float[1];
+                Location.distanceBetween(sLastKnownLocationLatitude, sLastKnownLocationLongitude,
+                        earthquake.getLatitude(), earthquake.getLongitude(), result);
+                distance = result[0];
 
-            distanceTextView.setText(context.getString(R.string.activity_main_distance_from_you_text,distanceText));
+                earthquake.setDistance(distance);
+
+                Log.d("TESTING", "Distance calculated");
+            }
+
+            distanceTextView.setText(context.getString(R.string.activity_main_distance_from_you_text, formatDistance(distance)));
             distanceTextView.setTextColor(magnitudeColor);
         }
+
+        Date dateObject = new Date(earthquake.getTimeInMilliseconds());
+        dateTextView.setText(WordsUtils.formatDate(dateObject));
+        timeTextView.setText(WordsUtils.formatTime(dateObject));
+        dateTextView.setTextColor(magnitudeColor);
+        timeTextView.setTextColor(magnitudeColor);
+    }
+
+
+    private static String formatDistance(float distance){
+        String distanceText = new DecimalFormat("0").format(distance / 1000);
+        distanceText = distanceText.replace(',', '.');
+        return distanceText;
     }
 
 

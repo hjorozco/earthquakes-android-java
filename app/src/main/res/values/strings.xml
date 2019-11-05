@@ -35,7 +35,6 @@
     <!-- ********** APP SHARED PREFERENCES ********** -->
 
 
-
     <!-- ********** ACTIVITY MAIN ********** -->
 
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
@@ -78,14 +77,14 @@
     <string name="activity_main_no_earthquake_location_text">No name</string>
 
     <string name="activity_main_long_search_message">
-        Long search time. Modify preferences and check internet connection.</string>
+        See search preferences help for tips to reduce the search time.
+    </string>
 
     <string name="activity_main_under_construction_text">Option not available yet</string>
 
     <string name="activity_main_distance_from_you_text">%1$s km from you</string>
 
     <!-- ********** Activity main ********** -->
-
 
 
     <!-- ********** ACTIVITY SEARCH PREFERENCES ********** -->
@@ -210,7 +209,10 @@
 
     <string name="activity_search_preferences_help_dialog_fragment_message">
         &lt;br/&gt;To reduce the time it takes to search for earthquakes&lt;br/&gt;&lt;br/&gt;\u2022 set a maximum distance
-        from  you&lt;br/&gt;\u2022 reduce the date range&lt;br/&gt;\u2022 increase the minimum magnitude.</string>
+        from  you&lt;br/&gt;\u2022 reduce the date range&lt;br/&gt;\u2022 increase the minimum magnitude.&lt;br/&gt;
+        &lt;br/&gt;If there are problems on the USGS server or your internet connection, the search can take up to
+        two minutes and get no results.
+    </string>
     <string name="activity_search_preferences_help_dialog_fragment_title">Help</string>
     <string name="activity_search_preferences_help_dialog_fragment_tag" translatable="false">
         activity_search_preferences_help_dialog_fragment_tag
@@ -248,6 +250,8 @@
         activity_earthquake_details_location_primary_text_view_transition</string>
     <string name="activity_earthquake_details_date_text_view_transition" translatable="false">
         activity_earthquake_details_date_text_view_transition</string>
+    <string name="activity_earthquake_details_time_text_view_transition" translatable="false">
+        activity_earthquake_details_time_text_view_transition</string>
     <string name="activity_earthquake_details_distance_text_view_transition" translatable="false">
         activity_earthquake_details_distance_text_view_transition</string>
     <string name="activity_earthquake_details_coordinates_text" translatable="false">
@@ -449,7 +453,6 @@
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
 
-
     <!-- ********** ACTIVITY FAVORITES ********** -->
 
     <string name="activity_favorites_label">Favorites</string>
@@ -507,7 +510,6 @@
     <string name="activity_favorites_some_favorites_deleted_message">%1$d favorite%2$s deleted%3$s</string>
 
     <string name="activity_favorites_action_mode_toolbar_title">%1$d selected%2$s</string>
-
 
 
     <!-- ********** Activity favorites ********** -->

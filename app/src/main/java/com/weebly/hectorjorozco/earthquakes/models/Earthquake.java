@@ -54,10 +54,13 @@ public class Earthquake implements Parcelable {
     private final String mAlert;
     @ColumnInfo(name = "tsunami")
     private final int mTsunami;
+    @ColumnInfo(name = "distance")
+    private float mDistance;
+
 
     public Earthquake(@NonNull String id, double magnitude, String locationOffset, String locationPrimary,
                       long timeInMilliseconds, String url, double latitude, double longitude, double depth,
-                      int felt, double cdi, double mmi, String alert, int tsunami) {
+                      int felt, double cdi, double mmi, String alert, int tsunami, float distance) {
         mId = id;
         mMagnitude = magnitude;
         mLocationOffset = locationOffset;
@@ -72,6 +75,7 @@ public class Earthquake implements Parcelable {
         mMmi = mmi;
         mAlert = alert;
         mTsunami = tsunami;
+        mDistance = distance;
     }
 
     public String getId() {
@@ -130,6 +134,13 @@ public class Earthquake implements Parcelable {
         return mTsunami;
     }
 
+    public float getDistance(){return mDistance;}
+
+
+    public void setDistance(float distance){
+        mDistance = distance;
+    }
+
 
     // Comparators used to sort favorite earthquakes
 
@@ -167,6 +178,7 @@ public class Earthquake implements Parcelable {
         dest.writeDouble(mMmi);
         dest.writeString(mAlert);
         dest.writeInt(mTsunami);
+        dest.writeFloat(mDistance);
     }
 
     protected Earthquake(Parcel in) {
@@ -184,6 +196,7 @@ public class Earthquake implements Parcelable {
         mMmi = in.readDouble();
         mAlert = in.readString();
         mTsunami = in.readInt();
+        mDistance = in.readFloat();
     }
 
     public static final Parcelable.Creator<Earthquake> CREATOR = new Parcelable.Creator<Earthquake>() {

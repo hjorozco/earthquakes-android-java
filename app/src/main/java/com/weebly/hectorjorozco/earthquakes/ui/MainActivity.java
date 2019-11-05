@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -528,8 +529,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     @Override
     public void onEarthquakeClick(Earthquake earthquake, int earthquakeRecyclerViewPosition,
                                   TextView magnitudeTextView, TextView locationOffsetTextView,
-                                  TextView locationPrimaryTextView, TextView dateTextView,
-                                  TextView distanceTextView) {
+                                  TextView locationPrimaryTextView, TextView distanceTextView,
+                                  TextView dateTextView, TextView timeTextView) {
 
         mEarthquakeRecyclerViewPosition = earthquakeRecyclerViewPosition;
 
@@ -541,12 +542,26 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+
             Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
             Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
             Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
             Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
-            @SuppressWarnings("unchecked") ActivityOptionsCompat activityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4);
+            Pair<View, String> pair5 = Pair.create(timeTextView, timeTextView.getTransitionName());
+
+            ActivityOptionsCompat activityOptionsCompat;
+            if (QueryUtils.sEarthquakesListInformationValues.getMaxDistance().isEmpty()) {
+                //noinspection unchecked
+                activityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5);
+            } else {
+                Pair<View, String> pair6 = Pair.create(distanceTextView, distanceTextView.getTransitionName());
+                //noinspection unchecked
+                activityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5, pair6);
+            }
+
             startActivity(intent, activityOptionsCompat.toBundle());
         } else {
             startActivity(intent);
@@ -570,15 +585,27 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
                         if (selectedViewHolder == null) return;
 
-                        sharedElements.put(names.get(0), selectedViewHolder.itemView.
+                        sharedElements.put(getString(R.string.activity_earthquake_details_magnitude_text_view_transition),
+                                selectedViewHolder.itemView.
                                 findViewById(R.id.earthquake_list_item_magnitude_text_view));
-                        sharedElements.put(names.get(1), selectedViewHolder.itemView.
+                        sharedElements.put(getString(R.string.activity_earthquake_details_location_offset_text_view_transition),
+                                selectedViewHolder.itemView.
                                 findViewById(R.id.earthquake_list_item_location_offset_text_view));
-                        sharedElements.put(names.get(2), selectedViewHolder.itemView.
+                        sharedElements.put(getString(R.string.activity_earthquake_details_location_primary_text_view_transition),
+                                selectedViewHolder.itemView.
                                 findViewById(R.id.earthquake_list_item_location_primary_text_view));
-                        sharedElements
-                                .put(names.get(3), selectedViewHolder.itemView.findViewById(R.id.earthquake_list_item_date_text_view));
+                        sharedElements.put(getString(R.string.activity_earthquake_details_date_text_view_transition),
+                                selectedViewHolder.itemView.
+                                findViewById(R.id.earthquake_list_item_date_text_view));
+                        sharedElements.put(getString(R.string.activity_earthquake_details_time_text_view_transition),
+                                selectedViewHolder.itemView.
+                                findViewById(R.id.earthquake_list_item_time_text_view));
 
+                        if (!QueryUtils.sEarthquakesListInformationValues.getMaxDistance().isEmpty()) {
+                            sharedElements.put(getString(R.string.activity_earthquake_details_distance_text_view_transition),
+                                    selectedViewHolder.itemView.
+                                    findViewById(R.id.earthquake_list_item_distance_text_view));
+                        }
                     }
                 });
     }
