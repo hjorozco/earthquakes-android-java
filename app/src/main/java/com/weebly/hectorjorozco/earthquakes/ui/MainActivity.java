@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -543,7 +542,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-
             Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
             Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
             Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
@@ -551,7 +549,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             Pair<View, String> pair5 = Pair.create(timeTextView, timeTextView.getTransitionName());
 
             ActivityOptionsCompat activityOptionsCompat;
-            if (QueryUtils.sEarthquakesListInformationValues.getMaxDistance().isEmpty()) {
+            if (earthquake.getDistance()==QueryUtils.DISTANCE_NULL_VALUE) {
                 //noinspection unchecked
                 activityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5);

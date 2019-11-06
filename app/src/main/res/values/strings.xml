@@ -129,6 +129,9 @@
     <string name="sort_by_preference_dialog_fragment_compat_tag" translatable="false">
         search_preference_sort_by_preference_dialog_fragment_compat_tag
     </string>
+
+    <string name="search_preference_show_distance_title">Show distance from you</string>
+    <string name="search_preference_show_distance_key" translatable="false">show_distance</string>
     <!-- General -->
 
 
@@ -220,8 +223,7 @@
 
     <string name="activity_search_preferences_location_permission_justification_dialog_fragment_message">
         &lt;br/&gt;To set this search preference you need to allow the app to access this
-        &lt;b>device\'s location&lt;/b>.&lt;br/&gt;&lt;br/&gt;The device\'s location will only be used to filter the earthquake
-        search results by a maximum distance from you.
+        &lt;b>device\'s location&lt;/b>.
     </string>
     <string name="activity_search_preferences_location_permission_justification_dialog_fragment_title">Permission needed</string>
     <string name="activity_search_preferences_location_permission_justification_dialog_fragment_tag" translatable="false">

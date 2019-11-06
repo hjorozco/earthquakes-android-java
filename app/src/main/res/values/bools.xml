@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="search_preference_sound_default_value">false</bool>
+    <bool name="search_preference_show_distance">false</bool>
 </resources>

@@ -87,6 +87,8 @@
     <string name="search_preference_sort_by_descending_date_summary">Fecha descendente</string>
     <string name="search_preference_sort_by_ascending_magnitude_summary">Magnitud ascendente</string>
     <string name="search_preference_sort_by_descending_magnitude_summary">Magnitud descendente</string>
+
+    <string name="search_preference_show_distance_title">Mostrar distancia de ti</string>
     <!-- General -->
 
 
@@ -150,8 +152,7 @@
 
     <string name="activity_search_preferences_location_permission_justification_dialog_fragment_message">
         &lt;br/&gt;Para establecer esta preferencia de búsqueda, debes permitir a la aplicación acceder a
-        la &lt;b>ubicación de este dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;La ubicación del dispositivo solo
-        se utilizará para filtrar los resultados de la búsqueda de sismos a una distancia máxima de ti.
+        la &lt;b>ubicación de este dispositivo&lt;/b>.
     </string>
     <string name="activity_search_preferences_location_permission_justification_dialog_fragment_title">
         Permiso requerido</string>

@@ -142,12 +142,12 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         mContext.getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
                 earthquakeViewHolder.locationPrimaryTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
+                earthquakeViewHolder.distanceTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_distance_text_view_transition));
                 earthquakeViewHolder.dateTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
                 earthquakeViewHolder.timeTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_time_text_view_transition));
-                earthquakeViewHolder.distanceTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_distance_text_view_transition));
             } else {
                 // For Android 19 set list item background as a touch selector since
                 // ?android:attr/selectableItemBackground does not work on 19.

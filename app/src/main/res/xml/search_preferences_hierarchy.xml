@@ -21,6 +21,13 @@
             app:icon="@drawable/ic_sort_descending_brown_24dp"
             app:singleLineTitle="false" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/search_preference_show_distance"
+            android:key="@string/search_preference_show_distance_key"
+            android:title="@string/search_preference_show_distance_title"
+            app:icon="@drawable/ic_show_distance_brown_24dp"
+            app:singleLineTitle="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

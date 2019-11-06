@@ -50,7 +50,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         void onFavoriteClick(Earthquake favorite, int favoriteRecyclerViewPosition,
                              TextView magnitudeTextView, TextView locationOffsetTextView,
-                             TextView locationPrimaryTextView, TextView dateTextView);
+                             TextView locationPrimaryTextView, TextView distanceTextView,
+                             TextView dateTextView, TextView timeTextView);
 
         void onFavoriteLongClick(int favoriteRecyclerViewPosition);
     }
@@ -114,15 +115,47 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else if (holder instanceof FavoriteViewHolder) {
 
             FavoriteViewHolder favoriteViewHolder = (FavoriteViewHolder) holder;
+            TextView distanceTextView;
+
             Earthquake currentFavorite = mFavorites.get(position - 1);
+
+            if (QueryUtils.getMaxDistanceSearchPreference(mContext)==0 ){
+                favoriteViewHolder.distanceTextView.setVisibility(View.GONE);
+                distanceTextView=null;
+            } else {
+                favoriteViewHolder.distanceTextView.setVisibility(View.VISIBLE);
+                distanceTextView = favoriteViewHolder.distanceTextView;
+            }
 
             QueryUtils.setupEarthquakeInformationOnViews(mContext, currentFavorite,
                     favoriteViewHolder.magnitudeTextView,
                     favoriteViewHolder.locationOffsetTextView,
                     favoriteViewHolder.locationPrimaryTextView,
+                    distanceTextView,
                     favoriteViewHolder.dateTextView,
-                    favoriteViewHolder.timeTextView,
-                    null);
+                    favoriteViewHolder.timeTextView);
+
+
+            // For Android version 21 and up set transition names
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                favoriteViewHolder.magnitudeTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
+                favoriteViewHolder.locationOffsetTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
+                favoriteViewHolder.locationPrimaryTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
+                favoriteViewHolder.distanceTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_distance_text_view_transition));
+                favoriteViewHolder.dateTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
+                favoriteViewHolder.timeTextView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_time_text_view_transition));
+            } else {
+                // For Android 19 set list item background as a touch selector since
+                // ?android:attr/selectableItemBackground does not work on 19.
+                favoriteViewHolder.earthquakeLinearLayout.setBackground(mContext.getResources().
+                        getDrawable(R.drawable.touch_selector));
+            }
 
             // If the student has been selected by a long click
             if (mSelectedFavorites.get(position, false)) {
@@ -245,6 +278,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
         final TextView magnitudeTextView;
         final TextView locationOffsetTextView;
         final TextView locationPrimaryTextView;
+        final TextView distanceTextView;
         final TextView dateTextView;
         final TextView timeTextView;
         final ImageView selectedImageView;
@@ -259,29 +293,13 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
             magnitudeTextView = itemView.findViewById(R.id.earthquake_list_item_magnitude_text_view);
             locationOffsetTextView = itemView.findViewById(R.id.earthquake_list_item_location_offset_text_view);
             locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
+            distanceTextView = itemView.findViewById(R.id.earthquake_list_item_distance_text_view);
             dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
             timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
             selectedImageView = itemView.findViewById(R.id.favorite_list_item_selected_image_view);
             viewLeftSwipeBackground = itemView.findViewById(R.id.favorite_list_item_left_swipe_background);
             viewRightSwipeBackground = itemView.findViewById(R.id.favorite_list_item_right_swipe_background);
             viewForeground = itemView.findViewById(R.id.favorite_list_item_view_foreground);
-
-            // For Android version 21 and up set transition names
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                magnitudeTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
-                locationOffsetTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
-                locationPrimaryTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
-                dateTextView.setTransitionName(
-                        mContext.getString(R.string.activity_earthquake_details_date_text_view_transition));
-            } else {
-                // For Android 19 set list item background as a touch selector since
-                // ?android:attr/selectableItemBackground does not work on 19.
-                earthquakeLinearLayout.setBackground(mContext.getResources().
-                        getDrawable(R.drawable.touch_selector));
-            }
 
             earthquakeLinearLayout.setOnClickListener((View v) ->
             {
@@ -290,7 +308,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (favoriteRecyclerViewPosition > 0) {
                     mFavoritesListAdapterListener.onFavoriteClick(mFavorites.get(favoriteRecyclerViewPosition - 1),
                             favoriteRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
-                            locationPrimaryTextView, dateTextView);
+                            locationPrimaryTextView, distanceTextView, dateTextView, timeTextView);
                 }
             });
 

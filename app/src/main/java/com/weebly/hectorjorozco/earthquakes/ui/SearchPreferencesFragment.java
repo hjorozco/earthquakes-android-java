@@ -82,6 +82,8 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
         setupMaxNumberOfEarthquakesEditTextPreference(findPreference(getString(R.string.search_preference_max_number_of_earthquakes_key)));
 
+        setupShowDistanceCheckBoxPreference(findPreference(getString(R.string.search_preference_show_distance_key)));
+
         mLocationEditTextPreference = findPreference(getString(R.string.search_preference_location_key));
         setupLocationEditTextPreference(mLocationEditTextPreference);
 
@@ -216,6 +218,19 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                 }
             });
         }
+    }
+
+
+    private void setupShowDistanceCheckBoxPreference(CheckBoxPreference checkBoxPreference) {
+
+        if (!QueryUtils.isLocationPermissionGranted(getContext())){
+            checkBoxPreference.setChecked(false);
+        }
+
+        // Saves the new checkbox value (on change) only if the location permission is granted
+        checkBoxPreference.setOnPreferenceChangeListener((preference, newValue) ->
+                checkIfLocationPermissionIsGrantedIfNotAskUser());
+
     }
 
 

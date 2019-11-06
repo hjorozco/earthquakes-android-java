@@ -39,6 +39,7 @@ import com.weebly.hectorjorozco.earthquakes.models.SparseBooleanArrayParcelable;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.ConfirmationDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.SortFavoritesDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.FavoritesActivityViewModel;
 
@@ -82,6 +83,8 @@ public class FavoritesActivity extends AppCompatActivity implements
     private boolean mIsAskingToDeleteFavorite;
     private int mFavoriteWithDeleteBackgroundPosition;
     private boolean mRightSwipe;
+
+    private boolean mFavoriteHasDistance = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -425,7 +428,8 @@ public class FavoritesActivity extends AppCompatActivity implements
     @Override
     public void onFavoriteClick(Earthquake favorite, int favoriteRecyclerViewPosition,
                                 TextView magnitudeTextView, TextView locationOffsetTextView,
-                                TextView locationPrimaryTextView, TextView dateTextView) {
+                                TextView locationPrimaryTextView, TextView distanceTextView,
+                                TextView dateTextView, TextView timeTextView) {
 
         // If there are favorites selected (action mode is enabled) set up action mode
         if (mAdapter.getSelectedFavoritesCount() > 0) {
@@ -440,12 +444,26 @@ public class FavoritesActivity extends AppCompatActivity implements
             intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
                 Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
                 Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
                 Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
                 Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
-                @SuppressWarnings("unchecked") ActivityOptionsCompat activityOptionsCompat =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4);
+                Pair<View, String> pair5 = Pair.create(timeTextView, timeTextView.getTransitionName());
+
+                ActivityOptionsCompat activityOptionsCompat;
+                if (favorite.getDistance() == QueryUtils.DISTANCE_NULL_VALUE) {
+                    //noinspection unchecked
+                    activityOptionsCompat =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5);
+                } else {
+                    Pair<View, String> pair6 = Pair.create(distanceTextView, distanceTextView.getTransitionName());
+                    //noinspection unchecked
+                    activityOptionsCompat =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5, pair6);
+                    mFavoriteHasDistance = true;
+                }
+
                 startActivity(intent, activityOptionsCompat.toBundle());
             } else {
                 startActivity(intent);
@@ -453,6 +471,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             }
         }
     }
+
 
     // Implementation of FavoritesListAdapter.FavoritesListAdapterListener
     @Override
@@ -595,14 +614,28 @@ public class FavoritesActivity extends AppCompatActivity implements
 
                         if (selectedViewHolder == null) return;
 
-                        sharedElements.put(names.get(0), selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_magnitude_text_view));
-                        sharedElements.put(names.get(1), selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_location_offset_text_view));
-                        sharedElements.put(names.get(2), selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_location_primary_text_view));
-                        sharedElements
-                                .put(names.get(3), selectedViewHolder.itemView.findViewById(R.id.earthquake_list_item_date_text_view));
+                        sharedElements.put(getString(R.string.activity_earthquake_details_magnitude_text_view_transition),
+                                selectedViewHolder.itemView.
+                                        findViewById(R.id.earthquake_list_item_magnitude_text_view));
+                        sharedElements.put(getString(R.string.activity_earthquake_details_location_offset_text_view_transition),
+                                selectedViewHolder.itemView.
+                                        findViewById(R.id.earthquake_list_item_location_offset_text_view));
+                        sharedElements.put(getString(R.string.activity_earthquake_details_location_primary_text_view_transition),
+                                selectedViewHolder.itemView.
+                                        findViewById(R.id.earthquake_list_item_location_primary_text_view));
+                        sharedElements.put(getString(R.string.activity_earthquake_details_date_text_view_transition),
+                                selectedViewHolder.itemView.
+                                        findViewById(R.id.earthquake_list_item_date_text_view));
+                        sharedElements.put(getString(R.string.activity_earthquake_details_time_text_view_transition),
+                                selectedViewHolder.itemView.
+                                        findViewById(R.id.earthquake_list_item_time_text_view));
+
+                        if (mFavoriteHasDistance) {
+                            sharedElements.put(getString(R.string.activity_earthquake_details_distance_text_view_transition),
+                                    selectedViewHolder.itemView.
+                                            findViewById(R.id.earthquake_list_item_distance_text_view));
+                            mFavoriteHasDistance = false;
+                        }
                     }
                 });
     }
