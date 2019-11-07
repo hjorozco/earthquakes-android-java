@@ -84,7 +84,6 @@ public class FavoritesActivity extends AppCompatActivity implements
     private int mFavoriteWithDeleteBackgroundPosition;
     private boolean mRightSwipe;
 
-    private boolean mFavoriteHasDistance = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -461,7 +460,6 @@ public class FavoritesActivity extends AppCompatActivity implements
                     //noinspection unchecked
                     activityOptionsCompat =
                             ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5, pair6);
-                    mFavoriteHasDistance = true;
                 }
 
                 startActivity(intent, activityOptionsCompat.toBundle());
@@ -630,11 +628,10 @@ public class FavoritesActivity extends AppCompatActivity implements
                                 selectedViewHolder.itemView.
                                         findViewById(R.id.earthquake_list_item_time_text_view));
 
-                        if (mFavoriteHasDistance) {
+                        if (QueryUtils.getShowDistanceSearchPreference(FavoritesActivity.this)) {
                             sharedElements.put(getString(R.string.activity_earthquake_details_distance_text_view_transition),
                                     selectedViewHolder.itemView.
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
-                            mFavoriteHasDistance = false;
                         }
                     }
                 });

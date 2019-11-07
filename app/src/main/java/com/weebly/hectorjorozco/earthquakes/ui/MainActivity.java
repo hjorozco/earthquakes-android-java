@@ -549,7 +549,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             Pair<View, String> pair5 = Pair.create(timeTextView, timeTextView.getTransitionName());
 
             ActivityOptionsCompat activityOptionsCompat;
-            if (earthquake.getDistance()==QueryUtils.DISTANCE_NULL_VALUE) {
+            if (earthquake.getDistance() == QueryUtils.DISTANCE_NULL_VALUE) {
                 //noinspection unchecked
                 activityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5);
@@ -599,7 +599,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 selectedViewHolder.itemView.
                                 findViewById(R.id.earthquake_list_item_time_text_view));
 
-                        if (!QueryUtils.sEarthquakesListInformationValues.getMaxDistance().isEmpty()) {
+                        if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this)) {
                             sharedElements.put(getString(R.string.activity_earthquake_details_distance_text_view_transition),
                                     selectedViewHolder.itemView.
                                     findViewById(R.id.earthquake_list_item_distance_text_view));

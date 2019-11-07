@@ -119,7 +119,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             Earthquake currentFavorite = mFavorites.get(position - 1);
 
-            if (QueryUtils.getMaxDistanceSearchPreference(mContext)==0 ){
+            if (!QueryUtils.getShowDistanceSearchPreference(mContext)){
                 favoriteViewHolder.distanceTextView.setVisibility(View.GONE);
                 distanceTextView=null;
             } else {

@@ -22,7 +22,7 @@
             app:singleLineTitle="false" />
 
         <CheckBoxPreference
-            android:defaultValue="@bool/search_preference_show_distance"
+            android:defaultValue="@bool/search_preference_show_distance_default_value"
             android:key="@string/search_preference_show_distance_key"
             android:title="@string/search_preference_show_distance_title"
             app:icon="@drawable/ic_show_distance_brown_24dp"

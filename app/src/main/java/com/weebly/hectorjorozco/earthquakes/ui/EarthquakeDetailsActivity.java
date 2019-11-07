@@ -876,8 +876,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             showSnackBar(getString(R.string.activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text));
         } else {
             // Insert to "favorite_earthquakes" db table
-            AppExecutors.getInstance().diskIO().execute(() ->
-                    mAppDatabase.earthquakeDao().insertFavoriteEarthquake(mEarthquake));
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                mEarthquake.setDistance(QueryUtils.DISTANCE_NULL_VALUE);
+                mAppDatabase.earthquakeDao().insertFavoriteEarthquake(mEarthquake);
+            });
             showSnackBar(getString(R.string.activity_earthquake_details_earthquake_added_to_favorites_snack_bar_text));
         }
         mIsFavorite = !mIsFavorite;

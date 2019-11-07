@@ -116,7 +116,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             EarthquakeViewHolder earthquakeViewHolder = (EarthquakeViewHolder) holder;
             TextView distanceTextView;
 
-            if (mMaxDistance.isEmpty()){
+            if (!QueryUtils.getShowDistanceSearchPreference(mContext)){
                 earthquakeViewHolder.distanceTextView.setVisibility(View.GONE);
                 distanceTextView=null;
             } else {

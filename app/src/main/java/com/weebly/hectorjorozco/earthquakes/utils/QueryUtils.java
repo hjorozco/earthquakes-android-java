@@ -680,7 +680,7 @@ public class QueryUtils {
 
             float distance = earthquake.getDistance();
 
-            Log.d("TESTING", "Distance "+ earthquake.getDistance());
+            Log.d("TESTING", "Distance " + earthquake.getDistance());
 
             // If the earthquake does not have a distance saved calculate it and save on the earthquake
             if (distance == DISTANCE_NULL_VALUE) {
@@ -706,7 +706,7 @@ public class QueryUtils {
     }
 
 
-    private static String formatDistance(float distance){
+    private static String formatDistance(float distance) {
         String distanceText = new DecimalFormat("0").format(distance / 1000);
         distanceText = distanceText.replace(',', '.');
         return distanceText;
@@ -726,11 +726,19 @@ public class QueryUtils {
         }
     }
 
+
     public static boolean getSoundSearchPreference(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).
                 getBoolean(context.getString(R.string.search_preference_sound_key),
                         context.getResources().getBoolean(R.bool.search_preference_sound_default_value));
 
+    }
+
+
+    public static boolean getShowDistanceSearchPreference(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).
+                getBoolean(context.getString(R.string.search_preference_show_distance_key),
+                        context.getResources().getBoolean(R.bool.search_preference_show_distance_default_value));
     }
 
 
