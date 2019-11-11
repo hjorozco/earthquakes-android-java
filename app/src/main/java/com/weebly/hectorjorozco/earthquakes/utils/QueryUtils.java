@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -646,16 +647,19 @@ public class QueryUtils {
     }
 
 
-    public static void setupEarthquakeInformationOnViews(Context context, Earthquake earthquake, TextView magnitudeTextView,
-                                                         TextView locationOffsetTextView, TextView locationPrimaryTextView,
-                                                         TextView distanceTextView, TextView dateTextView, TextView timeTextView) {
+    public static void setupEarthquakeInformationOnViews(
+            Context context, Earthquake earthquake, View magnitudeCircleView,
+            TextView magnitudeTextView, TextView locationOffsetTextView,
+            TextView locationPrimaryTextView, TextView distanceTextView,
+            TextView dateTextView, TextView timeTextView) {
+
         // Set magnitude text
         String magnitudeToDisplay = QueryUtils.getMagnitudeText(earthquake.getMagnitude());
         magnitudeTextView.setText(magnitudeToDisplay);
 
         // Set colors for magnitude circle and text
         double roundedMagnitude = Double.parseDouble(magnitudeToDisplay);
-        GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeTextView.getBackground();
+        GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeCircleView.getBackground();
         EarthquakeColors earthquakeColors = QueryUtils.getEarthquakeColors(context, roundedMagnitude);
         int magnitudeColor = earthquakeColors.getMagnitudeColor();
         int magnitudeBackgroundColor = earthquakeColors.getMagnitudeBackgroundColor();
@@ -680,8 +684,6 @@ public class QueryUtils {
 
             float distance = earthquake.getDistance();
 
-            Log.d("TESTING", "Distance " + earthquake.getDistance());
-
             // If the earthquake does not have a distance saved calculate it and save on the earthquake
             if (distance == DISTANCE_NULL_VALUE) {
                 float[] result = new float[1];
@@ -690,8 +692,6 @@ public class QueryUtils {
                 distance = result[0];
 
                 earthquake.setDistance(distance);
-
-                Log.d("TESTING", "Distance calculated");
             }
 
             distanceTextView.setText(context.getString(R.string.activity_main_distance_from_you_text, formatDistance(distance)));

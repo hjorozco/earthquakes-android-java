@@ -83,19 +83,24 @@
             android:paddingRight="@dimen/application_standard_padding"
             android:paddingBottom="@dimen/application_small_padding">
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/earthquake_list_item_magnitude_text_view"
+                <View
+                    android:id="@+id/earthquake_list_item_magnitude_circle_view"
                     android:layout_width="@dimen/earthquake_list_item_magnitude_text_view_size"
                     android:layout_height="@dimen/earthquake_list_item_magnitude_text_view_size"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/magnitude_circle"
+                    android:background="@drawable/magnitude_circle">
+                </View>
+
+                <TextView
+                    android:id="@+id/earthquake_list_item_magnitude_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
                     android:textSize="@dimen/application_standard_text_size"
                     android:textStyle="bold"
                     tools:text="8.9" />
@@ -104,13 +109,12 @@
                     android:id="@+id/favorite_list_item_selected_image_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/earthquake_list_item_magnitude_text_view"
-                    android:layout_alignBottom="@id/earthquake_list_item_magnitude_text_view"
+                    android:layout_gravity="bottom|end"
                     android:background="@drawable/selected_circle"
                     android:contentDescription="@string/favorite_list_item_selected_image_content_description"
                     app:srcCompat="@drawable/ic_check_white_18dp" />
 
-            </RelativeLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -127,7 +131,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
-                    android:textAllCaps="true"
                     android:textSize="@dimen/application_small_text_size"
                     android:textStyle="italic"
                     tools:text="88km N of" />
@@ -147,6 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:textStyle="italic"
                     android:maxLines="1"
                     android:textSize="@dimen/application_small_text_size"
                     tools:text="10 km from you" />

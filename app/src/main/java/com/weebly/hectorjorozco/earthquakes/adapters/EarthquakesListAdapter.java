@@ -35,6 +35,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         void onTitleClick();
 
         void onEarthquakeClick(Earthquake earthquake, int earthquakeRecyclerViewPosition,
+                               View magnitudeCircleView,
                                TextView magnitudeTextView, TextView locationOffsetTextView,
                                TextView locationPrimaryTextView, TextView distanceTextView,
                                TextView dateTextView, TextView timeTextView);
@@ -127,6 +128,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             Earthquake currentEarthquake = mEarthquakes.get(position - 1);
 
             QueryUtils.setupEarthquakeInformationOnViews(mContext, currentEarthquake,
+                    earthquakeViewHolder.magnitudeCircleView,
                     earthquakeViewHolder.magnitudeTextView,
                     earthquakeViewHolder.locationOffsetTextView,
                     earthquakeViewHolder.locationPrimaryTextView,
@@ -136,6 +138,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             // For Android version 21 and up set transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                earthquakeViewHolder.magnitudeCircleView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_magnitude_circle_view_transition));
                 earthquakeViewHolder.magnitudeTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
                 earthquakeViewHolder.locationOffsetTextView.setTransitionName(
@@ -151,7 +155,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 // For Android 19 set list item background as a touch selector since
                 // ?android:attr/selectableItemBackground does not work on 19.
-                earthquakeViewHolder.earthquakeLinearLayout.setBackground(mContext.getResources().
+                earthquakeViewHolder.earthquakeMainLayout.setBackground(mContext.getResources().
                         getDrawable(R.drawable.touch_selector));
             }
 
@@ -206,7 +210,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     class EarthquakeViewHolder extends RecyclerView.ViewHolder {
 
-        final LinearLayout earthquakeLinearLayout;
+        final LinearLayout earthquakeMainLayout;
+        final View magnitudeCircleView;
         final TextView magnitudeTextView;
         final TextView locationOffsetTextView;
         final TextView locationPrimaryTextView;
@@ -216,7 +221,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         EarthquakeViewHolder(@NonNull View itemView) {
             super(itemView);
-            earthquakeLinearLayout = itemView.findViewById(R.id.earthquake_list_item_main_layout);
+            earthquakeMainLayout = itemView.findViewById(R.id.earthquake_list_item_main_layout);
+            magnitudeCircleView = itemView.findViewById(R.id.earthquake_list_item_magnitude_circle_view);
             magnitudeTextView = itemView.findViewById(R.id.earthquake_list_item_magnitude_text_view);
             locationOffsetTextView = itemView.findViewById(R.id.earthquake_list_item_location_offset_text_view);
             locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
@@ -224,12 +230,12 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             dateTextView = itemView.findViewById(R.id.earthquake_list_item_date_text_view);
             timeTextView = itemView.findViewById(R.id.earthquake_list_item_time_text_view);
 
-            earthquakeLinearLayout.setOnClickListener((View v) ->
+            earthquakeMainLayout.setOnClickListener((View v) ->
             {
                 int earthquakeRecyclerViewPosition = getAdapterPosition();
                 if (earthquakeRecyclerViewPosition > 0) {
                     mEarthquakesListClickListener.onEarthquakeClick(mEarthquakes.get(earthquakeRecyclerViewPosition - 1),
-                            earthquakeRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
+                            earthquakeRecyclerViewPosition, magnitudeCircleView, magnitudeTextView, locationOffsetTextView,
                             locationPrimaryTextView, distanceTextView, dateTextView, timeTextView);
                 }
             });

@@ -112,7 +112,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         setupViewModel();
 
-        setupSharedElementsTransitions();
+        saveSharedElementsTransitions();
 
         if (savedInstanceState != null) {
             // To restore animation on orientation change
@@ -426,6 +426,7 @@ public class FavoritesActivity extends AppCompatActivity implements
      */
     @Override
     public void onFavoriteClick(Earthquake favorite, int favoriteRecyclerViewPosition,
+                                View magnitudeCircleView,
                                 TextView magnitudeTextView, TextView locationOffsetTextView,
                                 TextView locationPrimaryTextView, TextView distanceTextView,
                                 TextView dateTextView, TextView timeTextView) {
@@ -444,22 +445,23 @@ public class FavoritesActivity extends AppCompatActivity implements
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-                Pair<View, String> pair1 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
-                Pair<View, String> pair2 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
-                Pair<View, String> pair3 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
-                Pair<View, String> pair4 = Pair.create(dateTextView, dateTextView.getTransitionName());
-                Pair<View, String> pair5 = Pair.create(timeTextView, timeTextView.getTransitionName());
+                Pair<View, String> pair1 = Pair.create(magnitudeCircleView, magnitudeCircleView.getTransitionName());
+                Pair<View, String> pair2 = Pair.create(magnitudeTextView, magnitudeTextView.getTransitionName());
+                Pair<View, String> pair3 = Pair.create(locationOffsetTextView, locationOffsetTextView.getTransitionName());
+                Pair<View, String> pair4 = Pair.create(locationPrimaryTextView, locationPrimaryTextView.getTransitionName());
+                Pair<View, String> pair5 = Pair.create(dateTextView, dateTextView.getTransitionName());
+                Pair<View, String> pair6 = Pair.create(timeTextView, timeTextView.getTransitionName());
 
                 ActivityOptionsCompat activityOptionsCompat;
                 if (favorite.getDistance() == QueryUtils.DISTANCE_NULL_VALUE) {
                     //noinspection unchecked
                     activityOptionsCompat =
-                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5);
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5, pair6);
                 } else {
-                    Pair<View, String> pair6 = Pair.create(distanceTextView, distanceTextView.getTransitionName());
+                    Pair<View, String> pair7 = Pair.create(distanceTextView, distanceTextView.getTransitionName());
                     //noinspection unchecked
                     activityOptionsCompat =
-                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5, pair6);
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5, pair6, pair7);
                 }
 
                 startActivity(intent, activityOptionsCompat.toBundle());
@@ -601,7 +603,7 @@ public class FavoritesActivity extends AppCompatActivity implements
      * Map the shared element names to the RecyclerView ViewHolder Views. (works only for visible RecyclerView elements).
      * Used to restore exit transitions on rotation.
      */
-    private void setupSharedElementsTransitions() {
+    private void saveSharedElementsTransitions() {
         setExitSharedElementCallback(
                 new SharedElementCallback() {
                     @Override
@@ -612,6 +614,9 @@ public class FavoritesActivity extends AppCompatActivity implements
 
                         if (selectedViewHolder == null) return;
 
+                        sharedElements.put(getString(R.string.activity_earthquake_details_magnitude_circle_view_transition),
+                                selectedViewHolder.itemView.
+                                        findViewById(R.id.earthquake_list_item_magnitude_circle_view));
                         sharedElements.put(getString(R.string.activity_earthquake_details_magnitude_text_view_transition),
                                 selectedViewHolder.itemView.
                                         findViewById(R.id.earthquake_list_item_magnitude_text_view));

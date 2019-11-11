@@ -49,9 +49,9 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public interface FavoritesListAdapterListener {
 
         void onFavoriteClick(Earthquake favorite, int favoriteRecyclerViewPosition,
-                             TextView magnitudeTextView, TextView locationOffsetTextView,
-                             TextView locationPrimaryTextView, TextView distanceTextView,
-                             TextView dateTextView, TextView timeTextView);
+                             View magnitudeCircleView, TextView magnitudeTextView,
+                             TextView locationOffsetTextView, TextView locationPrimaryTextView,
+                             TextView distanceTextView, TextView dateTextView, TextView timeTextView);
 
         void onFavoriteLongClick(int favoriteRecyclerViewPosition);
     }
@@ -128,6 +128,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
 
             QueryUtils.setupEarthquakeInformationOnViews(mContext, currentFavorite,
+                    favoriteViewHolder.magnitudeCircleView,
                     favoriteViewHolder.magnitudeTextView,
                     favoriteViewHolder.locationOffsetTextView,
                     favoriteViewHolder.locationPrimaryTextView,
@@ -138,6 +139,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             // For Android version 21 and up set transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                favoriteViewHolder.magnitudeCircleView.setTransitionName(
+                        mContext.getString(R.string.activity_earthquake_details_magnitude_circle_view_transition));
                 favoriteViewHolder.magnitudeTextView.setTransitionName(
                         mContext.getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
                 favoriteViewHolder.locationOffsetTextView.setTransitionName(
@@ -275,6 +278,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class FavoriteViewHolder extends RecyclerView.ViewHolder {
 
         final LinearLayout earthquakeLinearLayout;
+        final View magnitudeCircleView;
         final TextView magnitudeTextView;
         final TextView locationOffsetTextView;
         final TextView locationPrimaryTextView;
@@ -290,6 +294,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
         FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
             earthquakeLinearLayout = itemView.findViewById(R.id.earthquake_list_item_main_layout);
+            magnitudeCircleView = itemView.findViewById(R.id.earthquake_list_item_magnitude_circle_view);
             magnitudeTextView = itemView.findViewById(R.id.earthquake_list_item_magnitude_text_view);
             locationOffsetTextView = itemView.findViewById(R.id.earthquake_list_item_location_offset_text_view);
             locationPrimaryTextView = itemView.findViewById(R.id.earthquake_list_item_location_primary_text_view);
@@ -307,7 +312,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 if (favoriteRecyclerViewPosition > 0) {
                     mFavoritesListAdapterListener.onFavoriteClick(mFavorites.get(favoriteRecyclerViewPosition - 1),
-                            favoriteRecyclerViewPosition, magnitudeTextView, locationOffsetTextView,
+                            favoriteRecyclerViewPosition, magnitudeCircleView, magnitudeTextView, locationOffsetTextView,
                             locationPrimaryTextView, distanceTextView, dateTextView, timeTextView);
                 }
             });

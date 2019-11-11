@@ -244,8 +244,10 @@
     <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
 
     <string name="activity_earthquake_details_label">Earthquake details</string>
+    <string name="activity_earthquake_details_magnitude_circle_view_transition" translatable="false">
+        activity_earthquake_details_magnitude_circle_view_transition</string>
     <string name="activity_earthquake_details_magnitude_text_view_transition" translatable="false">
-        ctivity_earthquake_details_magnitude_text_view_transition</string>
+        activity_earthquake_details_magnitude_text_view_transition</string>
     <string name="activity_earthquake_details_location_offset_text_view_transition" translatable="false">
         activity_earthquake_details_location_offset_text_view_transition</string>
     <string name="activity_earthquake_details_location_primary_text_view_transition" translatable="false">
