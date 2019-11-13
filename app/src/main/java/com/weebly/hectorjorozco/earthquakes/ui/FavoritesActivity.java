@@ -48,7 +48,7 @@ import java.util.Map;
 
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING;
 
-// TODO Do the same modifications on adapter of this activity to show distance when needed.
+
 public class FavoritesActivity extends AppCompatActivity implements
         FavoritesListAdapter.FavoritesListAdapterListener,
         ConfirmationDialogFragment.ConfirmationDialogFragmentListener,

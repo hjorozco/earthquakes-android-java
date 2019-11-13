@@ -84,6 +84,11 @@
 
     <string name="activity_main_distance_from_you_text">%1$s km from you</string>
 
+    <string name="menu_activity_main_bottom_navigation_view_action_list_title">List</string>
+    <string name="menu_activity_main_bottom_navigation_view_action_map_title">Map</string>
+    <string name="menu_activity_main_bottom_navigation_view_action_favorites_title">Favorites</string>
+    <string name="menu_activity_main_bottom_navigation_view_action_news_title">News</string>
+
     <!-- ********** Activity main ********** -->
 
 

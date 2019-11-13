@@ -23,8 +23,8 @@
 
     <dimen name="message_icons_size">96dp</dimen>
 
-    <dimen name="recycler_view_fast_scroll_custom_handle_width">6dp</dimen>
-    <dimen name="recycler_view_fast_scroll_custom_handle_height">24dp</dimen>
+    <dimen name="recycler_view_fast_scroll_custom_handle_width">8dp</dimen>
+    <dimen name="recycler_view_fast_scroll_custom_handle_height">32dp</dimen>
 
     <dimen name="activity_earthquake_details_map_height">300dp</dimen>
 

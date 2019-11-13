@@ -92,8 +92,7 @@
                     android:id="@+id/earthquake_list_item_magnitude_circle_view"
                     android:layout_width="@dimen/earthquake_list_item_magnitude_text_view_size"
                     android:layout_height="@dimen/earthquake_list_item_magnitude_text_view_size"
-                    android:background="@drawable/magnitude_circle">
-                </View>
+                    android:background="@drawable/magnitude_circle" />
 
                 <TextView
                     android:id="@+id/earthquake_list_item_magnitude_text_view"
@@ -129,10 +128,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
-                    android:textSize="@dimen/application_small_text_size"
-                    android:textStyle="italic"
+                    android:textSize="@dimen/application_standard_text_size"
                     tools:text="88km N of" />
 
                 <TextView
@@ -150,9 +147,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:textStyle="italic"
                     android:maxLines="1"
-                    android:textSize="@dimen/application_small_text_size"
+                    android:textSize="@dimen/application_standard_text_size"
+                    android:textStyle="italic"
                     tools:text="10 km from you" />
 
             </LinearLayout>
@@ -169,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:textSize="@dimen/application_small_text_size"
+                    android:textSize="@dimen/application_standard_text_size"
                     android:textStyle="italic"
                     tools:text="Feb 2, 2016" />
 
@@ -178,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:textSize="@dimen/application_small_text_size"
+                    android:textSize="@dimen/application_standard_text_size"
                     android:textStyle="italic"
                     tools:text="3:00 PM" />
 
