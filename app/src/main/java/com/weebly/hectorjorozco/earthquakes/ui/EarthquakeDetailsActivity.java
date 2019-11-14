@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ShareCompat;
 import androidx.core.view.MenuCompat;
 
@@ -69,6 +70,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
     private WebView mUsgsMapWebView;
     private FrameLayout mGoogleMapFrameLayout, mUsgsMapFrameLayout;
+    private CoordinatorLayout mCoordinatorLayout;
     private TextView mUsgsMapNoInternetTextView;
     private RadioGroup mMapTypeRadioGroup;
     private GoogleMap mGoogleMap;
@@ -118,6 +120,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         }
 
         mAppDatabase = AppDatabase.getInstance(this);
+
+        mCoordinatorLayout = findViewById(R.id.activity_earthquake_details_coordinator_layout);
 
         if (savedInstanceState != null) {
             mRotation = true;
@@ -888,7 +892,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     private void showSnackBar(String text) {
-        Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mCoordinatorLayout, text, Snackbar.LENGTH_LONG).show();
     }
 
 

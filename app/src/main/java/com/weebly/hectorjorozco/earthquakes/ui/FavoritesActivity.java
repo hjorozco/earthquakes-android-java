@@ -256,8 +256,8 @@ public class FavoritesActivity extends AppCompatActivity implements
                 mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
             } else {
                 // If one or more earthquakes were found
-                setMessageVisible(false);
                 mNumberOfFavoritesOnList = favorites.size();
+                setMessageVisible(false);
                 mAdapter.setFavoritesListData(SortFavoritesUtils.SortFavorites(this, favorites));
             }
 
@@ -596,7 +596,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
 
     private void showSnackBarMessage(String message) {
-        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(R.id.activity_favorites_coordinator_layout), message, Snackbar.LENGTH_LONG).show();
     }
 
     /**

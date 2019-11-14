@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/menu_activity_main_bottom_navigation_view_action_list"
-        android:icon="@drawable/ic_list_white_24dp"
+        android:icon="@drawable/ic_list_white_24_dp"
         android:title="@string/menu_activity_main_bottom_navigation_view_action_list_title"
         app:showAsAction="ifRoom"/>
 

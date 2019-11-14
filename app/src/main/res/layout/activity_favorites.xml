@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_favorites_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +16,7 @@
         android:id="@+id/activity_favorites_recycler_view_fast_scroller"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
         android:orientation="vertical" />
 
     <RelativeLayout
@@ -39,10 +40,10 @@
             android:text="@string/activity_favorites_loading_favorites_message"
             android:textAlignment="center"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary" />
 
     </RelativeLayout>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

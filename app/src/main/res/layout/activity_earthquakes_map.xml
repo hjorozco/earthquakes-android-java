@@ -1,135 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_earthquakes_map_frame_layout"
+    android:id="@+id/activity_earthquakes_map_coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="1dp"
-    tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakesMapActivity">
+    android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/activity_earthquakes_map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <FrameLayout
+        android:id="@+id/activity_earthquakes_map_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="FragmentTagUsage" />
+        android:padding="@dimen/activity_earthquakes_map_padding"
+        tools:context="com.weebly.hectorjorozco.earthquakes.ui.EarthquakesMapActivity">
 
-    <View
-        android:id="@+id/activity_earthquakes_map_fab_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:visibility="gone" />
+        <fragment
+            android:id="@+id/activity_earthquakes_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="FragmentTagUsage" />
 
-    <LinearLayout
-        android:id="@+id/activity_earthquakes_map_fab_layer_1_linear_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:clipToPadding="false"
-        android:gravity="center_vertical"
-        android:padding="@dimen/application_small_padding"
-        android:visibility="gone">
+        <View
+            android:id="@+id/activity_earthquakes_map_fab_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:visibility="gone" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/activity_earthquakes_map_fab_layer_1_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/application_small_margin"
-            android:background="@color/colorAppBackground"
-            android:paddingLeft="@dimen/application_small_padding"
-            android:paddingRight="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_details_google_map_default_type_text"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/application_small_text_size" />
+            android:layout_gravity="end"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:padding="@dimen/application_small_padding"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/application_small_margin"
+                android:background="@color/colorAppBackground"
+                android:paddingLeft="@dimen/application_small_padding"
+                android:paddingRight="@dimen/application_small_padding"
+                android:text="@string/activity_earthquake_details_google_map_default_type_text"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_small_text_size" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/activity_earthquakes_map_fab_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/colorPrimaryLight"
+                app:backgroundTint="@color/colorAppBackground"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_default_map_brown_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/activity_earthquakes_map_fab_layer_2_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:padding="@dimen/application_small_padding"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/application_small_margin"
+                android:background="@color/colorAppBackground"
+                android:paddingLeft="@dimen/application_small_padding"
+                android:paddingRight="@dimen/application_small_padding"
+                android:text="@string/activity_earthquake_details_google_map_satellite_type_text"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_small_text_size" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/activity_earthquakes_map_fab_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/colorPrimaryLight"
+                app:backgroundTint="@color/colorAppBackground"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_satellite_map_brown_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/activity_earthquakes_map_fab_layer_3_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:padding="@dimen/application_small_padding"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/application_small_margin"
+                android:background="@color/colorAppBackground"
+                android:paddingLeft="@dimen/application_small_padding"
+                android:paddingRight="@dimen/application_small_padding"
+                android:text="@string/activity_earthquake_details_google_map_terrain_type_text"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/application_small_text_size" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/activity_earthquakes_map_fab_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/colorPrimaryLight"
+                app:backgroundTint="@color/colorAppBackground"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_terrain_map_brown_24dp" />
+
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/activity_earthquakes_map_fab_1"
+            android:id="@+id/activity_earthquakes_map_layers_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/application_small_margin"
+            android:gravity="center_vertical"
+            android:padding="@dimen/application_small_padding"
             android:tint="@color/colorPrimaryLight"
             app:backgroundTint="@color/colorAppBackground"
             app:fabSize="mini"
-            app:srcCompat="@drawable/ic_default_map_brown_24dp" />
+            app:srcCompat="@drawable/ic_layers_brown_24dp" />
 
-    </LinearLayout>
+    </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/activity_earthquakes_map_fab_layer_2_linear_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:clipToPadding="false"
-        android:gravity="center_vertical"
-        android:padding="@dimen/application_small_padding"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/application_small_margin"
-            android:background="@color/colorAppBackground"
-            android:paddingLeft="@dimen/application_small_padding"
-            android:paddingRight="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_details_google_map_satellite_type_text"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/application_small_text_size" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/activity_earthquakes_map_fab_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="@color/colorPrimaryLight"
-            app:backgroundTint="@color/colorAppBackground"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_satellite_map_brown_24dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_earthquakes_map_fab_layer_3_linear_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:clipToPadding="false"
-        android:gravity="center_vertical"
-        android:padding="@dimen/application_small_padding"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/application_small_margin"
-            android:background="@color/colorAppBackground"
-            android:paddingLeft="@dimen/application_small_padding"
-            android:paddingRight="@dimen/application_small_padding"
-            android:text="@string/activity_earthquake_details_google_map_terrain_type_text"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/application_small_text_size" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/activity_earthquakes_map_fab_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="@color/colorPrimaryLight"
-            app:backgroundTint="@color/colorAppBackground"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_terrain_map_brown_24dp" />
-
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_earthquakes_map_layers_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="@dimen/application_small_margin"
-        android:gravity="center_vertical"
-        android:padding="@dimen/application_small_padding"
-        android:tint="@color/colorPrimaryLight"
-        app:backgroundTint="@color/colorAppBackground"
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_layers_brown_24dp" />
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

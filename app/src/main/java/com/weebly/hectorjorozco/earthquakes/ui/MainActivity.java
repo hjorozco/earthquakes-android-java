@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
+    private CoordinatorLayout mCoordinatorLayout;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mMessageImageView = findViewById(R.id.activity_main_message_image_view);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
+        mCoordinatorLayout = findViewById(R.id.activity_main_coordinator_layout);
 
         mMediaPlayer = new MediaPlayer();
 
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private void setupLongSearchMessageHandler() {
         mHandler = new Handler();
-        mRunnable = () -> Snackbar.make(findViewById(android.R.id.content),
+        mRunnable = () -> Snackbar.make(mCoordinatorLayout,
                 MainActivity.this.getString(R.string.activity_main_long_search_message),
                 LONG_TIME_SNACKBAR * 1000).show();
 
@@ -222,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     // If the search has finished and no previous snack has been shown
                     if (!QueryUtils.sSearchingForEarthquakes && QueryUtils.sLoadEarthquakesResultCode != QueryUtils.NO_ACTION
                             && !QueryUtils.sListWillBeLoadedAfterEmpty) {
-                        Snackbar.make(findViewById(android.R.id.content),
+                        Snackbar.make(mCoordinatorLayout,
                                 getSnackBarText(QueryUtils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_LONG).show();
                         if (mMenu != null) {

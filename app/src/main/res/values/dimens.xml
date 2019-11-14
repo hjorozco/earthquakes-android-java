@@ -28,6 +28,8 @@
 
     <dimen name="activity_earthquake_details_map_height">300dp</dimen>
 
+    <dimen name="activity_earthquakes_map_padding">1dp</dimen>
+
     <dimen name="standard_52">52dp</dimen>
     <dimen name="standard_96">96dp</dimen>
     <dimen name="standard_140">140dp</dimen>
@@ -37,6 +39,6 @@
     <dimen name="button_background_corner_radius">3dp</dimen>
     <dimen name="button_background_stroke_width">1dp</dimen>
 
-
+    <dimen name="bottom_navigation_view_elevation">6dp</dimen>
 
 </resources>

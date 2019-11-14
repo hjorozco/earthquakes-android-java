@@ -29,6 +29,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
+import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.LONG_TIME_SNACKBAR;
+
 
 public class EarthquakesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -128,11 +130,11 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         // Show a message if the number of earthquakes in the list is greater than 1000 (the map
         // will only show a maximum of 1000 earthquakes.
         if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {
-            Snackbar.make(findViewById(android.R.id.content),
+            Snackbar.make(findViewById(R.id.activity_earthquakes_map_coordinator_layout),
                     getString(R.string.activity_earthquakes_map_max_number_exceeded_message,
                             String.format(Locale.getDefault(), "%,d",
                                     MainActivity.MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP)),
-                    Snackbar.LENGTH_LONG).show();
+                    LONG_TIME_SNACKBAR * 1000).show();
         }
     }
 
