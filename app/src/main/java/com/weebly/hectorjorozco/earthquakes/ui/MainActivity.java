@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
@@ -76,10 +77,16 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
     private CoordinatorLayout mCoordinatorLayout;
+    private BottomNavigationView mBottomNavigationView;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
     private Runnable mRunnable;
+
+
+    // TODO Create an interface to be implemented on Favorites activity that will enable the maps bottom navigation
+    // view menu item when the list is loaded and not searching.
+    // Also set up a flag on Query Utils that indicates if the map menu item has to be disabled or not when the Favorites activity is created.
 
 
     @Override
@@ -122,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             QueryUtils.setupProgressBarForPreLollipop(mProgressBar, this);
         }
 
+        setupBottomNavigationView();
+
         setupRecyclerView();
 
         setupViewModel();
@@ -139,6 +148,27 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mHandler.postDelayed(mRunnable, SECONDS_UNTIL_SHOWING_LONG_SEARCH_MESSAGE * 1000);
         QueryUtils.sHandler = mHandler;
         QueryUtils.sRunnable = mRunnable;
+    }
+
+
+    private void setupBottomNavigationView(){
+        mBottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()){
+                case R.id.menu_activity_main_bottom_navigation_view_action_list:
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_map:
+
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
+                    startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_news:
+                    break;
+            }
+            return true;
+        });
     }
 
 
@@ -505,6 +535,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private void enableListInformationAndEarthquakesMapMenuItems(boolean enable) {
         mMenu.findItem(R.id.menu_activity_main_action_earthquakes_map).setEnabled(enable);
+        mBottomNavigationView.getMenu().getItem(1).setEnabled(enable);
     }
 
     /**
@@ -533,6 +564,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                   View magnitudeCircleView, TextView magnitudeTextView,
                                   TextView locationOffsetTextView, TextView locationPrimaryTextView,
                                   TextView distanceTextView, TextView dateTextView, TextView timeTextView) {
+
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
 
         mEarthquakeRecyclerViewPosition = earthquakeRecyclerViewPosition;
 
@@ -569,6 +602,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             startActivity(intent);
             overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
         }
+
     }
 
 
@@ -581,6 +615,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 new SharedElementCallback() {
                     @Override
                     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
 
                         RecyclerView.ViewHolder selectedViewHolder = mRecyclerView
                                 .findViewHolderForAdapterPosition(mEarthquakeRecyclerViewPosition);
@@ -642,6 +678,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 && QueryUtils.getMaxDistanceSearchPreference(this) != 0) {
             QueryUtils.updateLastKnowLocation(this);
         }
+
+        mBottomNavigationView.setVisibility(View.VISIBLE);
+        mBottomNavigationView.setSelectedItemId(R.id.menu_activity_main_bottom_navigation_view_action_list);
     }
 
     @Override

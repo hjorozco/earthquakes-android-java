@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.FavoritesListAdapter;
@@ -74,6 +75,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     private int mEarthquakeRecyclerViewPosition;
     private Menu mMenu;
     private DividerItemDecoration mDividerItemDecoration;
+    private BottomNavigationView mBottomNavigationView;
 
     // Used for action mode
     private ActionModeCallback actionModeCallback;
@@ -107,6 +109,8 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         mIsAskingToDeleteFavorite = false;
         mRightSwipe = false;
+
+        setupBottomNavigationView();
 
         setupRecyclerView();
 
@@ -151,6 +155,28 @@ public class FavoritesActivity extends AppCompatActivity implements
                 }
             }
         }
+    }
+
+
+    private void setupBottomNavigationView(){
+        mBottomNavigationView = findViewById(R.id.activity_favorites_bottom_navigation_view);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()){
+                case R.id.menu_activity_main_bottom_navigation_view_action_list:
+                    onBackPressed();
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_map:
+                    onBackPressed();
+                    startActivity(new Intent(FavoritesActivity.this, EarthquakesMapActivity.class));
+                    overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_news:
+                    break;
+            }
+            return true;
+        });
     }
 
 
@@ -431,6 +457,8 @@ public class FavoritesActivity extends AppCompatActivity implements
                                 TextView locationPrimaryTextView, TextView distanceTextView,
                                 TextView dateTextView, TextView timeTextView) {
 
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+
         // If there are favorites selected (action mode is enabled) set up action mode
         if (mAdapter.getSelectedFavoritesCount() > 0) {
             setupItemForActionMode(favoriteRecyclerViewPosition);
@@ -476,6 +504,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     // Implementation of FavoritesListAdapter.FavoritesListAdapterListener
     @Override
     public void onFavoriteLongClick(int favoriteRecyclerViewPosition) {
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
         setupItemForActionMode(favoriteRecyclerViewPosition);
     }
 
@@ -609,6 +638,8 @@ public class FavoritesActivity extends AppCompatActivity implements
                     @Override
                     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
 
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
+
                         RecyclerView.ViewHolder selectedViewHolder = mRecyclerView
                                 .findViewHolderForAdapterPosition(mEarthquakeRecyclerViewPosition);
 
@@ -705,6 +736,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             mAdapter.clearSelectedFavorites();
             mActionMode = null;
             mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
+            mBottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -712,7 +744,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -731,5 +763,13 @@ public class FavoritesActivity extends AppCompatActivity implements
             outState.putParcelable(SAVED_INSTANCE_STATE_SELECTED_ITEMS_KEY, mAdapter.getSelectedFavorites());
         }
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBottomNavigationView.setVisibility(View.VISIBLE);
+        mBottomNavigationView.setSelectedItemId(R.id.menu_activity_main_bottom_navigation_view_action_favorites);
     }
 }
