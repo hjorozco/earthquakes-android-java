@@ -82,7 +82,6 @@ public class QueryUtils {
     public static boolean sSearchingForEarthquakes = true;
     public static byte sLoadEarthquakesResultCode = NO_ACTION;
     public static boolean sListWillBeLoadedAfterEmpty = true;
-    public static boolean sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
     public static boolean sIsPlayingSound = false;
 
     public static Handler sHandler;

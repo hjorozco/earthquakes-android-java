@@ -84,11 +84,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private Runnable mRunnable;
 
 
-    // TODO Create an interface to be implemented on Favorites activity that will enable the maps bottom navigation
-    // view menu item when the list is loaded and not searching.
-    // Also set up a flag on Query Utils that indicates if the map menu item has to be disabled or not when the Favorites activity is created.
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -158,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 case R.id.menu_activity_main_bottom_navigation_view_action_list:
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_map:
-
+                    startActivity(new Intent(this, EarthquakesMapActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
                     startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
@@ -206,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     setMessageVisible(true);
                     setMessage(QueryUtils.sLoadEarthquakesResultCode);
                     enableRefresh();
-                    QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
                     removeRunnableFromHandler();
                 }
                 QueryUtils.sListWillBeLoadedAfterEmpty = true;
@@ -224,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                         } else {
                             setMessage(QueryUtils.NO_EARTHQUAKES_FOUND);
                         }
-                        QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = false;
                         removeRunnableFromHandler();
                     }
                     QueryUtils.sListWillBeLoadedAfterEmpty = true;
@@ -258,19 +252,12 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                         Snackbar.make(mCoordinatorLayout,
                                 getSnackBarText(QueryUtils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_LONG).show();
-                        if (mMenu != null) {
-                            enableListInformationAndEarthquakesMapMenuItems(true);
-                        }
                     }
 
                     // Flag used when activity is recreated to indicate that no action is tacking place
                     QueryUtils.sLoadEarthquakesResultCode = QueryUtils.NO_ACTION;
 
                     QueryUtils.sListWillBeLoadedAfterEmpty = false;
-
-                    if (mMenu != null && QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
-                        enableListInformationAndEarthquakesMapMenuItems(true);
-                    }
                 }
 
                 // This is used when this observer on changed method is called after a screen rotation.
@@ -422,17 +409,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         MenuCompat.setGroupDividerEnabled(menu, true);
         mMenu = menu;
 
-        if (QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery) {
-            enableListInformationAndEarthquakesMapMenuItems(true);
-        } else {
-            enableListInformationAndEarthquakesMapMenuItems(false);
-        }
-
         if (!QueryUtils.sSearchingForEarthquakes) {
             setupRefreshMenuItem(true);
-        } else {
-            enableListInformationAndEarthquakesMapMenuItems(false);
         }
+
         return true;
     }
 
@@ -495,7 +475,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         // Show stop menu item
         setupRefreshMenuItem(false);
         mProgressBar.setVisibility(View.VISIBLE);
-        enableListInformationAndEarthquakesMapMenuItems(false);
         QueryUtils.sSearchingForEarthquakes = true;
         setMessage(QueryUtils.SEARCHING);
         mMainActivityViewModel.loadEarthquakes();
@@ -532,11 +511,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         }
     }
 
-
-    private void enableListInformationAndEarthquakesMapMenuItems(boolean enable) {
-        mMenu.findItem(R.id.menu_activity_main_action_earthquakes_map).setEnabled(enable);
-        mBottomNavigationView.getMenu().getItem(1).setEnabled(enable);
-    }
 
     /**
      * Implementation of EarthquakesListAdapter.EarthquakesListClickListener

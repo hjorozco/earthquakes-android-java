@@ -168,7 +168,7 @@ public class FavoritesActivity extends AppCompatActivity implements
                 case R.id.menu_activity_main_bottom_navigation_view_action_map:
                     onBackPressed();
                     startActivity(new Intent(FavoritesActivity.this, EarthquakesMapActivity.class));
-                    overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
                     break;

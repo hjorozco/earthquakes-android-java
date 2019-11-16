@@ -66,10 +66,6 @@ public class MainActivityViewModel extends AndroidViewModel {
 
                                 setLoadEarthquakesResult(earthquakeList, QueryUtils.SEARCH_RESULT_NON_NULL);
 
-                                if (earthquakeList.size() > 0) {
-                                    QueryUtils.sOneOrMoreEarthquakesFoundByRetrofitQuery = true;
-                                }
-
                             } else {
                                 setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.SEARCH_RESULT_NULL);
                             }
