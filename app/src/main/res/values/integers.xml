@@ -19,7 +19,7 @@
 
     <integer name="message_icons_view_port_size">512</integer>
 
-    <integer name="activity_transition_time">500</integer>
-    <integer name="activity_fast_transition_time">250</integer>
+    <integer name="activity_transition_time">300</integer>
+    <integer name="activity_fast_transition_time">100</integer>
 
 </resources>

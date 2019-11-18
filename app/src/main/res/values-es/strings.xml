@@ -171,7 +171,13 @@
 
     <string name="activity_earthquakes_map_max_number_exceeded_message">
         Mostrando los primeros %1$s sismos de la lista.</string>
+    <string name="activity_earthquakes_map_number_of_earthquakes_shown_message">
+        Mostrando %1$s sismos.</string>
     <string name="activity_earthquakes_map_label">Mapa de sismos</string>
+    <string name="activity_earthquakes_map_no_earthquakes_data_message">
+        Buscando sismos.\n\nRegresa a la lista y una vez que se encuentren sismos, podrás ver sus
+        ubicaciones en este mapa.
+    </string>
 
     <!-- ********** Activity earthquakes map ********** -->
 

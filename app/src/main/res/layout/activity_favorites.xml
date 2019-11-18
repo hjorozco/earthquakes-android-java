@@ -49,15 +49,14 @@
         android:id="@+id/activity_favorites_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
+        android:background="@android:color/white"
         app:elevation="@dimen/bottom_navigation_view_elevation"
         app:itemIconTint="@drawable/bottom_navigation_view_colors"
         app:itemTextColor="@drawable/bottom_navigation_view_colors"
         app:labelVisibilityMode="labeled"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-        app:menu="@menu/menu_activity_main_bottom_navigation_view" />
+        app:menu="@menu/menu_bottom_navigation_view" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

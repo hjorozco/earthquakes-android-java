@@ -15,19 +15,8 @@
         android:title="@string/menu_activity_main_action_search_preferences_title"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/menu_activity_main_action_favorites"
-        android:title="@string/menu_activity_main_action_favorites_title"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_activity_main_action_earthquakes_map"
-        android:title="@string/menu_activity_main_action_earthquakes_map_title"
-        app:showAsAction="never" />
-
 
     <group android:id="@+id/menu_activity_main_help_group">
-
         <item
             android:id="@+id/menu_activity_main_action_glossary"
             android:title="@string/menu_activity_earthquake_details_action_glossary_title"

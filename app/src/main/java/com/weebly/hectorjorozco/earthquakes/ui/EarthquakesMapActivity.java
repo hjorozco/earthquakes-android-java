@@ -1,15 +1,17 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +21,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
@@ -30,8 +34,6 @@ import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
-
-import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.LONG_TIME_SNACKBAR;
 
 
 public class EarthquakesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -45,16 +47,13 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     private boolean mRotation = false;
     private List<Earthquake> mEarthquakes;
     private boolean mShowMap;
+    private BottomNavigationView mBottomNavigationView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquakes_map);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         mEarthquakes = QueryUtils.getEarthquakesList();
 
@@ -64,13 +63,15 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mShowMap = false;
         }
 
-        TextView textView = findViewById(R.id.activity_earthquakes_map_text_view);
-        CoordinatorLayout coordinatorLayout = findViewById(R.id.activity_earthquakes_map_coordinator_layout);
+        TextView noDatatextView = findViewById(R.id.activity_earthquakes_map_text_view);
+        FrameLayout mMapLayout = findViewById(R.id.activity_earthquakes_map_frame_layout);
+
+        setupBottomNavigationView();
 
         if (mShowMap) {
 
-            textView.setVisibility(View.GONE);
-            coordinatorLayout.setVisibility(View.VISIBLE);
+            noDatatextView.setVisibility(View.GONE);
+            mMapLayout.setVisibility(View.VISIBLE);
 
             if (savedInstanceState != null) {
                 mRotation = true;
@@ -146,21 +147,32 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                         layoutFabLayer2, layoutFabLayer3, fabBackgroundLayout, layersFab, this);
             });
 
-
-            // Show a message if the number of earthquakes in the list is greater than 1000 (the map
-            // will only show a maximum of 1000 earthquakes.
-            if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {
-                Snackbar.make(coordinatorLayout,
-                        getString(R.string.activity_earthquakes_map_max_number_exceeded_message,
-                                String.format(Locale.getDefault(), "%,d",
-                                        MainActivity.MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP)),
-                        LONG_TIME_SNACKBAR * 1000).show();
-            }
-
         } else {
-            textView.setVisibility(View.VISIBLE);
-            coordinatorLayout.setVisibility(View.GONE);
+            noDatatextView.setVisibility(View.VISIBLE);
+            mMapLayout.setVisibility(View.GONE);
         }
+    }
+
+
+    private void setupBottomNavigationView(){
+        mBottomNavigationView = findViewById(R.id.activity_earthquakes_map_bottom_navigation_view);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()){
+                case R.id.menu_activity_main_bottom_navigation_view_action_list:
+                    onBackPressed();
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_map:
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
+                    onBackPressed();
+                    startActivity(new Intent(EarthquakesMapActivity.this, FavoritesActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    break;
+                case R.id.menu_activity_main_bottom_navigation_view_action_news:
+                    break;
+            }
+            return true;
+        });
     }
 
 
@@ -207,8 +219,17 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
                     .anchor(0.5f, 0.5f)
                     .alpha(markerAttributes.getAlphaValue())
-                    .zIndex(markerAttributes.getZIndex()));
+                    .zIndex(markerAttributes.getZIndex())).setTag(i);
         }
+
+        // TODO Call EarthquakeDetailsActivity with the corresponding earthquake
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Snackbar.make(findViewById(R.id.activity_earthquakes_map_coordinator_layout),
+                        "Position " + marker.getTag(), Snackbar.LENGTH_LONG).show();
+            }
+        });
 
         googleMap.setMapType(mGoogleMapType);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -223,13 +244,45 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_earthquakes_map, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
+        if (item.getItemId() == R.id.menu_activity_earthquakes_map_action_help) {
+
+            showHelpSnackBar();
+        }
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void showHelpSnackBar(){
+        int stringID, numberOfEarthquakes;
+        if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {
+            stringID = R.string.activity_earthquakes_map_max_number_exceeded_message;
+            numberOfEarthquakes = MainActivity.MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP;
+        } else {
+            stringID = R.string.activity_earthquakes_map_number_of_earthquakes_shown_message;
+            numberOfEarthquakes = mEarthquakes.size();
+        }
+        String message = getString(stringID,
+                String.format(Locale.getDefault(), "%,d",
+                        numberOfEarthquakes));
+        Snackbar.make(findViewById(R.id.activity_earthquakes_map_coordinator_layout),message,
+                Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBottomNavigationView.setSelectedItemId(R.id.menu_activity_main_bottom_navigation_view_action_map);
+    }
 
     @Override
     public void onBackPressed() {

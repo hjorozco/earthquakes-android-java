@@ -146,10 +146,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-    private void setupBottomNavigationView(){
+    private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()){
+            switch (menuItem.getItemId()) {
                 case R.id.menu_activity_main_bottom_navigation_view_action_list:
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_map:
@@ -428,14 +428,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 startActivity(new Intent(this, SearchPreferencesActivity.class));
                 overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
                 break;
-            case R.id.menu_activity_main_action_favorites:
-                startActivity(new Intent(this, FavoritesActivity.class));
-                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
-                break;
-            case R.id.menu_activity_main_action_earthquakes_map:
-                startActivity(new Intent(this, EarthquakesMapActivity.class));
-                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
-                break;
             case R.id.menu_activity_main_action_glossary:
                 startActivity(new Intent(this, GlossaryActivity.class));
                 overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
@@ -602,24 +594,24 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                         findViewById(R.id.earthquake_list_item_magnitude_circle_view));
                         sharedElements.put(getString(R.string.activity_earthquake_details_magnitude_text_view_transition),
                                 selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_magnitude_text_view));
+                                        findViewById(R.id.earthquake_list_item_magnitude_text_view));
                         sharedElements.put(getString(R.string.activity_earthquake_details_location_offset_text_view_transition),
                                 selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_location_offset_text_view));
+                                        findViewById(R.id.earthquake_list_item_location_offset_text_view));
                         sharedElements.put(getString(R.string.activity_earthquake_details_location_primary_text_view_transition),
                                 selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_location_primary_text_view));
+                                        findViewById(R.id.earthquake_list_item_location_primary_text_view));
                         sharedElements.put(getString(R.string.activity_earthquake_details_date_text_view_transition),
                                 selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_date_text_view));
+                                        findViewById(R.id.earthquake_list_item_date_text_view));
                         sharedElements.put(getString(R.string.activity_earthquake_details_time_text_view_transition),
                                 selectedViewHolder.itemView.
-                                findViewById(R.id.earthquake_list_item_time_text_view));
+                                        findViewById(R.id.earthquake_list_item_time_text_view));
 
                         if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this)) {
                             sharedElements.put(getString(R.string.activity_earthquake_details_distance_text_view_transition),
                                     selectedViewHolder.itemView.
-                                    findViewById(R.id.earthquake_list_item_distance_text_view));
+                                            findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
                     }
                 });

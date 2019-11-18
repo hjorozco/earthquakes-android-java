@@ -94,10 +94,6 @@ public class FavoritesActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_favorites);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
 
