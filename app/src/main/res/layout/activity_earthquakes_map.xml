@@ -157,7 +157,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@android:color/white"
-        app:elevation="@dimen/bottom_navigation_view_elevation"
         app:itemIconTint="@drawable/bottom_navigation_view_colors"
         app:itemTextColor="@drawable/bottom_navigation_view_colors"
         app:labelVisibilityMode="labeled"

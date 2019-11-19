@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         }
 
         setContentView(R.layout.activity_main);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.activity_main_label));
+        }
 
         // Initialize Stetho.
         Stetho.initializeWithDefaults(this);
@@ -531,15 +537,13 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                   TextView locationOffsetTextView, TextView locationPrimaryTextView,
                                   TextView distanceTextView, TextView dateTextView, TextView timeTextView) {
 
-        mBottomNavigationView.setVisibility(View.INVISIBLE);
-
         mEarthquakeRecyclerViewPosition = earthquakeRecyclerViewPosition;
 
 
         Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, earthquake);
-        bundle.putBoolean(EarthquakeDetailsActivity.EXTRA_IS_FAVORITES_ACTIVITY_CALLING, false);
+        bundle.putByte(EarthquakeDetailsActivity.EXTRA_CALLER, EarthquakeDetailsActivity.MAIN_ACTIVITY_CALLER);
         intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -582,8 +586,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     @Override
                     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
 
-                        mBottomNavigationView.setVisibility(View.INVISIBLE);
-
                         RecyclerView.ViewHolder selectedViewHolder = mRecyclerView
                                 .findViewHolderForAdapterPosition(mEarthquakeRecyclerViewPosition);
 
@@ -613,8 +615,21 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                     selectedViewHolder.itemView.
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
+
+                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY()+selectedViewHolder.itemView.getHeight()-getEightDpInPx();
+                        float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
+
+                        if (viewHolderBottomYPosition>bottomNavigationViewTopYPosition) {
+                            mBottomNavigationView.setVisibility(View.INVISIBLE);
+                        }
+
                     }
                 });
+    }
+
+    public int getEightDpInPx() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        return Math.round(8 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
 

@@ -39,6 +39,4 @@
     <dimen name="button_background_corner_radius">3dp</dimen>
     <dimen name="button_background_stroke_width">1dp</dimen>
 
-    <dimen name="bottom_navigation_view_elevation">6dp</dimen>
-
 </resources>

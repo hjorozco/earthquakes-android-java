@@ -246,7 +246,7 @@
     <string name="activity_earthquakes_map_number_of_earthquakes_shown_message">Showing %1$s earthquakes.</string>
     <string name="activity_earthquakes_map_label">Earthquakes map</string>
     <string name="activity_earthquakes_map_no_earthquakes_data_message">
-        Searching for earthquakes.\n\nGo back to the list and once earthquakes are found you will
+        There are no earthquakes on the list.\n\nOnce earthquakes are found you will
         be able to see their locations on this map.</string>
 
     <!-- ********** Activity earthquakes map ********** -->

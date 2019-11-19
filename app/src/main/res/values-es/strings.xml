@@ -175,7 +175,7 @@
         Mostrando %1$s sismos.</string>
     <string name="activity_earthquakes_map_label">Mapa de sismos</string>
     <string name="activity_earthquakes_map_no_earthquakes_data_message">
-        Buscando sismos.\n\nRegresa a la lista y una vez que se encuentren sismos, podrás ver sus
+        No hay sismos en la lista.\n\nUna vez que se encuentren sismos, podrás ver sus
         ubicaciones en este mapa.
     </string>
 

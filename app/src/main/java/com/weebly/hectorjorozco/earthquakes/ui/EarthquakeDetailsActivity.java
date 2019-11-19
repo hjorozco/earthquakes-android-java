@@ -61,10 +61,14 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         MessageDialogFragment.MessageDialogFragmentListener {
 
     public static final String EXTRA_EARTHQUAKE = "EXTRA_EARTHQUAKE_KEY";
-    public static final String EXTRA_IS_FAVORITES_ACTIVITY_CALLING = "EXTRA_IS_FAVORITES_ACTIVITY_CALLING";
+    public static final String EXTRA_CALLER = "EXTRA_CALLER";
     public static final String EXTRA_BUNDLE_KEY = "EXTRA_BUNDLE_KEY";
     private static final String IS_FAB_MENU_OPEN_VALUE_KEY = "IS_FAB_MENU_OPEN_VALUE_KEY";
     private static final String IS_FAVORITE_VALUE_KEY = "IS_FAVORITE_VALUE_KEY";
+
+    public static final byte MAIN_ACTIVITY_CALLER = 0;
+    public static final byte FAVORITES_ACTIVITY_CALLER = 1;
+    public static final byte EARTHQUAKE_MAP_ACTIVITY_CALLER = 2;
 
     private Earthquake mEarthquake;
 
@@ -87,7 +91,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     private boolean mRotation = false;
     private boolean mIsFabMenuOpen = false;
     private boolean mIsFavorite = false;
-    private boolean mIsFavoritesActivityCalling;
+    private byte mCaller;
     private boolean mIsReportedIntensityShown;
     private boolean mIsEstimatedIntensityShown;
     private boolean mIsAlertTextShown;
@@ -114,8 +118,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             if (bundle.containsKey(EXTRA_EARTHQUAKE)) {
                 mEarthquake = bundle.getParcelable(EXTRA_EARTHQUAKE);
             }
-            if (bundle.containsKey(EXTRA_IS_FAVORITES_ACTIVITY_CALLING)) {
-                mIsFavoritesActivityCalling = bundle.getBoolean(EXTRA_IS_FAVORITES_ACTIVITY_CALLING);
+            if (bundle.containsKey(EXTRA_CALLER)) {
+                mCaller = bundle.getByte(EXTRA_CALLER);
             }
         }
 
@@ -150,7 +154,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView timeTextView = findViewById(R.id.activity_earthquake_details_time_text_view);
 
         TextView distanceTextViewToSetup;
-        if (mEarthquake.getDistance()==QueryUtils.DISTANCE_NULL_VALUE){
+        if (mEarthquake.getDistance() == QueryUtils.DISTANCE_NULL_VALUE) {
             distanceTextView.setVisibility(GONE);
             distanceTextViewToSetup = null;
         } else {
@@ -166,56 +170,62 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 this, mEarthquake, magnitudeCircleView, magnitudeTextView, locationOffsetTextView,
                 locationPrimaryTextView, distanceTextViewToSetup, dateTextView, timeTextView);
 
-        // If Android version is 21 or up set a transition for the elements in the top of the activity
+        // If Android version is 21 or up
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            magnitudeCircleView.setTransitionName(
-                    getString(R.string.activity_earthquake_details_magnitude_circle_view_transition));
-            magnitudeTextView.setTransitionName(
-                    getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
-            locationOffsetTextView.setTransitionName(
-                    getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
-            locationPrimaryTextView.setTransitionName(
-                    getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
-            dateTextView.setTransitionName(
-                    getString(R.string.activity_earthquake_details_date_text_view_transition));
-            timeTextView.setTransitionName(
-                    getString(R.string.activity_earthquake_details_time_text_view_transition));
-            distanceTextView.setTransitionName(
-                    getString(R.string.activity_earthquake_details_distance_text_view_transition));
+            if (mCaller == EARTHQUAKE_MAP_ACTIVITY_CALLER) {
+                setupEarthquakeDetails();
+            } else {
+                // If caller is MainActivity or FavoritesActivity set a transition for the elements
+                // in the top of the screen
+                magnitudeCircleView.setTransitionName(
+                        getString(R.string.activity_earthquake_details_magnitude_circle_view_transition));
+                magnitudeTextView.setTransitionName(
+                        getString(R.string.activity_earthquake_details_magnitude_text_view_transition));
+                locationOffsetTextView.setTransitionName(
+                        getString(R.string.activity_earthquake_details_location_offset_text_view_transition));
+                locationPrimaryTextView.setTransitionName(
+                        getString(R.string.activity_earthquake_details_location_primary_text_view_transition));
+                dateTextView.setTransitionName(
+                        getString(R.string.activity_earthquake_details_date_text_view_transition));
+                timeTextView.setTransitionName(
+                        getString(R.string.activity_earthquake_details_time_text_view_transition));
+                distanceTextView.setTransitionName(
+                        getString(R.string.activity_earthquake_details_distance_text_view_transition));
 
-            getWindow().setSharedElementEnterTransition(
-                    TransitionInflater.from(this).inflateTransition(R.transition.move));
+                getWindow().setSharedElementEnterTransition(
+                        TransitionInflater.from(this).inflateTransition(R.transition.move));
 
-            Transition sharedElementEnterTransition = getWindow().getSharedElementEnterTransition();
-            sharedElementEnterTransition.addListener(new Transition.TransitionListener() {
-                @Override
-                public void onTransitionStart(Transition transition) {
-                }
-
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    if (!mOnBackPressed) {
-                        setupEarthquakeDetails();
+                Transition sharedElementEnterTransition = getWindow().getSharedElementEnterTransition();
+                sharedElementEnterTransition.addListener(new Transition.TransitionListener() {
+                    @Override
+                    public void onTransitionStart(Transition transition) {
                     }
-                }
 
-                @Override
-                public void onTransitionCancel(Transition transition) {
-                }
+                    @Override
+                    public void onTransitionEnd(Transition transition) {
+                        if (!mOnBackPressed) {
+                            setupEarthquakeDetails();
+                        }
+                    }
 
-                @Override
-                public void onTransitionPause(Transition transition) {
-                }
+                    @Override
+                    public void onTransitionCancel(Transition transition) {
+                    }
 
-                @Override
-                public void onTransitionResume(Transition transition) {
-                }
-            });
+                    @Override
+                    public void onTransitionPause(Transition transition) {
+                    }
+
+                    @Override
+                    public void onTransitionResume(Transition transition) {
+                    }
+                });
+            }
         } else {
             // If Android 19
+            setupEarthquakeDetails();
             magnitudeFrameLayout.setBackground(getResources().
                     getDrawable(R.drawable.touch_selector));
-            setupEarthquakeDetails();
         }
 
         // After a rotation set up the earthquake details again because "onTransitionEnd" will
@@ -1026,7 +1036,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
         } else {
             // For Android 19 in Spanish show a message indicating how to change language to Spanish.
-            if (WordsUtils.getLocaleLanguage().equals("es")){
+            if (WordsUtils.getLocaleLanguage().equals("es")) {
                 showReportEarthquakeInSpanishHelpMessage();
             } else {
                 // On Android 19 report web site does not work correctly on ReportEarthquakeActivity WebView
@@ -1061,12 +1071,12 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
     @Override
     public void onBackPressed() {
-        if (mIsFavoritesActivityCalling && !mIsFavorite) {
+        if (mCaller == FAVORITES_ACTIVITY_CALLER && !mIsFavorite) {
             finish();
             overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
         } else {
             super.onBackPressed();
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || mCaller == EARTHQUAKE_MAP_ACTIVITY_CALLER) {
                 overridePendingTransition(R.anim.no_animation, R.anim.slide_down);
             }
         }

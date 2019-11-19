@@ -28,6 +28,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private String mLocation;
     private final EarthquakesListClickListener mEarthquakesListClickListener;
     private String mMaxDistance;
+    private boolean mIsDistanceShown;
 
 
     // Interface implemented in MainActivity.java to handle clicks
@@ -117,7 +118,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             EarthquakeViewHolder earthquakeViewHolder = (EarthquakeViewHolder) holder;
             TextView distanceTextView;
 
-            if (!QueryUtils.getShowDistanceSearchPreference(mContext)){
+            if (!mIsDistanceShown){
                 earthquakeViewHolder.distanceTextView.setVisibility(View.GONE);
                 distanceTextView=null;
             } else {
@@ -185,6 +186,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void setEarthquakesListData(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
+        mIsDistanceShown = QueryUtils.getShowDistanceSearchPreference(mContext);
         notifyDataSetChanged();
     }
 

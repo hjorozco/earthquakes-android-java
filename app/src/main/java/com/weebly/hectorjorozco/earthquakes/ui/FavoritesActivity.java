@@ -464,7 +464,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, EarthquakeDetailsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, favorite);
-            bundle.putBoolean(EarthquakeDetailsActivity.EXTRA_IS_FAVORITES_ACTIVITY_CALLING, true);
+            bundle.putByte(EarthquakeDetailsActivity.EXTRA_CALLER, EarthquakeDetailsActivity.FAVORITES_ACTIVITY_CALLER);
             intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

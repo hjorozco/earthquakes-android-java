@@ -1,84 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- TODO Show snackbars above ButtonNavigationView and do not hide on scroll on activity_main.xml, activity_favorites_xml -->
+<!-- TODO Show snackbars above ButtonNavigationView and do not hide on scroll on activity_favorites_xml -->
 <!-- activity_earthquake_maps.xml -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_main_recycler_view"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main_coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:visibility="gone" />
-
-    <com.futuremind.recyclerviewfastscroll.FastScroller
-        android:id="@+id/activity_main_recycler_view_fast_scroller"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:orientation="vertical" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_above="@id/activity_main_bottom_navigation_view"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/activity_main_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/application_standard_margin" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_main_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:visibility="gone" />
 
-        <LinearLayout
+        <com.futuremind.recyclerviewfastscroll.FastScroller
+            android:id="@+id/activity_main_recycler_view_fast_scroller"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables">
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical" />
 
-            <ImageView
-                android:id="@+id/activity_main_message_image_view"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/activity_main_progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@string/activity_main_image_view_content_description"
-                android:padding="@dimen/application_small_padding" />
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/application_standard_margin" />
 
-            <TextView
-                android:id="@+id/activity_main_message_text_view"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/application_big_padding"
-                android:text="@string/searching_earthquakes_text"
-                android:textAlignment="center"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/colorPrimary"
-                tools:visibility="visible" />
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/activity_main_message_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/activity_main_image_view_content_description"
+                    android:padding="@dimen/application_small_padding" />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/activity_main_message_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/application_big_padding"
+                    android:text="@string/searching_earthquakes_text"
+                    android:textAlignment="center"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/colorPrimary"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/activity_main_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
         android:background="@android:color/white"
-        app:elevation="@dimen/bottom_navigation_view_elevation"
         app:itemIconTint="@drawable/bottom_navigation_view_colors"
         app:itemTextColor="@drawable/bottom_navigation_view_colors"
         app:labelVisibilityMode="labeled"
-        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:menu="@menu/menu_bottom_navigation_view" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
+
+
 
 

@@ -21,7 +21,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -222,13 +221,16 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     .zIndex(markerAttributes.getZIndex())).setTag(i);
         }
 
-        // TODO Call EarthquakeDetailsActivity with the corresponding earthquake
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                Snackbar.make(findViewById(R.id.activity_earthquakes_map_coordinator_layout),
-                        "Position " + marker.getTag(), Snackbar.LENGTH_LONG).show();
-            }
+        googleMap.setOnInfoWindowClickListener(marker -> {
+
+            Intent intent = new Intent(EarthquakesMapActivity.this, EarthquakeDetailsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, mEarthquakes.get((int) marker.getTag()));
+            bundle.putByte(EarthquakeDetailsActivity.EXTRA_CALLER, EarthquakeDetailsActivity.EARTHQUAKE_MAP_ACTIVITY_CALLER);
+            intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
+
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
         });
 
         googleMap.setMapType(mGoogleMapType);
