@@ -1,6 +1,8 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -52,7 +54,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener {
+public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener, QueryUtils.LocationUpdateListener {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private static final int SECONDS_UNTIL_SHOWING_LONG_SEARCH_MESSAGE = 30;
     public static final int LONG_TIME_SNACKBAR = 5;
 
+    public static final String APP_LOCATION_PERMISSION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final String EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY = "EARTHQUAKE_RECYCLER_VIEW_POSITION_KEY";
 
     public static final int SORT_BY_ASCENDING_DATE = 0;
@@ -92,8 +95,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         super.onCreate(savedInstanceState);
 
         if (QueryUtils.isLocationPermissionGranted(this)
-                && QueryUtils.getMaxDistanceSearchPreference(this) != 0) {
-            QueryUtils.updateLastKnowLocation(this);
+                && (QueryUtils.getMaxDistanceSearchPreference(this) != 0 ||
+                QueryUtils.getShowDistanceSearchPreference(this))) {
+            QueryUtils.updateLastKnowLocation(this, this);
         }
 
         // After a rotation
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private void setupViewModel() {
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mMainActivityViewModel.getEarthquakes().observe(this, earthquakes -> {
+        mMainActivityViewModel.getEarthquakes(this).observe(this, earthquakes -> {
 
             mNumberOfEarthquakesOnList = 0;
 
@@ -475,7 +479,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mProgressBar.setVisibility(View.VISIBLE);
         QueryUtils.sSearchingForEarthquakes = true;
         setMessage(QueryUtils.SEARCHING);
-        mMainActivityViewModel.loadEarthquakes();
+        mMainActivityViewModel.loadEarthquakes(this);
     }
 
 
@@ -610,16 +614,19 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 selectedViewHolder.itemView.
                                         findViewById(R.id.earthquake_list_item_time_text_view));
 
-                        if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this)) {
+                        Location location = QueryUtils.getLastKnowLocationFromSharedPreferences(MainActivity.this);
+                        if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this) &&
+                                location.getLatitude() != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                                location.getLongitude() != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
                             sharedElements.put(getString(R.string.activity_earthquake_details_distance_text_view_transition),
                                     selectedViewHolder.itemView.
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
 
-                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY()+selectedViewHolder.itemView.getHeight()-getEightDpInPx();
+                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() + selectedViewHolder.itemView.getHeight() - getEightDpInPx();
                         float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
 
-                        if (viewHolderBottomYPosition>bottomNavigationViewTopYPosition) {
+                        if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {
                             mBottomNavigationView.setVisibility(View.INVISIBLE);
                         }
 
@@ -656,8 +663,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         }
 
         if (QueryUtils.isLocationPermissionGranted(this)
-                && QueryUtils.getMaxDistanceSearchPreference(this) != 0) {
-            QueryUtils.updateLastKnowLocation(this);
+                && (QueryUtils.getMaxDistanceSearchPreference(this) != 0) ||
+                QueryUtils.getShowDistanceSearchPreference(this)) {
+            QueryUtils.updateLastKnowLocation(this, this);
         }
 
         mBottomNavigationView.setVisibility(View.VISIBLE);
@@ -673,4 +681,16 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         return super.onKeyDown(keyCode, event);
     }
 
+
+    // TODO Show a little FAB if the location was not updated
+    // Implementation of the interface QueryUtils.LocationUpdateListener to check if the location was
+    // updated or not
+    @Override
+    public void onLocationUpdate(boolean locationUpdated) {
+        if (locationUpdated) {
+            Log.d("TESTING", "LISTENER: Location updated");
+        } else {
+            Log.d("TESTING", "LISTENER: Location not updated");
+        }
+    }
 }

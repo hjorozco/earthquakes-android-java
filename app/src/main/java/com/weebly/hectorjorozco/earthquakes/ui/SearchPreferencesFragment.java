@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.APP_LOCATION_PERMISSION;
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
 
 
@@ -354,7 +355,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         } else {
             if (!mIsAskingForLocationPermission) {
                 // Permission is not granted.
-                if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                if (shouldShowRequestPermissionRationale(APP_LOCATION_PERMISSION)) {
                     // Show an explanation to the user *asynchronously* -- don't block
                     // this thread waiting for the user's response! After the user
                     // sees the explanation, try again to request the permission.
@@ -362,7 +363,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                     showLocationPermissionRequestRequirementMessage();
                 } else {
                     mIsAskingForLocationPermission = true;
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    requestPermissions(new String[]{APP_LOCATION_PERMISSION},
                             LOCATION_PERMISSION_REQUEST_CODE);
                 }
             }
@@ -388,7 +389,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
     @Override
     public void onAccept() {
-        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+        requestPermissions(new String[]{APP_LOCATION_PERMISSION},
                 LOCATION_PERMISSION_REQUEST_CODE);
     }
 

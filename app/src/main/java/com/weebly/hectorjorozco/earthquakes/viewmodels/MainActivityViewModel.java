@@ -2,6 +2,7 @@ package com.weebly.hectorjorozco.earthquakes.viewmodels;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -31,16 +32,16 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<List<Earthquake>> getEarthquakes() {
+    public LiveData<List<Earthquake>> getEarthquakes(QueryUtils.LocationUpdateListener locationUpdateListener) {
         if (mEarthquakes == null) {
             mEarthquakes = new MutableLiveData<>();
-            loadEarthquakes();
+            loadEarthquakes(locationUpdateListener);
         }
         return mEarthquakes;
     }
 
 
-    public void loadEarthquakes() {
+    public void loadEarthquakes(QueryUtils.LocationUpdateListener locationUpdateListener) {
 
         Context context = getApplication();
 
@@ -51,7 +52,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                     RetrofitImplementation.getRetrofitImplementationInstance();
 
             EarthquakesQueryParameters earthquakesQueryParameters =
-                    QueryUtils.getEarthquakesQueryParameters(context);
+                    QueryUtils.getEarthquakesQueryParameters(context, locationUpdateListener);
 
             mRetrofitServiceCall =
                     retrofitImplementation.getListOfEarthquakes(new RetrofitCallback<Earthquakes>() {
@@ -68,6 +69,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
                             } else {
                                 setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.SEARCH_RESULT_NULL);
+                                Log.d("TESTING", "Retrofit result null");
                             }
                         }
 

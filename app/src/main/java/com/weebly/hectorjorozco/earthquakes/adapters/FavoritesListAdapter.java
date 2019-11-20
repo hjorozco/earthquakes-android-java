@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.adapters;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Build;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
@@ -119,9 +120,11 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             Earthquake currentFavorite = mFavorites.get(position - 1);
 
-            if (!QueryUtils.getShowDistanceSearchPreference(mContext)){
+            if (!QueryUtils.getShowDistanceSearchPreference(mContext) ||
+                    QueryUtils.sLastKnownLocationLatitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||
+                    QueryUtils.sLastKnownLocationLongitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
                 favoriteViewHolder.distanceTextView.setVisibility(View.GONE);
-                distanceTextView=null;
+                distanceTextView = null;
             } else {
                 favoriteViewHolder.distanceTextView.setVisibility(View.VISIBLE);
                 distanceTextView = favoriteViewHolder.distanceTextView;
@@ -209,6 +212,9 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void setFavoritesListData(List<Earthquake> favorites) {
         mFavorites = favorites;
+        Location location = QueryUtils.getLastKnowLocationFromSharedPreferences(mContext);
+        QueryUtils.sLastKnownLocationLatitude = location.getLatitude();
+        QueryUtils.sLastKnownLocationLongitude = location.getLongitude();
         notifyDataSetChanged();
     }
 

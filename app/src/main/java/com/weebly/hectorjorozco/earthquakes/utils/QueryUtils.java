@@ -1,6 +1,5 @@
 package com.weebly.hectorjorozco.earthquakes.utils;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -44,6 +43,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.APP_LOCATION_PERMISSION;
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
 
 
@@ -69,6 +69,8 @@ public class QueryUtils {
     public static final double DEPTH_NULL_VALUE = -1;
     public static final float DISTANCE_NULL_VALUE = -1;
 
+    public static final double LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE= 1000;
+
     // Used by the map activity
     public static List<Earthquake> sEarthquakesList;
     public static boolean sMoreThanMaximumNumberOfEarthquakesForMap;
@@ -87,8 +89,14 @@ public class QueryUtils {
     public static Handler sHandler;
     public static Runnable sRunnable;
 
-    private static double sLastKnownLocationLatitude;
-    private static double sLastKnownLocationLongitude;
+    public static double sLastKnownLocationLatitude;
+    public static double sLastKnownLocationLongitude;
+
+
+    public interface LocationUpdateListener {
+        void onLocationUpdate(boolean locationUpdated);
+    }
+
 
     public static List<Earthquake> getEarthquakesListFromRetrofitResult(Context context,
                                                                         Earthquakes retrofitResult) {
@@ -249,7 +257,7 @@ public class QueryUtils {
      *
      * @return An object that contains the parameters needed to do an Earthquakes search.
      */
-    public static EarthquakesQueryParameters getEarthquakesQueryParameters(Context context) {
+    public static EarthquakesQueryParameters getEarthquakesQueryParameters(Context context, LocationUpdateListener locationUpdateListener) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
@@ -361,16 +369,19 @@ public class QueryUtils {
         String longitude = "";
         String maxDistance = "";
         int maxDistanceValue = getMaxDistanceSearchPreference(context);
-        if (isLocationPermissionGranted(context) && maxDistanceValue != 0) {
-            updateLastKnowLocation(context);
-            maxDistance = String.valueOf(maxDistanceValue);
-            SharedPreferences mSharedPreferences = context.getSharedPreferences(
-                    context.getString(R.string.app_shared_preferences_name), 0);
-            latitude = mSharedPreferences.getString(context.getString(
-                    R.string.last_known_device_location_latitude_shared_preference_key), "");
-            longitude = mSharedPreferences.getString(context.getString(
-                    R.string.last_known_device_location_longitude_shared_preference_key), "");
+
+        if (isLocationPermissionGranted(context) &&
+                (maxDistanceValue != 0 || getShowDistanceSearchPreference(context))){
+            updateLastKnowLocation(context, locationUpdateListener);
         }
+
+        if (isLocationPermissionGranted(context) && maxDistanceValue != 0) {
+            maxDistance = String.valueOf(maxDistanceValue);
+            Location location = getLastKnowLocationFromSharedPreferences(context);
+            latitude = String.valueOf(location.getLatitude());
+            longitude = String.valueOf(location.getLongitude());
+        }
+
 
         mLocation = sharedPreferences.getString(
                 context.getString(R.string.search_preference_location_key),
@@ -741,6 +752,34 @@ public class QueryUtils {
     }
 
 
+    public static Location getLastKnowLocationFromSharedPreferences(Context context){
+        SharedPreferences mSharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.app_shared_preferences_name), 0);
+        String latitude = mSharedPreferences.getString(context.getString(
+                R.string.last_known_device_location_latitude_shared_preference_key), "");
+        String longitude = mSharedPreferences.getString(context.getString(
+                R.string.last_known_device_location_longitude_shared_preference_key), "");
+        Location location = new Location("");
+
+        double latitudeNumber, longitudeNumber;
+        if (latitude.isEmpty()){
+            latitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
+        } else {
+            latitudeNumber = Double.valueOf(latitude);
+        }
+        if (longitude.isEmpty()){
+            longitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
+        } else {
+            longitudeNumber = Double.valueOf(latitude);
+        }
+
+        location.setLatitude(latitudeNumber);
+        location.setLongitude(longitudeNumber);
+
+        return location;
+    }
+
+
     public static void setupProgressBarForPreLollipop(ProgressBar progressBar, Context context) {
         // Fixes pre-Lollipop progressBar indeterminateDrawable tinting
         Drawable wrapDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
@@ -750,12 +789,12 @@ public class QueryUtils {
 
 
     public static boolean isLocationPermissionGranted(Context context) {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+        return ContextCompat.checkSelfPermission(context, APP_LOCATION_PERMISSION)
                 == PackageManager.PERMISSION_GRANTED;
     }
 
 
-    public static void updateLastKnowLocation(Context context) {
+    public static void updateLastKnowLocation(Context context, LocationUpdateListener locationUpdateListener) {
         FusedLocationProviderClient fusedLocationProviderClient =
                 LocationServices.getFusedLocationProviderClient(context);
         fusedLocationProviderClient.getLastLocation()
@@ -771,8 +810,10 @@ public class QueryUtils {
                                 String.valueOf(location.getLongitude()));
                         editor.apply();
 
-                        sLastKnownLocationLatitude = location.getLatitude();
-                        sLastKnownLocationLongitude = location.getLongitude();
+                        locationUpdateListener.onLocationUpdate(true);
+
+                    } else {
+                        locationUpdateListener.onLocationUpdate(false);
                     }
                 });
     }

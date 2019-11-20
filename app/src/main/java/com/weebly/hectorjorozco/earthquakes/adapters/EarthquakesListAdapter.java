@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.adapters;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.util.List;
+
 
 public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -98,7 +100,9 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
             distance = "";
-            if (!mMaxDistance.isEmpty()) {
+            if (!mMaxDistance.isEmpty() &&
+                    QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                    QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
                 distance = " " + mContext.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
                         mMaxDistance);
             }
@@ -118,9 +122,11 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             EarthquakeViewHolder earthquakeViewHolder = (EarthquakeViewHolder) holder;
             TextView distanceTextView;
 
-            if (!mIsDistanceShown){
+            if (!mIsDistanceShown ||
+                    QueryUtils.sLastKnownLocationLatitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||
+                    QueryUtils.sLastKnownLocationLongitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
                 earthquakeViewHolder.distanceTextView.setVisibility(View.GONE);
-                distanceTextView=null;
+                distanceTextView = null;
             } else {
                 earthquakeViewHolder.distanceTextView.setVisibility(View.VISIBLE);
                 distanceTextView = earthquakeViewHolder.distanceTextView;
@@ -187,6 +193,9 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void setEarthquakesListData(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
         mIsDistanceShown = QueryUtils.getShowDistanceSearchPreference(mContext);
+        Location location = QueryUtils.getLastKnowLocationFromSharedPreferences(mContext);
+        QueryUtils.sLastKnownLocationLatitude = location.getLatitude();
+        QueryUtils.sLastKnownLocationLongitude = location.getLongitude();
         notifyDataSetChanged();
     }
 

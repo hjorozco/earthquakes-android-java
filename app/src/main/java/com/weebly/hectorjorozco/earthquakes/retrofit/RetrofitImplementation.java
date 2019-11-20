@@ -1,9 +1,12 @@
 package com.weebly.hectorjorozco.earthquakes.retrofit;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
 import com.weebly.hectorjorozco.earthquakes.models.retrofit.Earthquakes;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
@@ -75,7 +78,13 @@ public final class RetrofitImplementation implements Serializable {
                                                   EarthquakesQueryParameters earthquakesQueryParameters) {
 
         Call<Earthquakes> retrofitServiceCall;
-        if (earthquakesQueryParameters.getMaxDistance().isEmpty()) {
+
+        Log.d("TESTING", "Latitude used on search: " + earthquakesQueryParameters.getLatitude());
+        Log.d("TESTING", "Longitude used on search: " + earthquakesQueryParameters.getLongitude());
+
+        if (earthquakesQueryParameters.getMaxDistance().isEmpty() ||
+                Double.valueOf(earthquakesQueryParameters.getLatitude()) == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||
+                Double.valueOf(earthquakesQueryParameters.getLongitude()) == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
             retrofitServiceCall = retrofitService.getEarthquakes(
                     "geojson",
                     earthquakesQueryParameters.getStartTime(),

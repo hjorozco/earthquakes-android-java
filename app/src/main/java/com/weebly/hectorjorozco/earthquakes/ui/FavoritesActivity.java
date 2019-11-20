@@ -2,6 +2,7 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -154,10 +155,10 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
-    private void setupBottomNavigationView(){
+    private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_favorites_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()){
+            switch (menuItem.getItemId()) {
                 case R.id.menu_activity_main_bottom_navigation_view_action_list:
                     onBackPressed();
                     break;
@@ -660,7 +661,10 @@ public class FavoritesActivity extends AppCompatActivity implements
                                 selectedViewHolder.itemView.
                                         findViewById(R.id.earthquake_list_item_time_text_view));
 
-                        if (QueryUtils.getShowDistanceSearchPreference(FavoritesActivity.this)) {
+                        Location location = QueryUtils.getLastKnowLocationFromSharedPreferences(FavoritesActivity.this);
+                        if (QueryUtils.getShowDistanceSearchPreference(FavoritesActivity.this) &&
+                                location.getLatitude() != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                                location.getLongitude() != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
                             sharedElements.put(getString(R.string.activity_earthquake_details_distance_text_view_transition),
                                     selectedViewHolder.itemView.
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
