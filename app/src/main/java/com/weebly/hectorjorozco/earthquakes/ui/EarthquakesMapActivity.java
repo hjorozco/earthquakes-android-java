@@ -256,7 +256,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
-        if (item.getItemId() == R.id.menu_activity_earthquakes_map_action_help) {
+        if (item.getItemId() == R.id.menu_activity_earthquakes_map_action_info) {
 
             showHelpSnackBar();
         }
@@ -264,6 +264,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     }
 
 
+    // TODO Show a DialogFragment with information about the earthquakes displayed on the map.
     private void showHelpSnackBar(){
         int stringID, numberOfEarthquakes;
         if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {

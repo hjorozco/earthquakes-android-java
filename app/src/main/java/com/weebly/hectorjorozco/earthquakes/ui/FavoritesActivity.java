@@ -43,6 +43,7 @@ import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.SortFavoritesDial
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.FavoritesActivityViewModel;
 
 import java.util.List;
@@ -454,8 +455,6 @@ public class FavoritesActivity extends AppCompatActivity implements
                                 TextView locationPrimaryTextView, TextView distanceTextView,
                                 TextView dateTextView, TextView timeTextView) {
 
-        mBottomNavigationView.setVisibility(View.INVISIBLE);
-
         // If there are favorites selected (action mode is enabled) set up action mode
         if (mAdapter.getSelectedFavoritesCount() > 0) {
             setupItemForActionMode(favoriteRecyclerViewPosition);
@@ -501,7 +500,6 @@ public class FavoritesActivity extends AppCompatActivity implements
     // Implementation of FavoritesListAdapter.FavoritesListAdapterListener
     @Override
     public void onFavoriteLongClick(int favoriteRecyclerViewPosition) {
-        mBottomNavigationView.setVisibility(View.INVISIBLE);
         setupItemForActionMode(favoriteRecyclerViewPosition);
     }
 
@@ -635,8 +633,6 @@ public class FavoritesActivity extends AppCompatActivity implements
                     @Override
                     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
 
-                        mBottomNavigationView.setVisibility(View.INVISIBLE);
-
                         RecyclerView.ViewHolder selectedViewHolder = mRecyclerView
                                 .findViewHolderForAdapterPosition(mEarthquakeRecyclerViewPosition);
 
@@ -669,6 +665,15 @@ public class FavoritesActivity extends AppCompatActivity implements
                                     selectedViewHolder.itemView.
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
+
+                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() +
+                                selectedViewHolder.itemView.getHeight() - UiUtils.getEightDpInPx(FavoritesActivity.this);
+                        float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
+
+                        if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {
+                            mBottomNavigationView.setVisibility(View.INVISIBLE);
+                        }
+
                     }
                 });
     }
@@ -736,7 +741,6 @@ public class FavoritesActivity extends AppCompatActivity implements
             mAdapter.clearSelectedFavorites();
             mActionMode = null;
             mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
-            mBottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 

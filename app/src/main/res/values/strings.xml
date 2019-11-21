@@ -243,7 +243,7 @@
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
 
     <string name="activity_earthquakes_map_max_number_exceeded_message">Showing the first %1$s earthquakes of the list.</string>
-    <string name="activity_earthquakes_map_number_of_earthquakes_shown_message">Showing %1$s earthquakes.</string>
+    <string name="activity_earthquakes_map_number_of_earthquakes_shown_message">Showing the %1$s earthquakes of the list.</string>
     <string name="activity_earthquakes_map_label">Earthquakes map</string>
     <string name="activity_earthquakes_map_no_earthquakes_data_message">
         There are no earthquakes on the list.\n\nOnce earthquakes are found you will

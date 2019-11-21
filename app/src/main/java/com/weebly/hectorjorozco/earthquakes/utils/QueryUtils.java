@@ -770,7 +770,7 @@ public class QueryUtils {
         if (longitude.isEmpty()){
             longitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
         } else {
-            longitudeNumber = Double.valueOf(latitude);
+            longitudeNumber = Double.valueOf(longitude);
         }
 
         location.setLatitude(latitudeNumber);

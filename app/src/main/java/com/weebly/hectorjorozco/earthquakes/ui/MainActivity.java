@@ -43,6 +43,7 @@ import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
@@ -93,12 +94,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        if (QueryUtils.isLocationPermissionGranted(this)
-                && (QueryUtils.getMaxDistanceSearchPreference(this) != 0 ||
-                QueryUtils.getShowDistanceSearchPreference(this))) {
-            QueryUtils.updateLastKnowLocation(this, this);
-        }
 
         // After a rotation
         if (savedInstanceState != null) {
@@ -199,6 +194,12 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
+    // TODO When no earthquakes are found, update the list of earthquakes for the map to null so the
+    // map does not show any earthquakes.
+
+    // TODO Update the no earthquakes found to show only a message, no image.
+
+    // TODO Update the Earthquakes list information message to show the distance from you.
     private void setupViewModel() {
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mMainActivityViewModel.getEarthquakes(this).observe(this, earthquakes -> {
@@ -623,7 +624,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
 
-                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() + selectedViewHolder.itemView.getHeight() - getEightDpInPx();
+                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() +
+                                selectedViewHolder.itemView.getHeight() - UiUtils.getEightDpInPx(MainActivity.this);
                         float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
 
                         if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {
@@ -632,11 +634,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
                     }
                 });
-    }
-
-    public int getEightDpInPx() {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        return Math.round(8 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
 

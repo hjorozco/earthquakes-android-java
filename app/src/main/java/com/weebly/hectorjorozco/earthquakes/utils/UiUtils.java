@@ -2,6 +2,7 @@ package com.weebly.hectorjorozco.earthquakes.utils;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.Button;
 
@@ -18,6 +19,12 @@ public class UiUtils {
         } else {
             button.setBackground(context.getResources().getDrawable(R.drawable.touch_selector));
         }
+    }
+
+
+    public static int getEightDpInPx(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return Math.round(8 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
 }

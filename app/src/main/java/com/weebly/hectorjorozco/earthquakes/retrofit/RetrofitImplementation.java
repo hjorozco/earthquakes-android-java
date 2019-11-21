@@ -1,7 +1,5 @@
 package com.weebly.hectorjorozco.earthquakes.retrofit;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.weebly.hectorjorozco.earthquakes.models.EarthquakesQueryParameters;
@@ -78,9 +76,6 @@ public final class RetrofitImplementation implements Serializable {
                                                   EarthquakesQueryParameters earthquakesQueryParameters) {
 
         Call<Earthquakes> retrofitServiceCall;
-
-        Log.d("TESTING", "Latitude used on search: " + earthquakesQueryParameters.getLatitude());
-        Log.d("TESTING", "Longitude used on search: " + earthquakesQueryParameters.getLongitude());
 
         if (earthquakesQueryParameters.getMaxDistance().isEmpty() ||
                 Double.valueOf(earthquakesQueryParameters.getLatitude()) == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <dimen name="magnitude_circle_stroke_width">3dp</dimen>
 
@@ -38,5 +38,8 @@
 
     <dimen name="button_background_corner_radius">3dp</dimen>
     <dimen name="button_background_stroke_width">1dp</dimen>
+
+    <dimen name="activity_main_fab_size">24dp</dimen>
+    <dimen name="activity_main_fab_image_size">16dp</dimen>
 
 </resources>

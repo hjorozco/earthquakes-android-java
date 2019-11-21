@@ -1,61 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_favorites_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_favorites_recycler_view"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/activity_favorites_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:visibility="gone" />
+        android:layout_above="@id/activity_favorites_bottom_navigation_view">
 
-    <com.futuremind.recyclerviewfastscroll.FastScroller
-        android:id="@+id/activity_favorites_recycler_view_fast_scroller"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:orientation="vertical" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_favorites_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:visibility="gone" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/activity_favorites_progress_bar"
+        <com.futuremind.recyclerviewfastscroll.FastScroller
+            android:id="@+id/activity_favorites_recycler_view_fast_scroller"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/application_standard_margin" />
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical" />
 
-        <TextView
-            android:id="@+id/activity_favorites_message_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="@dimen/application_big_padding"
-            android:text="@string/activity_favorites_loading_favorites_message"
-            android:textAlignment="center"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorPrimary" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
+            <ProgressBar
+                android:id="@+id/activity_favorites_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/application_standard_margin" />
+
+            <TextView
+                android:id="@+id/activity_favorites_message_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/application_big_padding"
+                android:text="@string/activity_favorites_loading_favorites_message"
+                android:textAlignment="center"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/colorPrimary" />
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/activity_favorites_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         app:itemIconTint="@drawable/bottom_navigation_view_colors"
         app:itemTextColor="@drawable/bottom_navigation_view_colors"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bottom_navigation_view" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
-
+</RelativeLayout>
 
