@@ -1,6 +1,5 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
-import android.Manifest;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;

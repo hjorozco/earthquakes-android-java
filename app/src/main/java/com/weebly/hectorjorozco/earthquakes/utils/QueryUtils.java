@@ -469,10 +469,11 @@ public class QueryUtils {
 
 
     // Creates a message about the list of earthquakes .
-    public static CharSequence createCurrentListAlertDialogMessage(Context context, EarthquakesListInformationValues values) {
+    public static CharSequence createEarthquakesInformationAlertDialogMessage(Context context, EarthquakesListInformationValues values,
+                                                                              boolean forCurrentList) {
 
-        String numberOfEarthquakes, earthquakesWord, location, sortedBySuffix, sortedBy, dateRange, firstEarthquakeEndDate, firstEarthquakeStartDate, firstEarthquakeMinMagnitude,
-                firstEarthquakeMaxMagnitude, maxNumberOfEarthquakes, firstAndLastEarthquakesInfoMessage, orderBy;
+        String numberOfEarthquakes, earthquakesWord, location, distance, sortedBySuffix, sortedBy, dateRange,
+                endDate, startDate, minMagnitude, maxMagnitude, maxNumberOfEarthquakes, firstAndLastEarthquakesInfoMessage, orderBy;
 
         orderBy = values.getOrderBy();
 
@@ -489,10 +490,10 @@ public class QueryUtils {
             sortedBySuffix = context.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
             if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value)) ||
                     orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
-                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
+                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
                         context.getString(R.string.magnitude_text), values.getFirstEarthquakeMag(), values.getLastEarthquakeMag());
             } else {
-                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_2),
+                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
                         context.getString(R.string.date_text), values.getFirstEarthquakeDate(), values.getLastEarthquakeDate());
             }
         }
@@ -507,6 +508,14 @@ public class QueryUtils {
             } else {
                 location = WordsUtils.formatLocationText(location);
             }
+        }
+
+        distance = "";
+        if (!values.getMaxDistance().isEmpty() &&
+                QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
+            distance = " " + context.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
+                    values.getMaxDistance());
         }
 
         switch (values.getDatePeriod()) {
@@ -528,10 +537,10 @@ public class QueryUtils {
                 break;
         }
 
-        firstEarthquakeEndDate = values.getEndDate();
-        firstEarthquakeStartDate = values.getStartDate();
-        firstEarthquakeMinMagnitude = values.getMinMagnitude();
-        firstEarthquakeMaxMagnitude = values.getMaxMagnitude();
+        endDate = values.getEndDate();
+        startDate = values.getStartDate();
+        minMagnitude = values.getMinMagnitude();
+        maxMagnitude = values.getMaxMagnitude();
 
         sortedBy = "";
         if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
@@ -548,10 +557,10 @@ public class QueryUtils {
         maxNumberOfEarthquakes = String.format(Locale.getDefault(), "%,d", Integer.valueOf(values.getLimit()));
 
         String text = String.format
-                (context.getString(R.string.current_list_alert_dialog_message_1), numberOfEarthquakes,
-                        earthquakesWord, location, sortedBySuffix, sortedBy, maxNumberOfEarthquakes, dateRange,
-                        firstEarthquakeStartDate, firstEarthquakeEndDate, firstEarthquakeMinMagnitude,
-                        firstEarthquakeMaxMagnitude, firstAndLastEarthquakesInfoMessage);
+                (context.getString(R.string.current_list_alert_dialog_message_top_section), numberOfEarthquakes,
+                        earthquakesWord, location, distance, sortedBySuffix, sortedBy, maxNumberOfEarthquakes, dateRange,
+                        startDate, endDate, minMagnitude,
+                        maxMagnitude, firstAndLastEarthquakesInfoMessage);
 
         return Html.fromHtml(text);
     }

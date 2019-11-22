@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.utils.MapsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
@@ -62,14 +63,14 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mShowMap = false;
         }
 
-        TextView noDatatextView = findViewById(R.id.activity_earthquakes_map_text_view);
+        TextView noDataTextView = findViewById(R.id.activity_earthquakes_map_text_view);
         FrameLayout mMapLayout = findViewById(R.id.activity_earthquakes_map_frame_layout);
 
         setupBottomNavigationView();
 
         if (mShowMap) {
 
-            noDatatextView.setVisibility(View.GONE);
+            noDataTextView.setVisibility(View.GONE);
             mMapLayout.setVisibility(View.VISIBLE);
 
             if (savedInstanceState != null) {
@@ -147,7 +148,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             });
 
         } else {
-            noDatatextView.setVisibility(View.VISIBLE);
+            noDataTextView.setVisibility(View.VISIBLE);
             mMapLayout.setVisibility(View.GONE);
         }
     }
@@ -264,7 +265,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     }
 
 
-    // TODO Show a DialogFragment with information about the earthquakes displayed on the map.
     private void showHelpSnackBar(){
         int stringID, numberOfEarthquakes;
         if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {
@@ -279,6 +279,19 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                         numberOfEarthquakes));
         Snackbar.make(findViewById(R.id.activity_earthquakes_map_coordinator_layout),message,
                 Snackbar.LENGTH_LONG).show();
+
+
+        // TODO Show a DialogFragment with information about the earthquakes displayed on the map.
+        // Remove previous snack bar and modify QueryUtils.createEarthquakesInformationAlertDialogMessage method
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        QueryUtils.createEarthquakesInformationAlertDialogMessage(this,
+                                QueryUtils.sEarthquakesListInformationValues, false),
+                        getString(R.string.menu_activity_main_action_list_information_title),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
     }
 
     @Override

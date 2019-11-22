@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private MediaPlayer mMediaPlayer;
     private CoordinatorLayout mCoordinatorLayout;
     private BottomNavigationView mBottomNavigationView;
+    private Snackbar mSnackbar;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
@@ -194,12 +194,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-    // TODO When no earthquakes are found, update the list of earthquakes for the map to null so the
-    // map does not show any earthquakes.
-
-    // TODO Update the no earthquakes found to show only a message, no image.
-
-    // TODO Update the Earthquakes list information message to show the distance from you.
     private void setupViewModel() {
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mMainActivityViewModel.getEarthquakes(this).observe(this, earthquakes -> {
@@ -260,9 +254,11 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     // If the search has finished and no previous snack has been shown
                     if (!QueryUtils.sSearchingForEarthquakes && QueryUtils.sLoadEarthquakesResultCode != QueryUtils.NO_ACTION
                             && !QueryUtils.sListWillBeLoadedAfterEmpty) {
-                        Snackbar.make(mCoordinatorLayout,
+                        mSnackbar = Snackbar.make(mCoordinatorLayout,
                                 getSnackBarText(QueryUtils.sLoadEarthquakesResultCode),
-                                Snackbar.LENGTH_LONG).show();
+                                Snackbar.LENGTH_INDEFINITE);
+                        mSnackbar.setAction(getString(R.string.ok_text), v -> mSnackbar.dismiss());
+                        mSnackbar.show();
                     }
 
                     // Flag used when activity is recreated to indicate that no action is tacking place
@@ -378,6 +374,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private String getSnackBarText(byte type) {
         String snackBarText = null;
         switch (type) {
+            case QueryUtils.NO_EARTHQUAKES_FOUND:
+                snackBarText = getString(R.string.no_earthquakes_found_text);
+                break;
             case QueryUtils.NO_INTERNET_CONNECTION:
                 snackBarText = getString(R.string.no_internet_connection_text);
                 break;
@@ -457,6 +456,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private void selectRefreshOrStopAction() {
         if (!QueryUtils.sSearchingForEarthquakes) {
+            if (mSnackbar != null) {
+                mSnackbar.dismiss();
+            }
             setupLongSearchMessageHandler();
             doRefreshActions();
         } else {
@@ -523,7 +525,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public void onTitleClick() {
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
-                        QueryUtils.createCurrentListAlertDialogMessage(this, QueryUtils.sEarthquakesListInformationValues),
+                        QueryUtils.createEarthquakesInformationAlertDialogMessage(this,
+                                QueryUtils.sEarthquakesListInformationValues, true),
                         getString(R.string.menu_activity_main_action_list_information_title),
                         MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
