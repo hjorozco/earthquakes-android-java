@@ -50,8 +50,8 @@
     <string name="no_server_response_text">No response from the USGS server</string>
     <string name="earthquakes_list_updated_text">Earthquakes list updated</string>
 
-    <string name="earthquakes_list_title_for_one_earthquake">%1$d earthquake%2$s found%3$s in %4$s%5$s.</string>
-    <string name="earthquakes_list_title_for_multiple_earthquakes">%1$d earthquake%2$s found%3$s in %4$s%5$s. Sorted by %6$s.</string>
+    <string name="earthquakes_list_title_for_one_earthquake">%1$s earthquake%2$s found%3$s in %4$s%5$s.</string>
+    <string name="earthquakes_list_title_for_multiple_earthquakes">%1$s earthquake%2$s found%3$s in %4$s%5$s. Sorted by %6$s.</string>
     <string name="earthquakes_list_title_max_distance_from_you_section">within %1$s km from you</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix" />
     <string name="earthquakes_list_title_us_name">the United States</string>
@@ -240,8 +240,6 @@
 
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
 
-    <string name="activity_earthquakes_map_max_number_exceeded_message">Showing the first %1$s earthquakes of the list.</string>
-    <string name="activity_earthquakes_map_number_of_earthquakes_shown_message">Showing the %1$s earthquakes of the list.</string>
     <string name="activity_earthquakes_map_label">Earthquakes map</string>
     <string name="activity_earthquakes_map_no_earthquakes_data_message">
         There are no earthquakes on the list.\n\nOnce earthquakes are found you will
@@ -259,8 +257,12 @@
     </string>
 
     <string name="activity_earthquakes_map_info_alert_dialog_message_bottom_section">
-        &lt;b>&lt;i>Only the first %1$s earthquakes of the list are shown on this map.&lt;/b>&lt;/i>
+        &lt;br/&gt;&lt;br/&gt;&lt;b>&lt;i>Only the first %1$s earthquakes of the list are shown on this map.&lt;/b>&lt;/i>
     </string>
+
+    <string name="activity_earthquakes_map_info_message_dialog_fragment_title">Map information</string>
+    <string name="activity_earthquakes_map_info_message_dialog_fragment_tag" translatable="false">
+        activity_earthquakes_map_info_message_dialog_fragment_tag</string>
 
     <!-- ********** Activity earthquakes map ********** -->
 
@@ -486,6 +488,7 @@
     <string name="activity_favorites_label">Favorites</string>
 
     <string name="activity_favorites_delete_text">Delete</string>
+    <string name="activity_favorites_delete_all_text">Delete all</string>
 
     <string name="activity_favorites_no_favorites_message">No favorites found.</string>
 
@@ -494,7 +497,8 @@
     <string name="menu_activity_favorites_action_sort_title">Sort favorites</string>
     <string name="menu_activity_favorites_action_delete_title">Delete all favorites</string>
 
-    <string name="activity_favorites_list_title">%1$d favorite%2$s. Sorted by %3$s.</string>
+    <string name="activity_favorites_list_title_sorted_by_section">Sorted by %1$s.</string>
+    <string name="activity_favorites_list_title">%1$s favorite%2$s.%3$s</string>
 
     <string name="activity_favorites_delete_one_confirmation_dialog_fragment_text">
         &lt;br/&gt;You are going to delete &lt;b>a favorite.&lt;/b>&lt;br/&gt;&lt;br/&gt;Are your sure?</string>

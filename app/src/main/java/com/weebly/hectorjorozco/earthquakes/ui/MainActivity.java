@@ -1,6 +1,7 @@
 package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.media.AudioManager;
@@ -36,6 +37,7 @@ import android.widget.TextView;
 import com.facebook.stetho.Stetho;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
@@ -81,9 +83,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private FastScroller mRecyclerViewFastScroller;
     private int mEarthquakeRecyclerViewPosition;
     private MediaPlayer mMediaPlayer;
-    private CoordinatorLayout mCoordinatorLayout;
+    private CoordinatorLayout mSnackbarLayout;
     private BottomNavigationView mBottomNavigationView;
     private Snackbar mSnackbar;
+    private FloatingActionButton mFab;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
@@ -119,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         mMessageImageView = findViewById(R.id.activity_main_message_image_view);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
-        mCoordinatorLayout = findViewById(R.id.activity_main_coordinator_layout);
+        mSnackbarLayout = findViewById(R.id.activity_main_coordinator_layout);
+        mFab = findViewById(R.id.activity_main_fab);
 
         mMediaPlayer = new MediaPlayer();
 
@@ -141,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private void setupLongSearchMessageHandler() {
         mHandler = new Handler();
-        mRunnable = () -> Snackbar.make(mCoordinatorLayout,
+        mRunnable = () -> Snackbar.make(mSnackbarLayout,
                 MainActivity.this.getString(R.string.activity_main_long_search_message),
                 LONG_TIME_SNACKBAR * 1000).show();
 
@@ -151,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
@@ -254,11 +259,16 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     // If the search has finished and no previous snack has been shown
                     if (!QueryUtils.sSearchingForEarthquakes && QueryUtils.sLoadEarthquakesResultCode != QueryUtils.NO_ACTION
                             && !QueryUtils.sListWillBeLoadedAfterEmpty) {
-                        mSnackbar = Snackbar.make(mCoordinatorLayout,
+                        mSnackbar = Snackbar.make(mSnackbarLayout,
                                 getSnackBarText(QueryUtils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_INDEFINITE);
                         mSnackbar.setAction(getString(R.string.ok_text), v -> mSnackbar.dismiss());
+                        // TODO Fix Snackbar over fab
+//                        if (mFab.isOrWillBeShown()){
+//                            mSnackbar.getView().animate().translationY(-UiUtils.getPxFromDp(this, 40)).setDuration(500);
+//                        }
                         mSnackbar.show();
+
                     }
 
                     // Flag used when activity is recreated to indicate that no action is tacking place
@@ -525,7 +535,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public void onTitleClick() {
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
-                        QueryUtils.createEarthquakesInformationAlertDialogMessage(this,
+                        QueryUtils.createEarthquakesInformationMessageDialogMessage(this,
                                 QueryUtils.sEarthquakesListInformationValues, true),
                         getString(R.string.menu_activity_main_action_list_information_title),
                         MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
@@ -589,6 +599,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
      * Used to restore exit transitions on rotation.
      */
     private void saveSharedElementsTransitions() {
+
         setExitSharedElementCallback(
                 new SharedElementCallback() {
                     @Override
@@ -628,7 +639,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                         }
 
                         float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() +
-                                selectedViewHolder.itemView.getHeight() - UiUtils.getEightDpInPx(MainActivity.this);
+                                selectedViewHolder.itemView.getHeight() - UiUtils.getPxFromDp(MainActivity.this, 8);
                         float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
 
                         if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {
@@ -668,6 +679,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             QueryUtils.updateLastKnowLocation(this, this);
         }
 
+        mFab.hide();
         mBottomNavigationView.setVisibility(View.VISIBLE);
         mBottomNavigationView.setSelectedItemId(R.id.menu_activity_main_bottom_navigation_view_action_list);
     }
@@ -689,8 +701,41 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public void onLocationUpdate(boolean locationUpdated) {
         if (locationUpdated) {
             Log.d("TESTING", "LISTENER: Location updated");
+            mFab.hide();
         } else {
             Log.d("TESTING", "LISTENER: Location not updated");
+            mFab.show();
+            mFab.setOnClickListener(v -> {
+                if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this)) {
+                    if (QueryUtils.getMaxDistanceSearchPreference(MainActivity.this) != 0) {
+                        if (isThereALocationSaved(MainActivity.this)) {
+                            Log.d("TESTING", "Earthquake distance to you and distance filter may not be accurate because location can not be updated");
+                        } else {
+                            Log.d("TESTING", "Earthquake distance to you and distance filter not shown because location can not be determined.");
+                        }
+                    } else {
+                        if (isThereALocationSaved(MainActivity.this)) {
+                            Log.d("TESTING", "Earthquake distance to you may not be accurate because location can not be updated");
+                        } else {
+                            Log.d("TESTING", "Earthquake distance to you not shown because location can not be determined.");
+                        }
+                    }
+                } else {
+                    if (isThereALocationSaved(MainActivity.this)) {
+                        Log.d("TESTING", "Distance filter may not be accurate because location can not be updated");
+                    } else {
+                        Log.d("TESTING", "Distance filter not shown because location can not be determined.");
+                    }
+                }
+            });
         }
     }
+
+
+    private boolean isThereALocationSaved(Context context) {
+        Location location = QueryUtils.getLastKnowLocationFromSharedPreferences(context);
+        return location.getLatitude() != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                location.getLongitude() != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
+    }
+
 }

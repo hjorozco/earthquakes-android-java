@@ -44,6 +44,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.APP_LOCATION_PERMISSION;
+import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP;
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.MAX_NUMBER_OF_EARTHQUAKES_LIMIT;
 
 
@@ -69,7 +70,7 @@ public class QueryUtils {
     public static final double DEPTH_NULL_VALUE = -1;
     public static final float DISTANCE_NULL_VALUE = -1;
 
-    public static final double LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE= 1000;
+    public static final double LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE = 1000;
 
     // Used by the map activity
     public static List<Earthquake> sEarthquakesList;
@@ -371,7 +372,7 @@ public class QueryUtils {
         int maxDistanceValue = getMaxDistanceSearchPreference(context);
 
         if (isLocationPermissionGranted(context) &&
-                (maxDistanceValue != 0 || getShowDistanceSearchPreference(context))){
+                (maxDistanceValue != 0 || getShowDistanceSearchPreference(context))) {
             updateLastKnowLocation(context, locationUpdateListener);
         }
 
@@ -469,32 +470,43 @@ public class QueryUtils {
 
 
     // Creates a message about the list of earthquakes .
-    public static CharSequence createEarthquakesInformationAlertDialogMessage(Context context, EarthquakesListInformationValues values,
-                                                                              boolean forCurrentList) {
+    public static CharSequence createEarthquakesInformationMessageDialogMessage(Context context, EarthquakesListInformationValues values,
+                                                                                boolean forCurrentList) {
 
         String numberOfEarthquakes, earthquakesWord, location, distance, sortedBySuffix, sortedBy, dateRange,
-                endDate, startDate, minMagnitude, maxMagnitude, maxNumberOfEarthquakes, firstAndLastEarthquakesInfoMessage, orderBy;
+                endDate, startDate, minMagnitude, maxMagnitude, maxNumberOfEarthquakes,
+                firstAndLastEarthquakesInfoMessage, orderBy, message;
 
         orderBy = values.getOrderBy();
 
-        numberOfEarthquakes = values.getNumberOfEarthquakesDisplayed();
+        numberOfEarthquakes = String.format(Locale.getDefault(), "%,d",
+                Integer.valueOf(values.getNumberOfEarthquakesDisplayed()));
 
+
+        firstAndLastEarthquakesInfoMessage = "";
         // If there is only one earthquake on the list, set the strings values to singular.
         if (numberOfEarthquakes.equals("1")) {
             earthquakesWord = context.getString(R.string.earthquakes_text_singular);
             sortedBySuffix = "";
-            firstAndLastEarthquakesInfoMessage = "";
         } else {
             // If there is more than one earthquake on the list, set the strings values to plural
             earthquakesWord = context.getString(R.string.earthquakes_text_plural);
             sortedBySuffix = context.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
-            if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value)) ||
-                    orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
-                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
-                        context.getString(R.string.magnitude_text), values.getFirstEarthquakeMag(), values.getLastEarthquakeMag());
+            if (forCurrentList) {
+                if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value)) ||
+                        orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
+                    firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
+                            context.getString(R.string.magnitude_text), values.getFirstEarthquakeMag(), values.getLastEarthquakeMag());
+                } else {
+                    firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
+                            context.getString(R.string.date_text), values.getFirstEarthquakeDate(), values.getLastEarthquakeDate());
+                }
             } else {
-                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
-                        context.getString(R.string.date_text), values.getFirstEarthquakeDate(), values.getLastEarthquakeDate());
+                if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {
+                    numberOfEarthquakes = String.format(Locale.getDefault(), "%,d", MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP);
+                    firstAndLastEarthquakesInfoMessage = context.getString(R.string.activity_earthquakes_map_info_alert_dialog_message_bottom_section,
+                            numberOfEarthquakes);
+                }
             }
         }
 
@@ -515,7 +527,7 @@ public class QueryUtils {
                 QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
                 QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
             distance = " " + context.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
-                    values.getMaxDistance());
+                    String.format(Locale.getDefault(), "%,d", Integer.valueOf(values.getMaxDistance())));
         }
 
         switch (values.getDatePeriod()) {
@@ -556,13 +568,18 @@ public class QueryUtils {
 
         maxNumberOfEarthquakes = String.format(Locale.getDefault(), "%,d", Integer.valueOf(values.getLimit()));
 
-        String text = String.format
-                (context.getString(R.string.current_list_alert_dialog_message_top_section), numberOfEarthquakes,
-                        earthquakesWord, location, distance, sortedBySuffix, sortedBy, maxNumberOfEarthquakes, dateRange,
-                        startDate, endDate, minMagnitude,
-                        maxMagnitude, firstAndLastEarthquakesInfoMessage);
+        if (forCurrentList) {
+            message = context.getString(R.string.current_list_alert_dialog_message_top_section, numberOfEarthquakes,
+                    earthquakesWord, location, distance, sortedBySuffix, sortedBy, maxNumberOfEarthquakes, dateRange,
+                    startDate, endDate, minMagnitude,
+                    maxMagnitude, firstAndLastEarthquakesInfoMessage);
+        } else {
+            message = context.getString(R.string.activity_earthquakes_map_info_alert_dialog_message_top_section, numberOfEarthquakes,
+                    earthquakesWord, location, distance, maxNumberOfEarthquakes, dateRange, startDate, endDate, minMagnitude,
+                    maxMagnitude, firstAndLastEarthquakesInfoMessage);
+        }
 
-        return Html.fromHtml(text);
+        return Html.fromHtml(message);
     }
 
 
@@ -761,7 +778,7 @@ public class QueryUtils {
     }
 
 
-    public static Location getLastKnowLocationFromSharedPreferences(Context context){
+    public static Location getLastKnowLocationFromSharedPreferences(Context context) {
         SharedPreferences mSharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.app_shared_preferences_name), 0);
         String latitude = mSharedPreferences.getString(context.getString(
@@ -771,12 +788,12 @@ public class QueryUtils {
         Location location = new Location("");
 
         double latitudeNumber, longitudeNumber;
-        if (latitude.isEmpty()){
+        if (latitude.isEmpty()) {
             latitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
         } else {
             latitudeNumber = Double.valueOf(latitude);
         }
-        if (longitude.isEmpty()){
+        if (longitude.isEmpty()) {
             longitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
         } else {
             longitudeNumber = Double.valueOf(longitude);
@@ -803,7 +820,8 @@ public class QueryUtils {
     }
 
 
-    public static void updateLastKnowLocation(Context context, LocationUpdateListener locationUpdateListener) {
+    public static void updateLastKnowLocation(Context context, LocationUpdateListener
+            locationUpdateListener) {
         FusedLocationProviderClient fusedLocationProviderClient =
                 LocationServices.getFusedLocationProviderClient(context);
         fusedLocationProviderClient.getLastLocation()

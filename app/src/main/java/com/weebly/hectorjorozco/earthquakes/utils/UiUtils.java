@@ -22,9 +22,9 @@ public class UiUtils {
     }
 
 
-    public static int getEightDpInPx(Context context) {
+    public static int getPxFromDp(Context context, float dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return Math.round(8 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
 }

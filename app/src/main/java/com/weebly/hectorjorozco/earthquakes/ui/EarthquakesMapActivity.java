@@ -24,7 +24,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
@@ -33,7 +32,6 @@ import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Locale;
 
 
 public class EarthquakesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -154,19 +152,20 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     private void setupBottomNavigationView(){
         mBottomNavigationView = findViewById(R.id.activity_earthquakes_map_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()){
+            switch (menuItem.getItemId()) {
                 case R.id.menu_activity_main_bottom_navigation_view_action_list:
-                    onBackPressed();
+                    EarthquakesMapActivity.this.onBackPressed();
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_map:
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
-                    onBackPressed();
-                    startActivity(new Intent(EarthquakesMapActivity.this, FavoritesActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    EarthquakesMapActivity.this.onBackPressed();
+                    EarthquakesMapActivity.this.startActivity(new Intent(EarthquakesMapActivity.this, FavoritesActivity.class));
+                    EarthquakesMapActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_news:
                     break;
@@ -259,39 +258,23 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         }
         if (item.getItemId() == R.id.menu_activity_earthquakes_map_action_info) {
 
-            showHelpSnackBar();
+            showInfoMessageDialogFragment();
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    private void showHelpSnackBar(){
-        int stringID, numberOfEarthquakes;
-        if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {
-            stringID = R.string.activity_earthquakes_map_max_number_exceeded_message;
-            numberOfEarthquakes = MainActivity.MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP;
-        } else {
-            stringID = R.string.activity_earthquakes_map_number_of_earthquakes_shown_message;
-            numberOfEarthquakes = mEarthquakes.size();
-        }
-        String message = getString(stringID,
-                String.format(Locale.getDefault(), "%,d",
-                        numberOfEarthquakes));
-        Snackbar.make(findViewById(R.id.activity_earthquakes_map_coordinator_layout),message,
-                Snackbar.LENGTH_LONG).show();
+    private void showInfoMessageDialogFragment(){
 
-
-        // TODO Show a DialogFragment with information about the earthquakes displayed on the map.
-        // Remove previous snack bar and modify QueryUtils.createEarthquakesInformationAlertDialogMessage method
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
-                        QueryUtils.createEarthquakesInformationAlertDialogMessage(this,
+                        QueryUtils.createEarthquakesInformationMessageDialogMessage(this,
                                 QueryUtils.sEarthquakesListInformationValues, false),
-                        getString(R.string.menu_activity_main_action_list_information_title),
+                        getString(R.string.activity_earthquakes_map_info_message_dialog_fragment_title),
                         MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
         messageDialogFragment.show(getSupportFragmentManager(),
-                getString(R.string.activity_main_earthquakes_list_information_dialog_fragment_tag));
+                getString(R.string.activity_earthquakes_map_info_message_dialog_fragment_tag));
     }
 
     @Override

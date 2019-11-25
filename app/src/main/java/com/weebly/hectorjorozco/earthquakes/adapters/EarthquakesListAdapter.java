@@ -18,6 +18,7 @@ import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 
 public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -104,15 +105,15 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
                     QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
                 distance = " " + mContext.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
-                        mMaxDistance);
+                        String.format(Locale.getDefault(), "%,d", Integer.valueOf(mMaxDistance)));
             }
 
             if (mEarthquakes.size() == 1) {
                 title = mContext.getString(R.string.earthquakes_list_title_for_one_earthquake,
-                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, distance);
+                        String.format(Locale.getDefault(), "%,d", mEarthquakes.size()), pluralEnding, foundWordSuffix, mLocation, distance);
             } else {
                 title = mContext.getString(R.string.earthquakes_list_title_for_multiple_earthquakes,
-                        mEarthquakes.size(), pluralEnding, foundWordSuffix, mLocation, distance, sortedBy);
+                        String.format(Locale.getDefault(), "%,d", mEarthquakes.size()), pluralEnding, foundWordSuffix, mLocation, distance, sortedBy);
             }
 
             titleViewHolder.titleTextView.setText(title);

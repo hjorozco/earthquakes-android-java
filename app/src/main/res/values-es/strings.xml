@@ -25,8 +25,8 @@
     <string name="no_server_response_text">No hay respuesta del servidor de USGS</string>
     <string name="earthquakes_list_updated_text">Lista de sismos actualizada</string>
 
-    <string name="earthquakes_list_title_for_one_earthquake">%1$d sismo%2$s encontrado%3$s en %4$s%5$s.</string>
-    <string name="earthquakes_list_title_for_multiple_earthquakes">%1$d sismo%2$s encontrado%3$s en %4$s%5$s. Ordenados por %6$s.</string>
+    <string name="earthquakes_list_title_for_one_earthquake">%1$s sismo%2$s encontrado%3$s en %4$s%5$s.</string>
+    <string name="earthquakes_list_title_for_multiple_earthquakes">%1$s sismo%2$s encontrado%3$s en %4$s%5$s. Ordenados por %6$s.</string>
     <string name="earthquakes_list_title_max_distance_from_you_section">a menos de %1$s km de ti</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix">s</string>
     <string name="earthquakes_list_title_us_name">los Estados Unidos</string>
@@ -167,10 +167,6 @@
 
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
 
-    <string name="activity_earthquakes_map_max_number_exceeded_message">
-        Mostrando los primeros %1$s sismos de la lista.</string>
-    <string name="activity_earthquakes_map_number_of_earthquakes_shown_message">
-        Mostrando los %1$s sismos de la lista.</string>
     <string name="activity_earthquakes_map_label">Mapa de sismos</string>
     <string name="activity_earthquakes_map_no_earthquakes_data_message">
         No hay sismos en la lista.\n\nUna vez que se encuentren sismos, podrás ver sus
@@ -190,8 +186,10 @@
     </string>
 
     <string name="activity_earthquakes_map_info_alert_dialog_message_bottom_section">
-        &lt;b>&lt;i>Solo los primeros %1$s sismos de la lista son mostrados en este mapa.&lt;/b>&lt;/i>
+        &lt;br/&gt;&lt;br/&gt;&lt;b>&lt;i>Solo los primeros %1$s sismos de la lista son mostrados en este mapa.&lt;/b>&lt;/i>
     </string>
+
+    <string name="activity_earthquakes_map_info_message_dialog_fragment_title">Información del mapa</string>
 
     <!-- ********** Activity earthquakes map ********** -->
 
@@ -374,6 +372,7 @@
     <string name="activity_favorites_label">Favoritos</string>
 
     <string name="activity_favorites_delete_text">Eliminar</string>
+    <string name="activity_favorites_delete_all_text">Eliminar todos</string>
 
     <string name="activity_favorites_no_favorites_message">No se encontraron favoritos.</string>
 
@@ -382,7 +381,8 @@
     <string name="menu_activity_favorites_action_sort_title">Ordenar favoritos</string>
     <string name="menu_activity_favorites_action_delete_title">Eliminar todos los favoritos</string>
 
-    <string name="activity_favorites_list_title">%1$d favorito%2$s. Ordenados por %3$s.</string>
+    <string name="activity_favorites_list_title_sorted_by_section">Ordenados por %1$s.</string>
+    <string name="activity_favorites_list_title">%1$s favorito%2$s.%3$s</string>
 
     <string name="activity_favorites_delete_one_confirmation_dialog_fragment_text">
         &lt;br/&gt;Vas a eliminar &lt;b>un favorito.&lt;/b>&lt;br/&gt;&lt;br/&gt;¿Estás seguro(a)?</string>

@@ -156,6 +156,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_favorites_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
@@ -418,7 +419,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         ConfirmationDialogFragment confirmationDialogFragment =
                 ConfirmationDialogFragment.newInstance(
                         Html.fromHtml(getString(R.string.activity_favorites_delete_all_confirmation_dialog_fragment_text)),
-                        getString(R.string.activity_favorites_delete_text),
+                        getString(R.string.activity_favorites_delete_all_text),
                         0,
                         ConfirmationDialogFragment.FAVORITES_ACTIVITY_DELETE_ALL_FAVORITES);
 
@@ -667,7 +668,7 @@ public class FavoritesActivity extends AppCompatActivity implements
                         }
 
                         float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() +
-                                selectedViewHolder.itemView.getHeight() - UiUtils.getEightDpInPx(FavoritesActivity.this);
+                                selectedViewHolder.itemView.getHeight() - UiUtils.getPxFromDp(FavoritesActivity.this, 8);
                         float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
 
                         if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {

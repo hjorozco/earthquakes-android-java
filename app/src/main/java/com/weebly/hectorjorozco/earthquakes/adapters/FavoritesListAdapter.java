@@ -24,6 +24,7 @@ import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -90,8 +91,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
 
-            String pluralEnding, sortedBy;
-            String title = "";
+            String pluralEnding, sortedBy, sortedByTitleSection, title;
 
             if (mFavorites.size() == 1) {
                 pluralEnding = "";
@@ -99,17 +99,17 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 pluralEnding = mContext.getString(R.string.letter_s_lowercase);
             }
 
-            if (mFavorites.size() == 1) {
-                titleViewHolder.titleTextView.setVisibility(View.GONE);
-                titleViewHolder.titleTextView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+            if (mFavorites.size()==1){
+                sortedByTitleSection = "";
             } else {
-                titleViewHolder.titleTextView.setVisibility(View.VISIBLE);
-                titleViewHolder.titleTextView.setLayoutParams(new RecyclerView.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 sortedBy = SortFavoritesUtils.getSortByValueString(mContext);
-                title = mContext.getString(R.string.activity_favorites_list_title, mFavorites.size(),
-                        pluralEnding, sortedBy);
+                sortedByTitleSection = " " + mContext.getString(R.string.activity_favorites_list_title_sorted_by_section, sortedBy);
             }
+
+            title = mContext.getString(R.string.activity_favorites_list_title,
+                    String.format(Locale.getDefault(), "%,d", mFavorites.size()),
+                    pluralEnding, sortedByTitleSection);
+
 
             titleViewHolder.titleTextView.setText(title);
 
