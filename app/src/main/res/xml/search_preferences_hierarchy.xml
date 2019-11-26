@@ -50,6 +50,8 @@
             app:min="@integer/search_preferences_maximum_distance_minimum_value"
             app:singleLineTitle="false" />
 
+        <!-- TODO Add checkbox asking if a warning has to be shown when location can not be determined -->
+
     </PreferenceCategory>
 
     <PreferenceCategory

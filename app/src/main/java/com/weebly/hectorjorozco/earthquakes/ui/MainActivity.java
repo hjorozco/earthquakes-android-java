@@ -55,6 +55,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static android.view.View.GONE;
+
 
 public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener, QueryUtils.LocationUpdateListener {
 
@@ -145,9 +147,12 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
     private void setupLongSearchMessageHandler() {
         mHandler = new Handler();
-        mRunnable = () -> Snackbar.make(mSnackbarLayout,
-                MainActivity.this.getString(R.string.activity_main_long_search_message),
-                LONG_TIME_SNACKBAR * 1000).show();
+        mRunnable = () -> {
+            Snackbar snackbar = Snackbar.make(mSnackbarLayout,
+                    MainActivity.this.getString(R.string.activity_main_long_search_message),
+                    LONG_TIME_SNACKBAR * 1000);
+            snackbar.show();
+        };
 
         mHandler.postDelayed(mRunnable, SECONDS_UNTIL_SHOWING_LONG_SEARCH_MESSAGE * 1000);
         QueryUtils.sHandler = mHandler;
@@ -263,10 +268,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 getSnackBarText(QueryUtils.sLoadEarthquakesResultCode),
                                 Snackbar.LENGTH_INDEFINITE);
                         mSnackbar.setAction(getString(R.string.ok_text), v -> mSnackbar.dismiss());
-                        // TODO Fix Snackbar over fab
-//                        if (mFab.isOrWillBeShown()){
-//                            mSnackbar.getView().animate().translationY(-UiUtils.getPxFromDp(this, 40)).setDuration(500);
-//                        }
                         mSnackbar.show();
 
                     }
@@ -358,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             mMessageImageView.setImageDrawable(getResources().getDrawable(imageID));
             if (type == QueryUtils.SEARCHING) {
                 mMessageImageView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
-                mMessageTextView.setVisibility(View.GONE);
+                mMessageTextView.setVisibility(GONE);
                 if (QueryUtils.getSoundSearchPreference(this) && !QueryUtils.sIsPlayingSound) {
                     playEarthquakeSound();
                 }
@@ -407,7 +408,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     // Helper method that shows the message and hides the RecyclerView and vice versa.
     private void setMessageVisible(boolean showMessage) {
         if (showMessage) {
-            mRecyclerView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(GONE);
             mMessageImageView.setVisibility(View.VISIBLE);
             mMessageTextView.setVisibility(View.VISIBLE);
         } else {
@@ -417,8 +418,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             } else {
                 mRecyclerViewFastScroller.setVisibility(View.INVISIBLE);
             }
-            mMessageImageView.setVisibility(View.GONE);
-            mMessageTextView.setVisibility(View.GONE);
+            mMessageImageView.setVisibility(GONE);
+            mMessageTextView.setVisibility(GONE);
         }
     }
 
@@ -638,12 +639,21 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
 
+                        // TODO Use getResources.getPixelsfromDimension method instead of UiUtils method
                         float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() +
                                 selectedViewHolder.itemView.getHeight() - UiUtils.getPxFromDp(MainActivity.this, 8);
                         float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
 
                         if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {
                             mBottomNavigationView.setVisibility(View.INVISIBLE);
+                        }
+
+
+                        // TODO Hide FAB and Snackbar when they are covering view.
+                        if (mSnackbar != null) {
+                            if (mSnackbar.isShown()) {
+                                Log.d("TESTING", "Snackbar is shown");
+                            }
                         }
 
                     }
@@ -679,6 +689,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             QueryUtils.updateLastKnowLocation(this, this);
         }
 
+        mRecyclerView.setPadding(0,0,0,0);
         mFab.hide();
         mBottomNavigationView.setVisibility(View.VISIBLE);
         mBottomNavigationView.setSelectedItemId(R.id.menu_activity_main_bottom_navigation_view_action_list);
@@ -694,16 +705,15 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-    // TODO Show a little FAB if the location was not updated
-    // Implementation of the interface QueryUtils.LocationUpdateListener to check if the location was
-    // updated or not
-    @Override
+    // TODO Show MessageDialogFragments for each option on this method.
     public void onLocationUpdate(boolean locationUpdated) {
         if (locationUpdated) {
             Log.d("TESTING", "LISTENER: Location updated");
+            mRecyclerView.setPadding(0,0,0,0);
             mFab.hide();
         } else {
             Log.d("TESTING", "LISTENER: Location not updated");
+            mRecyclerView.setPadding(0,0,0,getResources().getDimensionPixelSize(R.dimen.activity_main_recycler_view_padding_bottom));
             mFab.show();
             mFab.setOnClickListener(v -> {
                 if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this)) {

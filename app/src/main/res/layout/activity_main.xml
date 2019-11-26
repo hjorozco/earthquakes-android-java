@@ -72,13 +72,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:padding="@dimen/application_small_padding"
+            android:layout_marginEnd="@dimen/application_standard_margin"
+            android:layout_marginBottom="@dimen/application_standard_margin"
             app:useCompatPadding="true"
             app:fabCustomSize="@dimen/activity_main_fab_size"
             app:maxImageSize="@dimen/activity_main_fab_image_size"
             app:srcCompat="@drawable/ic_exclamation_mark_white_24dp"
-            android:visibility="gone"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
+            android:visibility="gone"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
