@@ -99,6 +99,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 pluralEnding = mContext.getString(R.string.letter_s_lowercase);
             }
 
+
+
             if (mFavorites.size()==1){
                 sortedByTitleSection = "";
             } else {

@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -44,7 +45,6 @@ import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
-import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
@@ -639,20 +639,38 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
 
-                        // TODO Use getResources.getPixelsfromDimension method instead of UiUtils method
-                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() +
-                                selectedViewHolder.itemView.getHeight() - UiUtils.getPxFromDp(MainActivity.this, 8);
-                        float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
 
-                        if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {
+                        float viewTopPosition = selectedViewHolder.itemView.getY();
+                        float viewBottomPosition = viewTopPosition +
+                                selectedViewHolder.itemView.getHeight();
+
+                        float bottomNavigationViewTopPosition = mBottomNavigationView.getY();
+                        float viewTextBottomPosition = viewBottomPosition -
+                                getResources().getDimensionPixelSize(R.dimen.application_small_margin);
+
+                        // If the ViewHolder text is covered by the BottomNavigationView, hide it on click.
+                        if (viewTextBottomPosition > bottomNavigationViewTopPosition) {
                             mBottomNavigationView.setVisibility(View.INVISIBLE);
                         }
 
+                        float fabTopPosition = mFab.getY() +
+                                getResources().getDimensionPixelSize(R.dimen.activity_main_fab_padding_for_position);
+                        float fabBottomPosition = fabTopPosition +
+                                getResources().getDimensionPixelSize(R.dimen.activity_main_fab_size);
 
-                        // TODO Hide FAB and Snackbar when they are covering view.
+                        // If the ViewHolder text is covered by the FAB , hide it on click.
+                        if (fabTopPosition>viewTopPosition && fabBottomPosition < viewBottomPosition) {
+                            mFab.hide();
+                        }
+
+                        // If the ViewHolder text is covered by the Snackbar , hide it on click.
                         if (mSnackbar != null) {
                             if (mSnackbar.isShown()) {
-                                Log.d("TESTING", "Snackbar is shown");
+                                float snackbarTopPosition = mSnackbar.getView().getY();
+                                float snackbarBottomPosition = snackbarTopPosition + mSnackbar.getView().getHeight();
+                                if (snackbarBottomPosition>viewTopPosition && snackbarTopPosition < viewBottomPosition) {
+                                    mSnackbar.dismiss();
+                                }
                             }
                         }
 
@@ -689,7 +707,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             QueryUtils.updateLastKnowLocation(this, this);
         }
 
-        mRecyclerView.setPadding(0,0,0,0);
         mFab.hide();
         mBottomNavigationView.setVisibility(View.VISIBLE);
         mBottomNavigationView.setSelectedItemId(R.id.menu_activity_main_bottom_navigation_view_action_list);
@@ -709,34 +726,42 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public void onLocationUpdate(boolean locationUpdated) {
         if (locationUpdated) {
             Log.d("TESTING", "LISTENER: Location updated");
-            mRecyclerView.setPadding(0,0,0,0);
             mFab.hide();
         } else {
             Log.d("TESTING", "LISTENER: Location not updated");
-            mRecyclerView.setPadding(0,0,0,getResources().getDimensionPixelSize(R.dimen.activity_main_recycler_view_padding_bottom));
             mFab.show();
             mFab.setOnClickListener(v -> {
+                String message = "";
                 if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this)) {
                     if (QueryUtils.getMaxDistanceSearchPreference(MainActivity.this) != 0) {
                         if (isThereALocationSaved(MainActivity.this)) {
-                            Log.d("TESTING", "Earthquake distance to you and distance filter may not be accurate because location can not be updated");
+                            message = getString(R.string.activity_main_distance_and_filter_not_acurate_message);
                         } else {
-                            Log.d("TESTING", "Earthquake distance to you and distance filter not shown because location can not be determined.");
+                            message = getString(R.string.activity_main_distance_and_filter_not_shown_message);
                         }
                     } else {
                         if (isThereALocationSaved(MainActivity.this)) {
-                            Log.d("TESTING", "Earthquake distance to you may not be accurate because location can not be updated");
+                            message = getString(R.string.activity_main_distance_not_acurate_message);
                         } else {
-                            Log.d("TESTING", "Earthquake distance to you not shown because location can not be determined.");
+                            message = getString(R.string.activity_main_distance_not_shown_message);
                         }
                     }
                 } else {
                     if (isThereALocationSaved(MainActivity.this)) {
-                        Log.d("TESTING", "Distance filter may not be accurate because location can not be updated");
+                        message = getString(R.string.activity_main_filter_not_acurate_message);
                     } else {
-                        Log.d("TESTING", "Distance filter not shown because location can not be determined.");
+                        message = getString(R.string.activity_main_filter_not_shown_message);
                     }
                 }
+
+                MessageDialogFragment messageDialogFragment =
+                        MessageDialogFragment.newInstance(
+                                Html.fromHtml(message),
+                                getString(R.string.activity_main_location_can_not_be_determined_message_title),
+                                MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
+
+                messageDialogFragment.show(getSupportFragmentManager(),
+                        getString(R.string.activity_earthquakes_map_info_message_dialog_fragment_tag));
             });
         }
     }

@@ -89,6 +89,53 @@
     <string name="menu_activity_main_bottom_navigation_view_action_favorites_title">Favorites</string>
     <string name="menu_activity_main_bottom_navigation_view_action_news_title">News</string>
 
+    <!-- TODO Translate this messages to spanish -->
+
+    <string name="activity_main_location_can_not_be_determined_message_title">
+        Turn on location
+    </string>
+    <string name="activity_main_location_can_not_be_determined_message_tag" translatable="false">
+        activity_main_location_can_not_be_determined_message_tag
+    </string>
+    <string name="activity_main_distance_and_filter_not_acurate_message">
+        &lt;br/&gt;The &lt;b>maximum distance from you&lt;/b> search filter and the &lt;b>
+        distance from you&lt;/b> values may not be accurate because your location can not be determined
+        right now and the location used for the calculations may be and old one.&lt;br/&gt;&lt;br/&gt;&lt;b>Please
+        turn on the location on your device settings&lt;/b>.&lt;br/&gt;&lt;br/&gt;Once you turn it on, it can take
+        some time for your device to detect your location.
+    </string>
+    <string name="activity_main_distance_and_filter_not_shown_message">
+        &lt;br/&gt;The &lt;b>maximum distance from you&lt;/b> search filter will no be
+        applied and the &lt;b>distance from you&lt;/b> will not be shown because your location can not be
+        determined right now and there is not a location saved on your device.&lt;br/&gt;&lt;br/&gt;&lt;b>Please
+        turn on the location on your device settings&lt;/b>.&lt;br/&gt;&lt;br/&gt;Once you turn it on, it can take
+        some time for your device to detect your location.
+    </string>
+    <string name="activity_main_distance_not_acurate_message">
+        &lt;br/&gt;The &lt;b>distance from you&lt;/b> values may not be accurate because
+        your location can not be determined right now and the location used for the calculations
+        may be and old one.&lt;br/&gt;&lt;br/&gt;&lt;b>Please turn on the location on your device settings&lt;/b>.&lt;br/&gt;
+        &lt;br/&gt;Once you turn it on, it can take some time for your device to detect your location.
+    </string>
+    <string name="activity_main_distance_not_shown_message">
+        &lt;br/&gt;The &lt;b>distance from you&lt;/b> will not be shown because your
+        location can not be determined right now and there is not a location saved on your device.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>Please turn on the location on your device settings&lt;/b>.&lt;br/&gt;&lt;br/&gt;Once you turn
+        it on, it can take some time for your device to detect your location.
+    </string>
+    <string name="activity_main_filter_not_acurate_message">
+        &lt;br/&gt;The &lt;b>maximum distance from you&lt;/b> search filter may not be
+        accurate because your location can not be determined right now and the location used for the
+        calculations may be and old one.&lt;br/&gt;&lt;br/&gt;&lt;b>Please turn on the location on your device
+        settings&lt;/b>.&lt;br/&gt;&lt;br/&gt;Once you turn it on, it can take some time for your device to detect your location.
+    </string>
+    <string name="activity_main_filter_not_shown_message">
+        &lt;br/&gt;The &lt;b>maximum distance from you&lt;/b> search filter will no be
+        applied because your location can not be determined right now and there is not a location
+        saved on your device.&lt;br/&gt;&lt;br/&gt;&lt;b>Please turn on the location on your device settings
+        &lt;/b>.&lt;br/&gt;&lt;br/&gt;Once you turn it on, it can take some time for your device to detect your
+        location.</string>
+
     <!-- ********** Activity main ********** -->
 
 

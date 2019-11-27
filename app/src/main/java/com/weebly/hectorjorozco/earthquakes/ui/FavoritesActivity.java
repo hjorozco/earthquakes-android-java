@@ -43,7 +43,7 @@ import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.SortFavoritesDial
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
-import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
+
 import com.weebly.hectorjorozco.earthquakes.viewmodels.FavoritesActivityViewModel;
 
 import java.util.List;
@@ -78,6 +78,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     private Menu mMenu;
     private DividerItemDecoration mDividerItemDecoration;
     private BottomNavigationView mBottomNavigationView;
+    private Snackbar mSnackbar;
 
     // Used for action mode
     private ActionModeCallback actionModeCallback;
@@ -621,7 +622,8 @@ public class FavoritesActivity extends AppCompatActivity implements
 
 
     private void showSnackBarMessage(String message) {
-        Snackbar.make(findViewById(R.id.activity_favorites_coordinator_layout), message, Snackbar.LENGTH_LONG).show();
+        mSnackbar = Snackbar.make(findViewById(R.id.activity_favorites_coordinator_layout), message, Snackbar.LENGTH_LONG);
+        mSnackbar.show();
     }
 
     /**
@@ -667,12 +669,29 @@ public class FavoritesActivity extends AppCompatActivity implements
                                             findViewById(R.id.earthquake_list_item_distance_text_view));
                         }
 
-                        float viewHolderBottomYPosition = selectedViewHolder.itemView.getY() +
-                                selectedViewHolder.itemView.getHeight() - UiUtils.getPxFromDp(FavoritesActivity.this, 8);
-                        float bottomNavigationViewTopYPosition = mBottomNavigationView.getY();
 
-                        if (viewHolderBottomYPosition > bottomNavigationViewTopYPosition) {
+                        float viewTopPosition = selectedViewHolder.itemView.getY();
+                        float viewBottomPosition = viewTopPosition +
+                                selectedViewHolder.itemView.getHeight();
+                        float viewTextBottomPosition = viewBottomPosition -
+                                getResources().getDimensionPixelSize(R.dimen.application_small_margin);
+
+                        float bottomNavigationViewTopPosition = mBottomNavigationView.getY();
+
+                        // If the ViewHolder text is covered by the BottomNavigationView, hide it on click.
+                        if (viewTextBottomPosition > bottomNavigationViewTopPosition) {
                             mBottomNavigationView.setVisibility(View.INVISIBLE);
+                        }
+
+                        // If the ViewHolder text is covered by the Snackbar , hide it on click.
+                        if (mSnackbar != null) {
+                            if (mSnackbar.isShown()) {
+                                float snackbarTopPosition = mSnackbar.getView().getY();
+                                float snackbarBottomPosition = snackbarTopPosition + mSnackbar.getView().getHeight();
+                                if (snackbarBottomPosition>viewTopPosition && snackbarTopPosition < viewBottomPosition) {
+                                    mSnackbar.dismiss();
+                                }
+                            }
                         }
 
                     }

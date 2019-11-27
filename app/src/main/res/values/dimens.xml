@@ -42,5 +42,6 @@
     <dimen name="activity_main_fab_size">24dp</dimen>
     <dimen name="activity_main_fab_image_size">12dp</dimen>
     <dimen name="activity_main_recycler_view_padding_bottom">56dp</dimen>
+    <dimen name="activity_main_fab_padding_for_position">18dp</dimen>
 
 </resources>
