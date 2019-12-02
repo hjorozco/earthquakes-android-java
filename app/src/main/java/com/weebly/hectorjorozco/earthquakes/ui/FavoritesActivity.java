@@ -172,8 +172,6 @@ public class FavoritesActivity extends AppCompatActivity implements
                     break;
                 case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
                     break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_news:
-                    break;
             }
             return true;
         });

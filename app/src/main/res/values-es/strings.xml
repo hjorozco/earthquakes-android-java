@@ -58,9 +58,52 @@
     <string name="menu_activity_main_bottom_navigation_view_action_list_title">Lista</string>
     <string name="menu_activity_main_bottom_navigation_view_action_map_title">Mapa</string>
     <string name="menu_activity_main_bottom_navigation_view_action_favorites_title">Favoritos</string>
-    <string name="menu_activity_main_bottom_navigation_view_action_news_title">Noticias</string>
 
-
+    <string name="activity_main_location_can_not_be_determined_message_title">
+        Activar ubicación
+    </string>
+    <string name="activity_main_distance_and_filter_not_accurate_message">
+        &lt;br/&gt;La preferencia de búsqueda &lt;b>distancia máxima de ti&lt;/b> y los valores de &lt;b>
+        distancia de ti&lt;/b> pueden no ser exactos porque tu ubicación no puede ser determinada en
+        este momento y la que está siendo usada para hacer los cálculos es una ubicación
+        previa guardada en tu dispositivo.&lt;br/&gt;&lt;br/&gt;&lt;b>Por favor, activa la ubicación en la
+        configuración de tu dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;Una vez que la actives, puede tomar un tiempo
+        a tu dispositivo detectar tu ubicación.
+    </string>
+    <string name="activity_main_distance_and_filter_not_shown_message">
+        &lt;br/&gt;La preferencia de búsqueda &lt;b>distancia máxima de ti&lt;/b> no será aplicada y la &lt;b>distancia
+        de ti&lt;/b> no se mostrará porque tu ubicación no puede ser determinada en este momento
+        y no hay una ubicación guardada en tu dispositivo que pueda ser usada para los cálculos.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>Por favor, activa la ubicación en la configuración de tu dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;
+        Una vez que la actives, puede tomar un tiempo a tu dispositivo detectar tu ubicación.
+    </string>
+    <string name="activity_main_distance_not_accurate_message">
+        &lt;br/&gt;Los valores de &lt;b>distancia de ti&lt;/b> pueden no ser exactos porque tu ubicación no
+        puede ser determinada en este momento y la que está siendo usada para hacer los cálculos
+        es una ubicación previa guardada en tu dispositivo.&lt;br/&gt;&lt;br/&gt;&lt;b>Por favor, activa la ubicación en la
+        configuración de tu dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;Una vez que la actives, puede tomar un tiempo
+        a tu dispositivo detectar tu ubicación.
+    </string>
+    <string name="activity_main_distance_not_shown_message">
+        &lt;br/&gt;La &lt;b>distancia de ti&lt;/b> no se mostrará porque tu ubicación no puede ser determinada
+        en este momento y no hay una ubicación guardada en tu dispositivo que pueda ser usada para los cálculos.
+        &lt;br/&gt;&lt;br/&gt;&lt;b>Por favor, activa la ubicación en la configuración de tu dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;
+        Una vez que la actives, puede tomar un tiempo a tu dispositivo detectar tu ubicación.
+    </string>
+    <string name="activity_main_filter_not_accurate_message">
+        &lt;br/&gt;La preferencia de búsqueda &lt;b>distancia máxima de ti&lt;/b> puede no ser exacta porque tu
+        ubicación no puede ser determinada en este momento y la que está siendo usada para hacer los
+        cálculos es una ubicación previa guardada en tu dispositivo.&lt;br/&gt;&lt;br/&gt;&lt;b>Por favor, activa
+        la ubicación en la configuración de tu dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;Una vez que la actives, puede tomar un tiempo
+        a tu dispositivo detectar tu ubicación.
+    </string>
+    <string name="activity_main_filter_not_shown_message">
+        &lt;br/&gt;La preferencia de búsqueda &lt;b>distancia máxima de ti&lt;/b> no será aplicada porque tu
+        ubicación no puede ser determinada en este momento y no hay una ubicación guardada en tu
+        dispositivo que pueda ser usada para los cálculos.&lt;br/&gt;&lt;br/&gt;&lt;b>Por favor, activa la ubicación
+        en la configuración de tu dispositivo&lt;/b>.&lt;br/&gt;&lt;br/&gt;Una vez que la actives, puede tomar un
+        tiempo a tu dispositivo detectar tu ubicación.
+    </string>
 
     <!-- ********** Activity Main ********** -->
 

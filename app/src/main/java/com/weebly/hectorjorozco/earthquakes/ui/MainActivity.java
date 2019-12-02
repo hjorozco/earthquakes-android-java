@@ -175,8 +175,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_news:
-                    break;
             }
             return true;
         });
@@ -722,7 +720,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     }
 
 
-    // TODO Show MessageDialogFragments for each option on this method.
+    // Implementation of interface QueryUtils.LocationUpdateListener
     public void onLocationUpdate(boolean locationUpdated) {
         if (locationUpdated) {
             Log.d("TESTING", "LISTENER: Location updated");
@@ -731,24 +729,24 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             Log.d("TESTING", "LISTENER: Location not updated");
             mFab.show();
             mFab.setOnClickListener(v -> {
-                String message = "";
+                String message;
                 if (QueryUtils.getShowDistanceSearchPreference(MainActivity.this)) {
                     if (QueryUtils.getMaxDistanceSearchPreference(MainActivity.this) != 0) {
                         if (isThereALocationSaved(MainActivity.this)) {
-                            message = getString(R.string.activity_main_distance_and_filter_not_acurate_message);
+                            message = getString(R.string.activity_main_distance_and_filter_not_accurate_message);
                         } else {
                             message = getString(R.string.activity_main_distance_and_filter_not_shown_message);
                         }
                     } else {
                         if (isThereALocationSaved(MainActivity.this)) {
-                            message = getString(R.string.activity_main_distance_not_acurate_message);
+                            message = getString(R.string.activity_main_distance_not_accurate_message);
                         } else {
                             message = getString(R.string.activity_main_distance_not_shown_message);
                         }
                     }
                 } else {
                     if (isThereALocationSaved(MainActivity.this)) {
-                        message = getString(R.string.activity_main_filter_not_acurate_message);
+                        message = getString(R.string.activity_main_filter_not_accurate_message);
                     } else {
                         message = getString(R.string.activity_main_filter_not_shown_message);
                     }
@@ -761,7 +759,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER);
 
                 messageDialogFragment.show(getSupportFragmentManager(),
-                        getString(R.string.activity_earthquakes_map_info_message_dialog_fragment_tag));
+                        getString(R.string.activity_main_location_can_not_be_determined_message_tag));
             });
         }
     }

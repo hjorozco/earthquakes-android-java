@@ -167,8 +167,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     EarthquakesMapActivity.this.startActivity(new Intent(EarthquakesMapActivity.this, FavoritesActivity.class));
                     EarthquakesMapActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_news:
-                    break;
             }
             return true;
         });
