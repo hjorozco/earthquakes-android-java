@@ -845,4 +845,18 @@ public class QueryUtils {
                 });
     }
 
+
+    public static List<Earthquake> addDistanceToAllEarthquakes(List<Earthquake> earthquakes){
+        for (int i=0; i<earthquakes.size(); i++){
+            Earthquake earthquake = earthquakes.get(i);
+            if (earthquake.getDistance()==DISTANCE_NULL_VALUE){
+                float[] result = new float[1];
+                Location.distanceBetween(sLastKnownLocationLatitude, sLastKnownLocationLongitude,
+                        earthquake.getLatitude(), earthquake.getLongitude(), result);
+                earthquake.setDistance(result[0]);
+            }
+        }
+        return earthquakes;
+    }
+
 }

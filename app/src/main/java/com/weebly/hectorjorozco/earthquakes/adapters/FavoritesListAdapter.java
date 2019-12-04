@@ -122,6 +122,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             Earthquake currentFavorite = mFavorites.get(position - 1);
 
+            // If "Show distance from you" search preference is not checked, or there is not a location
+            // saved, hide the distance TextView
             if (!QueryUtils.getShowDistanceSearchPreference(mContext) ||
                     QueryUtils.sLastKnownLocationLatitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||
                     QueryUtils.sLastKnownLocationLongitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {

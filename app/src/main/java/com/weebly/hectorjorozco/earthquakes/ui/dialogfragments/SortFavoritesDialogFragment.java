@@ -19,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.ui.MainActivity;
+import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.SortFavoritesUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 
@@ -30,7 +31,7 @@ public class SortFavoritesDialogFragment extends DialogFragment {
     private static final String DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY = "title";
 
     public interface SortFavoritesDialogFragmentListener {
-        void onSortCriteriaSelected(int sortCriteriaSelected);
+        void onSortCriteriaSelected(int sortCriteriaSelected, boolean isDistanceShown);
     }
 
 
@@ -65,10 +66,10 @@ public class SortFavoritesDialogFragment extends DialogFragment {
                 colorPrimaryDarkString, title)));
 
         @SuppressLint("InflateParams") View view =
-                LayoutInflater.from(getContext()).inflate(R.layout.dialog_sort_by, null);
+                LayoutInflater.from(getContext()).inflate(R.layout.dialog_fragment_sort_by, null);
         builder.setView(view);
 
-        RadioGroup dateMagnitudeRadioGroup =
+        RadioGroup dateMagnitudeDistanceRadioGroup =
                 view.findViewById(R.id.dialog_sort_by_date_magnitude_radio_group);
         RadioGroup ascendingDescendingRadioGroup =
                 view.findViewById(R.id.dialog_sort_by_ascending_descending_radio_group);
@@ -78,37 +79,75 @@ public class SortFavoritesDialogFragment extends DialogFragment {
         setupRadioButton(view.findViewById(R.id.dialog_sort_by_ascending_radio_button));
         setupRadioButton(view.findViewById(R.id.dialog_sort_by_descending_radio_button));
 
+        // Shows or hides the distance from you RadioButton depending on the search preferences and location values
+        boolean isDistanceShown = QueryUtils.getShowDistanceSearchPreference(getContext()) &&
+                QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
+
+        RadioButton distanceRadioButton = view.findViewById(R.id.dialog_sort_by_distance_radio_button);
+        if (isDistanceShown) {
+            setupRadioButton(distanceRadioButton);
+            distanceRadioButton.setVisibility(View.VISIBLE);
+        } else {
+            distanceRadioButton.setVisibility(View.GONE);
+        }
+
         view.findViewById(R.id.dialog_sort_by_divider).setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
 
-        switch (SortFavoritesUtils.getSortByValueFromSharedPreferences(getActivity())){
+        switch (SortFavoritesUtils.getSortByValueFromSharedPreferences(getActivity())) {
             case MainActivity.SORT_BY_ASCENDING_DATE:
-                dateMagnitudeRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
+                dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
                 ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                 break;
             case MainActivity.SORT_BY_DESCENDING_DATE:
-                dateMagnitudeRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
+                dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
                 ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
                 break;
             case MainActivity.SORT_BY_ASCENDING_MAGNITUDE:
-                dateMagnitudeRadioGroup.check(R.id.dialog_sort_by_magnitude_radio_button);
+                dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_magnitude_radio_button);
                 ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                 break;
             case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
-                dateMagnitudeRadioGroup.check(R.id.dialog_sort_by_magnitude_radio_button);
+                dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_magnitude_radio_button);
                 ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
+                break;
+            case MainActivity.SORT_BY_ASCENDING_DISTANCE:
+                if (isDistanceShown){
+                    dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_distance_radio_button);
+                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
+                } else {
+                    dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
+                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
+                }
+                break;
+            case MainActivity.SORT_BY_DESCENDING_DISTANCE:
+                if (isDistanceShown){
+                    dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_distance_radio_button);
+                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
+                } else {
+                    dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
+                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
+                }
                 break;
         }
 
 
         builder.setPositiveButton(getString(R.string.ok_text), (dialog, which) -> {
 
-            int dateMagnitudeValue, ascendingDescendingValue, sortByEntryValue;
+            int dateMagnitudeDistanceValue, ascendingDescendingValue, sortByEntryValue;
 
-            if (dateMagnitudeRadioGroup.getCheckedRadioButtonId() ==
-                    R.id.dialog_sort_by_date_radio_button) {
-                dateMagnitudeValue = 0;
-            } else {
-                dateMagnitudeValue = 2;
+            switch (dateMagnitudeDistanceRadioGroup.getCheckedRadioButtonId()) {
+                case R.id.dialog_sort_by_date_radio_button:
+                    dateMagnitudeDistanceValue = 0;
+                    break;
+                case R.id.dialog_sort_by_magnitude_radio_button:
+                    dateMagnitudeDistanceValue = 2;
+                    break;
+                case R.id.dialog_sort_by_distance_radio_button:
+                    dateMagnitudeDistanceValue = 4;
+                    break;
+                default:
+                    dateMagnitudeDistanceValue = -1;
             }
 
             if (ascendingDescendingRadioGroup.getCheckedRadioButtonId() ==
@@ -118,10 +157,10 @@ public class SortFavoritesDialogFragment extends DialogFragment {
                 ascendingDescendingValue = 1;
             }
 
-            sortByEntryValue = dateMagnitudeValue + ascendingDescendingValue;
+            sortByEntryValue = dateMagnitudeDistanceValue + ascendingDescendingValue;
 
             SortFavoritesDialogFragmentListener listener = (SortFavoritesDialogFragmentListener) getActivity();
-            Objects.requireNonNull(listener).onSortCriteriaSelected(sortByEntryValue);
+            Objects.requireNonNull(listener).onSortCriteriaSelected(sortByEntryValue, isDistanceShown);
             dismiss();
         });
 
@@ -144,7 +183,7 @@ public class SortFavoritesDialogFragment extends DialogFragment {
     }
 
 
-    private void setupRadioButton(RadioButton radioButton){
+    private void setupRadioButton(RadioButton radioButton) {
 
         int colorAccent = getResources().getColor(R.color.colorAccent);
         int colorPrimary = getResources().getColor(R.color.colorPrimary);

@@ -169,6 +169,7 @@
 
     <string name="search_preference_sort_by_date_text">Date</string>
     <string name="search_preference_sort_by_magnitude_text">Magnitude</string>
+    <string name="search_preference_sort_by_distance_text">Distance</string>
     <string name="search_preference_sort_by_ascending_text">Ascending</string>
     <string name="search_preference_sort_by_descending_text">Descending</string>
 
@@ -578,6 +579,12 @@
     </string>
     <string name="activity_favorites_sorted_by_descending_magnitude_text">
         descending magnitude
+    </string>
+    <string name="activity_favorites_sorted_by_ascending_distance_text">
+        ascending distance
+    </string>
+    <string name="activity_favorites_sorted_by_descending_distance_text">
+        descending distance
     </string>
 
     <string name="favorite_list_item_delete_icon_content_description">Delete icon</string>

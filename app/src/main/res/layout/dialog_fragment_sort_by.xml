@@ -8,35 +8,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/application_standard_margin"
-        android:layout_marginEnd="@dimen/application_standard_margin"
         android:layout_marginTop="@dimen/application_standard_margin"
-        android:paddingBottom="@dimen/application_tiny_padding"
-        android:orientation="vertical">
+        android:layout_marginEnd="@dimen/application_standard_margin"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/application_tiny_padding">
 
         <RadioGroup
-            android:id="@+id/dialog_sort_by_ascending_descending_radio_group"
+            android:id="@+id/dialog_sort_by_date_magnitude_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/application_standard_margin"
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/dialog_sort_by_ascending_radio_button"
+                android:id="@+id/dialog_sort_by_date_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/application_standard_margin"
                 android:paddingStart="@dimen/application_standard_padding"
                 android:paddingEnd="@dimen/application_standard_padding"
-                android:text="@string/search_preference_sort_by_ascending_text"
+                android:text="@string/search_preference_sort_by_date_text"
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <RadioButton
-                android:id="@+id/dialog_sort_by_descending_radio_button"
+                android:id="@+id/dialog_sort_by_magnitude_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/application_small_margin"
                 android:paddingStart="@dimen/application_standard_padding"
                 android:paddingEnd="@dimen/application_standard_padding"
-                android:text="@string/search_preference_sort_by_descending_text"
+                android:text="@string/search_preference_sort_by_magnitude_text"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <RadioButton
+                android:id="@+id/dialog_sort_by_distance_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/application_small_margin"
+                android:paddingStart="@dimen/application_standard_padding"
+                android:paddingEnd="@dimen/application_standard_padding"
+                android:text="@string/search_preference_sort_by_distance_text"
                 android:textAppearance="?android:textAppearanceMedium" />
 
         </RadioGroup>
@@ -48,29 +58,29 @@
             android:background="@android:color/darker_gray" />
 
         <RadioGroup
-            android:id="@+id/dialog_sort_by_date_magnitude_radio_group"
+            android:id="@+id/dialog_sort_by_ascending_descending_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/application_standard_margin"
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/dialog_sort_by_date_radio_button"
+                android:id="@+id/dialog_sort_by_ascending_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/application_standard_margin"
                 android:paddingStart="@dimen/application_standard_padding"
                 android:paddingEnd="@dimen/application_standard_padding"
-                android:text="@string/search_preference_sort_by_date_text"
+                android:text="@string/search_preference_sort_by_ascending_text"
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <RadioButton
-                android:id="@+id/dialog_sort_by_magnitude_radio_button"
+                android:id="@+id/dialog_sort_by_descending_radio_button"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/application_small_margin"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/application_standard_padding"
                 android:paddingEnd="@dimen/application_standard_padding"
-                android:text="@string/search_preference_sort_by_magnitude_text"
+                android:text="@string/search_preference_sort_by_descending_text"
                 android:textAppearance="?android:textAppearanceMedium" />
 
         </RadioGroup>

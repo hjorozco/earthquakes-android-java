@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public static final int SORT_BY_DESCENDING_DATE = 1;
     public static final int SORT_BY_ASCENDING_MAGNITUDE = 2;
     public static final int SORT_BY_DESCENDING_MAGNITUDE = 3;
+    public static final int SORT_BY_ASCENDING_DISTANCE = 4;
+    public static final int SORT_BY_DESCENDING_DISTANCE = 5;
 
     private EarthquakesListAdapter mEarthquakesListAdapter;
     private RecyclerView mRecyclerView;

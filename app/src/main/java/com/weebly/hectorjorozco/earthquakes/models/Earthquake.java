@@ -156,6 +156,12 @@ public class Earthquake implements Parcelable {
     public static final Comparator<Earthquake> descendingMagnitudeComparator = (earthquake1, earthquake2)
             -> -Double.compare(earthquake1.getMagnitude(), earthquake2.getMagnitude());
 
+    public static final Comparator<Earthquake> ascendingDistanceComparator = (earthquake1, earthquake2)
+            -> Float.compare(earthquake1.getDistance(), earthquake2.getDistance());
+
+    public static final Comparator<Earthquake> descendingDistanceComparator = (earthquake1, earthquake2)
+            -> -Float.compare(earthquake1.getDistance(), earthquake2.getDistance());
+
 
     @Override
     public int describeContents() {

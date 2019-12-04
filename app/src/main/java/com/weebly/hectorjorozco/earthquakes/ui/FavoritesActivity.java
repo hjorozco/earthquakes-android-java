@@ -274,7 +274,7 @@ public class FavoritesActivity extends AppCompatActivity implements
 
             mNumberOfFavoritesOnList = 0;
 
-            // If the list of favorite earthquakes was empty before loading from the db
+            // If the list of favorite earthquakes was empty before loading from the db or its size is 0
             if (favorites == null || favorites.size() == 0) {
                 setMessageVisible(true);
                 mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);
@@ -282,7 +282,10 @@ public class FavoritesActivity extends AppCompatActivity implements
                 // If one or more earthquakes were found
                 mNumberOfFavoritesOnList = favorites.size();
                 setMessageVisible(false);
-                mAdapter.setFavoritesListData(SortFavoritesUtils.SortFavorites(this, favorites));
+                boolean isDistanceShown = QueryUtils.getShowDistanceSearchPreference(this) &&
+                        QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                        QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
+                mAdapter.setFavoritesListData(SortFavoritesUtils.SortFavorites(this, favorites, isDistanceShown));
             }
 
             if (mMenu != null) {
@@ -577,7 +580,7 @@ public class FavoritesActivity extends AppCompatActivity implements
      *                             3=Descending Magnitude
      */
     @Override
-    public void onSortCriteriaSelected(int sortCriteriaSelected) {
+    public void onSortCriteriaSelected(int sortCriteriaSelected, boolean isDistanceShown) {
 
         String sortedByMessage = "";
         int sortByMenuItemIcon = 0;
@@ -599,14 +602,21 @@ public class FavoritesActivity extends AppCompatActivity implements
                 sortedByMessage = getString(R.string.activity_favorites_sorted_by_descending_magnitude_text);
                 sortByMenuItemIcon = R.drawable.ic_sort_descending_white_24dp;
                 break;
+            case MainActivity.SORT_BY_ASCENDING_DISTANCE:
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_ascending_distance_text);
+                sortByMenuItemIcon = R.drawable.ic_sort_ascending_white_24dp;
+                break;
+            case MainActivity.SORT_BY_DESCENDING_DISTANCE:
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_descending_distance_text);
+                sortByMenuItemIcon = R.drawable.ic_sort_descending_white_24dp;
+                break;
         }
 
         // If the sorting criteria is different from the previous one
         if (SortFavoritesUtils.setFavoritesSortCriteriaOnSharedPreferences(this, sortCriteriaSelected)) {
             List<Earthquake> favorites = mAdapter.getFavoritesListData();
             if (favorites != null) {
-                mAdapter.setFavoritesListData(SortFavoritesUtils.SortFavorites(this, favorites));
-
+                mAdapter.setFavoritesListData(SortFavoritesUtils.SortFavorites(this, favorites, isDistanceShown));
             }
             mMenu.findItem(R.id.menu_activity_favorites_action_sort).setIcon(sortByMenuItemIcon);
             mMessageTextView.setText(R.string.activity_favorites_no_favorites_message);

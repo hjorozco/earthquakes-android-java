@@ -84,7 +84,7 @@ public class SortByDialogPreference extends DialogPreference {
     // Set the layout resource for the DialogPreference
     @Override
     public int getDialogLayoutResource() {
-        return R.layout.dialog_sort_by;
+        return R.layout.dialog_preference_sort_by;
     }
 
 }

@@ -123,6 +123,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             EarthquakeViewHolder earthquakeViewHolder = (EarthquakeViewHolder) holder;
             TextView distanceTextView;
 
+            // If "Show distance from you" search preference is not checked, or there is not a location
+            // saved, hide the distance TextView
             if (!mIsDistanceShown ||
                     QueryUtils.sLastKnownLocationLatitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||
                     QueryUtils.sLastKnownLocationLongitude == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {

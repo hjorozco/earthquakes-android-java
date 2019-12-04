@@ -56,7 +56,7 @@ public class SortFavoritesUtils {
      * @param favorites The list of students to be ordered
      * @return an ordered list of students
      */
-    public static List<Earthquake> SortFavorites(Context context, List<Earthquake> favorites) {
+    public static List<Earthquake> SortFavorites(Context context, List<Earthquake> favorites, boolean isDistanceShown) {
 
         switch (getSortByValueFromSharedPreferences(context)) {
             case MainActivity.SORT_BY_ASCENDING_DATE:
@@ -72,6 +72,28 @@ public class SortFavoritesUtils {
             case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
                 Collections.sort(favorites, Earthquake.descendingDateComparator);
                 Collections.sort(favorites, Earthquake.descendingMagnitudeComparator);
+                break;
+            case MainActivity.SORT_BY_ASCENDING_DISTANCE:
+                if (isDistanceShown){
+                    List <Earthquake> favoritesWithDistance = QueryUtils.addDistanceToAllEarthquakes(favorites);
+                    Collections.sort(favoritesWithDistance, Earthquake.ascendingDateComparator);
+                    Collections.sort(favoritesWithDistance, Earthquake.ascendingDistanceComparator);
+                    favorites = favoritesWithDistance;
+                } else {
+                    Collections.sort(favorites, Earthquake.ascendingDateComparator);
+                    setFavoritesSortCriteriaOnSharedPreferences(context, MainActivity.SORT_BY_ASCENDING_DATE);
+                }
+                break;
+            case MainActivity.SORT_BY_DESCENDING_DISTANCE:
+                if (isDistanceShown){
+                    List <Earthquake> favoritesWithDistance = QueryUtils.addDistanceToAllEarthquakes(favorites);
+                    Collections.sort(favoritesWithDistance, Earthquake.descendingDateComparator);
+                    Collections.sort(favoritesWithDistance, Earthquake.descendingDistanceComparator);
+                    favorites = favoritesWithDistance;
+                } else {
+                    Collections.sort(favorites, Earthquake.descendingDateComparator);
+                    setFavoritesSortCriteriaOnSharedPreferences(context, MainActivity.SORT_BY_DESCENDING_DATE);
+                }
                 break;
             default:
                 break;
@@ -95,6 +117,12 @@ public class SortFavoritesUtils {
                 break;
             case MainActivity.SORT_BY_DESCENDING_MAGNITUDE:
                 sortByValueString = context.getString(R.string.activity_favorites_sorted_by_descending_magnitude_text);
+                break;
+            case MainActivity.SORT_BY_ASCENDING_DISTANCE:
+                sortByValueString = context.getString(R.string.activity_favorites_sorted_by_ascending_distance_text);
+                break;
+            case MainActivity.SORT_BY_DESCENDING_DISTANCE:
+                sortByValueString = context.getString(R.string.activity_favorites_sorted_by_descending_distance_text);
                 break;
         }
         return sortByValueString;
