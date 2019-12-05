@@ -19,7 +19,7 @@
             android:padding="@dimen/application_standard_padding"
             android:text="@string/activity_earthquakes_map_no_earthquakes_data_message"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/application_standard_text_size"
+            android:textAppearance="?android:textAppearanceMedium"
             android:visibility="gone" />
 
         <FrameLayout

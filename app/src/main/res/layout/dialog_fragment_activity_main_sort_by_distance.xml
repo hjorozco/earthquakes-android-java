@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/dialog_sort_by_distance_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/application_standard_margin"
+            android:paddingBottom="@dimen/application_tiny_padding"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/dialog_sort_by_ascending_distance_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/application_standard_padding"
+                android:paddingEnd="@dimen/application_standard_padding"
+                android:text="@string/search_preference_sort_by_ascending_text"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <RadioButton
+                android:id="@+id/dialog_sort_by_descending_distance_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/application_small_margin"
+                android:paddingStart="@dimen/application_standard_padding"
+                android:paddingEnd="@dimen/application_standard_padding"
+                android:text="@string/search_preference_sort_by_descending_text"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+        </RadioGroup>
+
+</androidx.core.widget.NestedScrollView>

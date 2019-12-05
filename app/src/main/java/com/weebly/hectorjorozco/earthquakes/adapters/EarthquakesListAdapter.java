@@ -193,6 +193,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
+    // TODO Set parameter indicating if updated earthquakes are sort by distance and display that
+    // info in title.
     public void setEarthquakesListData(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
         mIsDistanceShown = QueryUtils.getShowDistanceSearchPreference(mContext);
@@ -200,6 +202,10 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         QueryUtils.sLastKnownLocationLatitude = location.getLatitude();
         QueryUtils.sLastKnownLocationLongitude = location.getLongitude();
         notifyDataSetChanged();
+    }
+
+    public List<Earthquake> getEarthquakesListData(){
+        return mEarthquakes;
     }
 
 

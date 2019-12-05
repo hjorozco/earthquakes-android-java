@@ -41,6 +41,7 @@
     <string name="menu_activity_main_action_stop_title">Detener la actualización</string>
     <string name="menu_activity_main_action_search_preferences_title">
         Preferencias de búsqueda</string>
+    <string name="menu_activity_main_action_sort_by_distance_title">Ordenar por distancia</string>
     <string name="menu_activity_main_action_list_information_title">Información de la lista</string>
     <string name="menu_activity_main_action_help_title">Ayuda</string>
     <string name="menu_activity_main_action_about_title">Acerca de</string>

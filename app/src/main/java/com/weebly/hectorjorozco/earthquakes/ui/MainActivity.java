@@ -17,6 +17,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -43,6 +44,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.adapters.EarthquakesListAdapter;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.SortEarthquakesDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.ui.recyclerviewfastscroller.RecyclerViewFastScrollerViewProvider;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
@@ -51,6 +53,7 @@ import com.weebly.hectorjorozco.earthquakes.viewmodels.MainActivityViewModel;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -58,7 +61,8 @@ import java.util.Map;
 import static android.view.View.GONE;
 
 
-public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener, QueryUtils.LocationUpdateListener {
+public class MainActivity extends AppCompatActivity implements EarthquakesListAdapter.EarthquakesListClickListener,
+        QueryUtils.LocationUpdateListener, SortEarthquakesDialogFragment.SortEarthquakesDialogFragmentListener {
 
     public static final int MAX_NUMBER_OF_EARTHQUAKES_LIMIT = 20000;
     public static final int UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING = 50;
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     public static final int SORT_BY_ASCENDING_DISTANCE = 4;
     public static final int SORT_BY_DESCENDING_DISTANCE = 5;
 
-    private EarthquakesListAdapter mEarthquakesListAdapter;
+    private EarthquakesListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainActivityViewModel mMainActivityViewModel;
     private TextView mMessageTextView;
@@ -91,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private BottomNavigationView mBottomNavigationView;
     private Snackbar mSnackbar;
     private FloatingActionButton mFab;
+    private List<Earthquake> mEarthquakes;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
@@ -122,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        mEarthquakesListAdapter = new EarthquakesListAdapter(this, this);
+        mAdapter = new EarthquakesListAdapter(this, this);
         mMessageImageView = findViewById(R.id.activity_main_message_image_view);
         mMessageTextView = findViewById(R.id.activity_main_message_text_view);
         mProgressBar = findViewById(R.id.activity_main_progress_bar);
@@ -190,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         mRecyclerView = findViewById(R.id.activity_main_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mEarthquakesListAdapter);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
@@ -257,9 +262,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 earthquakes.get(earthquakes.size() - 1));
                     }
 
-                    mEarthquakesListAdapter.setLocation(QueryUtils.sEarthquakesListInformationValues.getLocation());
-                    mEarthquakesListAdapter.setMaxDistance(QueryUtils.sEarthquakesListInformationValues.getMaxDistance());
-                    mEarthquakesListAdapter.setEarthquakesListData(earthquakes);
+                    mAdapter.setLocation(QueryUtils.sEarthquakesListInformationValues.getLocation());
+                    mAdapter.setMaxDistance(QueryUtils.sEarthquakesListInformationValues.getMaxDistance());
+                    mAdapter.setEarthquakesListData(earthquakes);
 
                     // If the search has finished and no previous snack has been shown
                     if (!QueryUtils.sSearchingForEarthquakes && QueryUtils.sLoadEarthquakesResultCode != QueryUtils.NO_ACTION
@@ -449,6 +454,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 startActivity(new Intent(this, SearchPreferencesActivity.class));
                 overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
                 break;
+            case R.id.menu_activity_main_action_sort_by_distance:
+                showSortEarthquakesDialogFragment();
+                break;
             case R.id.menu_activity_main_action_glossary:
                 startActivity(new Intent(this, GlossaryActivity.class));
                 overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
@@ -478,6 +486,22 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         }
     }
 
+    // TODO Disable sort by distance menu item when no earthquakes on list or distance not shown
+    private void enableSortByDistanceMenuItem(boolean enable) {
+        mMenu.findItem(R.id.menu_activity_main_action_sort_by_distance).setEnabled(enable);
+    }
+
+
+    // Helper method that show a DialogFragment that lets the user select how to sort favorites
+    private void showSortEarthquakesDialogFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SortEarthquakesDialogFragment sortEarthquakesDialogFragment =
+                SortEarthquakesDialogFragment.newInstance(
+                        getString(R.string.menu_activity_main_action_sort_by_distance_title));
+
+        sortEarthquakesDialogFragment.show(fragmentManager,
+                getString(R.string.activity_main_sort_by_distance_dialog_fragment_tag));
+    }
 
     private void removeRunnableFromHandler() {
         // Removes the runnable that shows a snack bar when a long time searching has passed.
@@ -659,7 +683,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 getResources().getDimensionPixelSize(R.dimen.activity_main_fab_size);
 
                         // If the ViewHolder text is covered by the FAB , hide it on click.
-                        if (fabTopPosition>viewTopPosition && fabBottomPosition < viewBottomPosition) {
+                        if (fabTopPosition > viewTopPosition && fabBottomPosition < viewBottomPosition) {
                             mFab.hide();
                         }
 
@@ -668,7 +692,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                             if (mSnackbar.isShown()) {
                                 float snackbarTopPosition = mSnackbar.getView().getY();
                                 float snackbarBottomPosition = snackbarTopPosition + mSnackbar.getView().getHeight();
-                                if (snackbarBottomPosition>viewTopPosition && snackbarTopPosition < viewBottomPosition) {
+                                if (snackbarBottomPosition > viewTopPosition && snackbarTopPosition < viewBottomPosition) {
                                     mSnackbar.dismiss();
                                 }
                             }
@@ -773,4 +797,37 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 location.getLongitude() != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
     }
 
+
+    // Implementation of SortEarthquakesDialogFragment.SortEarthquakesDialogFragmentListener interface
+    @Override
+    public void onSortCriteriaSelected(boolean sortByAscendingDistance) {
+
+        String sortedByMessage = "";
+
+        List<Earthquake> earthquakes = mAdapter.getEarthquakesListData();
+        if (earthquakes != null) {
+            List<Earthquake> earthquakesWithDistance = QueryUtils.addDistanceToAllEarthquakes(earthquakes);
+            if (sortByAscendingDistance) {
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_ascending_distance_text);
+                Collections.sort(earthquakesWithDistance, Earthquake.ascendingDateComparator);
+                Collections.sort(earthquakesWithDistance, Earthquake.ascendingDistanceComparator);
+                earthquakes = earthquakesWithDistance;
+            } else {
+                sortedByMessage = getString(R.string.activity_favorites_sorted_by_descending_distance_text);
+                Collections.sort(earthquakesWithDistance, Earthquake.descendingDateComparator);
+                Collections.sort(earthquakesWithDistance, Earthquake.descendingDistanceComparator);
+                earthquakes = earthquakesWithDistance;
+            }
+            mAdapter.setEarthquakesListData(earthquakes);
+        }
+
+        // If some earthquakes were sorted show a snackbar message
+        if (mNumberOfEarthquakesOnList > 1) {
+            mSnackbar = Snackbar.make(mSnackbarLayout,
+                    getString(R.string.activity_favorites_sorted_by_snack_text, sortedByMessage),
+                    Snackbar.LENGTH_LONG);
+            mSnackbar.show();
+        }
+
+    }
 }

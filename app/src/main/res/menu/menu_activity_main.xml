@@ -15,6 +15,10 @@
         android:title="@string/menu_activity_main_action_search_preferences_title"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menu_activity_main_action_sort_by_distance"
+        android:title="@string/menu_activity_main_action_sort_by_distance_title"
+        app:showAsAction="never" />
 
     <group android:id="@+id/menu_activity_main_help_group">
         <item

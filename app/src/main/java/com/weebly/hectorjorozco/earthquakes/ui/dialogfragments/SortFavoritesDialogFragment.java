@@ -66,7 +66,7 @@ public class SortFavoritesDialogFragment extends DialogFragment {
                 colorPrimaryDarkString, title)));
 
         @SuppressLint("InflateParams") View view =
-                LayoutInflater.from(getContext()).inflate(R.layout.dialog_fragment_sort_by, null);
+                LayoutInflater.from(getContext()).inflate(R.layout.dialog_fragment_activity_favorites_sort_by, null);
         builder.setView(view);
 
         RadioGroup dateMagnitudeDistanceRadioGroup =
