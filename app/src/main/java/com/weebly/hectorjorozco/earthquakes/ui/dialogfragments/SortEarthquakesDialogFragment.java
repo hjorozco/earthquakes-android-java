@@ -70,7 +70,7 @@ public class SortEarthquakesDialogFragment extends DialogFragment {
                 view.findViewById(R.id.dialog_sort_by_distance_radio_group);
 
         setupRadioButton(view.findViewById(R.id.dialog_sort_by_ascending_distance_radio_button));
-        setupRadioButton(view.findViewById(R.id.dialog_sort_by_ascending_distance_radio_button));
+        setupRadioButton(view.findViewById(R.id.dialog_sort_by_descending_distance_radio_button));
 
         sortByDistanceRadioGroup.check(R.id.dialog_sort_by_ascending_distance_radio_button);
 

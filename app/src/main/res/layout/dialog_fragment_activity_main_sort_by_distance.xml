@@ -8,8 +8,9 @@
             android:id="@+id/dialog_sort_by_distance_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/application_standard_margin"
-            android:paddingBottom="@dimen/application_tiny_padding"
+            android:layout_marginTop="@dimen/application_standard_margin"
+            android:layout_marginStart="@dimen/application_standard_margin"
+            android:layout_marginEnd="@dimen/application_standard_margin"
             android:orientation="vertical">
 
             <RadioButton

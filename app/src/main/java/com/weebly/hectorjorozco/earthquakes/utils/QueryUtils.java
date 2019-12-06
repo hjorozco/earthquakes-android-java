@@ -93,6 +93,8 @@ public class QueryUtils {
     public static double sLastKnownLocationLatitude;
     public static double sLastKnownLocationLongitude;
 
+    public static String sEarthquakesListSortedByDistanceText = "";
+
 
     public interface LocationUpdateListener {
         void onLocationUpdate(boolean locationUpdated);
@@ -846,10 +848,10 @@ public class QueryUtils {
     }
 
 
-    public static List<Earthquake> addDistanceToAllEarthquakes(List<Earthquake> earthquakes){
-        for (int i=0; i<earthquakes.size(); i++){
+    public static List<Earthquake> addDistanceToAllEarthquakes(List<Earthquake> earthquakes) {
+        for (int i = 0; i < earthquakes.size(); i++) {
             Earthquake earthquake = earthquakes.get(i);
-            if (earthquake.getDistance()==DISTANCE_NULL_VALUE){
+            if (earthquake.getDistance() == DISTANCE_NULL_VALUE) {
                 float[] result = new float[1];
                 Location.distanceBetween(sLastKnownLocationLatitude, sLastKnownLocationLongitude,
                         earthquake.getLatitude(), earthquake.getLongitude(), result);
@@ -857,6 +859,15 @@ public class QueryUtils {
             }
         }
         return earthquakes;
+    }
+
+
+    // Returns true if the "show distance from you" search preference is enabled and there is a last
+    // known location available.
+    public static boolean isDistanceShown(Context context) {
+        return (QueryUtils.getShowDistanceSearchPreference(context) &&
+                QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
+                QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE);
     }
 
 }

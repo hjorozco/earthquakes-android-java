@@ -114,6 +114,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 title = mContext.getString(R.string.earthquakes_list_title_for_multiple_earthquakes,
                         String.format(Locale.getDefault(), "%,d", mEarthquakes.size()), pluralEnding, foundWordSuffix, mLocation, distance, sortedBy);
+                title = title + " " + QueryUtils.sEarthquakesListSortedByDistanceText;
             }
 
             titleViewHolder.titleTextView.setText(title);
@@ -193,8 +194,6 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
-    // TODO Set parameter indicating if updated earthquakes are sort by distance and display that
-    // info in title.
     public void setEarthquakesListData(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
         mIsDistanceShown = QueryUtils.getShowDistanceSearchPreference(mContext);

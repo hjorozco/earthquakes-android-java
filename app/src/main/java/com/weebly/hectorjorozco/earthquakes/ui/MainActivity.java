@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private Snackbar mSnackbar;
     private FloatingActionButton mFab;
     private List<Earthquake> mEarthquakes;
+    private MenuItem mSortByDistanceMenuItem;
 
     // Used to show a snack bar after a long search time.
     private Handler mHandler;
@@ -145,8 +146,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         setupBottomNavigationView();
 
         setupRecyclerView();
-
-        setupViewModel();
 
         saveSharedElementsTransitions();
     }
@@ -266,6 +265,16 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     mAdapter.setMaxDistance(QueryUtils.sEarthquakesListInformationValues.getMaxDistance());
                     mAdapter.setEarthquakesListData(earthquakes);
 
+                    // After the adapter is updated with one or more earthquakes
+                    if (mSortByDistanceMenuItem != null) {
+                        // If the distance is shown enable sort by distance menu item if not disable it
+                        if (QueryUtils.isDistanceShown(this)) {
+                            mSortByDistanceMenuItem.setEnabled(true);
+                        } else {
+                            mSortByDistanceMenuItem.setEnabled(false);
+                        }
+                    }
+
                     // If the search has finished and no previous snack has been shown
                     if (!QueryUtils.sSearchingForEarthquakes && QueryUtils.sLoadEarthquakesResultCode != QueryUtils.NO_ACTION
                             && !QueryUtils.sListWillBeLoadedAfterEmpty) {
@@ -275,6 +284,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                         mSnackbar.setAction(getString(R.string.ok_text), v -> mSnackbar.dismiss());
                         mSnackbar.show();
 
+                        // If the earthquakes list was updated from a Retrofit Query then remove sorted by distance message
+                        if (QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_RESULT_NON_NULL) {
+                            QueryUtils.sEarthquakesListSortedByDistanceText = "";
+                        }
                     }
 
                     // Flag used when activity is recreated to indicate that no action is tacking place
@@ -434,6 +447,17 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         MenuCompat.setGroupDividerEnabled(menu, true);
         mMenu = menu;
+        mSortByDistanceMenuItem = mMenu.findItem(R.id.menu_activity_main_action_sort_by_distance);
+
+        if (mAdapter.getEarthquakesListData() != null) {
+            if (mAdapter.getEarthquakesListData().size() > 0) {
+                if (QueryUtils.isDistanceShown(this)) {
+                    mSortByDistanceMenuItem.setEnabled(true);
+                } else {
+                    mSortByDistanceMenuItem.setEnabled(false);
+                }
+            }
+        }
 
         if (!QueryUtils.sSearchingForEarthquakes) {
             setupRefreshMenuItem(true);
@@ -486,7 +510,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         }
     }
 
-    // TODO Disable sort by distance menu item when no earthquakes on list or distance not shown
+
     private void enableSortByDistanceMenuItem(boolean enable) {
         mMenu.findItem(R.id.menu_activity_main_action_sort_by_distance).setEnabled(enable);
     }
@@ -721,6 +745,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     protected void onResume() {
         super.onResume();
 
+        setupViewModel();
+
         if (QueryUtils.getSoundSearchPreference(this) && QueryUtils.sIsPlayingSound) {
             playEarthquakeSound();
         }
@@ -818,16 +844,14 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 Collections.sort(earthquakesWithDistance, Earthquake.descendingDistanceComparator);
                 earthquakes = earthquakesWithDistance;
             }
+            QueryUtils.sEarthquakesListSortedByDistanceText =
+                    getString(R.string.activity_main_list_title_sorted_by_distance_text, sortedByMessage);
             mAdapter.setEarthquakesListData(earthquakes);
         }
 
-        // If some earthquakes were sorted show a snackbar message
-        if (mNumberOfEarthquakesOnList > 1) {
-            mSnackbar = Snackbar.make(mSnackbarLayout,
-                    getString(R.string.activity_favorites_sorted_by_snack_text, sortedByMessage),
-                    Snackbar.LENGTH_LONG);
-            mSnackbar.show();
-        }
-
+        mSnackbar = Snackbar.make(mSnackbarLayout,
+                getString(R.string.activity_main_sorted_by_distance_snack_text, sortedByMessage),
+                Snackbar.LENGTH_LONG);
+        mSnackbar.show();
     }
 }

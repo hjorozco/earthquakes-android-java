@@ -63,7 +63,7 @@
     <string name="menu_activity_main_action_refresh_title">Update list</string>
     <string name="menu_activity_main_action_stop_title">Stop update</string>
     <string name="menu_activity_main_action_search_preferences_title">Search preferences</string>
-    <string name="menu_activity_main_action_sort_by_distance_title">Sort by distance</string>
+    <string name="menu_activity_main_action_sort_by_distance_title">Re-sort by distance</string>
     <string name="menu_activity_main_action_list_information_title">List information</string>
     <string name="menu_activity_main_action_help_title">Help</string>
     <string name="menu_activity_main_action_about_title">About</string>
@@ -139,6 +139,9 @@
     <string name="activity_main_sort_by_distance_dialog_fragment_tag" translatable="false">
         activity_main_sort_by_distance_dialog_fragment_tag
     </string>
+
+    <string name="activity_main_sorted_by_distance_snack_text">Earthquakes re-sorted by %1$s</string>
+    <string name="activity_main_list_title_sorted_by_distance_text">Then re-sorted by %1$s.</string>
 
     <!-- ********** Activity main ********** -->
 
