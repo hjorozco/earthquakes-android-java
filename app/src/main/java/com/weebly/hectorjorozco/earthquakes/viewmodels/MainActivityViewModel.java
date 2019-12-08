@@ -68,6 +68,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                                     setLoadEarthquakesResult(mEarthquakes.getValue(), QueryUtils.NO_EARTHQUAKES_FOUND);
                                 } else {
                                     setLoadEarthquakesResult(earthquakeList, QueryUtils.SEARCH_RESULT_NON_NULL);
+                                    QueryUtils.sEarthquakesLoadedObservable.notifyEarthquakesMapActivity();
                                 }
 
                             } else {

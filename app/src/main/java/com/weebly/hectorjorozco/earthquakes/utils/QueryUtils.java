@@ -95,6 +95,8 @@ public class QueryUtils {
 
     public static String sEarthquakesListSortedByDistanceText = "";
 
+    public static final EarthquakesLoadedObservable sEarthquakesLoadedObservable = new EarthquakesLoadedObservable();
+
 
     public interface LocationUpdateListener {
         void onLocationUpdate(boolean locationUpdated);
@@ -494,16 +496,34 @@ public class QueryUtils {
             // If there is more than one earthquake on the list, set the strings values to plural
             earthquakesWord = context.getString(R.string.earthquakes_text_plural);
             sortedBySuffix = context.getString(R.string.earthquakes_list_title_found_and_sorted_words_suffix);
+
+            // If the message is for the list
             if (forCurrentList) {
-                if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value)) ||
-                        orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
-                    firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
-                            context.getString(R.string.magnitude_text), values.getFirstEarthquakeMag(), values.getLastEarthquakeMag());
+                String firstAndLastEarthquakeOrder, firstEarthquakeValue, lastEarthquakeValue;
+
+                if (QueryUtils.sEarthquakesListSortedByDistanceText.isEmpty()) {
+                    if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value)) ||
+                            orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
+                        firstAndLastEarthquakeOrder = context.getString(R.string.magnitude_text);
+                        firstEarthquakeValue = values.getFirstEarthquakeMag();
+                        lastEarthquakeValue = values.getLastEarthquakeMag();
+
+                    } else {
+                        firstAndLastEarthquakeOrder = context.getString(R.string.date_text);
+                        firstEarthquakeValue = values.getFirstEarthquakeDate();
+                        lastEarthquakeValue = values.getLastEarthquakeDate();
+                    }
                 } else {
-                    firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
-                            context.getString(R.string.date_text), values.getFirstEarthquakeDate(), values.getLastEarthquakeDate());
+                    firstAndLastEarthquakeOrder = context.getString(R.string.distance_text);
+                    firstEarthquakeValue = values.getFirstEarthquakeDistance();
+                    lastEarthquakeValue = values.getLastEarthquakeDistance();
+
                 }
+                firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
+                        firstAndLastEarthquakeOrder, firstEarthquakeValue, lastEarthquakeValue);
             } else {
+
+                // If the message is for the map
                 if (QueryUtils.sMoreThanMaximumNumberOfEarthquakesForMap) {
                     numberOfEarthquakes = String.format(Locale.getDefault(), "%,d", MAX_NUMBER_OF_EARTHQUAKES_FOR_MAP);
                     firstAndLastEarthquakesInfoMessage = context.getString(R.string.activity_earthquakes_map_info_alert_dialog_message_bottom_section,
@@ -556,23 +576,31 @@ public class QueryUtils {
         minMagnitude = values.getMinMagnitude();
         maxMagnitude = values.getMaxMagnitude();
 
-        sortedBy = "";
-        if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
-            sortedBy = context.getString(R.string.search_preference_sort_by_ascending_date_entry);
-        } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_date_entry_value))) {
-            sortedBy = context.getString(R.string.search_preference_sort_by_descending_date_entry);
-        } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value))) {
-            sortedBy = context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry);
-        } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
-            sortedBy = context.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
-        }
-        sortedBy = WordsUtils.changeFirstLetterToLowercase(sortedBy);
-
         maxNumberOfEarthquakes = String.format(Locale.getDefault(), "%,d", Integer.valueOf(values.getLimit()));
 
         if (forCurrentList) {
+
+            sortedBy = "";
+            if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_date_entry_value))) {
+                sortedBy = context.getString(R.string.search_preference_sort_by_ascending_date_entry);
+            } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_date_entry_value))) {
+                sortedBy = context.getString(R.string.search_preference_sort_by_descending_date_entry);
+            } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry_value))) {
+                sortedBy = context.getString(R.string.search_preference_sort_by_ascending_magnitude_entry);
+            } else if (orderBy.equals(context.getString(R.string.search_preference_sort_by_descending_magnitude_entry_value))) {
+                sortedBy = context.getString(R.string.search_preference_sort_by_descending_magnitude_entry);
+            }
+            sortedBy = WordsUtils.changeFirstLetterToLowercase(sortedBy);
+
+            String reSortedBy = "";
+
+            if (!QueryUtils.sEarthquakesListSortedByDistanceText.isEmpty()) {
+                reSortedBy = " " + QueryUtils.sEarthquakesListSortedByDistanceText + ",";
+                reSortedBy = reSortedBy.toLowerCase();
+            }
+
             message = context.getString(R.string.current_list_alert_dialog_message_top_section, numberOfEarthquakes,
-                    earthquakesWord, location, distance, sortedBySuffix, sortedBy, maxNumberOfEarthquakes, dateRange,
+                    earthquakesWord, location, distance, sortedBySuffix, sortedBy, reSortedBy, maxNumberOfEarthquakes, dateRange,
                     startDate, endDate, minMagnitude,
                     maxMagnitude, firstAndLastEarthquakesInfoMessage);
         } else {
@@ -744,10 +772,8 @@ public class QueryUtils {
     }
 
 
-    private static String formatDistance(float distance) {
-        String distanceText = new DecimalFormat("0").format(distance / 1000);
-        distanceText = distanceText.replace(',', '.');
-        return distanceText;
+    public static String formatDistance(float distance) {
+        return String.format(Locale.getDefault(), "%,d",  Math.round(distance/1000));
     }
 
 

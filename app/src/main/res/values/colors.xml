@@ -20,10 +20,11 @@
 
     <color name="colorSwipeToDelete">@color/colorBackGroundActionMode</color>
     <color name="colorBackGroundActionMode">#D32F2F</color>             <!-- Red 700 -->
-    <color name="colorRowActivated">#EEEEEE</color>          <!-- Grey 200 -->
+    <color name="colorRowActivated">#EEEEEE</color>                     <!-- Grey 200 -->
 
     <color name="color_favorite_star">#FAAB1E</color>
 
+    <color name="colorLinks">#304FFE</color>                            <!-- Indigo A400 -->
 
     <!-- *************** MAGNITUDE COLORS AND BACKGROUNDS COLORS ********************** -->
     <!-- MAGNITUDE COLORS, used on the borders of the magnitude circle, and the earthquake

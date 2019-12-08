@@ -114,7 +114,9 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 title = mContext.getString(R.string.earthquakes_list_title_for_multiple_earthquakes,
                         String.format(Locale.getDefault(), "%,d", mEarthquakes.size()), pluralEnding, foundWordSuffix, mLocation, distance, sortedBy);
-                title = title + " " + QueryUtils.sEarthquakesListSortedByDistanceText;
+                if (!QueryUtils.sEarthquakesListSortedByDistanceText.isEmpty()) {
+                    title = title + " " + QueryUtils.sEarthquakesListSortedByDistanceText + ".";
+                }
             }
 
             titleViewHolder.titleTextView.setText(title);
@@ -203,7 +205,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         notifyDataSetChanged();
     }
 
-    public List<Earthquake> getEarthquakesListData(){
+    public List<Earthquake> getEarthquakesListData() {
         return mEarthquakes;
     }
 

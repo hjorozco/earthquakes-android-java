@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,7 +26,8 @@ public class MessageDialogFragment extends DialogFragment {
     private static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_NOT_DEFINED = -1;
     public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_REPORT_BUTTON = 0;
     public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_LOCATION_PERMISSION_REQUEST = 1;
-    public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER = 2;
+    public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_HELP_ABOUT_MESSAGE = 2;
+    public static final byte MESSAGE_DIALOG_FRAGMENT_CALLER_OTHER = 3;
 
 
     public interface MessageDialogFragmentListener {
@@ -96,6 +99,15 @@ public class MessageDialogFragment extends DialogFragment {
         Button button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         button.setTextColor(colorAccent);
         UiUtils.setupAlertDialogButtonBackground(getContext(), button);
+
+        // If the message is for About information, make the links in text activated
+        if (caller== MESSAGE_DIALOG_FRAGMENT_CALLER_HELP_ABOUT_MESSAGE) {
+            TextView textView = Objects.requireNonNull(alertDialog.getWindow()).getDecorView()
+                    .findViewById(android.R.id.message);
+            textView.setClickable(true);
+            textView.setLinkTextColor(getResources().getColor(R.color.colorLinks));
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
 
         return alertDialog;
     }

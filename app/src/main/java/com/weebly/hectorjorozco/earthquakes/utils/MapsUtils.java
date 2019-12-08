@@ -24,9 +24,9 @@ public class MapsUtils {
         return magnitude + " - " + earthquake.getLocationOffset() + " " + locationPrimary;
     }
 
-    public static String constructEarthquakeSnippetForMarker(long earthquakeTimeInMilliseconds) {
+    public static String constructEarthquakeSnippetForMarker(long earthquakeTimeInMilliseconds, String distanceText) {
         Date dateObject = new Date(earthquakeTimeInMilliseconds);
-        return WordsUtils.formatDate(dateObject) + " " + WordsUtils.formatTime(dateObject);
+        return WordsUtils.formatDate(dateObject) + " " + WordsUtils.formatTime(dateObject) + distanceText;
     }
 
     /**

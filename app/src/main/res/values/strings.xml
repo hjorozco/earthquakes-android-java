@@ -37,7 +37,7 @@
 
     <!-- ********** ACTIVITY MAIN ********** -->
 
-    <string name="activity_main_label">Earthquakes list</string>
+    <string name="activity_main_label">Earthquakes</string>
 
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
@@ -85,7 +85,7 @@
 
     <string name="activity_main_distance_from_you_text">%1$s km from you</string>
 
-    <string name="menu_activity_main_bottom_navigation_view_action_list_title">List</string>
+    <string name="menu_activity_main_bottom_navigation_view_action_list_title">Earthquakes</string>
     <string name="menu_activity_main_bottom_navigation_view_action_map_title">Map</string>
     <string name="menu_activity_main_bottom_navigation_view_action_favorites_title">Favorites</string>
 
@@ -141,7 +141,52 @@
     </string>
 
     <string name="activity_main_sorted_by_distance_snack_text">Earthquakes re-sorted by %1$s</string>
-    <string name="activity_main_list_title_sorted_by_distance_text">Then re-sorted by %1$s.</string>
+    <string name="activity_main_list_title_sorted_by_distance_text">Then re-sorted by %1$s</string>
+
+    <string name="activity_main_help_dialog_fragment_text">
+        &lt;br/>With this app you can search for earthquakes that have been located by the
+        &lt;a href="https://www.usgs.gov/">USGS&lt;/a> (United States Geological Survey) and its contributing
+        agencies.&lt;br/>&lt;br/>
+        The USGS locates earthquakes worldwide of magnitude 5.0 and larger in 30 minutes or less. It
+        may not rapidly locate earthquakes smaller then 5.0 outside the United States unless they have
+        caused significant damage or are widely felt. Earthquakes occurring outside the US and smaller
+        than magnitude 4.5 can be difficult for the USGS to locate if there are not enough data.
+        &lt;br/>&lt;br/>The USGS locate earthquakes with magnitude 4.0 and larger within the contiguous US
+        and populated regions of Alaska within 30 minutes.&lt;br/>&lt;br/>
+        There are many regional networks around the world that can record smaller earthquakes in their
+        region than the USGS global network can, and in many cases these regional networks do not
+        share their data with the USGS. Check with your regional network for more comprehensive
+        earthquakes information.
+    </string>
+    <string name="activity_main_help_dialog_fragment_tag" translatable="false">
+        activity_main_help_dialog_fragment_tag</string>
+
+    <string name="activity_main_about_dialog_fragment_text">
+        &lt;br/>&lt;b>Earthquakes. Version 1.0&lt;/b>&lt;br/>&lt;br/>App designed and developed
+        by:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Hector J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
+        &lt;i>Information source.&lt;/i>&lt;br/>&lt;br/>Earthquakes information obtained from &lt;a href="https://www.usgs.gov/">
+        U.S. Geological Survey&lt;/a>.&lt;br/>&lt;br/>&lt;br/>
+        &lt;i>Privacy.&lt;/i>&lt;br/>&lt;br/>If you allow this app to access the device\'s location, the location will only be used to
+        calculate the earthquakes\' distance from you.&lt;br/>&lt;br/>&lt;br/>
+        &lt;i>Third party libraries.&lt;/i>&lt;br/>&lt;br/>
+        &lt;a href="https://square.github.io/retrofit/">Retrofit&lt;/a>
+        (a type-safe HTTP client for Android and Java). &lt;a href="https://square.github.io/retrofit/#license">
+        Copyright 2013 Square, Inc&lt;/a>.&lt;br/>&lt;br/>
+        &lt;a href="https://github.com/FutureMind/recycler-fast-scroll">Recycler Bubble&lt;/a>
+        (provides fast scroll and section indexer for recycler view). &lt;a href="http://www.apache.org/licenses/LICENSE-2.0">
+        Apache License, Version 2.0&lt;/a>.&lt;br/>&lt;br/>
+        &lt;a href="http://facebook.github.io/stetho/">Stetho&lt;/a> (debug bridge for Android applications).
+        &lt;a href="https://github.com/facebook/stetho/blob/master/LICENSE">MIT license&lt;/a>.&lt;br/>&lt;br/>&lt;br/>
+        &lt;i>Icons credits.&lt;/i>&lt;br/&gt;&lt;br/&gt;Licensed icons made by &lt;a href="https://www.freepik.com">Freepik&lt;/a>,
+        &lt;a href="https://www.flaticon.com/authors/prettycons">prettycons&lt;/a>,
+        &lt;a href="https://www.flaticon.com/authors/mynamepong">mynamepong&lt;/a>, and
+        &lt;a href="https://www.flaticon.com/authors/pixel-perfect">Pixel perfect&lt;/a> from
+        &lt;a href="https://www.flaticon.com">www.flaticon.com&lt;/a> licensed by
+        &lt;a href="http://creativecommons.org/licenses/by/3.0">Creative Commons BY 3.0&lt;/a>.
+    </string>
+    <string name="activity_main_about_dialog_fragment_tag" translatable="false">
+        activity_main_about_dialog_fragment_tag</string>
+
 
     <!-- ********** Activity main ********** -->
 
@@ -295,10 +340,10 @@
 
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
 
-    <string name="activity_earthquakes_map_label">Earthquakes map</string>
+    <string name="activity_earthquakes_map_label">Map</string>
     <string name="activity_earthquakes_map_no_earthquakes_data_message">
-        There are no earthquakes on the list.\n\nOnce earthquakes are found you will
-        be able to see their locations on this map.</string>
+        There are no earthquakes to show.\n\nCome back once there are earthquakes on the list to see
+        them on this map.</string>
 
     <string name="activity_earthquakes_map_info_alert_dialog_message_top_section">
         &lt;br/>Showing &lt;b>%1$s %2$s in %3$s%4$s,&lt;/b> for the next search preferences:
@@ -527,7 +572,7 @@
         Epicenter location on USGS website:</string>
     <string name="activity_earthquake_details_share_option_about_app_link_text">
         Information generated by the USGS (United States Geological Survey) and shared using
-        the Earthquakes app:</string>
+        the Earthquakes app.</string>
     <string name="activity_earthquake_details_share_option_google_map_link_text_1" translatable="false">
         http://maps.google.com/maps?q=</string>
     <string name="activity_earthquake_details_share_option_google_map_link_text_2" translatable="false">
@@ -817,21 +862,21 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_top_section">
-        &lt;br/>Showing &lt;b>%1$s %2$s in %3$s%4$s, sorted%5$s by %6$s,&lt;/b> for the next search preferences:
+        &lt;br/>Showing &lt;b>%1$s %2$s in %3$s%4$s, sorted%5$s by %6$s,%7$s&lt;/b> for the next search preferences:
         &lt;br/&gt;&lt;br/&gt;
-        &lt;i>Max number of earthquakes &lt;/i>%7$s&lt;br/&gt;
-        &lt;i>Date range &lt;/i>%8$s&lt;br/&gt;
-        %9$s to&lt;br/&gt;
-        %10$s&lt;br/&gt;
-        &lt;i>Magnitudes range &lt;/i>%11$s to %12$s
-        %13$s
+        &lt;i>Max number of earthquakes &lt;/i>%8$s&lt;br/&gt;
+        &lt;i>Date range &lt;/i>%9$s&lt;br/&gt;
+        %10$s to&lt;br/&gt;
+        %11$s&lt;br/&gt;
+        &lt;i>Magnitudes range &lt;/i>%12$s to %13$s
+        %14$s
     </string>
 
     <string name="current_list_alert_dialog_message_bottom_section">
         &lt;br/&gt;&lt;br/&gt;
-        &lt;i>%1$s of earthquake on top of the list:&lt;/i> &lt;br/&gt;
+        &lt;i>%1$s earthquake on top of the list:&lt;/i> &lt;br/&gt;
         %2$s &lt;br/&gt; &lt;br/&gt;
-        &lt;i>%1$s of earthquake at the bottom of the list:&lt;/i> &lt;br/&gt;
+        &lt;i>%1$s earthquake at the bottom of the list:&lt;/i> &lt;br/&gt;
         %3$s
     </string>
 
@@ -839,8 +884,9 @@
     <string name="earthquakes_text_singular">earthquake</string>
     <string name="earthquakes_text_plural">earthquakes</string>
     <string name="the_whole_world_text">the whole world</string>
-    <string name="magnitude_text">Magnitude</string>
-    <string name="date_text">Date</string>
+    <string name="magnitude_text">Magnitude of</string>
+    <string name="date_text">Date of</string>
+    <string name="distance_text">Distance to</string>
     <string name="positive_button_text">OK</string>
     <string name="twenty_four_hours_text">last 24 hours</string>
     <string name="seven_days_text">last 7 days</string>

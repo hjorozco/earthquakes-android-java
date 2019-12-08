@@ -256,6 +256,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
                     // If there were new earthquakes displayed
                     if (QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_RESULT_NON_NULL) {
+                        // Remove sorted by distance message
+                        QueryUtils.sEarthquakesListSortedByDistanceText = "";
                         setEarthquakesListForMapsActivity(earthquakes);
                         setEarthquakesListInformationValues(earthquakes.get(0),
                                 earthquakes.get(earthquakes.size() - 1));
@@ -283,11 +285,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                                 Snackbar.LENGTH_INDEFINITE);
                         mSnackbar.setAction(getString(R.string.ok_text), v -> mSnackbar.dismiss());
                         mSnackbar.show();
-
-                        // If the earthquakes list was updated from a Retrofit Query then remove sorted by distance message
-                        if (QueryUtils.sLoadEarthquakesResultCode == QueryUtils.SEARCH_RESULT_NON_NULL) {
-                            QueryUtils.sEarthquakesListSortedByDistanceText = "";
-                        }
                     }
 
                     // Flag used when activity is recreated to indicate that no action is tacking place
@@ -342,6 +339,10 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 setFirstEarthquakeDate(simpleDateFormatter.format(firstEarthquake.getTimeInMilliseconds()));
         QueryUtils.sEarthquakesListInformationValues.
                 setLastEarthquakeDate(simpleDateFormatter.format(lastEarthquake.getTimeInMilliseconds()));
+        QueryUtils.sEarthquakesListInformationValues.
+                setFirstEarthquakeDistance(QueryUtils.formatDistance(firstEarthquake.getDistance()) + " km");
+        QueryUtils.sEarthquakesListInformationValues.
+                setLastEarthquakeDistance(QueryUtils.formatDistance(lastEarthquake.getDistance()) + " km");
         QueryUtils.sEarthquakesListInformationValues.
                 setNumberOfEarthquakesDisplayed(String.valueOf(mNumberOfEarthquakesOnList));
     }
@@ -486,14 +487,40 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
                 break;
             case R.id.menu_activity_main_action_help:
+                showHelpMessageDialogFragment();
+                break;
             case R.id.menu_activity_main_action_about:
-                Snackbar.make(findViewById(android.R.id.content),
-                        getString(R.string.activity_main_under_construction_text),
-                        Snackbar.LENGTH_LONG).show();
+                showAboutMessageDialogFragment();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    // Helper method that show a DialogFragment with help for the application
+    private void showHelpMessageDialogFragment() {
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        Html.fromHtml(getString(R.string.activity_main_help_dialog_fragment_text)),
+                        getString(R.string.menu_activity_main_action_help_title),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_HELP_ABOUT_MESSAGE);
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_main_help_dialog_fragment_tag));
+    }
+
+
+    // Helper method that show a DialogFragment that shows info about the application
+    private void showAboutMessageDialogFragment() {
+        MessageDialogFragment messageDialogFragment =
+                MessageDialogFragment.newInstance(
+                        Html.fromHtml(getString(R.string.activity_main_about_dialog_fragment_text)),
+                        getString(R.string.menu_activity_main_action_about_title),
+                        MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_HELP_ABOUT_MESSAGE);
+
+        messageDialogFragment.show(getSupportFragmentManager(),
+                getString(R.string.activity_main_about_dialog_fragment_tag));
     }
 
 
@@ -623,7 +650,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             Pair<View, String> pair6 = Pair.create(timeTextView, timeTextView.getTransitionName());
 
             ActivityOptionsCompat activityOptionsCompat;
-            if (earthquake.getDistance() == QueryUtils.DISTANCE_NULL_VALUE) {
+            if (!QueryUtils.isDistanceShown(this)) {
                 //noinspection unchecked
                 activityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3, pair4, pair5, pair6);
@@ -846,6 +873,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
             }
             QueryUtils.sEarthquakesListSortedByDistanceText =
                     getString(R.string.activity_main_list_title_sorted_by_distance_text, sortedByMessage);
+            setEarthquakesListForMapsActivity(earthquakes);
+            setEarthquakesListInformationValues(earthquakes.get(0),
+                    earthquakes.get(earthquakes.size() - 1));
             mAdapter.setEarthquakesListData(earthquakes);
         }
 

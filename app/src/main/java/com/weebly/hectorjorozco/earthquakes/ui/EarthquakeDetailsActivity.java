@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -55,6 +56,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import static android.view.View.GONE;
+import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.DISTANCE_NULL_VALUE;
+import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.sLastKnownLocationLatitude;
+import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.sLastKnownLocationLongitude;
 
 
 public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMapReadyCallback,
@@ -154,7 +158,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         TextView timeTextView = findViewById(R.id.activity_earthquake_details_time_text_view);
 
         TextView distanceTextViewToSetup;
-        if (mEarthquake.getDistance() == QueryUtils.DISTANCE_NULL_VALUE) {
+        if (!QueryUtils.isDistanceShown(this)) {
             distanceTextView.setVisibility(GONE);
             distanceTextViewToSetup = null;
         } else {
@@ -189,8 +193,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                         getString(R.string.activity_earthquake_details_date_text_view_transition));
                 timeTextView.setTransitionName(
                         getString(R.string.activity_earthquake_details_time_text_view_transition));
-                distanceTextView.setTransitionName(
-                        getString(R.string.activity_earthquake_details_distance_text_view_transition));
+                if (QueryUtils.isDistanceShown(this)) {
+                    distanceTextView.setTransitionName(
+                            getString(R.string.activity_earthquake_details_distance_text_view_transition));
+                }
 
                 getWindow().setSharedElementEnterTransition(
                         TransitionInflater.from(this).inflateTransition(R.transition.move));
@@ -700,10 +706,24 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
         MapsUtils.MarkerAttributes markerAttributes = MapsUtils.getMarkerAttributes(roundedMagnitude);
 
+        String distanceText = "";
+        if (QueryUtils.isDistanceShown(this)) {
+            float distance = mEarthquake.getDistance();
+            // If the earthquake does not have a distance saved calculate it and save on the earthquake
+            if (distance == DISTANCE_NULL_VALUE) {
+                float[] result = new float[1];
+                Location.distanceBetween(sLastKnownLocationLatitude, sLastKnownLocationLongitude,
+                        mEarthquake.getLatitude(), mEarthquake.getLongitude(), result);
+                distance = result[0];
+                mEarthquake.setDistance(distance);
+            }
+            distanceText = " - " + getString(R.string.activity_main_distance_from_you_text, QueryUtils.formatDistance(distance));
+        }
+
         googleMap.addMarker(new MarkerOptions()
                 .position(mEarthquakePosition)
                 .title(MapsUtils.constructEarthquakeTitleForMarker(mEarthquake, magnitudeToDisplay, this))
-                .snippet(MapsUtils.constructEarthquakeSnippetForMarker(mEarthquake.getTimeInMilliseconds()))
+                .snippet(MapsUtils.constructEarthquakeSnippetForMarker(mEarthquake.getTimeInMilliseconds(), distanceText))
                 .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
                 .anchor(0.5f, 0.5f)
                 .alpha(markerAttributes.getAlphaValue())
@@ -928,6 +948,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 + locationOffset + spaceForLocation + locationPrimary + '\n'
                 + getString(R.string.activity_earthquake_details_share_option_date_time_text) + ' '
                 + WordsUtils.displayedDateFormatter().format(new Date(mEarthquake.getTimeInMilliseconds())) + "\n\n";
+
+        // TODO Add distance (if it is shown) to the previous string.
 
         boolean isNextSectionPopulated = false;
 

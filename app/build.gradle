@@ -40,14 +40,14 @@ dependencies {
     // ViewModel and Live Data
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-rc02"
 
+    // Room database library
+    implementation "androidx.room:room-runtime:2.2.2"
+    annotationProcessor "androidx.room:room-compiler:2.2.2"
+
     // Retrofit library.
     implementation "com.squareup.retrofit2:retrofit:2.4.0"
     implementation "com.squareup.retrofit2:converter-jackson:2.4.0"
     implementation "com.squareup.okhttp3:okhttp:3.10.0"
-
-    // Room database library
-    implementation "androidx.room:room-runtime:2.2.2"
-    annotationProcessor "androidx.room:room-compiler:2.2.2"
 
     // Stetho library. Navigate to chrome://inspect in Google Chrome to inspect the app data.
     implementation 'com.facebook.stetho:stetho:1.5.0'

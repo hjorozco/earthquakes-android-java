@@ -21,10 +21,4 @@
         android:title="@string/menu_activity_main_bottom_navigation_view_action_favorites_title"
         app:showAsAction="ifRoom"/>
 
-<!--    <item-->
-<!--        android:id="@+id/menu_activity_main_bottom_navigation_view_action_news"-->
-<!--        android:icon="@drawable/ic_news_white_24dp"-->
-<!--        android:title="@string/menu_activity_main_bottom_navigation_view_action_news_title"-->
-<!--        app:showAsAction="ifRoom"/>-->
-
 </menu>

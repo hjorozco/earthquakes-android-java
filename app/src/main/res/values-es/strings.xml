@@ -12,7 +12,7 @@
 
     <!-- ********** ACTIVITY MAIN ********** -->
 
-    <string name="activity_main_label">Lista de sismos</string>
+    <string name="activity_main_label">Sismos</string>
 
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
@@ -56,7 +56,7 @@
 
     <string name="activity_main_distance_from_you_text">a %1$s km de ti</string>
 
-    <string name="menu_activity_main_bottom_navigation_view_action_list_title">Lista</string>
+    <string name="menu_activity_main_bottom_navigation_view_action_list_title">Sismos</string>
     <string name="menu_activity_main_bottom_navigation_view_action_map_title">Mapa</string>
     <string name="menu_activity_main_bottom_navigation_view_action_favorites_title">Favoritos</string>
 
@@ -107,7 +107,48 @@
     </string>
 
     <string name="activity_main_sorted_by_distance_snack_text">Sismos reordenados por %1$s</string>
-    <string name="activity_main_list_title_sorted_by_distance_text">Luego reordenados por %1$s.</string>
+    <string name="activity_main_list_title_sorted_by_distance_text">Luego reordenados por %1$s</string>
+
+    <!-- TODO Translate this string to Spanish -->
+    <string name="activity_main_help_dialog_fragment_text">
+        &lt;br/>With this app you can search for earthquakes that have been located by the
+        &lt;a href="https://www.usgs.gov/">USGS&lt;/a> (United States Geological Survey) and its contributing
+        agencies.&lt;br/>&lt;br/>
+        The USGS locates earthquakes worldwide of magnitude 5.0 and larger in 30 minutes or less. It
+        may not rapidly locate earthquakes smaller then 5.0 outside the United States unless they have
+        caused significant damage or are widely felt. Earthquakes occurring outside the US and smaller
+        than magnitude 4.5 can be difficult for the USGS to locate if there are not enough data.
+        &lt;br/>&lt;br/>The USGS locate earthquakes with magnitude 4.0 and larger within the contiguous US
+        and populated regions of Alaska within 30 minutes.&lt;br/>&lt;br/>
+        There are many regional networks around the world that can record smaller earthquakes in their
+        region than the USGS global network can, and in many cases these regional networks do not
+        share their data with the USGS. Check with your regional network for more comprehensive
+        earthquakes information.
+    </string>
+
+    <string name="activity_main_about_dialog_fragment_text">
+        &lt;br/>&lt;b>Sismos. Versión 1.0&lt;/b>&lt;br/>&lt;br/>Aplicación diseñada y desarrollada por:
+        &lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Héctor J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
+        &lt;i>Fuente de información.&lt;/i>&lt;br/>&lt;br/>Información sobre sismos obtenida de: &lt;a href="https://www.usgs.gov/">
+        U.S. Geological Survey (Estudios Geológicos de los Estados Unidos de América)&lt;/a>.&lt;br/>&lt;br/>&lt;br/>
+        &lt;i>Privacy.&lt;/i>&lt;br/>&lt;br/>Si permites a esta aplicación acceder a la ubicación de este dispositivo, la ubicación
+        será usada solamente para calcular la distancia de ti a los temblores.&lt;br/>&lt;br/>&lt;br/>
+        &lt;i>Librerías de terceros.&lt;/i>&lt;br/>&lt;br/>
+        &lt;a href="https://square.github.io/retrofit/">Retrofit&lt;/a>
+        (un cliente HTTP para Android y Java). &lt;a href="https://square.github.io/retrofit/#license">
+        Copyright 2013 Square, Inc&lt;/a>.&lt;br/>&lt;br/>
+        &lt;a href="https://github.com/FutureMind/recycler-fast-scroll">Recycler Bubble&lt;/a>
+        (proporciona desplazamiento rápido e indexador de sección para la \"Recycler View\").
+        &lt;a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0&lt;/a>.&lt;br/>&lt;br/>
+        &lt;a href="http://facebook.github.io/stetho/">Stetho&lt;/a> (puente de depuración para aplicaciones de Android).
+        &lt;a href="https://github.com/facebook/stetho/blob/master/LICENSE">MIT license&lt;/a>.&lt;br/>&lt;br/>&lt;br/>
+        &lt;i>Creditos de íconos.&lt;/i>&lt;br/&gt;&lt;br/&gt;Íconos con licencia hechos por &lt;a href="https://www.freepik.com">Freepik&lt;/a>,
+        &lt;a href="https://www.flaticon.com/authors/prettycons">prettycons&lt;/a>,
+        &lt;a href="https://www.flaticon.com/authors/mynamepong">mynamepong&lt;/a> y
+        &lt;a href="https://www.flaticon.com/authors/pixel-perfect">Pixel perfect&lt;/a> para
+        &lt;a href="https://www.flaticon.com">www.flaticon.com&lt;/a> con la siguiente licencia
+        &lt;a href="http://creativecommons.org/licenses/by/3.0">Creative Commons BY 3.0&lt;/a>.
+    </string>
 
     <!-- ********** Activity Main ********** -->
 
@@ -217,10 +258,10 @@
 
     <!-- ********** ACTIVITY EARTHQUAKES MAP ********** -->
 
-    <string name="activity_earthquakes_map_label">Mapa de sismos</string>
+    <string name="activity_earthquakes_map_label">Mapa</string>
     <string name="activity_earthquakes_map_no_earthquakes_data_message">
-        No hay sismos en la lista.\n\nUna vez que se encuentren sismos, podrás ver sus
-        ubicaciones en este mapa.
+        No hay sismos que mostrar.\n\nRegresa una vez que haya sismos en la lista para verlos en
+        este mapa.
     </string>
 
     <string name="activity_earthquakes_map_info_alert_dialog_message_top_section">
@@ -412,7 +453,7 @@
         Localización del epicentro en el sitio web de USGS:</string>
     <string name="activity_earthquake_details_share_option_about_app_link_text">
         Información generada por el USGS (Servicio Geológico de los Estados Unidos por sus siglas
-        en inglés) y compartida usando la aplicación Earthquakes:</string>
+        en inglés) y compartida usando la aplicación Earthquakes.</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 
@@ -697,21 +738,21 @@
     <!-- Strings used to display a message about the current list displayed, on the "Information"
     option AlertDialog -->
     <string name="current_list_alert_dialog_message_top_section">
-        &lt;br/>Mostrando &lt;b>%1$s %2$s en %3$s%4$s, ordenado%5$s por %6$s,&lt;/b> para las siguientes preferencias de
+        &lt;br/>Mostrando &lt;b>%1$s %2$s en %3$s%4$s, ordenado%5$s por %6$s,%7$s&lt;/b> para las siguientes preferencias de
         búsqueda:&lt;br/&gt;&lt;br/&gt;
-        &lt;i>Máximo número de sismos &lt;/i>%7$s&lt;br/&gt;
-        &lt;i>Rango de fechas &lt;/i>%8$s&lt;br/&gt;
-        %9$s a&lt;br/&gt;
-        %10$s&lt;br/&gt;
-        &lt;i>Rango de magnitudes &lt;/i>%11$s a %12$s
-        %13$s&lt;br/>
+        &lt;i>Máximo número de sismos &lt;/i>%8$s&lt;br/&gt;
+        &lt;i>Rango de fechas &lt;/i>%9$s&lt;br/&gt;
+        %10$s a&lt;br/&gt;
+        %11$s&lt;br/&gt;
+        &lt;i>Rango de magnitudes &lt;/i>%12$s a %13$s
+        %14$s&lt;br/>
     </string>
 
     <string name="current_list_alert_dialog_message_bottom_section">
         &lt;br/&gt;&lt;br/&gt;
-        &lt;i>%1$s del primer sismo en la lista:&lt;/i> &lt;br/&gt;
+        &lt;i>%1$s primer sismo en la lista:&lt;/i> &lt;br/&gt;
         %2$s &lt;br/&gt; &lt;br/&gt;
-        &lt;i>%1$s del último sismo en la lista:&lt;/i> &lt;br/&gt;
+        &lt;i>%1$s último sismo en la lista:&lt;/i> &lt;br/&gt;
         %3$s
     </string>
 
@@ -719,8 +760,9 @@
     <string name="earthquakes_text_singular">sismo</string>
     <string name="earthquakes_text_plural">sismos</string>
     <string name="the_whole_world_text">todo el mundo</string>
-    <string name="magnitude_text">Magnitud</string>
-    <string name="date_text">Fecha</string>
+    <string name="magnitude_text">Magnitud del</string>
+    <string name="date_text">Fecha del</string>
+    <string name="distance_text">Distancia al</string>
     <string name="positive_button_text">Aceptar</string>
     <string name="twenty_four_hours_text">últimas 24 horas</string>
     <string name="seven_days_text">últimos 7 días</string>

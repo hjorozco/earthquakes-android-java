@@ -2,12 +2,14 @@ package com.weebly.hectorjorozco.earthquakes.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +34,15 @@ import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.DISTANCE_NULL_VALUE;
+import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.sLastKnownLocationLatitude;
+import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.sLastKnownLocationLongitude;
 
 
-public class EarthquakesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class EarthquakesMapActivity extends AppCompatActivity implements OnMapReadyCallback, Observer {
 
     private static final String IS_FAB_MENU_OPEN_VALUE_KEY = "IS_FAB_MENU_OPEN_VALUE_KEY";
 
@@ -54,6 +62,8 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         setContentView(R.layout.activity_earthquakes_map);
 
         mEarthquakes = QueryUtils.getEarthquakesList();
+
+        QueryUtils.sEarthquakesLoadedObservable.addObserver(this);
 
         if (mEarthquakes != null) {
             mShowMap = mEarthquakes.size() > 0;
@@ -209,10 +219,24 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
             MapsUtils.MarkerAttributes markerAttributes = MapsUtils.getMarkerAttributes(roundedMagnitude);
 
+            String distanceText="";
+            if (QueryUtils.isDistanceShown(this)){
+                float distance = earthquake.getDistance();
+                // If the earthquake does not have a distance saved calculate it and save on the earthquake
+                if (distance == DISTANCE_NULL_VALUE) {
+                    float[] result = new float[1];
+                    Location.distanceBetween(sLastKnownLocationLatitude, sLastKnownLocationLongitude,
+                            earthquake.getLatitude(), earthquake.getLongitude(), result);
+                    distance = result[0];
+                    earthquake.setDistance(distance);
+                }
+                distanceText = " - " + getString(R.string.activity_main_distance_from_you_text, QueryUtils.formatDistance(distance));
+            }
+
             googleMap.addMarker(new MarkerOptions()
                     .position(earthquakePosition)
                     .title(MapsUtils.constructEarthquakeTitleForMarker(earthquake, magnitudeToDisplay, this))
-                    .snippet(MapsUtils.constructEarthquakeSnippetForMarker(earthquake.getTimeInMilliseconds()))
+                    .snippet(MapsUtils.constructEarthquakeSnippetForMarker(earthquake.getTimeInMilliseconds(), distanceText))
                     .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
                     .anchor(0.5f, 0.5f)
                     .alpha(markerAttributes.getAlphaValue())
@@ -259,6 +283,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             showInfoMessageDialogFragment();
         }
         return super.onOptionsItemSelected(item);
+
     }
 
 
@@ -295,6 +320,11 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
         }
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        // TODO Update map when list of earthquakes was loaded
+        Log.d("TESTING","Earthquakes loaded. Observed on Earthquakes map");
+    }
 }
 
 
