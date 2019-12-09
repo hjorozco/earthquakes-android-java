@@ -54,6 +54,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     private List<Earthquake> mEarthquakes;
     private boolean mShowMap;
     private BottomNavigationView mBottomNavigationView;
+    private Menu mMenu;
 
 
     @Override
@@ -69,6 +70,10 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mShowMap = mEarthquakes.size() > 0;
         } else {
             mShowMap = false;
+        }
+
+        if (mMenu!=null){
+            setupMenu();
         }
 
         TextView noDataTextView = findViewById(R.id.activity_earthquakes_map_text_view);
@@ -163,7 +168,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
 
     @SuppressWarnings("SameReturnValue")
-    private void setupBottomNavigationView(){
+    private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_earthquakes_map_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
@@ -219,8 +224,8 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
             MapsUtils.MarkerAttributes markerAttributes = MapsUtils.getMarkerAttributes(roundedMagnitude);
 
-            String distanceText="";
-            if (QueryUtils.isDistanceShown(this)){
+            String distanceText = "";
+            if (QueryUtils.isDistanceShown(this)) {
                 float distance = earthquake.getDistance();
                 // If the earthquake does not have a distance saved calculate it and save on the earthquake
                 if (distance == DISTANCE_NULL_VALUE) {
@@ -270,7 +275,20 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_earthquakes_map, menu);
+        mMenu = menu;
+        setupMenu();
         return true;
+    }
+
+
+    private void setupMenu(){
+        MenuItem infoMenuItem = mMenu.findItem(R.id.menu_activity_earthquakes_map_action_info);
+        infoMenuItem.setEnabled(mShowMap);
+        if (mShowMap){
+            infoMenuItem.setIcon(R.drawable.ic_info_outline_white_24dp);
+        } else {
+            infoMenuItem.setIcon(R.drawable.ic_info_outline_grey_24dp);
+        }
     }
 
     @Override
@@ -287,7 +305,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     }
 
 
-    private void showInfoMessageDialogFragment(){
+    private void showInfoMessageDialogFragment() {
 
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
@@ -322,7 +340,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     public void update(Observable o, Object arg) {
-        Log.d("TESTING","Earthquakes loaded. Observed on Earthquakes map");
+        Log.d("TESTING", "Earthquakes loaded. Observed on Earthquakes map");
     }
 }
 

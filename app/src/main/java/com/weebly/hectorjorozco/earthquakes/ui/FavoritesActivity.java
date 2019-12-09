@@ -360,7 +360,7 @@ public class FavoritesActivity extends AppCompatActivity implements
             deleteMenuItem.setIcon(R.drawable.ic_delete_white_24dp);
         }
 
-        if (sortByCriteria == 0 || sortByCriteria == 2) {
+        if (sortByCriteria == 0 || sortByCriteria == 2 || sortByCriteria == 4) {
             sortMenuItem.setIcon(R.drawable.ic_sort_ascending_white_24dp);
         } else {
             sortMenuItem.setIcon(R.drawable.ic_sort_descending_white_24dp);
