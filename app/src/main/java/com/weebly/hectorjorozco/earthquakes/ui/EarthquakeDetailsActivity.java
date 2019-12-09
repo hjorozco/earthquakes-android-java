@@ -942,14 +942,21 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             locationPrimary = getString(R.string.activity_main_no_earthquake_location_text);
         }
 
+
+        // Distance string
+        String distanceText="";
+        if (QueryUtils.isDistanceShown(this)){
+            distanceText = '\n' + getString(R.string.activity_earthquake_details_share_option_distance_text) + ' '
+                    + getString(R.string.activity_main_distance_from_you_text, QueryUtils.formatDistance(mEarthquake.getDistance())) + ".";
+        }
+
         String text = getString(R.string.activity_earthquake_details_share_option_magnitude_text) + ' '
                 + QueryUtils.getMagnitudeText(mEarthquake.getMagnitude()) + '\n'
                 + getString(R.string.activity_earthquake_details_share_option_location_text) + ' '
                 + locationOffset + spaceForLocation + locationPrimary + '\n'
                 + getString(R.string.activity_earthquake_details_share_option_date_time_text) + ' '
-                + WordsUtils.displayedDateFormatter().format(new Date(mEarthquake.getTimeInMilliseconds())) + "\n\n";
-
-        // TODO Add distance (if it is shown) to the previous string.
+                + WordsUtils.displayedDateFormatter().format(new Date(mEarthquake.getTimeInMilliseconds()))
+                + distanceText + "\n\n";
 
         boolean isNextSectionPopulated = false;
 

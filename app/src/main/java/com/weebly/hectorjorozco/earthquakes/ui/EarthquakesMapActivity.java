@@ -322,7 +322,6 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     public void update(Observable o, Object arg) {
-        // TODO Update map when list of earthquakes was loaded
         Log.d("TESTING","Earthquakes loaded. Observed on Earthquakes map");
     }
 }
