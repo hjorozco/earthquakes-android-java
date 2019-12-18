@@ -12,6 +12,8 @@
     <string name="ok_text" translatable="false">@android:string/ok</string>
     <string name="cancel_text" translatable="false">@android:string/cancel</string>
     <string name="spanish_only_plural_ending_letter_s" />
+    <string name="kilometers_text" translatable="false">km</string>
+    <string name="miles_text">mi</string>
 
     <!-- ********** App ********** -->
 
@@ -41,7 +43,7 @@
 
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
-    <string name="near_the">Location</string>
+    <string name="activity_main_location_text">Location</string>
 
     <string name="searching_earthquakes_text">Searching for earthquakes</string>
 
@@ -81,7 +83,7 @@
         See search preferences help for tips to reduce the search time.
     </string>
 
-    <string name="activity_main_distance_from_you_text">%1$s km from you</string>
+    <string name="activity_main_distance_from_you_text">%1$s %2$s from you</string>
 
     <string name="menu_activity_main_bottom_navigation_view_action_list_title">Earthquakes</string>
     <string name="menu_activity_main_bottom_navigation_view_action_map_title">Map</string>
@@ -161,8 +163,9 @@
         activity_main_help_dialog_fragment_tag</string>
 
     <string name="activity_main_about_dialog_fragment_text">
-        &lt;br/>&lt;b>Earthquakes. Version 1.0&lt;/b>&lt;br/>&lt;br/>App designed and developed
-        by:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Hector J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
+        &lt;br/>&lt;b>Earthquakes. Version 1.0&lt;/b>&lt;br/>&lt;br/>
+        &lt;b>&lt;a href="https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes">Rate this app&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
+        App designed and developed by:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Hector J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         &lt;i>Information source.&lt;/i>&lt;br/>&lt;br/>Earthquakes information obtained from &lt;a href="https://www.usgs.gov/">
         U.S. Geological Survey&lt;/a>.&lt;br/>&lt;br/>&lt;br/>
         &lt;i>Privacy.&lt;/i>&lt;br/>&lt;br/>If you allow this app to access the device\'s location, the location will only be used to
@@ -236,6 +239,16 @@
 
     <string name="search_preference_show_distance_title">Show distance from you</string>
     <string name="search_preference_show_distance_key" translatable="false">show_distance</string>
+
+    <string name="search_preference_distance_unit_title">Distance units</string>
+    <string name="search_preference_distance_unit_key" translatable="false">distance_unit</string>
+    <string name="search_preference_distance_unit_default_value" translatable="false">
+        @string/search_preference_distance_unit_kilometers_entry_value</string>
+    <string name="search_preference_distance_unit_kilometers_entry">kilometers</string>
+    <string name="search_preference_distance_unit_kilometers_entry_value" translatable="false">kilometers</string>
+    <string name="search_preference_distance_unit_miles_entry">miles</string>
+    <string name="search_preference_distance_unit_miles_entry_value" translatable="false">miles</string>
+
     <!-- General -->
 
 
@@ -258,7 +271,6 @@
         Not set. Will search for earthquakes at any distance from you on the set location.</string>
     <string name="search_preference_maximum_distance_not_set_and_location_not_set_summary">
         Not set. Will search for earthquakes at any distance from you.</string>
-    <string name="search_preference_maximum_distance_km_text" translatable="false">km</string>
     <!-- Location -->
 
 
@@ -578,7 +590,9 @@
     <string name="activity_earthquake_details_share_option_google_map_link_text_2" translatable="false">
         &amp;z=7</string>
 
-    <string name="activity_earthquake_details_share_option_app_link_text" translatable="false" />
+    <string name="activity_earthquake_details_share_option_app_link_text">
+        Get it in Google Play:\n
+        https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 

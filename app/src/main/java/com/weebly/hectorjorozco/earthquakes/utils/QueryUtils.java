@@ -382,6 +382,11 @@ public class QueryUtils {
 
         if (isLocationPermissionGranted(context) && maxDistanceValue != 0) {
             maxDistance = String.valueOf(maxDistanceValue);
+
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)){
+                float maxDistanceInMiles = UiUtils.getKilometersFromMiles(maxDistanceValue);
+                maxDistance = String.valueOf(Math.round(maxDistanceInMiles));
+            }
             Location location = getLastKnowLocationFromSharedPreferences(context);
             latitude = String.valueOf(location.getLatitude());
             longitude = String.valueOf(location.getLongitude());
@@ -548,6 +553,7 @@ public class QueryUtils {
         if (!values.getMaxDistance().isEmpty() &&
                 QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
                 QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
+            // TODO Modify distance message to account for miles
             distance = " " + context.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
                     String.format(Locale.getDefault(), "%,d", Integer.valueOf(values.getMaxDistance())));
         }
@@ -740,7 +746,23 @@ public class QueryUtils {
             locationPrimary = context.getString(R.string.activity_main_no_earthquake_location_text);
         }
 
-        locationOffsetTextView.setText(earthquake.getLocationOffset());
+        String locationOffset = earthquake.getLocationOffset();
+
+        // If Distance Units are miles
+        if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
+            if (!locationOffset.equals(context.getString(R.string.activity_main_location_text))) {
+                int kmPosition = locationOffset.indexOf(context.getString(R.string.kilometers_text));
+                String kilometersStringValue = locationOffset.substring(0, kmPosition - 1);
+                float kilometersValue = Float.valueOf(kilometersStringValue);
+                float milesValue = UiUtils.getMilesFromKilometers(kilometersValue);
+                String milesStringValue = formatOffsetDistance(milesValue);
+                String locationOffsetPart1 = milesStringValue + " " + context.getString(R.string.miles_text);
+                String locationOffsetPart2 = locationOffset.substring(kmPosition + 2);
+                locationOffset = locationOffsetPart1 + locationOffsetPart2;
+            }
+        }
+
+        locationOffsetTextView.setText(locationOffset);
         locationPrimaryTextView.setText(locationPrimary);
         locationOffsetTextView.setTextColor(magnitudeColor);
         locationPrimaryTextView.setTextColor(magnitudeColor);
@@ -760,7 +782,14 @@ public class QueryUtils {
                 earthquake.setDistance(distance);
             }
 
-            distanceTextView.setText(context.getString(R.string.activity_main_distance_from_you_text, formatDistance(distance)));
+            String distanceUnits = context.getString(R.string.kilometers_text);
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
+                distance = UiUtils.getMilesFromKilometers(distance);
+                distanceUnits = context.getString(R.string.miles_text);
+            }
+
+            distanceTextView.setText(context.getString(R.string.activity_main_distance_from_you_text,
+                    formatDistance(distance), distanceUnits));
             distanceTextView.setTextColor(magnitudeColor);
         }
 
@@ -773,7 +802,12 @@ public class QueryUtils {
 
 
     public static String formatDistance(float distance) {
-        return String.format(Locale.getDefault(), "%,d",  Math.round(distance/1000));
+        return String.format(Locale.getDefault(), "%,d", Math.round(distance / 1000));
+    }
+
+
+    public static String formatOffsetDistance(float distance) {
+        return String.format(Locale.getDefault(), "%,d", Math.round(distance));
     }
 
 
@@ -803,6 +837,14 @@ public class QueryUtils {
         return PreferenceManager.getDefaultSharedPreferences(context).
                 getBoolean(context.getString(R.string.search_preference_show_distance_key),
                         context.getResources().getBoolean(R.bool.search_preference_show_distance_default_value));
+    }
+
+
+    public static boolean isDistanceUnitSearchPreferenceValueMiles(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).
+                getString(context.getString(R.string.search_preference_distance_unit_key),
+                        context.getString(R.string.search_preference_distance_unit_default_value))
+                .equals(context.getString(R.string.search_preference_distance_unit_miles_entry_value));
     }
 
 

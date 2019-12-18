@@ -31,6 +31,7 @@ import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.utils.MapsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -235,7 +236,14 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     distance = result[0];
                     earthquake.setDistance(distance);
                 }
-                distanceText = " - " + getString(R.string.activity_main_distance_from_you_text, QueryUtils.formatDistance(distance));
+
+                String distanceUnits = getString(R.string.kilometers_text);
+                if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+                    distance = UiUtils.getMilesFromKilometers(distance);
+                    distanceUnits = getString(R.string.miles_text);
+                }
+                distanceText = " - " + getString(R.string.activity_main_distance_from_you_text,
+                        QueryUtils.formatDistance(distance), distanceUnits);
             }
 
             googleMap.addMarker(new MarkerOptions()

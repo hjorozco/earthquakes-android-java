@@ -6,6 +6,7 @@
     <string name="app_name">Sismos</string>
     <string name="yes_text">SI</string>
     <string name="spanish_only_plural_ending_letter_s">@string/letter_s_lowercase</string>
+    <string name="miles_text">millas</string>
 
     <!-- ********** App ********** -->
 
@@ -16,7 +17,7 @@
 
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
     if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
-    <string name="near_the">Localidad</string>
+    <string name="activity_main_location_text">Localidad</string>
 
     <string name="searching_earthquakes_text">Buscando sismos</string>
 
@@ -52,7 +53,7 @@
         En la ayuda de preferencias encontrarás consejos sobre como reducir el tiempo de búsqueda.
     </string>
 
-    <string name="activity_main_distance_from_you_text">a %1$s km de ti</string>
+    <string name="activity_main_distance_from_you_text">a %1$s %2$s de ti</string>
 
     <string name="menu_activity_main_bottom_navigation_view_action_list_title">Sismos</string>
     <string name="menu_activity_main_bottom_navigation_view_action_map_title">Mapa</string>
@@ -127,8 +128,9 @@
     </string>
 
     <string name="activity_main_about_dialog_fragment_text">
-        &lt;br/>&lt;b>Sismos. Versión 1.0&lt;/b>&lt;br/>&lt;br/>Aplicación diseñada y desarrollada por:
-        &lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Héctor J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
+        &lt;br/>&lt;b>Sismos. Versión 1.0&lt;/b>&lt;br/>&lt;br/>
+        &lt;b>&lt;a href="https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes">Calificar esta aplicación&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
+        Aplicación diseñada y desarrollada por:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Héctor J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         &lt;i>Fuente de información.&lt;/i>&lt;br/>&lt;br/>Información sobre sismos obtenida de: &lt;a href="https://www.usgs.gov/">
         U.S. Geological Survey (Estudios Geológicos de los Estados Unidos de América)&lt;/a>.&lt;br/>&lt;br/>&lt;br/>
         &lt;i>Privacidad.&lt;/i>&lt;br/>&lt;br/>Si permites a esta aplicación acceder a la ubicación de este dispositivo, la ubicación
@@ -185,6 +187,11 @@
     <string name="search_preference_sort_by_descending_magnitude_summary">Magnitud descendente</string>
 
     <string name="search_preference_show_distance_title">Mostrar distancia de ti</string>
+
+    <string name="search_preference_distance_unit_title">Unidades de distancia</string>
+    <string name="search_preference_distance_unit_kilometers_entry">kilómetros</string>
+    <string name="search_preference_distance_unit_miles_entry">millas</string>
+
     <!-- General -->
 
 
@@ -265,7 +272,7 @@
     </string>
 
     <string name="activity_earthquakes_map_info_alert_dialog_message_top_section">
-        &lt;br/>Mostrando &lt;b>%1$s %2$s in %3$s%4$s,&lt;/b> para las siguientes preferencias de
+        &lt;br/>Mostrando &lt;b>%1$s %2$s en %3$s%4$s,&lt;/b> para las siguientes preferencias de
         búsqueda:
         &lt;br/&gt;&lt;br/&gt;
         &lt;i>Máximo número de sismos &lt;/i>%5$s&lt;br/&gt;
@@ -455,6 +462,10 @@
     <string name="activity_earthquake_details_share_option_about_app_link_text">
         Información obtenida del USGS (Servicio Geológico de los Estados Unidos por sus siglas
         en inglés) y compartida usando la aplicación Earthquakes.</string>
+
+    <string name="activity_earthquake_details_share_option_app_link_text">
+        Obtenla en Google Play:\n
+        https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes</string>
 
     <!-- ********** ACTIVITY Earthquake details ********** -->
 

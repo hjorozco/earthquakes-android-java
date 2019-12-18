@@ -104,6 +104,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (!mMaxDistance.isEmpty() &&
                     QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
                     QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
+
+                // TODO Modify distance message to account for miles
                 distance = " " + mContext.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
                         String.format(Locale.getDefault(), "%,d", Integer.valueOf(mMaxDistance)));
             }

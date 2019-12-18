@@ -117,10 +117,9 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if (key.equals(getString(R.string.search_preference_maximum_distance_key))) {
-            setLocationAndMaximumDistanceSummaries();
-
-        } else if (key.equals(getString(R.string.search_preference_location_key))) {
+        if (key.equals(getString(R.string.search_preference_distance_unit_key)) ||
+                key.equals(getString(R.string.search_preference_maximum_distance_key)) ||
+                key.equals(getString(R.string.search_preference_location_key))) {
             setLocationAndMaximumDistanceSummaries();
 
         } else if (key.equals(getString(R.string.search_preference_date_range_key))) {
@@ -223,7 +222,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
     private void setupShowDistanceCheckBoxPreference(CheckBoxPreference checkBoxPreference) {
 
-        if (!QueryUtils.isLocationPermissionGranted(getContext())){
+        if (!QueryUtils.isLocationPermissionGranted(getContext())) {
             checkBoxPreference.setChecked(false);
         }
 
@@ -327,9 +326,12 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                 } else {
                     mLocationEditTextPreference.setSummary(locationSummary);
                 }
+                String distanceUnits = getString(R.string.kilometers_text);
+                if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(getContext())) {
+                    distanceUnits = getString(R.string.miles_text);
+                }
                 mMaximumDistanceSeekBarPreference.setSummary(
-                        mMaximumDistanceSeekBarPreference.getValue() + " " +
-                                getString(R.string.search_preference_maximum_distance_km_text));
+                        mMaximumDistanceSeekBarPreference.getValue() + " " + distanceUnits);
             } else {
                 if (locationSummary.isEmpty()) {
                     mLocationEditTextPreference.setSummary(getString(
@@ -379,7 +381,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                         getString(R.string.activity_search_preferences_location_permission_justification_dialog_fragment_title),
                         MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_LOCATION_PERMISSION_REQUEST);
 
-        messageDialogFragment.setTargetFragment( this, 0);
+        messageDialogFragment.setTargetFragment(this, 0);
 
         messageDialogFragment.show(getParentFragmentManager(),
                 getString(R.string.activity_search_preferences_location_permission_justification_dialog_fragment_tag));

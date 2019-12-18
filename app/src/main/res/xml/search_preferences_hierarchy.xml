@@ -28,6 +28,16 @@
             app:icon="@drawable/ic_show_distance_brown_24dp"
             app:singleLineTitle="false" />
 
+        <ListPreference
+            android:defaultValue="@string/search_preference_distance_unit_default_value"
+            android:entries="@array/search_preference_distance_unit_entries"
+            android:entryValues="@array/search_preference_distance_unit_entry_values"
+            android:key="@string/search_preference_distance_unit_key"
+            android:title="@string/search_preference_distance_unit_title"
+            app:icon="@drawable/ic_distance_unit_brown_24dp"
+            app:singleLineTitle="false"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

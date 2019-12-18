@@ -650,7 +650,7 @@ public class WordsUtils {
             }
             // if the location does not contain specific indication of km
         } else {
-            splitString[0] = context.getString(R.string.near_the);
+            splitString[0] = context.getString(R.string.activity_main_location_text);
             splitString[1] = location;
             splitString[1] = WordsUtils.abbreviationsToCompleteNames(splitString[1]);
             splitString[1] = WordsUtils.addUSAStringLocation(splitString[1]);

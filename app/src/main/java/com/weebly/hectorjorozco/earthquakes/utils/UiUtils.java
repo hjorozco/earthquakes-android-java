@@ -27,4 +27,14 @@ public class UiUtils {
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
+
+    public static float getMilesFromKilometers(float kilometers){
+        return kilometers * (float) 0.621371;
+    }
+
+
+    public static float getKilometersFromMiles(float miles){
+        return miles * (float) 1.609344;
+    }
+
 }

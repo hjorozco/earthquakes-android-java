@@ -47,6 +47,7 @@ import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFragment;
 import com.weebly.hectorjorozco.earthquakes.utils.MapsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WebViewUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
@@ -480,6 +481,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             mIsDepthTextShown = false;
         } else {
             depthValueTextView.setVisibility(View.VISIBLE);
+            // TODO Modify depth message to account for miles
             mDepthText = getString(R.string.activity_earthquake_details_depth_text, depth);
             depthValueTextView.setText(mDepthText);
             mIsDepthTextShown = true;
@@ -717,7 +719,15 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 distance = result[0];
                 mEarthquake.setDistance(distance);
             }
-            distanceText = " - " + getString(R.string.activity_main_distance_from_you_text, QueryUtils.formatDistance(distance));
+
+            String distanceUnits = getString(R.string.kilometers_text);
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+                distance = UiUtils.getMilesFromKilometers(distance);
+                distanceUnits = getString(R.string.miles_text);
+            }
+
+            distanceText = " - " + getString(R.string.activity_main_distance_from_you_text,
+                    QueryUtils.formatDistance(distance), distanceUnits);
         }
 
         googleMap.addMarker(new MarkerOptions()
@@ -931,10 +941,11 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         // Location offset can be empty
         String locationOffset = mEarthquake.getLocationOffset();
         String spaceForLocation = " ";
-        if (locationOffset.equals(getString(R.string.near_the))) {
+        if (locationOffset.equals(getString(R.string.activity_main_location_text))) {
             locationOffset = "";
             spaceForLocation = "";
         }
+        // TODO Modify location offset message to account for miles
 
         // Location primary can be empty
         String locationPrimary = mEarthquake.getLocationPrimary();
@@ -942,12 +953,17 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             locationPrimary = getString(R.string.activity_main_no_earthquake_location_text);
         }
 
-
         // Distance string
         String distanceText="";
         if (QueryUtils.isDistanceShown(this)){
+            float distance = mEarthquake.getDistance();
+            String distanceUnits = getString(R.string.kilometers_text);
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+                distance = UiUtils.getMilesFromKilometers(distance);
+                distanceUnits = getString(R.string.miles_text);
+            }
             distanceText = '\n' + getString(R.string.activity_earthquake_details_share_option_distance_text) + ' '
-                    + getString(R.string.activity_main_distance_from_you_text, QueryUtils.formatDistance(mEarthquake.getDistance())) + ".";
+                    + getString(R.string.activity_main_distance_from_you_text, QueryUtils.formatDistance(distance), distanceUnits) + ".";
         }
 
         String text = getString(R.string.activity_earthquake_details_share_option_magnitude_text) + ' '
@@ -1031,7 +1047,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 getString(R.string.activity_earthquake_details_share_option_google_map_link_text_2) + '\n' +
                 getString(R.string.activity_earthquake_details_share_option_usgs_map_text) + '\n'
                 + mEarthquake.getUrl() + "/map" + "\n\n" +
-                getString(R.string.activity_earthquake_details_share_option_about_app_link_text) + '\n'
+                getString(R.string.activity_earthquake_details_share_option_about_app_link_text) + "\n\n"
                 + getString(R.string.activity_earthquake_details_share_option_app_link_text) + "\n\n";
 
         Intent shareIntent = ShareCompat.IntentBuilder.from(this)
