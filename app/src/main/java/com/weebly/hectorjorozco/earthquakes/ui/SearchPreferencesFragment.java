@@ -24,6 +24,7 @@ import com.weebly.hectorjorozco.earthquakes.ui.dialogfragments.MessageDialogFrag
 import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByDialogPreference;
 import com.weebly.hectorjorozco.earthquakes.ui.sortbypreference.SortByPreferenceDialogFragmentCompat;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 
 import java.util.Calendar;
@@ -51,6 +52,9 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
     private SeekBarPreference mMinimumMagnitudeSeekBarPreference;
     private SeekBarPreference mMaximumMagnitudeSeekBarPreference;
     private CheckBoxPreference mPlaySoundPreference;
+
+    // Used to indicate when the value of Distance Units search preference is change by the user
+    private boolean isDistanceUnitsSetByUser = false;
 
     // Used to flag when the "from" or "to" dates where changed by a predefined date range selected or by
     // the user changing the date individually
@@ -83,6 +87,11 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         setupMaxNumberOfEarthquakesEditTextPreference(findPreference(getString(R.string.search_preference_max_number_of_earthquakes_key)));
 
         setupShowDistanceCheckBoxPreference(findPreference(getString(R.string.search_preference_show_distance_key)));
+
+        ListPreference distanceUnitsListPreference = findPreference(getString(R.string.search_preference_distance_unit_key));
+        if (distanceUnitsListPreference != null) {
+            setupDistanceUnitsListPreference(distanceUnitsListPreference);
+        }
 
         mLocationEditTextPreference = findPreference(getString(R.string.search_preference_location_key));
         setupLocationEditTextPreference(mLocationEditTextPreference);
@@ -326,9 +335,36 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                 } else {
                     mLocationEditTextPreference.setSummary(locationSummary);
                 }
-                String distanceUnits = getString(R.string.kilometers_text);
+                String distanceUnits;
+                String maxDistanceSummary;
+                String kilometersText = getString(R.string.kilometers_text);
+                String milesText = getString(R.string.miles_text);
+                int maxDistanceValue = mMaximumDistanceSeekBarPreference.getValue();
+
+                if (mMaximumDistanceSeekBarPreference.getSummary() != null) {
+                    maxDistanceSummary = mMaximumDistanceSeekBarPreference.getSummary().toString();
+                } else {
+                    maxDistanceSummary = "";
+                }
+
                 if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(getContext())) {
-                    distanceUnits = getString(R.string.miles_text);
+                    mMaximumDistanceSeekBarPreference.setMax(
+                            getResources().getInteger(R.integer.search_preferences_maximum_distance_maximum_value_miles));
+                    distanceUnits = milesText;
+                    if (maxDistanceSummary.contains(kilometersText) && isDistanceUnitsSetByUser) {
+                        isDistanceUnitsSetByUser = false;
+                        mMaximumDistanceSeekBarPreference.setValue(Math.round(
+                                UiUtils.getMilesFromKilometers(maxDistanceValue)));
+                    }
+                } else {
+                    mMaximumDistanceSeekBarPreference.setMax(
+                            getResources().getInteger(R.integer.search_preferences_maximum_distance_maximum_value_kilometers));
+                    distanceUnits = kilometersText;
+                    if (maxDistanceSummary.contains(milesText) && isDistanceUnitsSetByUser) {
+                        isDistanceUnitsSetByUser = false;
+                        mMaximumDistanceSeekBarPreference.setValue(Math.round(
+                                UiUtils.getKilometersFromMiles(maxDistanceValue)));
+                    }
                 }
                 mMaximumDistanceSeekBarPreference.setSummary(
                         mMaximumDistanceSeekBarPreference.getValue() + " " + distanceUnits);
@@ -412,6 +448,15 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
         // Saves the minimum magnitude value only if it is less than or equal to the maximum magnitude
         seekBarPreference.setOnPreferenceChangeListener((preference, newValue) ->
                 (Integer) newValue <= mMaximumMagnitudeSeekBarPreference.getValue());
+    }
+
+
+    @SuppressWarnings("SameReturnValue")
+    private void setupDistanceUnitsListPreference(ListPreference listPreference) {
+        listPreference.setOnPreferenceClickListener(preference -> {
+            isDistanceUnitsSetByUser = true;
+            return true;
+        });
     }
 
 

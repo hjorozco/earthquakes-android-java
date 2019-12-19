@@ -54,7 +54,7 @@
         <SeekBarPreference
             android:defaultValue="@integer/search_preferences_maximum_distance_default_value"
             android:key="@string/search_preference_maximum_distance_key"
-            android:max="@integer/search_preferences_maximum_distance_maximum_value"
+            android:max="@integer/search_preferences_maximum_distance_maximum_value_kilometers"
             android:title="@string/search_preference_maximum_distance_title"
             app:icon="@drawable/ic_maximum_distance_brown_24dp"
             app:min="@integer/search_preferences_maximum_distance_minimum_value"
