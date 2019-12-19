@@ -481,8 +481,12 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             mIsDepthTextShown = false;
         } else {
             depthValueTextView.setVisibility(View.VISIBLE);
-            // TODO Modify depth message to account for miles
-            mDepthText = getString(R.string.activity_earthquake_details_depth_text, depth);
+            String distanceUnits = getString(R.string.kilometers_text);
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+                distanceUnits = getString(R.string.miles_text);
+                depth = UiUtils.getMilesFromKilometers((float) depth);
+            }
+            mDepthText = getString(R.string.activity_earthquake_details_depth_text, depth, distanceUnits);
             depthValueTextView.setText(mDepthText);
             mIsDepthTextShown = true;
         }
@@ -945,7 +949,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             locationOffset = "";
             spaceForLocation = "";
         }
-        // TODO Modify location offset message to account for miles
+
+        // TODO Modify Location Offset for km or mi
 
         // Location primary can be empty
         String locationPrimary = mEarthquake.getLocationPrimary();

@@ -340,9 +340,9 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
         QueryUtils.sEarthquakesListInformationValues.
                 setLastEarthquakeDate(simpleDateFormatter.format(lastEarthquake.getTimeInMilliseconds()));
         QueryUtils.sEarthquakesListInformationValues.
-                setFirstEarthquakeDistance(QueryUtils.formatDistance(firstEarthquake.getDistance()) + " km");
+                setFirstEarthquakeDistance(firstEarthquake.getDistance());
         QueryUtils.sEarthquakesListInformationValues.
-                setLastEarthquakeDistance(QueryUtils.formatDistance(lastEarthquake.getDistance()) + " km");
+                setLastEarthquakeDistance(lastEarthquake.getDistance());
         QueryUtils.sEarthquakesListInformationValues.
                 setNumberOfEarthquakesDisplayed(String.valueOf(mNumberOfEarthquakesOnList));
     }

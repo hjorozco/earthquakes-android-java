@@ -28,7 +28,7 @@
 
     <string name="earthquakes_list_title_for_one_earthquake">%1$s sismo%2$s encontrado%3$s en %4$s%5$s.</string>
     <string name="earthquakes_list_title_for_multiple_earthquakes">%1$s sismo%2$s encontrado%3$s en %4$s%5$s. Ordenados por %6$s.</string>
-    <string name="earthquakes_list_title_max_distance_from_you_section">a menos de %1$s km de ti</string>
+    <string name="earthquakes_list_title_max_distance_from_you_section">a menos de %1$s %2$s de ti</string>
     <string name="earthquakes_list_title_found_and_sorted_words_suffix">s</string>
     <string name="earthquakes_list_title_us_name">los Estados Unidos</string>
 
@@ -295,7 +295,7 @@
     <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
 
     <string name="activity_earthquake_details_label">Detalles del sismo</string>
-    <string name="activity_earthquake_details_depth_text">%1$.1f km de profundidad</string>
+    <string name="activity_earthquake_details_depth_text">%1$.1f %2$s de profundidad</string>
     <string name="activity_earthquake_details_west_longitude_letter">O</string>
 
     <string name="activity_earthquake_details_usgs_map_no_internet_message">

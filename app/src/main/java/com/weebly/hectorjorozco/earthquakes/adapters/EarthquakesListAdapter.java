@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
+import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.WordsUtils;
 import com.weebly.hectorjorozco.earthquakes.utils.QueryUtils;
 
@@ -105,9 +106,15 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
                     QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
 
-                // TODO Modify distance message to account for miles
+                String distanceUnits = mContext.getString(R.string.kilometers_text);
+                int maxDistance = Integer.valueOf(mMaxDistance);
+                if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(mContext)){
+                    distanceUnits = mContext.getString(R.string.miles_text);
+                    maxDistance = Math.round(UiUtils.getMilesFromKilometers(maxDistance));
+                }
+
                 distance = " " + mContext.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
-                        String.format(Locale.getDefault(), "%,d", Integer.valueOf(mMaxDistance)));
+                        String.format(Locale.getDefault(), "%,d", maxDistance), distanceUnits);
             }
 
             if (mEarthquakes.size() == 1) {

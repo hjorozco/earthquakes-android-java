@@ -16,8 +16,8 @@ public class EarthquakesListInformationValues {
     private String mLastEarthquakeMag;
     private String mFirstEarthquakeDate;
     private String mLastEarthquakeDate;
-    private String mFirstEarthquakeDistance;
-    private String mLastEarthquakeDistance;
+    private float mFirstEarthquakeDistance;
+    private float mLastEarthquakeDistance;
     private String mNumberOfEarthquakesDisplayed;
 
 
@@ -85,11 +85,11 @@ public class EarthquakesListInformationValues {
         return mLastEarthquakeDate;
     }
 
-    public String getFirstEarthquakeDistance() {
+    public float getFirstEarthquakeDistance() {
         return mFirstEarthquakeDistance;
     }
 
-    public String getLastEarthquakeDistance() {
+    public float getLastEarthquakeDistance() {
         return mLastEarthquakeDistance;
     }
 
@@ -112,11 +112,11 @@ public class EarthquakesListInformationValues {
         mLastEarthquakeDate = lastEarthquakeDate;
     }
 
-    public void setFirstEarthquakeDistance(String firstEarthquakeDistance) {
+    public void setFirstEarthquakeDistance(float firstEarthquakeDistance) {
         mFirstEarthquakeDistance = firstEarthquakeDistance;
     }
 
-    public void setLastEarthquakeDistance(String lastEarthquakeDistance) {
+    public void setLastEarthquakeDistance(float lastEarthquakeDistance) {
         mLastEarthquakeDistance = lastEarthquakeDistance;
     }
 

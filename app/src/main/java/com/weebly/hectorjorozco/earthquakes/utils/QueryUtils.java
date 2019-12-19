@@ -383,7 +383,7 @@ public class QueryUtils {
         if (isLocationPermissionGranted(context) && maxDistanceValue != 0) {
             maxDistance = String.valueOf(maxDistanceValue);
 
-            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)){
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
                 float maxDistanceInMiles = UiUtils.getKilometersFromMiles(maxDistanceValue);
                 maxDistance = String.valueOf(Math.round(maxDistanceInMiles));
             }
@@ -520,8 +520,17 @@ public class QueryUtils {
                     }
                 } else {
                     firstAndLastEarthquakeOrder = context.getString(R.string.distance_text);
-                    firstEarthquakeValue = values.getFirstEarthquakeDistance();
-                    lastEarthquakeValue = values.getLastEarthquakeDistance();
+                    String distanceUnits = context.getString(R.string.kilometers_text);
+                    float firstEarthquakeDistance = values.getFirstEarthquakeDistance();
+                    float lastEarthquakeDistance = values.getLastEarthquakeDistance();
+                    if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
+                        distanceUnits = context.getString(R.string.miles_text);
+                        firstEarthquakeDistance = UiUtils.getMilesFromKilometers(firstEarthquakeDistance);
+                        lastEarthquakeDistance = UiUtils.getMilesFromKilometers(lastEarthquakeDistance);
+                    }
+
+                    firstEarthquakeValue = QueryUtils.formatDistance(firstEarthquakeDistance) + " " + distanceUnits;
+                    lastEarthquakeValue = QueryUtils.formatDistance(lastEarthquakeDistance) + " " + distanceUnits;
 
                 }
                 firstAndLastEarthquakesInfoMessage = String.format(context.getString(R.string.current_list_alert_dialog_message_bottom_section),
@@ -553,9 +562,16 @@ public class QueryUtils {
         if (!values.getMaxDistance().isEmpty() &&
                 QueryUtils.sLastKnownLocationLatitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE &&
                 QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
-            // TODO Modify distance message to account for miles
+
+            String distanceUnits = context.getString(R.string.kilometers_text);
+            int maxDistance = Integer.valueOf(values.getMaxDistance());
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
+                distanceUnits = context.getString(R.string.miles_text);
+                maxDistance = Math.round(UiUtils.getMilesFromKilometers(maxDistance));
+            }
+
             distance = " " + context.getString(R.string.earthquakes_list_title_max_distance_from_you_section,
-                    String.format(Locale.getDefault(), "%,d", Integer.valueOf(values.getMaxDistance())));
+                    String.format(Locale.getDefault(), "%,d", maxDistance), distanceUnits);
         }
 
         switch (values.getDatePeriod()) {
