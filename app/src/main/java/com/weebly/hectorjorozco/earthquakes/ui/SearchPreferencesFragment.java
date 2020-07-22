@@ -199,7 +199,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
 
                         String maxNumberOfEarthquakesString = editText.getText().toString();
                         if (!maxNumberOfEarthquakesString.isEmpty()) {
-                            int maxNumberOfEarthquakes = Integer.valueOf(maxNumberOfEarthquakesString);
+                            int maxNumberOfEarthquakes = Integer.parseInt(maxNumberOfEarthquakesString);
                             if (maxNumberOfEarthquakes > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
                                 editText.setText(String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT));
                             } else {
@@ -213,7 +213,7 @@ public class SearchPreferencesFragment extends PreferenceFragmentCompat implemen
                 if (preference.getText().isEmpty()) {
                     return getString(R.string.search_preference_max_number_of_earthquakes_not_set_text);
                 } else {
-                    int maxNumberOfEarthquakes = Integer.valueOf(preference.getText());
+                    int maxNumberOfEarthquakes = Integer.parseInt(preference.getText());
                     if (maxNumberOfEarthquakes == 0) {
                         return getString(R.string.search_preference_max_number_of_earthquakes_zero_text);
                     } else {

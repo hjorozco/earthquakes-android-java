@@ -59,7 +59,7 @@ public class SortFavoritesDialogFragment extends DialogFragment {
         Bundle bundle = getArguments();
         String title = Objects.requireNonNull(bundle).getString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(),
                 R.style.ThemeDialogCustomPrimaryColor);
 
         builder.setTitle(Html.fromHtml(getString(R.string.html_text_with_color,
@@ -94,7 +94,7 @@ public class SortFavoritesDialogFragment extends DialogFragment {
 
         view.findViewById(R.id.dialog_sort_by_divider).setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
 
-        switch (SortFavoritesUtils.getSortByValueFromSharedPreferences(getActivity())) {
+        switch (SortFavoritesUtils.getSortByValueFromSharedPreferences(requireActivity())) {
             case MainActivity.SORT_BY_ASCENDING_DATE:
                 dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
                 ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
@@ -114,20 +114,18 @@ public class SortFavoritesDialogFragment extends DialogFragment {
             case MainActivity.SORT_BY_ASCENDING_DISTANCE:
                 if (isDistanceShown){
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_distance_radio_button);
-                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                 } else {
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
-                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                 }
+                ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                 break;
             case MainActivity.SORT_BY_DESCENDING_DISTANCE:
                 if (isDistanceShown){
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_distance_radio_button);
-                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
                 } else {
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
-                    ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
                 }
+                ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
                 break;
         }
 

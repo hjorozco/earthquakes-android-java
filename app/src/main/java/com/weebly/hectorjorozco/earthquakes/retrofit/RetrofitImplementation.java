@@ -78,8 +78,8 @@ public final class RetrofitImplementation implements Serializable {
         Call<Earthquakes> retrofitServiceCall;
 
         if (earthquakesQueryParameters.getMaxDistance().isEmpty() ||
-                Double.valueOf(earthquakesQueryParameters.getLatitude()) == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||
-                Double.valueOf(earthquakesQueryParameters.getLongitude()) == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
+                Double.parseDouble(earthquakesQueryParameters.getLatitude()) == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE ||
+                Double.parseDouble(earthquakesQueryParameters.getLongitude()) == QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
             retrofitServiceCall = retrofitService.getEarthquakes(
                     "geojson",
                     earthquakesQueryParameters.getStartTime(),

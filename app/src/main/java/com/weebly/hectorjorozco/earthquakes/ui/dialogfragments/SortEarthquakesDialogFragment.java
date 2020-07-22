@@ -56,7 +56,7 @@ public class SortEarthquakesDialogFragment extends DialogFragment {
         Bundle bundle = getArguments();
         String title = Objects.requireNonNull(bundle).getString(DIALOG_FRAGMENT_TITLE_ARGUMENT_KEY);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(),
                 R.style.ThemeDialogCustomPrimaryColor);
 
         builder.setTitle(Html.fromHtml(getString(R.string.html_text_with_color,

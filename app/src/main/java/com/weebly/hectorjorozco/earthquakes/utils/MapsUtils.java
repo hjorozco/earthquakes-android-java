@@ -11,8 +11,6 @@ import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
 
 import java.util.Date;
 
-import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.formatOffsetDistance;
-
 public class MapsUtils {
 
     public static String constructEarthquakeTitleForMarker(Earthquake earthquake, String magnitude, Context context) {
@@ -28,14 +26,7 @@ public class MapsUtils {
         // If Distance Units are miles
         if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
             if (!locationOffset.equals(context.getString(R.string.activity_main_location_text))) {
-                int kmPosition = locationOffset.indexOf(context.getString(R.string.kilometers_text));
-                String kilometersStringValue = locationOffset.substring(0, kmPosition - 1);
-                float kilometersValue = Float.valueOf(kilometersStringValue);
-                float milesValue = UiUtils.getMilesFromKilometers(kilometersValue);
-                String milesStringValue = formatOffsetDistance(milesValue);
-                String locationOffsetPart1 = milesStringValue + " " + context.getString(R.string.miles_text);
-                String locationOffsetPart2 = locationOffset.substring(kmPosition + 2);
-                locationOffset = locationOffsetPart1 + locationOffsetPart2;
+                locationOffset = UiUtils.changeLocationOffsetFromMilesToKilometers(locationOffset, context);
             }
         }
         return magnitude + " - " + locationOffset + " " + locationPrimary;

@@ -163,7 +163,7 @@
         activity_main_help_dialog_fragment_tag</string>
 
     <string name="activity_main_about_dialog_fragment_text">
-        &lt;br/>&lt;b>Earthquakes. Version 1.0&lt;/b>&lt;br/>&lt;br/>
+        &lt;br/>&lt;b>Earthquakes. Version 1.3&lt;/b>&lt;br/>&lt;br/>
         &lt;b>&lt;a href="https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes">Rate this app&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         App designed and developed by:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Hector J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         &lt;i>Information source.&lt;/i>&lt;br/>&lt;br/>Earthquakes information obtained from &lt;a href="https://www.usgs.gov/">
@@ -380,7 +380,7 @@
 
     <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
 
-    <string name="activity_earthquake_details_label">Earthquake details</string>
+    <string name="activity_earthquake_details_label">Earthquake</string>
     <string name="activity_earthquake_details_magnitude_circle_view_transition" translatable="false">
         activity_earthquake_details_magnitude_circle_view_transition</string>
     <string name="activity_earthquake_details_magnitude_text_view_transition" translatable="false">
@@ -568,6 +568,10 @@
     </string>
     <string name="activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text">
         Earthquake removed from favorites
+    </string>
+
+    <string name="activity_earthquake_details_no_app_available_to_share">
+        No app available to share the earthquake details
     </string>
 
     <string name="activity_earthquake_details_share_option_magnitude_text">Magnitude:</string>

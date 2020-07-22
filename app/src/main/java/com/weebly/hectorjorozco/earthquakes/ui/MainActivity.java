@@ -864,13 +864,12 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 sortedByMessage = getString(R.string.activity_favorites_sorted_by_ascending_distance_text);
                 Collections.sort(earthquakesWithDistance, Earthquake.ascendingDateComparator);
                 Collections.sort(earthquakesWithDistance, Earthquake.ascendingDistanceComparator);
-                earthquakes = earthquakesWithDistance;
             } else {
                 sortedByMessage = getString(R.string.activity_favorites_sorted_by_descending_distance_text);
                 Collections.sort(earthquakesWithDistance, Earthquake.descendingDateComparator);
                 Collections.sort(earthquakesWithDistance, Earthquake.descendingDistanceComparator);
-                earthquakes = earthquakesWithDistance;
             }
+            earthquakes = earthquakesWithDistance;
             QueryUtils.sEarthquakesListSortedByDistanceText =
                     getString(R.string.activity_main_list_title_sorted_by_distance_text, sortedByMessage);
             setEarthquakesListForMapsActivity(earthquakes);

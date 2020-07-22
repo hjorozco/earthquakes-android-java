@@ -107,7 +107,7 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
 
                 String distanceUnits = mContext.getString(R.string.kilometers_text);
-                int maxDistance = Integer.valueOf(mMaxDistance);
+                int maxDistance = Integer.parseInt(mMaxDistance);
                 if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(mContext)){
                     distanceUnits = mContext.getString(R.string.miles_text);
                     maxDistance = Math.round(UiUtils.getMilesFromKilometers(maxDistance));

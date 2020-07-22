@@ -74,7 +74,7 @@ public class MessageDialogFragment extends DialogFragment {
             caller = arguments.getByte(DIALOG_FRAGMENT_CALLER_ARGUMENT_KEY);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(),
                 R.style.ThemeDialogCustomPrimaryColor);
         builder.setMessage(message).setTitle(Html.fromHtml(getString(R.string.html_text_with_color,
                 colorPrimaryDarkString, title)));
@@ -84,7 +84,9 @@ public class MessageDialogFragment extends DialogFragment {
             MessageDialogFragmentListener listener;
             if (finalCaller == MESSAGE_DIALOG_FRAGMENT_CALLER_REPORT_BUTTON) {
                 listener = (MessageDialogFragmentListener) getActivity();
-                listener.onAccept();
+                if (listener != null) {
+                    listener.onAccept();
+                }
             } else if (finalCaller == MESSAGE_DIALOG_FRAGMENT_CALLER_LOCATION_PERMISSION_REQUEST) {
                 listener = (MessageDialogFragmentListener) getTargetFragment();
                 if (listener != null) {

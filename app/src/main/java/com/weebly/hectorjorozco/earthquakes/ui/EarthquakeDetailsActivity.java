@@ -482,7 +482,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         } else {
             depthValueTextView.setVisibility(View.VISIBLE);
             String distanceUnits = getString(R.string.kilometers_text);
-            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)) {
                 distanceUnits = getString(R.string.miles_text);
                 depth = UiUtils.getMilesFromKilometers((float) depth);
             }
@@ -725,7 +725,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             }
 
             String distanceUnits = getString(R.string.kilometers_text);
-            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)) {
                 distance = UiUtils.getMilesFromKilometers(distance);
                 distanceUnits = getString(R.string.miles_text);
             }
@@ -942,28 +942,30 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
     private void shareEarthquakeDetails() {
 
-        // Location offset can be empty
+        // Location offset string
         String locationOffset = mEarthquake.getLocationOffset();
         String spaceForLocation = " ";
         if (locationOffset.equals(getString(R.string.activity_main_location_text))) {
             locationOffset = "";
             spaceForLocation = "";
+        } else {
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)) {
+                locationOffset = UiUtils.changeLocationOffsetFromMilesToKilometers(locationOffset, this);
+            }
         }
 
-        // TODO Modify Location Offset for km or mi
-
-        // Location primary can be empty
+        // Location primary string
         String locationPrimary = mEarthquake.getLocationPrimary();
         if (locationPrimary.isEmpty()) {
             locationPrimary = getString(R.string.activity_main_no_earthquake_location_text);
         }
 
         // Distance string
-        String distanceText="";
-        if (QueryUtils.isDistanceShown(this)){
+        String distanceText = "";
+        if (QueryUtils.isDistanceShown(this)) {
             float distance = mEarthquake.getDistance();
             String distanceUnits = getString(R.string.kilometers_text);
-            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+            if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)) {
                 distance = UiUtils.getMilesFromKilometers(distance);
                 distanceUnits = getString(R.string.miles_text);
             }
@@ -1061,7 +1063,12 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 .setSubject(getString(R.string.activity_earthquake_details_label) + ".")
                 .getIntent();
 
-        startActivity(shareIntent);
+        // Verify that on Activity or other component is available to receive the Intent to share
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(shareIntent);
+        } else {
+            showSnackBar(getString(R.string.activity_earthquake_details_no_app_available_to_share));
+        }
     }
 
 

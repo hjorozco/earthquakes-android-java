@@ -87,11 +87,7 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
                 QueryUtils.openWebPageInGoogleChrome(this, mEarthquakeUrl);
                 break;
             case android.R.id.home:
-                if (mWebView != null && mWebView.canGoBack()) {
-                    mWebView.goBack();
-                } else {
-                    onBackPressed();
-                }
+                onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);

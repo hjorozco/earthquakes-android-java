@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -110,7 +111,7 @@ public class QueryUtils {
         String limit = mLimit;
 
         // Number used to limit the results shown from the JSON query to the USGS.
-        int limitNumber = Integer.valueOf(limit);
+        int limitNumber = Integer.parseInt(limit);
 
         String[] splitString;
 
@@ -314,6 +315,7 @@ public class QueryUtils {
         String startDateJSONQuery, endDateJSONQuery;
         long startDateInMilliseconds, endDateInMilliseconds;
 
+        assert datePeriod != null;
         switch (datePeriod) {
             case "day":
                 startDateInMilliseconds = currentTimeInMilliseconds - millisecondsInOneDay;
@@ -340,7 +342,6 @@ public class QueryUtils {
                 endDateInMilliseconds = currentTimeInMilliseconds;
                 break;
             default:
-
                 startDateInMilliseconds = sharedPreferences.getLong(
                         context.getString(R.string.search_preference_start_date_key),
                         context.getResources().getInteger(R.integer.search_preference_start_date_default_value));
@@ -357,7 +358,6 @@ public class QueryUtils {
 
                 startDateTimeOffset = timeZone.getOffset(startDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
                 endDateTimeOffset = timeZone.getOffset(endDateInMilliseconds) / MILLISECONDS_IN_ONE_HOUR;
-
                 break;
         }
 
@@ -393,9 +393,9 @@ public class QueryUtils {
         }
 
 
-        mLocation = sharedPreferences.getString(
+        mLocation = Objects.requireNonNull(sharedPreferences.getString(
                 context.getString(R.string.search_preference_location_key),
-                context.getString(R.string.search_preference_location_default_value)).trim().
+                context.getString(R.string.search_preference_location_default_value))).trim().
                 replaceAll(" +", " ").
                 toLowerCase(Resources.getSystem().getConfiguration().locale);
 
@@ -405,10 +405,11 @@ public class QueryUtils {
                 context.getString(R.string.search_preference_max_number_of_earthquakes_default_value));
 
         // If the limit set by the user is empty, set the limit for the search to 20,000
+        assert mLimit != null;
         if (mLimit.isEmpty()) {
             mLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
 
-        } else if (Integer.valueOf(mLimit) > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
+        } else if (Integer.parseInt(mLimit) > MAX_NUMBER_OF_EARTHQUAKES_LIMIT) {
             // If the limit set by the user is 20,000 or more, set the limit for the search to 20,000
             // and update the limit preference value to 20,000
             mLimit = String.valueOf(MAX_NUMBER_OF_EARTHQUAKES_LIMIT);
@@ -564,7 +565,7 @@ public class QueryUtils {
                 QueryUtils.sLastKnownLocationLongitude != QueryUtils.LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE) {
 
             String distanceUnits = context.getString(R.string.kilometers_text);
-            int maxDistance = Integer.valueOf(values.getMaxDistance());
+            int maxDistance = Integer.parseInt(values.getMaxDistance());
             if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
                 distanceUnits = context.getString(R.string.miles_text);
                 maxDistance = Math.round(UiUtils.getMilesFromKilometers(maxDistance));
@@ -767,14 +768,7 @@ public class QueryUtils {
         // If Distance Units are miles
         if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(context)) {
             if (!locationOffset.equals(context.getString(R.string.activity_main_location_text))) {
-                int kmPosition = locationOffset.indexOf(context.getString(R.string.kilometers_text));
-                String kilometersStringValue = locationOffset.substring(0, kmPosition - 1);
-                float kilometersValue = Float.valueOf(kilometersStringValue);
-                float milesValue = UiUtils.getMilesFromKilometers(kilometersValue);
-                String milesStringValue = formatOffsetDistance(milesValue);
-                String locationOffsetPart1 = milesStringValue + " " + context.getString(R.string.miles_text);
-                String locationOffsetPart2 = locationOffset.substring(kmPosition + 2);
-                locationOffset = locationOffsetPart1 + locationOffsetPart2;
+                locationOffset = UiUtils.changeLocationOffsetFromMilesToKilometers(locationOffset, context);
             }
         }
 
@@ -857,10 +851,10 @@ public class QueryUtils {
 
 
     public static boolean isDistanceUnitSearchPreferenceValueMiles(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).
-                getString(context.getString(R.string.search_preference_distance_unit_key),
-                        context.getString(R.string.search_preference_distance_unit_default_value))
-                .equals(context.getString(R.string.search_preference_distance_unit_miles_entry_value));
+        return Objects.equals(PreferenceManager.getDefaultSharedPreferences(context).
+                        getString(context.getString(R.string.search_preference_distance_unit_key),
+                                context.getString(R.string.search_preference_distance_unit_default_value)),
+                context.getString(R.string.search_preference_distance_unit_miles_entry_value));
     }
 
 
@@ -873,16 +867,15 @@ public class QueryUtils {
                 R.string.last_known_device_location_longitude_shared_preference_key), "");
         Location location = new Location("");
 
-        double latitudeNumber, longitudeNumber;
-        if (latitude.isEmpty()) {
-            latitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
-        } else {
-            latitudeNumber = Double.valueOf(latitude);
+        double latitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
+        double longitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
+
+        if (latitude != null && !latitude.isEmpty()) {
+            latitudeNumber = Double.parseDouble(latitude);
         }
-        if (longitude.isEmpty()) {
-            longitudeNumber = LAST_KNOW_LOCATION_LAT_LONG_NULL_VALUE;
-        } else {
-            longitudeNumber = Double.valueOf(longitude);
+
+        if (longitude != null && !longitude.isEmpty()) {
+            longitudeNumber = Double.parseDouble(longitude);
         }
 
         location.setLatitude(latitudeNumber);
@@ -910,25 +903,29 @@ public class QueryUtils {
             locationUpdateListener) {
         FusedLocationProviderClient fusedLocationProviderClient =
                 LocationServices.getFusedLocationProviderClient(context);
-        fusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener(location -> {
-                    // Got last known location. In some rare situations this can be null.
-                    if (location != null) {
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                                context.getString(R.string.app_shared_preferences_name), 0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(context.getString(R.string.last_known_device_location_latitude_shared_preference_key),
-                                String.valueOf(location.getLatitude()));
-                        editor.putString(context.getString(R.string.last_known_device_location_longitude_shared_preference_key),
-                                String.valueOf(location.getLongitude()));
-                        editor.apply();
 
-                        locationUpdateListener.onLocationUpdate(true);
+        if (ContextCompat.checkSelfPermission(context, APP_LOCATION_PERMISSION)
+                == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(location -> {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            SharedPreferences sharedPreferences = context.getSharedPreferences(
+                                    context.getString(R.string.app_shared_preferences_name), 0);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(context.getString(R.string.last_known_device_location_latitude_shared_preference_key),
+                                    String.valueOf(location.getLatitude()));
+                            editor.putString(context.getString(R.string.last_known_device_location_longitude_shared_preference_key),
+                                    String.valueOf(location.getLongitude()));
+                            editor.apply();
 
-                    } else {
-                        locationUpdateListener.onLocationUpdate(false);
-                    }
-                });
+                            locationUpdateListener.onLocationUpdate(true);
+
+                        } else {
+                            locationUpdateListener.onLocationUpdate(false);
+                        }
+                    });
+        }
     }
 
 

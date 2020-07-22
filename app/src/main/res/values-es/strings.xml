@@ -128,7 +128,7 @@
     </string>
 
     <string name="activity_main_about_dialog_fragment_text">
-        &lt;br/>&lt;b>Sismos. Versión 1.0&lt;/b>&lt;br/>&lt;br/>
+        &lt;br/>&lt;b>Sismos. Versión 1.3&lt;/b>&lt;br/>&lt;br/>
         &lt;b>&lt;a href="https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes">Calificar esta aplicación&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         Aplicación diseñada y desarrollada por:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Héctor J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         &lt;i>Fuente de información.&lt;/i>&lt;br/>&lt;br/>Información sobre sismos obtenida de: &lt;a href="https://www.usgs.gov/">
@@ -294,7 +294,7 @@
 
     <!-- ********** ACTIVITY EARTHQUAKE DETAILS ********** -->
 
-    <string name="activity_earthquake_details_label">Detalles del sismo</string>
+    <string name="activity_earthquake_details_label">Sismo</string>
     <string name="activity_earthquake_details_depth_text">%1$.1f %2$s de profundidad</string>
     <string name="activity_earthquake_details_west_longitude_letter">O</string>
 
@@ -445,6 +445,10 @@
     </string>
     <string name="activity_earthquake_details_earthquake_removed_from_favorites_snack_bar_text">
         Sismo eliminado de favoritos
+    </string>
+
+    <string name="activity_earthquake_details_no_app_available_to_share">
+        No hay una aplicación disponible para compartir los detalles del sismo
     </string>
 
     <string name="activity_earthquake_details_share_option_magnitude_text">Magnitud:</string>
@@ -734,7 +738,7 @@
 
     <string name="activity_earthquake_report_label">Reportar sismo</string>
     <string name="activity_earthquake_report_snack_bar_text">
-        Presiona \"Select Language\" para cambiar el idioma a español</string>
+        Presiona \"Select Language\" para cambiar idioma</string>
     <string name="activity_earthquake_report_no_internet_message">
         No hay conexión a Internet.\n\nUna vez que se restablezca la conexión presiona aquí para
         cargar la página web nuevamente.

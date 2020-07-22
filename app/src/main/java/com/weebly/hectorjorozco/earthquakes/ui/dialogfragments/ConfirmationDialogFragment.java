@@ -79,7 +79,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
         // Ask if the user is sure about deleting the student
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()),
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(),
                 R.style.ThemeDialogCustomPrimaryColor);
         builder.setMessage(message).setTitle(Html.fromHtml(getString(R.string.html_text_with_color,
                 colorPrimaryDarkString, title)));

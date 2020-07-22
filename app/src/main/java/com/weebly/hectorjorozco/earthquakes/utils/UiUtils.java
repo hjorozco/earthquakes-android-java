@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
+import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.formatOffsetDistance;
+
 
 public class UiUtils {
 
@@ -35,6 +37,18 @@ public class UiUtils {
 
     public static float getKilometersFromMiles(float miles){
         return miles * (float) 1.609344;
+    }
+
+
+    public static String changeLocationOffsetFromMilesToKilometers(String locationOffset, Context context){
+        int kmPosition = locationOffset.indexOf(context.getString(R.string.kilometers_text));
+        String kilometersStringValue = locationOffset.substring(0, kmPosition - 1);
+        float kilometersValue = Float.parseFloat(kilometersStringValue);
+        float milesValue = UiUtils.getMilesFromKilometers(kilometersValue);
+        String milesStringValue = formatOffsetDistance(milesValue);
+        String locationOffsetPart1 = milesStringValue + " " + context.getString(R.string.miles_text);
+        String locationOffsetPart2 = locationOffset.substring(kmPosition + 2);
+        return locationOffsetPart1 + locationOffsetPart2;
     }
 
 }

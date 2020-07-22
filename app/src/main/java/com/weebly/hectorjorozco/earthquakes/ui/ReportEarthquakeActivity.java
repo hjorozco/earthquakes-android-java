@@ -92,16 +92,13 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
                 QueryUtils.openWebPageInGoogleChrome(this, mReportEarthquakeUrl);
                 break;
             case android.R.id.home:
-                if (mWebView != null && mWebView.canGoBack()) {
-                    mWebView.goBack();
-                } else {
-                    onBackPressed();
-                }
+                onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    // When the user presses the back key on the phone
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && mWebView != null && mWebView.canGoBack()) {
