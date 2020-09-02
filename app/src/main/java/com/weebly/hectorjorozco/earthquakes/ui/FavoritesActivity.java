@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
 import androidx.fragment.app.FragmentManager;
@@ -48,6 +49,7 @@ import com.weebly.hectorjorozco.earthquakes.viewmodels.FavoritesActivityViewMode
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.weebly.hectorjorozco.earthquakes.ui.MainActivity.UPPER_LIMIT_TO_NOT_SHOW_FAST_SCROLLING;
 
@@ -150,7 +152,7 @@ public class FavoritesActivity extends AppCompatActivity implements
                                 selectedFavoritesCount, selectedWordEnding));
                     }
                     mAdapter.setSelectedFavorites(selectedFavorites);
-                    mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_dark));
+                    setDarkRecyclerViewDivider();
                 }
             }
         }
@@ -181,7 +183,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     private void setupRecyclerView() {
 
         mDividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
+        setLightRecyclerViewDivider();
 
         mRecyclerView = findViewById(R.id.activity_favorites_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -718,7 +720,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         if (mActionMode == null) {
             mActionMode = startSupportActionMode(actionModeCallback);
             if (mAdapter.getSelectedFavoritesCount() == 0) {
-                mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_dark));
+                setDarkRecyclerViewDivider();
             }
         }
 
@@ -729,7 +731,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         // If the last selected favorite was deselected finish action mode
         if (selectedFavoritesCount == 0) {
             mActionMode.finish();
-            mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
+            setLightRecyclerViewDivider();
         } else {
             // If not, update action mode title with the number of favorites selected
             mActionMode.setTitle(getString(R.string.activity_favorites_action_mode_toolbar_title,
@@ -768,7 +770,7 @@ public class FavoritesActivity extends AppCompatActivity implements
         public void onDestroyActionMode(ActionMode actionMode) {
             mAdapter.clearSelectedFavorites();
             mActionMode = null;
-            mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
+            setLightRecyclerViewDivider();
         }
     }
 
@@ -797,6 +799,19 @@ public class FavoritesActivity extends AppCompatActivity implements
 
     }
 
+
+    // Sets a light color to the recyclerview divider
+    private void setLightRecyclerViewDivider(){
+        mDividerItemDecoration.setDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(
+                getResources(), R.drawable.recycler_view_divider_light, null)));
+    }
+
+
+    // Sets a light color to the recyclerview divider
+    private void setDarkRecyclerViewDivider(){
+        mDividerItemDecoration.setDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(
+                getResources(), R.drawable.recycler_view_divider_dark, null)));
+    }
 
     @Override
     protected void onResume() {

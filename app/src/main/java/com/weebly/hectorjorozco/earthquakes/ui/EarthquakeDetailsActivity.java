@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ShareCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.MenuCompat;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -231,8 +232,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         } else {
             // If Android 19
             setupEarthquakeDetails();
-            magnitudeFrameLayout.setBackground(getResources().
-                    getDrawable(R.drawable.touch_selector));
+            magnitudeFrameLayout.setBackground(ResourcesCompat.getDrawable
+                    (getResources(), R.drawable.touch_selector, null));
         }
 
         // After a rotation set up the earthquake details again because "onTransitionEnd" will
@@ -305,9 +306,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                 estimatedIntensityFlexboxLayout.
                         setOnClickListener(v -> showIntensityMessage(estimatedIntensity, estimatedType,
                                 mEstimatedIntensityRomanNumeral));
+                // If Android 19
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    estimatedIntensityFlexboxLayout.setBackground(getResources().
-                            getDrawable(R.drawable.touch_selector));
+                    estimatedIntensityFlexboxLayout.setBackground(ResourcesCompat.getDrawable
+                            (getResources(), R.drawable.touch_selector, null));
                 }
                 mIsEstimatedIntensityShown = true;
             }
@@ -323,8 +325,8 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
                         setOnClickListener(v -> showIntensityMessage(reportedIntensity, reportedType,
                                 mReportedIntensityRomanNumeral));
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    reportedIntensityFlexboxLayout.setBackground(getResources().
-                            getDrawable(R.drawable.touch_selector));
+                    reportedIntensityFlexboxLayout.setBackground(ResourcesCompat.getDrawable
+                            (getResources(), R.drawable.touch_selector, null));
                 }
                 mIsReportedIntensityShown = true;
             }
@@ -374,9 +376,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
             String finalAlertValueText = mAlertText.toLowerCase();
             alertFlexboxLayout.setOnClickListener(v -> showAlertMessage(finalAlertType, finalAlertValueText));
 
+            // If Android 19
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                alertFlexboxLayout.setBackground(getResources().
-                        getDrawable(R.drawable.touch_selector));
+                alertFlexboxLayout.setBackground(ResourcesCompat.getDrawable
+                        (getResources(), R.drawable.touch_selector, null));
             }
 
             mIsAlertTextShown = true;
@@ -391,9 +394,10 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
         } else {
             tsunamiTextView.setVisibility(View.VISIBLE);
             tsunamiTextView.setOnClickListener(v -> showPossibleTsunamiMessage());
+            // If Android 19
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                tsunamiTextView.setBackground(getResources().
-                        getDrawable(R.drawable.touch_selector));
+                tsunamiTextView.setBackground(ResourcesCompat.getDrawable
+                        (getResources(), R.drawable.touch_selector, null));
             }
         }
 

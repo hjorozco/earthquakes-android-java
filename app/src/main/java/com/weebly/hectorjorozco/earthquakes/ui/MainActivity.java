@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.SharedElementCallback;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuCompat;
 import androidx.fragment.app.FragmentManager;
@@ -57,6 +58,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import static android.view.View.GONE;
 
@@ -190,7 +192,8 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private void setupRecyclerView() {
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider_light));
+        dividerItemDecoration.setDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(
+                getResources(), R.drawable.recycler_view_divider_light, null)));
 
         mRecyclerView = findViewById(R.id.activity_main_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -375,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                 break;
         }
         if (type != QueryUtils.SEARCH_RESULT_NON_NULL) {
-            mMessageImageView.setImageDrawable(getResources().getDrawable(imageID));
+            mMessageImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), imageID, null));
             if (type == QueryUtils.SEARCHING) {
                 mMessageImageView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
                 mMessageTextView.setVisibility(GONE);

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
@@ -177,8 +178,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 // For Android 19 set list item background as a touch selector since
                 // ?android:attr/selectableItemBackground does not work on 19.
-                earthquakeViewHolder.earthquakeMainLayout.setBackground(mContext.getResources().
-                        getDrawable(R.drawable.touch_selector));
+                earthquakeViewHolder.earthquakeMainLayout.setBackground(ResourcesCompat.getDrawable
+                        (mContext.getResources(), R.drawable.touch_selector, null));
             }
 
         }
@@ -282,8 +283,8 @@ public class EarthquakesListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             titleTextView = itemView.findViewById(R.id.title_list_item_text_view);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                titleTextView.setBackground(mContext.getResources().
-                        getDrawable(R.drawable.touch_selector));
+                titleTextView.setBackground(ResourcesCompat.getDrawable
+                        (mContext.getResources(), R.drawable.touch_selector, null));
             }
 
             titleTextView.setOnClickListener(v -> mEarthquakesListClickListener.onTitleClick());

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.weebly.hectorjorozco.earthquakes.R;
@@ -163,8 +164,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 // For Android 19 set list item background as a touch selector since
                 // ?android:attr/selectableItemBackground does not work on 19.
-                favoriteViewHolder.earthquakeLinearLayout.setBackground(mContext.getResources().
-                        getDrawable(R.drawable.touch_selector));
+                favoriteViewHolder.earthquakeLinearLayout.setBackground(ResourcesCompat.getDrawable
+                        (mContext.getResources(), R.drawable.touch_selector, null));
             }
 
             // If the student has been selected by a long click

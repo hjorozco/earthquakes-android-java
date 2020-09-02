@@ -6,6 +6,8 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.Button;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import com.weebly.hectorjorozco.earthquakes.R;
 
 import static com.weebly.hectorjorozco.earthquakes.utils.QueryUtils.formatOffsetDistance;
@@ -19,7 +21,9 @@ public class UiUtils {
             context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             button.setBackgroundResource(outValue.resourceId);
         } else {
-            button.setBackground(context.getResources().getDrawable(R.drawable.touch_selector));
+            // If Android 19
+            button.setBackground(ResourcesCompat.getDrawable
+                    (context.getResources(), R.drawable.touch_selector, null));
         }
     }
 

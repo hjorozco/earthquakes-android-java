@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.weebly.hectorjorozco.earthquakes.R;
 
@@ -201,7 +202,8 @@ public class GlossaryActivity extends AppCompatActivity {
         });
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            linearLayout.setBackground(getResources().getDrawable(R.drawable.touch_selector));
+            linearLayout.setBackground(ResourcesCompat.getDrawable
+                    (getResources(), R.drawable.touch_selector, null));
         }
     }
 

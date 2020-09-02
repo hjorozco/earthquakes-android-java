@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.weebly.hectorjorozco.earthquakes.R;
 import com.weebly.hectorjorozco.earthquakes.models.Earthquake;
@@ -127,7 +129,8 @@ public class MapsUtils {
 
                     @Override
                     public void onAnimationEnd(Animator animator) {
-                        mMainFab.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_close_brown_24dp));
+                        mMainFab.setImageDrawable(ResourcesCompat.getDrawable(
+                                context.getResources(),R.drawable.ic_close_brown_24dp, null ));
                     }
 
                     @Override
@@ -145,7 +148,8 @@ public class MapsUtils {
                              View mFabBackgroundLayout, FloatingActionButton mMainFab, Context context) {
         mFabBackgroundLayout.setVisibility(View.GONE);
         mMainFab.animate().rotation(0);
-        mMainFab.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_layers_brown_24dp));
+        mMainFab.setImageDrawable(ResourcesCompat.getDrawable(
+                context.getResources(),R.drawable.ic_layers_brown_24dp, null ));
         mLayoutFab1.animate().translationY(0);
         mLayoutFab2.animate().translationY(0);
         mLayoutFab3.animate().translationY(0).setListener(new Animator.AnimatorListener() {
