@@ -128,7 +128,7 @@
     </string>
 
     <string name="activity_main_about_dialog_fragment_text">
-        &lt;br/>&lt;b>Sismos. Versión 1.3&lt;/b>&lt;br/>&lt;br/>
+        &lt;br/>&lt;b>Sismos. Versión %1$s&lt;/b>&lt;br/>&lt;br/>
         &lt;b>&lt;a href="https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes">Calificar esta aplicación&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         Aplicación diseñada y desarrollada por:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Héctor J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         &lt;i>Fuente de información.&lt;/i>&lt;br/>&lt;br/>Información sobre sismos obtenida de: &lt;a href="https://www.usgs.gov/">

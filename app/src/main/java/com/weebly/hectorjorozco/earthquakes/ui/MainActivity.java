@@ -518,7 +518,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private void showAboutMessageDialogFragment() {
         MessageDialogFragment messageDialogFragment =
                 MessageDialogFragment.newInstance(
-                        Html.fromHtml(getString(R.string.activity_main_about_dialog_fragment_text)),
+                        Html.fromHtml(getString(R.string.activity_main_about_dialog_fragment_text, getString(R.string.version_name))),
                         getString(R.string.menu_activity_main_action_about_title),
                         MessageDialogFragment.MESSAGE_DIALOG_FRAGMENT_CALLER_HELP_ABOUT_MESSAGE);
 

@@ -14,6 +14,7 @@
     <string name="spanish_only_plural_ending_letter_s" />
     <string name="kilometers_text" translatable="false">km</string>
     <string name="miles_text">mi</string>
+    <string name="version_name" translatable="false">1.4</string>
 
     <!-- ********** App ********** -->
 
@@ -163,7 +164,7 @@
         activity_main_help_dialog_fragment_tag</string>
 
     <string name="activity_main_about_dialog_fragment_text">
-        &lt;br/>&lt;b>Earthquakes. Version 1.3&lt;/b>&lt;br/>&lt;br/>
+        &lt;br/>&lt;b>Earthquakes. Version %1$s&lt;/b>&lt;br/>&lt;br/>
         &lt;b>&lt;a href="https://play.google.com/store/apps/details?id=com.weebly.hectorjorozco.earthquakes">Rate this app&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         App designed and developed by:&lt;br/&gt;&lt;br/&gt;&lt;b>&lt;a href="https://hectorjorozco.weebly.com">Hector J. Orozco&lt;/a>&lt;/b>&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
         &lt;i>Information source.&lt;/i>&lt;br/>&lt;br/>Earthquakes information obtained from &lt;a href="https://www.usgs.gov/">
