@@ -887,22 +887,18 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                dismissEarthquakeDetailsActivity();
-                break;
-            case R.id.menu_activity_earthquake_details_action_favorites:
-                deleteOrInsertOnFavoritesTableDb();
-                break;
-            case R.id.menu_activity_earthquake_details_action_share:
-                shareEarthquakeDetails();
-                break;
-            case R.id.menu_activity_earthquake_details_action_help:
-                showEarthquakeDetailsHelpMessage();
-                break;
-            case R.id.menu_activity_earthquake_details_action_web_page:
-                showEarthquakeWebSiteActivity();
-                break;
+        int menuItemId = item.getItemId();
+
+        if (menuItemId == android.R.id.home) {
+            dismissEarthquakeDetailsActivity();
+        } else if (menuItemId == R.id.menu_activity_earthquake_details_action_favorites) {
+            deleteOrInsertOnFavoritesTableDb();
+        } else if (menuItemId == R.id.menu_activity_earthquake_details_action_share) {
+            shareEarthquakeDetails();
+        } else if (menuItemId == R.id.menu_activity_earthquake_details_action_help) {
+            showEarthquakeDetailsHelpMessage();
+        } else if (menuItemId == R.id.menu_activity_earthquake_details_action_web_page) {
+            showEarthquakeWebPageActivity();
         }
 
         return super.onOptionsItemSelected(item);
@@ -1076,7 +1072,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
     }
 
 
-    private void showEarthquakeWebSiteActivity() {
+    private void showEarthquakeWebPageActivity() {
         if (WordsUtils.getLocaleLanguage().equals("es")) {
             QueryUtils.openWebPageInGoogleChrome(this, mEarthquake.getUrl());
         } else {

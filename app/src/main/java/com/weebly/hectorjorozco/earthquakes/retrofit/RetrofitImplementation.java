@@ -27,7 +27,7 @@ public final class RetrofitImplementation implements Serializable {
     private static final String USGS_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/";
 
     private static volatile RetrofitImplementation retrofitImplementation = new RetrofitImplementation();
-    private RetrofitService retrofitService;
+    private final RetrofitService retrofitService;
 
     private RetrofitImplementation() {
         // Avoid the reflection api.

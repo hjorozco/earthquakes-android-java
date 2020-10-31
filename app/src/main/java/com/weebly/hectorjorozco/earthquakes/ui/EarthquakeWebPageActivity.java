@@ -81,15 +81,12 @@ public class EarthquakeWebPageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_activity_earthquake_web_page_action_chrome:
-                QueryUtils.openWebPageInGoogleChrome(this, mEarthquakeUrl);
-                break;
-            case android.R.id.home:
-                onBackPressed();
+        int menuItemId = item.getItemId();
+        if (menuItemId == R.id.menu_activity_earthquake_web_page_action_chrome) {
+            QueryUtils.openWebPageInGoogleChrome(this, mEarthquakeUrl);
+        } else if (menuItemId == android.R.id.home) {
+            onBackPressed();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

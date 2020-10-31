@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Section of activity_earthquake_details.xml
+     It shows a map with the location of the earthquake -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -98,7 +101,8 @@
                 android:tint="@color/colorPrimaryLight"
                 app:backgroundTint="@color/colorAppBackground"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_default_map_brown_24dp" />
+                app:srcCompat="@drawable/ic_default_map_brown_24dp"
+                android:contentDescription="@string/google_map_default_icon_content_description" />
 
         </LinearLayout>
 
@@ -130,7 +134,8 @@
                 android:tint="@color/colorPrimaryLight"
                 app:backgroundTint="@color/colorAppBackground"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_satellite_map_brown_24dp" />
+                app:srcCompat="@drawable/ic_satellite_map_brown_24dp"
+                android:contentDescription="@string/google_map_satellite_icon_content_description" />
 
         </LinearLayout>
 
@@ -162,7 +167,8 @@
                 android:tint="@color/colorPrimaryLight"
                 app:backgroundTint="@color/colorAppBackground"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_terrain_map_brown_24dp" />
+                app:srcCompat="@drawable/ic_terrain_map_brown_24dp"
+                android:contentDescription="@string/google_map_terrain_icon_content_description" />
 
         </LinearLayout>
 
@@ -177,7 +183,8 @@
             android:tint="@color/colorPrimaryLight"
             app:backgroundTint="@color/colorAppBackground"
             app:fabSize="mini"
-            app:srcCompat="@drawable/ic_layers_brown_24dp" />
+            app:srcCompat="@drawable/ic_layers_brown_24dp"
+            android:contentDescription="@string/google_map_layers_icon_content_description" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_earthquake_details_google_map_earthquake_location_fab"
@@ -190,7 +197,8 @@
             android:tint="@color/colorPrimaryLight"
             app:backgroundTint="@color/colorAppBackground"
             app:fabSize="mini"
-            app:srcCompat="@drawable/ic_earthquake_location_brown_24dp" />
+            app:srcCompat="@drawable/ic_earthquake_location_brown_24dp"
+            android:contentDescription="@string/activity_earthquake_details_google_map_earthquake_location_icon_content_description" />
 
     </FrameLayout>
 

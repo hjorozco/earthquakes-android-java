@@ -84,16 +84,17 @@ public class ReportEarthquakeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_activity_report_earthquake_action_help:
-                showHelpSnackBar();
-                break;
-            case R.id.menu_activity_report_earthquake_action_chrome:
-                QueryUtils.openWebPageInGoogleChrome(this, mReportEarthquakeUrl);
-                break;
-            case android.R.id.home:
-                onBackPressed();
+
+        int menuItemId = item.getItemId();
+
+        if (menuItemId == R.id.menu_activity_report_earthquake_action_help) {
+            showHelpSnackBar();
+        } else if (menuItemId == R.id.menu_activity_report_earthquake_action_chrome) {
+            QueryUtils.openWebPageInGoogleChrome(this, mReportEarthquakeUrl);
+        } else if (menuItemId ==android.R.id.home) {
+            onBackPressed();
         }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 // Gets Google Maps API key from gradle.properties file (not checked into Versions Control Systems
-// y adding it to the ".gitignore" file)
+// by adding it to the ".gitignore" file)
 Properties properties = new Properties()
 properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
 def googleMapsApiKey = properties.getProperty('google.maps.api.key')
@@ -33,13 +33,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     // Google Play Services location
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
 
     // Settings
     implementation 'androidx.preference:preference:1.1.1'

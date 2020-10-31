@@ -112,7 +112,7 @@ public class SortFavoritesDialogFragment extends DialogFragment {
                 ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_descending_radio_button);
                 break;
             case MainActivity.SORT_BY_ASCENDING_DISTANCE:
-                if (isDistanceShown){
+                if (isDistanceShown) {
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_distance_radio_button);
                 } else {
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
@@ -120,7 +120,7 @@ public class SortFavoritesDialogFragment extends DialogFragment {
                 ascendingDescendingRadioGroup.check(R.id.dialog_sort_by_ascending_radio_button);
                 break;
             case MainActivity.SORT_BY_DESCENDING_DISTANCE:
-                if (isDistanceShown){
+                if (isDistanceShown) {
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_distance_radio_button);
                 } else {
                     dateMagnitudeDistanceRadioGroup.check(R.id.dialog_sort_by_date_radio_button);
@@ -133,19 +133,16 @@ public class SortFavoritesDialogFragment extends DialogFragment {
         builder.setPositiveButton(getString(R.string.ok_text), (dialog, which) -> {
 
             int dateMagnitudeDistanceValue, ascendingDescendingValue, sortByEntryValue;
+            int checkedRadioButtonId = dateMagnitudeDistanceRadioGroup.getCheckedRadioButtonId();
 
-            switch (dateMagnitudeDistanceRadioGroup.getCheckedRadioButtonId()) {
-                case R.id.dialog_sort_by_date_radio_button:
-                    dateMagnitudeDistanceValue = 0;
-                    break;
-                case R.id.dialog_sort_by_magnitude_radio_button:
-                    dateMagnitudeDistanceValue = 2;
-                    break;
-                case R.id.dialog_sort_by_distance_radio_button:
-                    dateMagnitudeDistanceValue = 4;
-                    break;
-                default:
-                    dateMagnitudeDistanceValue = -1;
+            if (checkedRadioButtonId == R.id.dialog_sort_by_date_radio_button) {
+                dateMagnitudeDistanceValue = 0;
+            } else if (checkedRadioButtonId == R.id.dialog_sort_by_magnitude_radio_button) {
+                dateMagnitudeDistanceValue = 2;
+            } else if (checkedRadioButtonId == R.id.dialog_sort_by_distance_radio_button) {
+                dateMagnitudeDistanceValue = 4;
+            } else {
+                dateMagnitudeDistanceValue = -1;
             }
 
             if (ascendingDescendingRadioGroup.getCheckedRadioButtonId() ==

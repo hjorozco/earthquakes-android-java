@@ -73,7 +73,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
             mShowMap = false;
         }
 
-        if (mMenu!=null){
+        if (mMenu != null) {
             setupMenu();
         }
 
@@ -172,17 +172,13 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_earthquakes_map_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()) {
-                case R.id.menu_activity_main_bottom_navigation_view_action_list:
-                    EarthquakesMapActivity.this.onBackPressed();
-                    break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_map:
-                    break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
-                    EarthquakesMapActivity.this.onBackPressed();
-                    EarthquakesMapActivity.this.startActivity(new Intent(EarthquakesMapActivity.this, FavoritesActivity.class));
-                    EarthquakesMapActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    break;
+            int menuItemId = menuItem.getItemId();
+            if (menuItemId == R.id.menu_activity_main_bottom_navigation_view_action_list) {
+                EarthquakesMapActivity.this.onBackPressed();
+            } else if (menuItemId == R.id.menu_activity_main_bottom_navigation_view_action_favorites) {
+                EarthquakesMapActivity.this.onBackPressed();
+                EarthquakesMapActivity.this.startActivity(new Intent(EarthquakesMapActivity.this, FavoritesActivity.class));
+                EarthquakesMapActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
             return true;
         });
@@ -238,7 +234,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                 }
 
                 String distanceUnits = getString(R.string.kilometers_text);
-                if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)){
+                if (QueryUtils.isDistanceUnitSearchPreferenceValueMiles(this)) {
                     distance = UiUtils.getMilesFromKilometers(distance);
                     distanceUnits = getString(R.string.miles_text);
                 }
@@ -256,16 +252,20 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                     .zIndex(markerAttributes.getZIndex())).setTag(i);
         }
 
+        // When an earthquake marker info window is clicked, start the EarthquakesDetailsActivity for
+        // that particular earthquake.
         googleMap.setOnInfoWindowClickListener(marker -> {
 
-            Intent intent = new Intent(EarthquakesMapActivity.this, EarthquakeDetailsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, mEarthquakes.get((int) marker.getTag()));
-            bundle.putByte(EarthquakeDetailsActivity.EXTRA_CALLER, EarthquakeDetailsActivity.EARTHQUAKE_MAP_ACTIVITY_CALLER);
-            intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
+            if (marker.getTag() != null) {
+                Intent intent = new Intent(EarthquakesMapActivity.this, EarthquakeDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(EarthquakeDetailsActivity.EXTRA_EARTHQUAKE, mEarthquakes.get((int) marker.getTag()));
+                bundle.putByte(EarthquakeDetailsActivity.EXTRA_CALLER, EarthquakeDetailsActivity.EARTHQUAKE_MAP_ACTIVITY_CALLER);
+                intent.putExtra(EarthquakeDetailsActivity.EXTRA_BUNDLE_KEY, bundle);
 
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+            }
         });
 
         googleMap.setMapType(mGoogleMapType);
@@ -289,10 +289,10 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
     }
 
 
-    private void setupMenu(){
+    private void setupMenu() {
         MenuItem infoMenuItem = mMenu.findItem(R.id.menu_activity_earthquakes_map_action_info);
         infoMenuItem.setEnabled(mShowMap);
-        if (mShowMap){
+        if (mShowMap) {
             infoMenuItem.setIcon(R.drawable.ic_info_outline_white_24dp);
         } else {
             infoMenuItem.setIcon(R.drawable.ic_info_outline_grey_24dp);

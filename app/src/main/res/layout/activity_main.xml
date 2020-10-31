@@ -78,7 +78,8 @@
             app:fabCustomSize="@dimen/activity_main_fab_size"
             app:maxImageSize="@dimen/activity_main_fab_image_size"
             app:srcCompat="@drawable/ic_exclamation_mark_white_24dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:contentDescription="@string/activity_main_fab_icon_content_description" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

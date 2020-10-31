@@ -163,17 +163,13 @@ public class FavoritesActivity extends AppCompatActivity implements
     private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_favorites_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()) {
-                case R.id.menu_activity_main_bottom_navigation_view_action_list:
-                    onBackPressed();
-                    break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_map:
-                    onBackPressed();
-                    startActivity(new Intent(FavoritesActivity.this, EarthquakesMapActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
-                    break;
+            int menuItemId = menuItem.getItemId();
+            if (menuItemId == R.id.menu_activity_main_bottom_navigation_view_action_list) {
+                onBackPressed();
+            } else if (menuItemId == R.id.menu_activity_main_bottom_navigation_view_action_map) {
+                onBackPressed();
+                startActivity(new Intent(FavoritesActivity.this, EarthquakesMapActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
             return true;
         });
@@ -332,19 +328,14 @@ public class FavoritesActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-            case R.id.menu_activity_favorites_action_sort:
-                showSortFavoritesDialogFragment();
-                break;
-            case R.id.menu_activity_favorites_action_delete:
-                showDeleteAllFavoritesConfirmationDialogFragment();
-                break;
+        int menuItemId = item.getItemId();
+        if (menuItemId == android.R.id.home) {
+            onBackPressed();
+        } else if (menuItemId == R.id.menu_activity_favorites_action_sort) {
+            showSortFavoritesDialogFragment();
+        } else if (menuItemId == R.id.menu_activity_favorites_action_delete) {
+            showDeleteAllFavoritesConfirmationDialogFragment();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -502,7 +493,7 @@ public class FavoritesActivity extends AppCompatActivity implements
     }
 
 
-    // Implementation of FavoritesListAdapter.FavoritesListAdapterListener
+    // Implementation of FavoritesListAdapter.FavoritesListAdapterListener interface
     @Override
     public void onFavoriteLongClick(int favoriteRecyclerViewPosition) {
         setupItemForActionMode(favoriteRecyclerViewPosition);
@@ -698,7 +689,7 @@ public class FavoritesActivity extends AppCompatActivity implements
                             if (mSnackbar.isShown()) {
                                 float snackbarTopPosition = mSnackbar.getView().getY();
                                 float snackbarBottomPosition = snackbarTopPosition + mSnackbar.getView().getHeight();
-                                if (snackbarBottomPosition>viewTopPosition && snackbarTopPosition < viewBottomPosition) {
+                                if (snackbarBottomPosition > viewTopPosition && snackbarTopPosition < viewBottomPosition) {
                                     mSnackbar.dismiss();
                                 }
                             }
@@ -801,14 +792,14 @@ public class FavoritesActivity extends AppCompatActivity implements
 
 
     // Sets a light color to the recyclerview divider
-    private void setLightRecyclerViewDivider(){
+    private void setLightRecyclerViewDivider() {
         mDividerItemDecoration.setDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(
                 getResources(), R.drawable.recycler_view_divider_light, null)));
     }
 
 
     // Sets a light color to the recyclerview divider
-    private void setDarkRecyclerViewDivider(){
+    private void setDarkRecyclerViewDivider() {
         mDividerItemDecoration.setDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(
                 getResources(), R.drawable.recycler_view_divider_dark, null)));
     }

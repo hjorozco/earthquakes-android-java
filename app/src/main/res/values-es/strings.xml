@@ -8,6 +8,15 @@
     <string name="spanish_only_plural_ending_letter_s">@string/letter_s_lowercase</string>
     <string name="miles_text">millas</string>
 
+    <string name="google_map_default_icon_content_description">
+        Ícono de mapa predeterminado</string>
+    <string name="google_map_satellite_icon_content_description">
+        Ícono de mapa satélite</string>
+    <string name="google_map_terrain_icon_content_description">
+        Ícono de mapa relieve</string>
+    <string name="google_map_layers_icon_content_description">
+         Ícono de capas de mapa</string>
+
     <!-- ********** App ********** -->
 
 
@@ -151,6 +160,8 @@
         &lt;a href="https://www.flaticon.com">www.flaticon.com&lt;/a> con la siguiente licencia
         &lt;a href="http://creativecommons.org/licenses/by/3.0">Creative Commons BY 3.0&lt;/a>.
     </string>
+
+    <string name="activity_main_fab_icon_content_description">Signo de exclamación</string>
 
     <!-- ********** Activity Main ********** -->
 
@@ -308,6 +319,9 @@
     <string name="activity_earthquake_details_google_map_default_type_text">Predeterminado</string>
     <string name="activity_earthquake_details_google_map_satellite_type_text">Satélite</string>
     <string name="activity_earthquake_details_google_map_terrain_type_text">Relieve</string>
+
+    <string name="activity_earthquake_details_google_map_earthquake_location_icon_content_description">
+         Ícono de localización del sismo</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensidad</string>
     <string name="activity_earthquake_details_help_dialog_fragment_message">

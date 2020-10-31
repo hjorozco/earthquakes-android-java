@@ -16,6 +16,15 @@
     <string name="miles_text">mi</string>
     <string name="version_name" translatable="false">1.4</string>
 
+    <string name="google_map_default_icon_content_description">
+        Default map icon</string>
+    <string name="google_map_satellite_icon_content_description">
+        Satellite map icon</string>
+    <string name="google_map_terrain_icon_content_description">
+        Terrain map icon</string>
+    <string name="google_map_layers_icon_content_description">
+        Map layers icon</string>
+
     <!-- ********** App ********** -->
 
 
@@ -190,6 +199,7 @@
     <string name="activity_main_about_dialog_fragment_tag" translatable="false">
         activity_main_about_dialog_fragment_tag</string>
 
+    <string name="activity_main_fab_icon_content_description">Exclamation mark</string>
 
     <!-- ********** Activity main ********** -->
 
@@ -419,6 +429,9 @@
     <string name="activity_earthquake_details_google_map_default_type_text">Default</string>
     <string name="activity_earthquake_details_google_map_satellite_type_text">Satellite</string>
     <string name="activity_earthquake_details_google_map_terrain_type_text">Terrain</string>
+
+    <string name="activity_earthquake_details_google_map_earthquake_location_icon_content_description">
+        Earthquake location icon</string>
 
     <string name="activity_earthquake_details_intensity_text">Intensity</string>
     <string name="activity_earthquake_details_help_dialog_fragment_message">

@@ -172,17 +172,13 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     private void setupBottomNavigationView() {
         mBottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()) {
-                case R.id.menu_activity_main_bottom_navigation_view_action_list:
-                    break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_map:
-                    startActivity(new Intent(this, EarthquakesMapActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    break;
-                case R.id.menu_activity_main_bottom_navigation_view_action_favorites:
-                    startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    break;
+            int menuItemId = menuItem.getItemId();
+            if (menuItemId == R.id.menu_activity_main_bottom_navigation_view_action_map) {
+                startActivity(new Intent(this, EarthquakesMapActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            } else if (menuItemId == R.id.menu_activity_main_bottom_navigation_view_action_favorites) {
+                startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
             return true;
         });
@@ -273,11 +269,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
                     // After the adapter is updated with one or more earthquakes
                     if (mSortByDistanceMenuItem != null) {
                         // If the distance is shown enable sort by distance menu item if not disable it
-                        if (QueryUtils.isDistanceShown(this)) {
-                            mSortByDistanceMenuItem.setEnabled(true);
-                        } else {
-                            mSortByDistanceMenuItem.setEnabled(false);
-                        }
+                        mSortByDistanceMenuItem.setEnabled(QueryUtils.isDistanceShown(this));
                     }
 
                     // If the search has finished and no previous snack has been shown
@@ -455,11 +447,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
         if (mAdapter.getEarthquakesListData() != null) {
             if (mAdapter.getEarthquakesListData().size() > 0) {
-                if (QueryUtils.isDistanceShown(this)) {
-                    mSortByDistanceMenuItem.setEnabled(true);
-                } else {
-                    mSortByDistanceMenuItem.setEnabled(false);
-                }
+                mSortByDistanceMenuItem.setEnabled(QueryUtils.isDistanceShown(this));
             }
         }
 
@@ -474,27 +462,22 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.menu_activity_main_action_refresh:
-                selectRefreshOrStopAction();
-                break;
-            case R.id.menu_activity_main_action_search_preferences:
-                startActivity(new Intent(this, SearchPreferencesActivity.class));
-                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
-                break;
-            case R.id.menu_activity_main_action_sort_by_distance:
-                showSortEarthquakesDialogFragment();
-                break;
-            case R.id.menu_activity_main_action_glossary:
-                startActivity(new Intent(this, GlossaryActivity.class));
-                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
-                break;
-            case R.id.menu_activity_main_action_help:
-                showHelpMessageDialogFragment();
-                break;
-            case R.id.menu_activity_main_action_about:
-                showAboutMessageDialogFragment();
-                break;
+        int menuItemId = item.getItemId();
+
+        if (menuItemId == R.id.menu_activity_main_action_refresh) {
+            selectRefreshOrStopAction();
+        } else if (menuItemId == R.id.menu_activity_main_action_search_preferences) {
+            startActivity(new Intent(this, SearchPreferencesActivity.class));
+            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+        } else if (menuItemId == R.id.menu_activity_main_action_sort_by_distance) {
+            showSortEarthquakesByDistanceDialogFragment();
+        } else if (menuItemId == R.id.menu_activity_main_action_glossary) {
+            startActivity(new Intent(this, GlossaryActivity.class));
+            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+        } else if (menuItemId == R.id.menu_activity_main_action_help) {
+            showHelpMessageDialogFragment();
+        } else if (menuItemId == R.id.menu_activity_main_action_about) {
+            showAboutMessageDialogFragment();
         }
 
         return super.onOptionsItemSelected(item);
@@ -547,7 +530,7 @@ public class MainActivity extends AppCompatActivity implements EarthquakesListAd
 
 
     // Helper method that show a DialogFragment that lets the user select how to sort favorites
-    private void showSortEarthquakesDialogFragment() {
+    private void showSortEarthquakesByDistanceDialogFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         SortEarthquakesDialogFragment sortEarthquakesDialogFragment =
                 SortEarthquakesDialogFragment.newInstance(

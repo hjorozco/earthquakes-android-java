@@ -72,7 +72,8 @@
                     android:tint="@color/colorPrimaryLight"
                     app:backgroundTint="@color/colorAppBackground"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_default_map_brown_24dp" />
+                    app:srcCompat="@drawable/ic_default_map_brown_24dp"
+                    android:contentDescription="@string/google_map_default_icon_content_description" />
 
             </LinearLayout>
 
@@ -104,7 +105,8 @@
                     android:tint="@color/colorPrimaryLight"
                     app:backgroundTint="@color/colorAppBackground"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_satellite_map_brown_24dp" />
+                    app:srcCompat="@drawable/ic_satellite_map_brown_24dp"
+                    android:contentDescription="@string/google_map_satellite_icon_content_description" />
 
             </LinearLayout>
 
@@ -136,7 +138,8 @@
                     android:tint="@color/colorPrimaryLight"
                     app:backgroundTint="@color/colorAppBackground"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_terrain_map_brown_24dp" />
+                    app:srcCompat="@drawable/ic_terrain_map_brown_24dp"
+                    android:contentDescription="@string/google_map_terrain_icon_content_description" />
 
             </LinearLayout>
 
@@ -151,7 +154,8 @@
                 android:tint="@color/colorPrimaryLight"
                 app:backgroundTint="@color/colorAppBackground"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_layers_brown_24dp" />
+                app:srcCompat="@drawable/ic_layers_brown_24dp"
+                android:contentDescription="@string/google_map_layers_icon_content_description" />
 
         </FrameLayout>
 
