@@ -35,6 +35,7 @@ import com.weebly.hectorjorozco.earthquakes.utils.UiUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -201,7 +202,7 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
      * installed Google Play services and returned to the app.
      */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
 
         mGoogleMap = googleMap;
 
@@ -242,14 +243,14 @@ public class EarthquakesMapActivity extends AppCompatActivity implements OnMapRe
                         QueryUtils.formatDistance(distance), distanceUnits);
             }
 
-            googleMap.addMarker(new MarkerOptions()
+            Objects.requireNonNull(googleMap.addMarker(new MarkerOptions()
                     .position(earthquakePosition)
                     .title(MapsUtils.constructEarthquakeTitleForMarker(earthquake, magnitudeToDisplay, this))
                     .snippet(MapsUtils.constructEarthquakeSnippetForMarker(earthquake.getTimeInMilliseconds(), distanceText))
                     .icon(BitmapDescriptorFactory.fromResource(markerAttributes.getMarkerImageResourceId()))
                     .anchor(0.5f, 0.5f)
                     .alpha(markerAttributes.getAlphaValue())
-                    .zIndex(markerAttributes.getZIndex())).setTag(i);
+                    .zIndex(markerAttributes.getZIndex()))).setTag(i);
         }
 
         // When an earthquake marker info window is clicked, start the EarthquakesDetailsActivity for

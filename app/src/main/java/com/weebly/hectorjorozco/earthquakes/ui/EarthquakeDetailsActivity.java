@@ -702,7 +702,7 @@ public class EarthquakeDetailsActivity extends AppCompatActivity implements OnMa
 
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
 
         mGoogleMap = googleMap;
 

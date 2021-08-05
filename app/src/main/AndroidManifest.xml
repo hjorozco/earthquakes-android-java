@@ -69,8 +69,8 @@
             ".gitignore" file)
 
              Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.   -->
+             You need a different API key for each encryption key, including the release key that is
+             used to sign the APK for publishing.   -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GOOGLE_MAPS_API_KEY}" />
