@@ -11,7 +11,7 @@ gradle.properties
 *.apk
 *.ap_
 *.aab
-app/release/**
+app/release/
 app/debug/
 
 # Files for the ART/Dalvik VM
